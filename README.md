@@ -11,14 +11,14 @@
 
 ## Artefacts Checklist
 
-* The artefacts checklist is available at: <docs.google.com/spreadsheets @ g.uporto>
+* The artefacts checklist is available at: [Google Sheet](https://docs.google.com/spreadsheets/d/1KJHTnrm4QXCuKkgCpW1QtOgYxvfV_7D6Sqph21BtQZc/edit#gid=1742390135)
 
 ## Team
 
-* Group member 1 name, email
-* Group member 2 name, email
-* Group member 3 name, email
-* Group member 4 name, email
+* Rita Cachaldora, up202108798@g.uporto.pt
+* Madalena Ye, up202108795@g.uporto.pt
+* Tomás Ramos, up202108687@g.uporto.pt
+* Luís Duarte, up202108734@g.uporto.pt
 
 ***
-GROUP21gg, DD/MM/2021
+GROUP23107, 21/09/2021
