@@ -1,10 +1,10 @@
-# Product name (e.g. MediaLibrary)
+# ReVogue
 
-> Project vision.
+> Revogue empowers users to breathe new life into their wardrobe treasures, while cultivating a community where fashion is sustainable. It's about reimagining the lifecycle of fashion, where your garments become the catalyst for incredible second-hand discoveries.
 
 ## Project Components
 
-* [ER: Requirements Specification](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/eap)
+* [ER: Requirements Specification](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/er)
 * [EBD: Database Specification](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/ebd)
 * [EAP: Architecture Specification and Prototype](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/eap)
 * [PA: Product and Presentation](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/pa)
