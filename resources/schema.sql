@@ -85,18 +85,18 @@ CREATE TABLE Products(
 );
 
 CREATE TABLE Attributes(
+    id INT PRIMARY KEY NOT NULL,
     key TEXT NOT NULL,
     value TEXT NOT NULL,
-    PRIMARY KEY (key, value)
+    UNIQUE (key, value)
 );
 
 CREATE TABLE ProductAttributes(
   product INT NOT NULL,
-  key TEXT NOT NULL,
-  value TEXT NOT NULL,
-  PRIMARY KEY (product, key),
+  attribute INT NOT NULL,
+  PRIMARY KEY (product, attribute),
   FOREIGN KEY (product) REFERENCES Products(id) ON DELETE CASCADE,
-  FOREIGN KEY (key, value) REFERENCES Attributes(key, value) ON DELETE CASCADE
+  FOREIGN KEY (attribute) REFERENCES Attributes(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Orders(
@@ -257,7 +257,8 @@ BEGIN
         NEW.fts_search = (
             setweight(to_tsvector('english', NEW.name), 'A') ||
             setweight(to_tsvector('english',
-                        coalesce(string_agg((SELECT value from ProductAttributes where product=NEW.id), ''), ' ')), 'B') ||
+                        coalesce(string_agg((SELECT string_agg(a.value, ' ') FROM ProductAttributes pa JOIN Attributes a
+                        ON a.id=pa.attribute WHERE pa.product=NEW.id GROUP BY pa.product), ''), ' ')), 'B') ||
             setweight(to_tsvector('english', coalesce(NEW.description, '')), 'C')
             );
     END IF;
@@ -266,7 +267,8 @@ BEGIN
             NEW.fts_search = (
                 setweight(to_tsvector('english', NEW.name), 'A') ||
                 setweight(to_tsvector('english',
-                        coalesce(string_agg((SELECT value from ProductAttributes where product=NEW.id), ''), ' ')), 'B') ||
+                        coalesce(string_agg((SELECT string_agg(a.value, ' ') FROM ProductAttributes pa JOIN Attributes a
+                        ON a.id=pa.attribute WHERE pa.product=NEW.id GROUP BY pa.product), ''), ' ')), 'B') ||
                 setweight(to_tsvector('english', COALESCE(NEW.description, '')), 'C')
                 );
         END IF;
@@ -285,7 +287,8 @@ BEGIN
     UPDATE Products SET fts_search=(
         setweight(to_tsvector('english', (SELECT name FROM Products where id=NEW.product)), 'A') ||
         setweight(to_tsvector('english',
-                    coalesce((SELECT string_agg(value, ' ') FROM ProductAttributes WHERE product=NEW.product GROUP BY product), '')), 'B') ||
+                    coalesce((SELECT string_agg(a.value, ' ') FROM ProductAttributes pa JOIN Attributes a
+                        ON a.id=pa.attribute WHERE pa.product=NEW.product GROUP BY pa.product), '')), 'B') ||
         setweight(to_tsvector('english', coalesce((SELECT description FROM Products where id=NEW.product), '')), 'C'))
         WHERE id=NEW.product;
     RETURN NEW;
@@ -408,3 +411,19 @@ $$ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS bargain_message_price_valid ON Messages;
 CREATE TRIGGER bargain_message_priceV_valid BEFORE INSERT OR UPDATE ON Messages
     FOR EACH ROW EXECUTE PROCEDURE bargain_message_price_validity();
+
+-- trigger08
+
+CREATE OR REPLACE FUNCTION product_attribute_unique_key() RETURNS TRIGGER AS $$
+BEGIN
+    IF ((SELECT count(*) FROM ProductAttributes pa JOIN Attributes a ON a.id=pa.attribute
+                         WHERE a.key=(SELECT key FROM Attributes WHERE id=NEW.attribute) AND pa.product=NEW.product) <> 0) THEN
+        RAISE EXCEPTION 'You can only have one value per key in a product attribute';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS product_attribute_unique_validity ON ProductAttributes;
+CREATE TRIGGER product_attribute_unique_validity BEFORE INSERT OR UPDATE ON ProductAttributes
+    FOR EACH ROW EXECUTE PROCEDURE product_attribute_unique_key();
