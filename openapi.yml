@@ -1,0 +1,91 @@
+﻿openapi: '3.0.2'
+info:
+  title: ReVogue
+  version: '1.0'
+servers:
+  - url: https://localhost
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: laravel_session
+paths:
+  /:
+    get:
+      summary: Landing page of ReVogue
+      description: Returns HTML, contains a overview of the website from trending products and categories and redirects people to the website features.
+      responses:
+        '200':
+          description: Returns the Landing Page
+  /login:
+    get:
+      summary: Login Page
+      description: Retuns HTML, contains the layout and the forms that the user should use to login. Should also contain buttons to OAuth login providers.
+      responses:
+        '200':
+          description: Returns the Login Page
+    post:
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      summary: Login Action
+      description: The Login Action, submitted by the form in the page
+      responses:
+        '200':
+          description: When the login is successful, redirect to the landing page or to the last page the user has been to.
+        '403':
+          description: When the login is not successful return the login page but with an error
+# TODO: make oauth login
+# /login/callback:
+#   parameters:
+#     - 
+  /search:
+    get:
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: Query string, when not supplied returns an empty search page
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Limit of items to get, not required because the application sets a default
+        - in: query
+          name: after
+          schema:
+            type: integer
+          description: Starts the query from a certain index defaults to 0
+      summary: Search products
+      responses:
+        '200':
+          description: Returns the HTML for the search page
+  /products/{slug}:
+    get:
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Returns the page of the product
+        '404':
+          description: Return default 404 page if slug is not found
+
+
+          
