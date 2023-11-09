@@ -11,10 +11,9 @@ use Laravel\Sanctum\HasApiTokens;
 // Added to define Eloquent relationships.
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
 
     const CREATED_AT = 'creation_date';
     const UPDATED_AT = null;
@@ -28,40 +27,37 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-
     protected $fillable = [
-        'username',
-        'displayName',
         'email',
         'password'
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
-        'settings',
         'remember_token',
     ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+    
     protected $casts = [
         'creation_date' => 'datetime',
         'password' => 'hashed',
-        'settings' => 'array',
     ];
-
-    /**
+    
+        /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'Users';
+    protected $table = 'Admins';
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
