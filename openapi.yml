@@ -86,6 +86,56 @@ paths:
           description: Returns the page of the product
         '404':
           description: Return default 404 page if slug is not found
-
-
-          
+  /register:
+    get:
+      summary: Register page 
+      description: Returns the register page if the user is not logged on, redirect to the landing page otherwise
+      responses:
+        '200':
+          description: Returns the register Page
+    post:
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                username:
+                  type: string
+                displayName:
+                  type: string
+              required:
+                - email
+                - password
+                - username
+                - displayName
+      summary: Register Action
+      responses:
+        '200':
+          description: If sucessful redirect to the profile settings page
+        '400':
+          description: Returns the register page with an error if something is wrong with the user submission
+  /login/reset-password:
+    summary: Reset Password page
+    get:
+      responses:
+        '200':
+          description: Returns the Reset Password
+    post:
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        '200':
+          description: Always returns 200, and shows a sucessful reset page for security purposes even if the email doesn't exist      
