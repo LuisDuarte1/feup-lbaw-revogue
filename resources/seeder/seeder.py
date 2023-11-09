@@ -44,12 +44,12 @@ attributes = [
     {"Color": "Orange"},
 ]
 
-file.write("INSERT INTO Attributes(key, value) VALUES\n")
+file.write("INSERT INTO Attributes(id, key, value) VALUES\n")
 for i, attribute in enumerate(attributes):
     if i != len(attributes)-1:
-        file.write(f"""\t('{list(attribute.keys())[0]}', '{list(attribute.values())[0]}'),\n""")
+        file.write(f"""\t({i},'{list(attribute.keys())[0]}', '{list(attribute.values())[0]}'),\n""")
     else:
-        file.write(f"""\t('{list(attribute.keys())[0]}', '{list(attribute.values())[0]}');\n""")
+        file.write(f"""\t({i}, '{list(attribute.keys())[0]}', '{list(attribute.values())[0]}');\n""")
 file.write("\n")
 
 for a in range(50):
@@ -154,13 +154,14 @@ for product in products:
     products_attributes[product['database_id']] = product_attrbutes
 
 
-file.write("INSERT INTO ProductAttributes (product, key, value) VALUES\n")
+file.write("INSERT INTO ProductAttributes (product, attribute) VALUES\n")
 for e, pa in enumerate(products_attributes):
     for i, attrs in enumerate(products_attributes[pa]):
+        id = attributes.index({list(attrs.keys())[0]:list(attrs.values())[0]})
         if(e != (len(products_attributes) - 1) or i != (len(products_attributes[pa]) - 1)):
-            file.write(f"\t({pa}, '{list(attrs.keys())[0]}', '{list(attrs.values())[0]}'),\n")
+            file.write(f"\t({pa}, {id}),\n")
         else:
-            file.write(f"\t({pa}, '{list(attrs.keys())[0]}', '{list(attrs.values())[0]}');\n")
+            file.write(f"\t({pa}, {id});\n")
 
 
 file.write('\n')
