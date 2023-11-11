@@ -17,16 +17,44 @@ class Product extends Model
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'slug',
         'name',
-        
+        'description',
+        'price',
+        'image_Path',
+
+    ];  
+
+    protected $casts = [
+        'creation_date' => 'datetime',
+        'price' => 'float',
+
+    ];
+
+    public function attributes(): BelongsToMany
+    {
+        return $this->belongsToMany(Attributes::class,'ProductAttributes', 'attribute_id' , 'product_id');	
+    }
+
+    public function soldBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'sold_by');
+    }
+
+
 
     /**
-     * Get the card where the item is included.
+     * The table associated with the model.
+     *
+     * @var string
      */
-    public function card(): BelongsTo
-    {
-        return $this->belongsTo(Card::class);
-    }
+    protected $table = 'Products';
+
 }
