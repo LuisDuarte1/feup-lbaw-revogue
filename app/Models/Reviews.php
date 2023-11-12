@@ -47,5 +47,11 @@ class Reviews extends Model {
         return $this->BelongsTo(User::class, 'reviewed');
     }
 
+    public function notifications(): HasOne
+    {
+        return $this->hasOne(Notifications::class, 'review');
+    }
+
+    protected $table = 'Reviews';
     
 }

@@ -59,6 +59,17 @@ class Product extends Model
         return $this->hasMany(Vouchers::class, 'product');
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Reviews::class, 'product');
+    }
+
+    public function wishlist(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class,'ProductWishlist', 'product' , 'belongsTo');	
+    }
+    
+
     
     /**
      * The table associated with the model.

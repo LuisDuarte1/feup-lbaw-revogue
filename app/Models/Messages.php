@@ -61,6 +61,10 @@ class Messages extends Model
         return $this->hasOne(Vouchers::class, 'bargainMessage');
     }
 
+    public function notification(): HasOne
+    {
+        return $this->hasOne(Notifications::class, 'message');
+    }
     /**
      * The table associated with the model.
      *

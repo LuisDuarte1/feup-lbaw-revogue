@@ -17,6 +17,11 @@ class Order extends Model{
     protected $fillable = [
         'orderStatus',
     ];
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notifications::class, 'orderId');
+    }
     
     /**
      * The attributes that should be cast.
