@@ -146,7 +146,7 @@ CREATE TABLE Reviews(
     reviewed INT NOT NULL,
     FOREIGN KEY (reviewedOrder) REFERENCES Orders(id) ON DELETE CASCADE,
     FOREIGN KEY (reviewed) REFERENCES Users(id) ON DELETE CASCADE,
-    FOREIGN KEY (reviewed) REFERENCES Users(id) ON DELETE CASCADE
+    FOREIGN KEY (reviewer) REFERENCES Users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Admins(

@@ -57,6 +57,30 @@ class User extends Authenticatable
         'settings' => 'array',
     ];
 
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Messages::class, 'fromUser');
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Products::class, 'toUser');
+    }
+
+    public function reviewing(): HasMany
+    {
+        return $this->hasMany(Reviews::class, 'reviewer');
+    }
+
+    public function reviewed(): HasMany
+    {
+        return $this->hasMany(Reviews::class, 'reviewed');
+    }
+
+
+
+
     /**
      * The table associated with the model.
      *

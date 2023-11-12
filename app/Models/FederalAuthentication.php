@@ -7,10 +7,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 class FederalAuthentication extends Model 
 {   
+   use HasApiTokens;
    
     const timestamps = false;
 
-    protected $primarykey = 'id';
+    protected $primarykey = 'userId';
 
     protected $fillable = [
         'provider',

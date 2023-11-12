@@ -48,8 +48,17 @@ class Product extends Model
         return $this->belongsTo(User::class, 'sold_by');
     }
 
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Messages::class, 'subjectProduct');
+    }
 
+    public function vouchers(): HasMany
+    {
+        return $this->hasMany(Vouchers::class, 'product');
+    }
 
+    
     /**
      * The table associated with the model.
      *
