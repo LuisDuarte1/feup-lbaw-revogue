@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model{
-    use HasFactory;
-
+    
     const CREATED_AT = "creationDate";
     const UPDATED_AT = null;
 
@@ -18,11 +17,6 @@ class Order extends Model{
         'orderStatus'
     ];
 
-    public function notifications(): HasMany
-    {
-        return $this->hasMany(Notifications::class, 'orderId');
-    }
-    
     /**
      * The attributes that should be cast.
      *
@@ -32,8 +26,19 @@ class Order extends Model{
         'creationDate' => 'datetime',
     ];
 
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'orderId');
+    }
+    
+
     public function products() {
         return $this->belongsToMany(Product::class, 'OrderProduct', 'orderId', 'product')->withPivot('discount');
+    }
+
+    public function reviewedOrder(): HasOne
+    {
+        return $this->hasOne(Review::class, 'reviewedOrder');
     }
 
     protected $table = 'Order';

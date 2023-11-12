@@ -12,12 +12,13 @@ class FederatedAuthentication extends Model
    
     public $timestamps = false;
 
-    protected $primarykey = 'userId';
+    protected $primarykey = ['provider', 'user_id'];
 
     protected $fillable = [
         'provider',
         'refreshToken',
-        'accessToken'
+        'accessToken',
+        'userId'
     ];
 
     public function user(): BelongsTo

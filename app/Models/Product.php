@@ -38,12 +38,12 @@ class Product extends Model
 
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attributes::class,'ProductAttributes', 'attribute' , 'product');	
+        return $this->belongsToMany(Attribute::class,'ProductAttributes', 'attribute' , 'product');	
     }
 
     public function soldBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'soldBy');
     }
 
     public function messages(): HasMany
@@ -53,7 +53,7 @@ class Product extends Model
 
     public function vouchers(): HasMany
     {
-        return $this->hasMany(Vouchers::class, 'product');
+        return $this->hasMany(Voucher::class, 'product');
     }
 
     public function reviews(): HasMany
@@ -69,12 +69,22 @@ class Product extends Model
 
     public function orders(): BelongsToMany
     {
-        return $this->belongsToMany(Order::class, 'OrderProduct', 'product', 'orderId');
+        return $this->belongsToMany(Order::class, 'OrderProduct', 'product', 'orderId')->withPivot('discount');
     }
 
     public function inCart(): BelongsToMany
     {
         return $this->belongsToMany(CartProduct::class, 'CartProduct', 'product', 'belongsTo')->withPivot('appliedVoucher');
+    }
+    
+    public function report(): HasMany
+    {
+        return $this->hasMany(Report::class, 'product');
+    }
+
+    public function cartProducts(): BelongsTo
+    {
+        return $this->belongsTo(CartProduct::class, 'cartProduct');
     }
     
     /**

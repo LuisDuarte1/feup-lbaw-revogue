@@ -22,7 +22,7 @@ class Message extends Model
 
     protected $fillable = [
         'sentDate',
-        'message_Type',
+        'messageType',
         'textContent',
         'imagePath',
         'proposedPrice',
@@ -40,7 +40,7 @@ class Message extends Model
      */
     protected $casts = [
         'sentDate' => 'datetime',
-        'proposedPrice' => 'double',
+        'proposedPrice' => 'float',
     ];
 
     public function fromUser(): BelongsTo
@@ -60,13 +60,19 @@ class Message extends Model
 
     public function voucher(): HasOne
     {
-        return $this->hasOne(Vouchers::class, 'bargainMessage');
+        return $this->hasOne(Voucher::class, 'bargainMessage');
     }
 
     public function notification(): HasOne
     {
-        return $this->hasOne(Notifications::class, 'message');
+        return $this->hasOne(Notification::class, 'message');
     }
+
+    public function messageReport(): BelongsTo
+    {
+        return $this->belongsTo(Report::class, 'message');
+    }
+
     /**
      * The table associated with the model.
      *

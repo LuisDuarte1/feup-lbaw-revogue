@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -55,14 +56,22 @@ class User extends Authenticatable
     ];
 
 
-    public function messages(): HasMany
+    public function messagesFrom(): HasMany
     {
         return $this->hasMany(Message::class, 'fromUser');
+    }
+    public function messagesTo(): HasMany
+    {
+        return $this->hasMany(Message::class, 'toUser');
     }
 
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'soldBy');
+    }
+    public function voucher(): HasOne {
+
+        return $this->hasOne(Voucher::class, 'belongsTo');
     }
 
     public function reviewing(): HasMany
@@ -77,9 +86,29 @@ class User extends Authenticatable
 
     public function notifications(): HasMany
     {
-        return $this->hasMany(Notifications::class, 'toUser');
+        return $this->hasMany(Notification::class, 'belongsTo');
     }
 
+    public function reporter(): HasMany
+    {
+        return $this->hasMany(Report::class, 'reporter');
+    }
+
+    public function reported(): HasMany
+    {
+        return $this->hasMany(Report::class, 'reported');
+    }
+
+    public function cart(): HasOne
+    {
+        return $this->hasOne(CartProduct::class, 'belongsTo');
+    }
+
+    public function wishlist(): HasOne
+    {
+        return $this->hasOne(ProductWishlist::class, 'belongsTo');
+    }
+    
     /**
      * The table associated with the model.
      *

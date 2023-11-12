@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Review extends Model {
 
-
-    const timestamps = false;
+    public $timestamps = false;
 
     protected $primaryKey = 'id';
 
@@ -34,9 +33,9 @@ class Review extends Model {
         'reviewed'
     ];
 
-    public function reviewedOrder(): HasOne
+    public function reviewedOrder(): BelongsTo
     {
-        return $this->hasOne(Order::class, 'reviewedOrder');
+        return $this->BelongsTo(Order::class, 'reviewedOrder');
     }
 
     public function reviewer(): BelongsTo
@@ -51,7 +50,7 @@ class Review extends Model {
 
     public function notifications(): HasOne
     {
-        return $this->hasOne(Notifications::class, 'review');
+        return $this->hasOne(Notification::class, 'review');
     }
 
     protected $table = 'Reviews';
