@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 // Added to define Eloquent relationships.
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    use HasFactory;
 
     // Don't add create and update timestamps in database.
     const CREATED_AT = "creationDate";
@@ -29,14 +28,12 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'imagePath',
-
+        'imagePath'
     ];  
 
     protected $casts = [
         'creationDate' => 'datetime',
-        'price' => 'float',
-
+        'price' => 'float'
     ];
 
     public function attributes(): BelongsToMany
@@ -46,7 +43,7 @@ class Product extends Model
 
     public function soldBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'soldBy');
+        return $this->belongsTo(User::class, 'id');
     }
 
     public function messages(): HasMany
@@ -70,6 +67,15 @@ class Product extends Model
     }
     
 
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'OrderProduct', 'product', 'orderId');
+    }
+
+    public function inCart(): BelongsToMany
+    {
+        return $this->belongsToMany(CartProduct::class, 'CartProduct', 'product', 'belongsTo')->withPivot('appliedVoucher');
+    }
     
     /**
      * The table associated with the model.

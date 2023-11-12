@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -13,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, Notifiable;
 
     const CREATED_AT = 'creationDate';
     const UPDATED_AT = null;
@@ -32,7 +30,7 @@ class User extends Authenticatable
         'username',
         'displayName',
         'email',
-        'password'
+        'password',
     ];
 
     /**
@@ -64,7 +62,7 @@ class User extends Authenticatable
 
     public function products(): HasMany
     {
-        return $this->hasMany(Products::class, 'toUser');
+        return $this->hasMany(Product::class, 'soldBy');
     }
 
     public function reviewing(): HasMany
@@ -81,9 +79,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notifications::class, 'toUser');
     }
-
-
-
 
     /**
      * The table associated with the model.

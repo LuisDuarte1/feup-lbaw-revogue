@@ -15,7 +15,7 @@ class Order extends Model{
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'orderStatus',
+        'orderStatus'
     ];
 
     public function notifications(): HasMany
@@ -32,5 +32,10 @@ class Order extends Model{
         'creationDate' => 'datetime',
     ];
 
+    public function products() {
+        return $this->belongsToMany(Product::class, 'OrderProduct', 'orderId', 'product')->withPivot('discount');
+    }
+
+    protected $table = 'Order';
 
 }

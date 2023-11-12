@@ -12,7 +12,7 @@ class Attributes extends Model  {
 
     use HasFactory;
 
-    const timestamps = false;
+    public $timestamps = false;
 
     protected $primarykey = 'id';
 

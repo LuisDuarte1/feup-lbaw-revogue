@@ -10,14 +10,14 @@ class FederalAuthentication extends Model
 {   
    use HasApiTokens;
    
-    const timestamps = false;
+    public $timestamps = false;
 
     protected $primarykey = 'userId';
 
     protected $fillable = [
         'provider',
         'refreshToken',
-        'accessToken',
+        'accessToken'
     ];
 
     public function user(): BelongsTo

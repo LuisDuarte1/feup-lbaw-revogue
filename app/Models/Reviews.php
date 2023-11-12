@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Reviews extends Model {
 
@@ -34,7 +36,7 @@ class Reviews extends Model {
 
     public function reviewedOrder(): HasOne
     {
-        return $this->hasOne(Orders::class, 'reviewedOrder');
+        return $this->hasOne(Order::class, 'reviewedOrder');
     }
 
     public function reviewer(): BelongsTo

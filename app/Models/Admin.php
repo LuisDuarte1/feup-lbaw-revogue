@@ -2,18 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-// Added to define Eloquent relationships.
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, Notifiable;
 
     const CREATED_AT = 'creationDate';
     const UPDATED_AT = null;
@@ -46,7 +42,6 @@ class Admin extends Authenticatable
      * @var string
      */
     protected $table = 'Admins';
-
 
 }
 
