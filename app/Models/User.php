@@ -15,7 +15,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    const CREATED_AT = 'creation_date';
+    const CREATED_AT = 'creationDate';
     const UPDATED_AT = null;
 
     /**
@@ -43,7 +43,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'settings',
-        'remember_token',
     ];
 
     /**
@@ -52,7 +51,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'creation_date' => 'datetime',
+        'creationDate' => 'datetime',
         'password' => 'hashed',
         'settings' => 'array',
     ];

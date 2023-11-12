@@ -15,7 +15,7 @@ class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    const CREATED_AT = 'creation_date';
+    const CREATED_AT = 'creationDate';
     const UPDATED_AT = null;
 
     /**
@@ -33,11 +33,10 @@ class Admin extends Authenticatable
     ];
     protected $hidden = [
         'password',
-        'remember_token',
     ];
     
     protected $casts = [
-        'creation_date' => 'datetime',
+        'creationDate' => 'datetime',
         'password' => 'hashed',
     ];
     
