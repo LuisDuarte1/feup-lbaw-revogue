@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 // Added to define Eloquent relationships.
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
     use HasFactory;
 
     // Don't add create and update timestamps in database.
-    const CREATED_AT = "creation_date";
+    const CREATED_AT = "creationDate";
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
@@ -28,24 +29,24 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'image_Path',
+        'imagePath',
 
     ];  
 
     protected $casts = [
-        'creation_date' => 'datetime',
+        'creationDate' => 'datetime',
         'price' => 'float',
 
     ];
 
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attributes::class,'ProductAttributes', 'attribute_id' , 'product_id');	
+        return $this->belongsToMany(Attributes::class,'ProductAttributes', 'attribute' , 'product');	
     }
 
     public function soldBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'sold_by');
+        return $this->belongsTo(User::class, 'soldBy');
     }
 
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Sanctum\HasApiTokens;
 
 class FederalAuthentication extends Model 
@@ -14,8 +15,8 @@ class FederalAuthentication extends Model
 
     protected $fillable = [
         'provider',
-        'refresh_token',
-        'access_token',
+        'refreshToken',
+        'accessToken',
     ];
 
     public function user(): BelongsTo
@@ -23,5 +24,5 @@ class FederalAuthentication extends Model
         return $this->belongsTo(User::class, 'userId');
     }
 
-    protected $table = 'FederalAuthentication';
+    protected $table = 'FederatedAuthentication';
 }
