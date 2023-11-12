@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     public function messages(): HasMany
     {
-        return $this->hasMany(Messages::class, 'fromUser');
+        return $this->hasMany(Message::class, 'fromUser');
     }
 
     public function products(): HasMany
@@ -67,12 +67,12 @@ class User extends Authenticatable
 
     public function reviewing(): HasMany
     {
-        return $this->hasMany(Reviews::class, 'reviewer');
+        return $this->hasMany(Review::class, 'reviewer');
     }
 
     public function reviewed(): HasMany
     {
-        return $this->hasMany(Reviews::class, 'reviewed');
+        return $this->hasMany(Review::class, 'reviewed');
     }
 
     public function notifications(): HasMany

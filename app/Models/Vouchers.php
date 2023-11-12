@@ -55,7 +55,7 @@ class Vouchers extends Model
 
         public function bargainMessage(): HasOne
         {
-            return $this->hasOne(Messages::class, 'bargainMessage');
+            return $this->hasOne(Message::class, 'bargainMessage');
         }
 
 

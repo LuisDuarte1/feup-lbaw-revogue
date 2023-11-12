@@ -48,7 +48,7 @@ class Product extends Model
 
     public function messages(): HasMany
     {
-        return $this->hasMany(Messages::class, 'subjectProduct');
+        return $this->hasMany(Message::class, 'subjectProduct');
     }
 
     public function vouchers(): HasMany
@@ -58,7 +58,7 @@ class Product extends Model
 
     public function reviews(): HasMany
     {
-        return $this->hasMany(Reviews::class, 'product');
+        return $this->hasMany(Review::class, 'product');
     }
 
     public function wishlist(): BelongsToMany

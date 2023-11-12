@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Sanctum\HasApiTokens;
 
-class FederalAuthentication extends Model 
+class FederatedAuthentication extends Model 
 {   
    use HasApiTokens;
    

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
-class Messages extends Model
+class Message extends Model
 {
     const CREATED_AT = 'sent_date';
     const UPDATED_AT = null;
