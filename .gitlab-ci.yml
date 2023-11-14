@@ -7,3 +7,10 @@ lint-laravel:
   script:
     - composer install
     - ./vendor/bin/pint --test -v
+
+lint-ts:
+  stage: "lint"
+  image: node:21-alpine
+  script:
+    - npm install
+    - npm run lint
