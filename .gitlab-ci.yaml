@@ -1,0 +1,9 @@
+stages:
+  - "lint"
+
+lint-laravel:
+  stage: "lint"
+  image: composer
+  script:
+    - composer install
+    - ./vendor/bin/pint --test -v
