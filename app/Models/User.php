@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // Added to define Eloquent relationships.
@@ -12,10 +12,16 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, Notifiable;
 
-    // Don't add create and update timestamps in database.
-    public $timestamps = false;
+    const CREATED_AT = 'creationDate';
+
+    const UPDATED_AT = null;
+
+    /**
+     * The primary key associated with the table.
+     */
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -23,9 +29,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
+        'displayName',
         'email',
         'password',
+        'settings',
+        'profileImagePath',
+        'bio',
+        'accountStatus',
+
     ];
 
     /**
@@ -35,7 +47,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        'settings',
     ];
 
     /**
@@ -44,15 +56,71 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'creationDate' => 'datetime',
         'password' => 'hashed',
+        'settings' => 'array',
     ];
 
-    /**
-     * Get the cards for a user.
-     */
-    public function cards(): HasMany
+    public function messagesFrom(): HasMany
     {
-        return $this->hasMany(Card::class);
+        return $this->hasMany(Message::class, 'fromUser');
     }
+
+    public function messagesTo(): HasMany
+    {
+        return $this->hasMany(Message::class, 'toUser');
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'soldBy');
+    }
+
+    public function voucher(): HasOne
+    {
+
+        return $this->hasOne(Voucher::class, 'belongsTo');
+    }
+
+    public function reviewing(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewer');
+    }
+
+    public function reviewed(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewed');
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'belongsTo');
+    }
+
+    public function reporter(): HasMany
+    {
+        return $this->hasMany(Report::class, 'reporter');
+    }
+
+    public function reported(): HasMany
+    {
+        return $this->hasMany(Report::class, 'reported');
+    }
+
+    public function cart(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class)->using(CartProduct::class);
+    }
+
+    public function wishlist(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'ProductWishlist', 'belongsTo', 'product');
+    }
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'Users';
 }
