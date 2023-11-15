@@ -14,5 +14,5 @@ class CartProduct extends Pivot
         return $this->belongsTo(Voucher::class, 'appliedVoucher');
     }
 
-    protected $table = "CartProduct";
+    protected $table = 'CartProduct';
 }

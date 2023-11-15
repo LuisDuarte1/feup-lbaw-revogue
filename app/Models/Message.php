@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-
 class Message extends Model
 {
     const CREATED_AT = 'sentDate';
+
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
@@ -19,16 +19,14 @@ class Message extends Model
      *
      * @var array<int, string>
      */
-
     protected $fillable = [
         'sentDate',
         'messageType',
         'textContent',
         'imagePath',
         'proposedPrice',
-        'bargainStatus'
+        'bargainStatus',
     ];
-
 
     /**
      * The attributes that should be cast.
@@ -37,7 +35,7 @@ class Message extends Model
      */
     protected $casts = [
         'sentDate' => 'datetime',
-        'proposedPrice' => 'float'
+        'proposedPrice' => 'float',
     ];
 
     public function fromUser(): BelongsTo
@@ -76,5 +74,4 @@ class Message extends Model
      * @var string
      */
     protected $table = 'Messages';
-
 }

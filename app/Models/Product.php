@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 // Added to define Eloquent relationships.
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-
     // Don't add create and update timestamps in database.
-    const CREATED_AT = "creationDate";
+    const CREATED_AT = 'creationDate';
+
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
@@ -28,17 +27,17 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'imagePath'
-    ];  
+        'imagePath',
+    ];
 
     protected $casts = [
         'creationDate' => 'datetime',
-        'price' => 'float'
+        'price' => 'float',
     ];
 
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class,'ProductAttributes', 'attribute' , 'product');	
+        return $this->belongsToMany(Attribute::class, 'ProductAttributes', 'attribute', 'product');
     }
 
     public function soldBy(): BelongsTo
@@ -63,9 +62,8 @@ class Product extends Model
 
     public function wishlist(): BelongsToMany
     {
-        return $this->belongsToMany(User::class,'ProductWishlist', 'product' , 'belongsTo');	
+        return $this->belongsToMany(User::class, 'ProductWishlist', 'product', 'belongsTo');
     }
-    
 
     public function orders(): BelongsToMany
     {
@@ -76,7 +74,7 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class)->using(CartProduct::class);
     }
-    
+
     public function report(): HasMany
     {
         return $this->hasMany(Report::class, 'product');
@@ -86,12 +84,11 @@ class Product extends Model
     {
         return $this->belongsTo(CartProduct::class, 'cartProduct');
     }
-    
+
     /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'Products';
-
 }

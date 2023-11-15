@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Sanctum\HasApiTokens;
 
-class FederatedAuthentication extends Model 
-{   
-   use HasApiTokens;
-   
+class FederatedAuthentication extends Model
+{
+    use HasApiTokens;
+
     public $timestamps = false;
 
     protected $primarykey = 'id';
@@ -17,7 +17,7 @@ class FederatedAuthentication extends Model
     protected $fillable = [
         'provider',
         'refreshToken',
-        'accessToken'
+        'accessToken',
     ];
 
     public function user(): BelongsTo

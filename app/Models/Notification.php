@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Notification extends Model
 {
     const CREATED_AT = 'creationDate';
+
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
@@ -15,7 +16,7 @@ class Notification extends Model
     protected $fillable = [
         'read',
         'dismissed',
-        'type'
+        'type',
     ];
 
     protected $casts = [
@@ -54,5 +55,4 @@ class Notification extends Model
     }
 
     protected $table = 'Notifications';
-
 }

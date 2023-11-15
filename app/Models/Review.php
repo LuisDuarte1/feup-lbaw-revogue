@@ -6,21 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Review extends Model {
-
+class Review extends Model
+{
     public $timestamps = false;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'stars',
-        'imagePaths'
+        'imagePaths',
     ];
 
     protected $casts = [
-        'stars' => 'integer'
+        'stars' => 'integer',
     ];
-
 
     public function reviewedOrder(): BelongsTo
     {
@@ -43,5 +42,4 @@ class Review extends Model {
     }
 
     protected $table = 'Reviews';
-    
 }

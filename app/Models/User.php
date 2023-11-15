@@ -15,18 +15,19 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable;
 
     const CREATED_AT = 'creationDate';
+
     const UPDATED_AT = null;
 
     /**
      * The primary key associated with the table.
      */
     protected $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-
     protected $fillable = [
         'username',
         'displayName',
@@ -35,7 +36,7 @@ class User extends Authenticatable
         'settings',
         'profileImagePath',
         'bio',
-        'accountStatus'
+        'accountStatus',
 
     ];
 
@@ -46,7 +47,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'settings'
+        'settings',
     ];
 
     /**
@@ -57,14 +58,14 @@ class User extends Authenticatable
     protected $casts = [
         'creationDate' => 'datetime',
         'password' => 'hashed',
-        'settings' => 'array'
+        'settings' => 'array',
     ];
-
 
     public function messagesFrom(): HasMany
     {
         return $this->hasMany(Message::class, 'fromUser');
     }
+
     public function messagesTo(): HasMany
     {
         return $this->hasMany(Message::class, 'toUser');
@@ -74,7 +75,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class, 'soldBy');
     }
-    public function voucher(): HasOne {
+
+    public function voucher(): HasOne
+    {
 
         return $this->hasOne(Voucher::class, 'belongsTo');
     }
@@ -108,7 +111,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Product::class)->using(CartProduct::class);
     }
-    
+
     /*
     public function wishlist(): HasOne
     {

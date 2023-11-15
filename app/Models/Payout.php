@@ -5,18 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Payout extends Model{
+class Payout extends Model
+{
     const CREATED_AT = 'creation_date';
+
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
+
     protected $fillable = [
-        'tax'
+        'tax',
     ];
 
     protected $casts = [
         'creation_date' => 'datetime',
-        'tax' => 'float'
+        'tax' => 'float',
     ];
 
     public function paidTo(): BelongsTo
@@ -24,6 +27,5 @@ class Payout extends Model{
         return $this->belongsTo(User::class, 'paidTo');
     }
 
-    
     protected $table = 'Payouts';
 }

@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Order extends Model{
-    
-    const CREATED_AT = "creationDate";
+class Order extends Model
+{
+    const CREATED_AT = 'creationDate';
+
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'orderStatus'
+        'orderStatus',
     ];
 
     /**
@@ -23,16 +24,16 @@ class Order extends Model{
      * @var array<string, string>
      */
     protected $casts = [
-        'creationDate' => 'datetime'
+        'creationDate' => 'datetime',
     ];
 
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'orderId');
     }
-    
 
-    public function products() {
+    public function products()
+    {
         return $this->belongsToMany(Product::class, 'OrderProduct', 'orderId', 'product')->withPivot('discount');
     }
 
@@ -42,5 +43,4 @@ class Order extends Model{
     }
 
     protected $table = 'Orders';
-
 }
