@@ -1,0 +1,16 @@
+stages:
+  - "lint"
+
+lint-laravel:
+  stage: "lint"
+  image: composer
+  script:
+    - composer install
+    - ./vendor/bin/pint --test -v
+
+lint-ts:
+  stage: "lint"
+  image: node:21-alpine
+  script:
+    - npm install
+    - npm run lint
