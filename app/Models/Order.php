@@ -23,7 +23,7 @@ class Order extends Model{
      * @var array<string, string>
      */
     protected $casts = [
-        'creationDate' => 'datetime',
+        'creationDate' => 'datetime'
     ];
 
     public function notifications(): HasMany
@@ -41,6 +41,6 @@ class Order extends Model{
         return $this->hasOne(Review::class, 'reviewedOrder');
     }
 
-    protected $table = 'Order';
+    protected $table = 'Orders';
 
 }

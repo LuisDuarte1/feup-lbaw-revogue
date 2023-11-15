@@ -13,25 +13,14 @@ class Review extends Model {
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'starts',
-        'imagePaths',
-        'reviewedOrder',
-        'reviewer',
-        'reviewed'
+        'stars',
+        'imagePaths'
     ];
 
     protected $casts = [
-        'starts' => 'integer',
-        'reviewedOrder' => 'integer',
-        'reviewer' => 'integer',
-        'reviewed' => 'integer'
+        'stars' => 'integer'
     ];
 
-    protected $hidden = [
-        'reviewedOrder',
-        'reviewer',
-        'reviewed'
-    ];
 
     public function reviewedOrder(): BelongsTo
     {

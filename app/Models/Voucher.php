@@ -20,18 +20,11 @@ class Voucher extends Model
      */
 
      protected $fillable = [
-        'code',
-        'belongsTo',
-        'product',
-        'bargainMessage'
+        'code'
+        
      ];
 
-     protected $casts = [
-        'belongsTo' => 'integer',
-        'product' => 'integer',
-        'bargainMessage' => 'integer'
-        ];
-
+    
         /**
         * The attributes that should be cast.
         *
@@ -39,8 +32,7 @@ class Voucher extends Model
         */
 
         protected $hidden = [
-            'code',
-            'bargainMessage'
+            'code'
         ];
 
         public function voucherBelongsTo(): BelongsTo

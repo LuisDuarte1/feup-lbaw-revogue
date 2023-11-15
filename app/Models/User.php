@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,6 +33,11 @@ class User extends Authenticatable
         'displayName',
         'email',
         'password',
+        'settings',
+        'profileImagePath',
+        'bio',
+        'accountStatus'
+
     ];
 
     /**
@@ -41,7 +47,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'settings',
+        'settings'
     ];
 
     /**
@@ -52,7 +58,7 @@ class User extends Authenticatable
     protected $casts = [
         'creationDate' => 'datetime',
         'password' => 'hashed',
-        'settings' => 'array',
+        'settings' => 'array'
     ];
 
 
@@ -99,16 +105,17 @@ class User extends Authenticatable
         return $this->hasMany(Report::class, 'reported');
     }
 
-    public function cart(): HasOne
+    public function cart(): BelongsToMany
     {
-        return $this->hasOne(CartProduct::class, 'belongsTo');
+        return $this->belongsToMany(Product::class)->using(CartProduct::class);
     }
-
+    
+    /*
     public function wishlist(): HasOne
     {
         return $this->hasOne(ProductWishlist::class, 'belongsTo');
     }
-    
+    */
     /**
      * The table associated with the model.
      *

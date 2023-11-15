@@ -12,13 +12,12 @@ class FederatedAuthentication extends Model
    
     public $timestamps = false;
 
-    protected $primarykey = ['provider', 'user_id'];
+    protected $primarykey = 'id';
 
     protected $fillable = [
         'provider',
         'refreshToken',
-        'accessToken',
-        'userId'
+        'accessToken'
     ];
 
     public function user(): BelongsTo
@@ -26,5 +25,5 @@ class FederatedAuthentication extends Model
         return $this->belongsTo(User::class, 'userId');
     }
 
-    protected $table = 'FederatedAuthentication';
+    protected $table = 'FederatedAuthentications';
 }

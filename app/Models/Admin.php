@@ -25,7 +25,8 @@ class Admin extends Authenticatable
      */
     protected $fillable = [
         'email',
-        'password'
+        'password',
+        'profileImagePath'
     ];
     protected $hidden = [
         'password',
@@ -33,7 +34,7 @@ class Admin extends Authenticatable
     
     protected $casts = [
         'creationDate' => 'datetime',
-        'password' => 'hashed',
+        'password' => 'hashed'
     ];
     
         /**

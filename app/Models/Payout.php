@@ -11,14 +11,12 @@ class Payout extends Model{
 
     protected $primaryKey = 'id';
     protected $fillable = [
-        'tax',
-        'paidTo',
+        'tax'
     ];
 
     protected $casts = [
         'creation_date' => 'datetime',
-        'tax' => 'float',
-        'paidTo' => 'integer'
+        'tax' => 'float'
     ];
 
     public function paidTo(): BelongsTo
@@ -26,4 +24,6 @@ class Payout extends Model{
         return $this->belongsTo(User::class, 'paidTo');
     }
 
+    
+    protected $table = 'Payouts';
 }

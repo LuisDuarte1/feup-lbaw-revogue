@@ -13,23 +13,13 @@ class Report extends Model {
         protected $primaryKey = 'id';
     
         protected $fillable = [
-            'ReportType',
-            'isClosed',
-            'closedBy',
-            'reporter',
-            'reported',
-            'product',
-            'message'
+            'type',
+            'isClosed'
         ];
     
         protected $casts = [
             'creationDate' => 'datetime',
-            'isClosed' => 'boolean',
-            'reporter' => 'integer',
-            'reported' => 'integer',
-            'closedBy' => 'integer',
-            'message' => 'integer',
-            'product' => 'integer',
+            'isClosed' => 'boolean'
         ];
     
         public function closedBy(): BelongsTo

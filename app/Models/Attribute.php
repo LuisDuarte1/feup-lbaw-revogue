@@ -23,9 +23,6 @@ class Attribute extends Model {
         return $this->belongsToMany(Product::class,'ProductAttributes', 'product' , 'attribute');	
     }
 
-    // unique key missing 
-
     protected $table = 'Attributes';
-
 
 }

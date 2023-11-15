@@ -15,29 +15,12 @@ class Notification extends Model
     protected $fillable = [
         'read',
         'dismissed',
-        'notificationType',
-        'belongsTo',
-        'orderId',
-        'wishlistProduct',
-        'cartProduct',
-        'review',
-        'message',
+        'type'
     ];
 
     protected $casts = [
         'read' => 'boolean',
         'dismissed' => 'boolean',
-        'belongsTo' => 'integer', 
-        'orderId' => 'integer',
-        'wishlistProduct' => 'integer',
-        'cartProduct' => 'integer',
-        'review' => 'integer',
-        //'notificationType' => 'integer', qual é o type?
-        'message' => 'integer',
-    ];
-
-    protected $hidden = [
-        'notificationTo'
     ];
 
     public function notificationBelongsTo(): BelongsTo
@@ -50,10 +33,10 @@ class Notification extends Model
         return $this->BelongsTo(Order::class, 'orderId');
     }
 
-    public function productWishlist(): BelongsTo
+    /*public function productWishlist(): BelongsTo
     {
         return $this->BelongsTo(ProductWishlist::class, 'wishlistProduct');
-    }
+    }*/
 
     public function cartProduct(): BelongsTo
     {

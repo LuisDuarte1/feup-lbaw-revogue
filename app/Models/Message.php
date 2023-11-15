@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Message extends Model
 {
-    const CREATED_AT = 'sent_date';
+    const CREATED_AT = 'sentDate';
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
@@ -26,10 +26,7 @@ class Message extends Model
         'textContent',
         'imagePath',
         'proposedPrice',
-        'bargainStatus',
-        'fromUser',
-        'toUser',
-        'subjectProduct'
+        'bargainStatus'
     ];
 
 
@@ -40,7 +37,7 @@ class Message extends Model
      */
     protected $casts = [
         'sentDate' => 'datetime',
-        'proposedPrice' => 'float',
+        'proposedPrice' => 'float'
     ];
 
     public function fromUser(): BelongsTo

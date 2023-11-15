@@ -64,11 +64,12 @@ CREATE TABLE Users(
 );
 
 CREATE TABLE FederatedAuthentications(
+  id INT PRIMARY KEY NOT NULL,
   provider TEXT NOT NULL,
   refreshToken TEXT NOT NULL,
   accessToken TEXT NOT NULL,
   userId int NOT NULL,
-  PRIMARY KEY (provider, userId),
+  UNIQUE (provider, userId),
   FOREIGN KEY (userId) REFERENCES Users(id) ON DELETE CASCADE
 );
 
@@ -102,7 +103,9 @@ CREATE TABLE ProductAttributes(
 CREATE TABLE Orders(
     id INT PRIMARY KEY,
     creationDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( creationDate <= CURRENT_TIMESTAMP ),
-    status OrderStatus
+    status OrderStatus,
+    belongsTo INT NOT NULL,
+    FOREIGN KEY (belongsTo) REFERENCES Users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Messages(
