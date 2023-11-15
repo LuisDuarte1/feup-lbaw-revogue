@@ -20,7 +20,6 @@ class Message extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'sentDate',
         'messageType',
         'textContent',
         'imagePath',

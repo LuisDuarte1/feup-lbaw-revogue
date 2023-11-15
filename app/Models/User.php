@@ -112,12 +112,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class)->using(CartProduct::class);
     }
 
-    /*
-    public function wishlist(): HasOne
+    public function wishlist(): BelongsToMany
     {
-        return $this->hasOne(ProductWishlist::class, 'belongsTo');
+        return $this->belongsToMany(Product::class, 'ProductWishlist', 'belongsTo', 'product');
     }
-    */
+
     /**
      * The table associated with the model.
      *
