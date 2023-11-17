@@ -1,3 +1,23 @@
-* {
-    background-color: aqua;
+@import 'theme';
+
+
+html {
+    background-color: $background;
+}
+
+body {
+    padding: 3.75rem;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 4rem;
+    .main-content{
+        flex-grow: 2;
+    }
+    .navbar{
+        width: 14rem;
+        flex-grow: 0;
+        display: sticky;
+        height: 100svh;
+    }
 }
