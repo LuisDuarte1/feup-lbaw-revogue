@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Notification;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Models\Notification;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Notification>
  */
@@ -20,9 +20,10 @@ class NotificationFactory extends Factory
         return [
             'read' => fake()->boolean(),
             'dismissed' => fake()->bollean(),
-            'type' => fake()->randomElement(['order_status','wishlist','cart','review','message'])
+            'type' => fake()->randomElement(['order_status', 'wishlist', 'cart', 'review', 'message']),
 
         ];
     }
+
     protected $model = Notification::class;
 }

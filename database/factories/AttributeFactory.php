@@ -18,7 +18,7 @@ class AttributeFactory extends Factory
     {
         return [
             'key' => fake()->word(),
-            'value' => fake()->word()
+            'value' => fake()->word(),
         ];
     }
 

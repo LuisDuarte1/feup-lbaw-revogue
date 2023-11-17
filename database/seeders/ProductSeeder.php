@@ -4,9 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -14,7 +12,9 @@ class ProductSeeder extends Seeder
      * Run the database seeds.
      */
     const PRODUCTS_COUNT = 100;
+
     const WISHLIST_USERS = 5;
+
     const CART_USERS = 2;
 
     public function run(): void
@@ -23,9 +23,9 @@ class ProductSeeder extends Seeder
 
         $products = Product::factory()->count(ProductSeeder::PRODUCTS_COUNT)->state(['sold_by' => $users->random()->id])->create();
 
-        foreach ($products as $product){
+        foreach ($products as $product) {
             $wishlistUsers = $users->random(ProductSeeder::WISHLIST_USERS);
-            foreach ($wishlistUsers as $user){
+            foreach ($wishlistUsers as $user) {
                 $user->wishlist()->attach($product);
             }
 

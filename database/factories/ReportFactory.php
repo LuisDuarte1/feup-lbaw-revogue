@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Report;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Report>
  */
@@ -17,8 +18,8 @@ class ReportFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => fake()->randomElement(['user', 'message','product']),
-            'is_closed' => fake()->boolean()
+            'type' => fake()->randomElement(['user', 'message', 'product']),
+            'is_closed' => fake()->boolean(),
         ];
     }
 
@@ -27,7 +28,7 @@ class ReportFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'type' => 'user',
-                'is_close' => fake()->boolean()
+                'is_close' => fake()->boolean(),
             ];
         });
     }
@@ -37,9 +38,10 @@ class ReportFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'type' => 'message',
-                'is_close' => fake()->boolean()
+                'is_close' => fake()->boolean(),
             ];
         });
     }
+
     protected $model = Report::class;
 }

@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Admin;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Admin>
@@ -19,8 +19,9 @@ class AdminFactory extends Factory
     {
         return [
             'email' => fake()->unique()->Email(),
-            'password' => password_hash('bloat123', PASSWORD_DEFAULT)
+            'password' => password_hash('bloat123', PASSWORD_DEFAULT),
         ];
     }
+
     protected $model = Admin::class;
 }

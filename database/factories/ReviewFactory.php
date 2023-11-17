@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Review;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Review>
  */
@@ -17,7 +18,7 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'stars' => fake()->randomFloat(1,0,5),
+            'stars' => fake()->randomFloat(1, 0, 5),
             'image_paths' => '{}',
         ];
     }

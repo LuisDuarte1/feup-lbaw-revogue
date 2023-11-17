@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Payout;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Models\Payout;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Payout>
  */
@@ -19,10 +19,9 @@ class PayoutFactory extends Factory
     {
         return [
             'tax' => $this->faker->randomFloat(2, 0.1, 100),
-            
-            
+
         ];
     }
-    
+
     protected $model = Payout::class;
 }

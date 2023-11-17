@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Models\Order;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
  */
@@ -26,7 +26,7 @@ class OrderFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'order_status' => 'requestCancellation'
+                'order_status' => 'requestCancellation',
             ];
         });
     }
@@ -35,17 +35,19 @@ class OrderFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'order_status' => 'cancelled'
+                'order_status' => 'cancelled',
             ];
         });
     }
+
     public function pendingShipment(): Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'order_status' => 'pendingShipment'
+                'order_status' => 'pendingShipment',
             ];
         });
     }
+
     protected $model = Order::class;
 }

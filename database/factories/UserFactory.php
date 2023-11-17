@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -31,14 +31,14 @@ class UserFactory extends Factory
     public function needsConfirmation(): Factory
     {
         return $this->state(function (array $attributes) {
-            return ['account_status' => "needsConfirmation"];
+            return ['account_status' => 'needsConfirmation'];
         });
     }
 
     public function banned(): Factory
     {
         return $this->state(function (array $attributes) {
-            return ['account_status' => "banned"];
+            return ['account_status' => 'banned'];
         });
     }
 

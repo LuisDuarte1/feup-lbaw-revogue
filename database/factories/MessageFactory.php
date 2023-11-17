@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Message;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Models\Message;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Message>
  */
@@ -18,13 +18,14 @@ class MessageFactory extends Factory
     public function definition(): array
     {
         return [
-            'message_type' => fake()->randomElement(['text','bargain']),
+            'message_type' => fake()->randomElement(['text', 'bargain']),
             'text_content' => fake()->text(),
             'image_path' => '{}', //TODO: revise this part
             'proposed_price' => fake()->randomFloat(2, 0.1, 1000),
-            'bargain_status' => fake()->randomElement(['pending','accepted','rejected']), //TODO: revise this part
+            'bargain_status' => fake()->randomElement(['pending', 'accepted', 'rejected']), //TODO: revise this part
 
         ];
     }
+
     protected $model = Message::class;
 }

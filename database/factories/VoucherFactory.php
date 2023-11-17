@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Voucher;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Voucher>
@@ -18,8 +18,9 @@ class VoucherFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => fake()->randomText(10)
+            'code' => fake()->randomText(10),
         ];
     }
+
     protected $model = Voucher::class;
 }

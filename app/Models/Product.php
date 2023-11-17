@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Product extends Model
 {
     use HasFactory;
+
     // Don't add create and update timestamps in database.
     const CREATED_AT = 'creation_date';
 
