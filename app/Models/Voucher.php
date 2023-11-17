@@ -33,7 +33,7 @@ class Voucher extends Model
 
     public function voucherBelongsTo(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'belongsTo');
+        return $this->belongsTo(User::class, 'belongs_to');
     }
 
     public function product(): BelongsTo
@@ -43,13 +43,13 @@ class Voucher extends Model
 
     public function bargainMessage(): BelongsTo
     {
-        return $this->BelongsTo(Message::class, 'bargainMessage');
+        return $this->BelongsTo(Message::class, 'bargain_message');
     }
 
     public function appliedVoucher(): HasOne
     {
-        return $this->hasOne(CartProduct::class, 'appliedVoucher');
+        return $this->hasOne(CartProduct::class, 'applied_voucher');
     }
 
-    protected $table = 'Vouchers';
+    protected $table = 'vouchers';
 }

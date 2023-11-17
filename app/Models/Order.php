@@ -2,20 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
-    const CREATED_AT = 'creationDate';
+    use HasFactory;
+    const CREATED_AT = 'creation_date';
 
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'orderStatus',
+        'order_status',
     ];
 
     /**
@@ -24,23 +26,23 @@ class Order extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'creationDate' => 'datetime',
+        'creation_date' => 'datetime',
     ];
 
     public function notifications(): HasMany
     {
-        return $this->hasMany(Notification::class, 'orderId');
+        return $this->hasMany(Notification::class, 'order_id');
     }
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'OrderProduct', 'orderId', 'product')->withPivot('discount');
+        return $this->belongsToMany(Product::class, 'orderproduct', 'order_id', 'product')->withPivot('discount');
     }
 
     public function reviewedOrder(): HasOne
     {
-        return $this->hasOne(Review::class, 'reviewedOrder');
+        return $this->hasOne(Review::class, 'reviewed_order');
     }
 
-    protected $table = 'Orders';
+    protected $table = 'orders';
 }

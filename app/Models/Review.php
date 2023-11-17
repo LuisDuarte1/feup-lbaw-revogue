@@ -14,7 +14,7 @@ class Review extends Model
 
     protected $fillable = [
         'stars',
-        'imagePaths',
+        'image_paths',
     ];
 
     protected $casts = [
@@ -23,7 +23,7 @@ class Review extends Model
 
     public function reviewedOrder(): BelongsTo
     {
-        return $this->BelongsTo(Order::class, 'reviewedOrder');
+        return $this->BelongsTo(Order::class, 'reviewed_order');
     }
 
     public function reviewer(): BelongsTo
@@ -41,5 +41,5 @@ class Review extends Model
         return $this->hasOne(Notification::class, 'review');
     }
 
-    protected $table = 'Reviews';
+    protected $table = 'reviews';
 }

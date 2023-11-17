@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -12,9 +13,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasFactory;
 
-    const CREATED_AT = 'creationDate';
+    const CREATED_AT = 'creation_date';
 
     const UPDATED_AT = null;
 
@@ -30,13 +31,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
-        'displayName',
+        'display_name',
         'email',
         'password',
         'settings',
-        'profileImagePath',
+        'profile_image_path',
         'bio',
-        'accountStatus',
+        'account_status',
 
     ];
 
@@ -56,30 +57,30 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'creationDate' => 'datetime',
+        'creation_date' => 'datetime',
         'password' => 'hashed',
         'settings' => 'array',
     ];
 
     public function messagesFrom(): HasMany
     {
-        return $this->hasMany(Message::class, 'fromUser');
+        return $this->hasMany(Message::class, 'from_user');
     }
 
     public function messagesTo(): HasMany
     {
-        return $this->hasMany(Message::class, 'toUser');
+        return $this->hasMany(Message::class, 'to_user');
     }
 
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class, 'soldBy');
+        return $this->hasMany(Product::class, 'sold_by');
     }
 
     public function voucher(): HasOne
     {
 
-        return $this->hasOne(Voucher::class, 'belongsTo');
+        return $this->hasOne(Voucher::class, 'belongs_to');
     }
 
     public function reviewing(): HasMany
@@ -94,7 +95,7 @@ class User extends Authenticatable
 
     public function notifications(): HasMany
     {
-        return $this->hasMany(Notification::class, 'belongsTo');
+        return $this->hasMany(Notification::class, 'belongs_to');
     }
 
     public function reporter(): HasMany
@@ -114,7 +115,7 @@ class User extends Authenticatable
 
     public function wishlist(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'ProductWishlist', 'belongsTo', 'product');
+        return $this->belongsToMany(Product::class, 'productwishlist', 'belongs_to', 'product');
     }
 
     /**
@@ -122,5 +123,5 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'Users';
+    protected $table = 'users';
 }

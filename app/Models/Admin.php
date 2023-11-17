@@ -10,7 +10,7 @@ class Admin extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
-    const CREATED_AT = 'creationDate';
+    const CREATED_AT = 'creation_date';
 
     const UPDATED_AT = null;
 
@@ -27,7 +27,7 @@ class Admin extends Authenticatable
     protected $fillable = [
         'email',
         'password',
-        'profileImagePath',
+        'profile_image_path',
     ];
 
     protected $hidden = [
@@ -35,7 +35,7 @@ class Admin extends Authenticatable
     ];
 
     protected $casts = [
-        'creationDate' => 'datetime',
+        'creation_date' => 'datetime',
         'password' => 'hashed',
     ];
 
@@ -44,5 +44,5 @@ class Admin extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'Admins';
+    protected $table = 'admins';
 }

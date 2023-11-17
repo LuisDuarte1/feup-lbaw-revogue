@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -18,21 +18,29 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'username' => fake()->unique()->userName(),
+            'display_name' => fake()->name(),
+            'email' => fake()->unique()->email(),
+            'password' => password_hash('bloat123', PASSWORD_DEFAULT),
+            'settings' => [],
+            'bio' => fake()->paragraph(),
+            'account_status' => fake()->randomElement(['active', 'needsConfirmation', 'banned']),
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
+    public function needsConfirmation(): Factory
     {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        return $this->state(function (array $attributes) {
+            return ['account_status' => "needsConfirmation"];
+        });
     }
+
+    public function banned(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return ['account_status' => "banned"];
+        });
+    }
+
+    protected $model = User::class;
 }

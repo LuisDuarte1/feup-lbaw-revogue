@@ -13,14 +13,14 @@ class FederatedAuthentication extends Model
 
     protected $fillable = [
         'provider',
-        'refreshToken',
-        'accessToken',
+        'refresh_token',
+        'access_token',
     ];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'userId');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    protected $table = 'FederatedAuthentications';
+    protected $table = 'federated_authentications';
 }

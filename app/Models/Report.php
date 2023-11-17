@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Report extends Model
 {
-    const CREATED_AT = 'creationDate';
+    const CREATED_AT = 'creation_date';
 
     const UPDATED_AT = null;
 
@@ -16,17 +16,17 @@ class Report extends Model
 
     protected $fillable = [
         'type',
-        'isClosed',
+        'is_closed',
     ];
 
     protected $casts = [
-        'creationDate' => 'datetime',
-        'isClosed' => 'boolean',
+        'creation_date' => 'datetime',
+        'is_closed' => 'boolean',
     ];
 
     public function closedBy(): BelongsTo
     {
-        return $this->belongsTo(Admin::class, 'closedBy');
+        return $this->belongsTo(Admin::class, 'closed_by');
     }
 
     public function reporter(): BelongsTo
@@ -49,5 +49,5 @@ class Report extends Model
         return $this->HasOne(Message::class, 'message');
     }
 
-    protected $table = 'Reports';
+    protected $table = 'reports';
 }

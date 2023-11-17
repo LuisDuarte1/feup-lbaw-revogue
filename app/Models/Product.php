@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 // Added to define Eloquent relationships.
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,8 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
+    use HasFactory;
     // Don't add create and update timestamps in database.
-    const CREATED_AT = 'creationDate';
+    const CREATED_AT = 'creation_date';
 
     const UPDATED_AT = null;
 
@@ -27,27 +29,27 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'imagePath',
+        'image_paths',
     ];
 
     protected $casts = [
-        'creationDate' => 'datetime',
+        'creation_date' => 'datetime',
         'price' => 'float',
     ];
 
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class, 'ProductAttributes', 'attribute', 'product');
+        return $this->belongsToMany(Attribute::class, 'productattributes', 'attribute', 'product');
     }
 
     public function soldBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'soldBy');
+        return $this->belongsTo(User::class, 'sold_by');
     }
 
     public function messages(): HasMany
     {
-        return $this->hasMany(Message::class, 'subjectProduct');
+        return $this->hasMany(Message::class, 'subject_product');
     }
 
     public function vouchers(): HasMany
@@ -62,12 +64,12 @@ class Product extends Model
 
     public function wishlist(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'ProductWishlist', 'product', 'belongsTo');
+        return $this->belongsToMany(User::class, 'productwishlist', 'product', 'belongs_to');
     }
 
     public function orders(): BelongsToMany
     {
-        return $this->belongsToMany(Order::class, 'OrderProduct', 'product', 'orderId')->withPivot('discount');
+        return $this->belongsToMany(Order::class, 'orderproduct', 'product', 'order_id')->withPivot('discount');
     }
 
     public function inCart(): BelongsToMany
@@ -82,7 +84,7 @@ class Product extends Model
 
     public function cartProducts(): BelongsTo
     {
-        return $this->belongsTo(CartProduct::class, 'cartProduct');
+        return $this->belongsTo(CartProduct::class, 'cartproduct');
     }
 
     /**
@@ -90,5 +92,5 @@ class Product extends Model
      *
      * @var string
      */
-    protected $table = 'Products';
+    protected $table = 'products';
 }
