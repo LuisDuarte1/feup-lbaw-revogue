@@ -144,10 +144,10 @@ CREATE TABLE Reviews(
     "stars" NUMERIC NOT NULL CHECK ( "stars" >= 0 AND "stars" <= 5 ),
     "description" TEXT,
     "image_paths" TEXT[] NOT NULL CHECK (array_length("image_paths", 1) >= 1),
-    "reviewd_order" INT NOT NULL,
+    "reviewed_order" INT NOT NULL,
     "reviewer" INT NOT NULL,
     "reviewed" INT NOT NULL,
-    FOREIGN KEY ("reviewd_order") REFERENCES Orders("id") ON DELETE CASCADE,
+    FOREIGN KEY ("reviewed_order") REFERENCES Orders("id") ON DELETE CASCADE,
     FOREIGN KEY ("reviewed") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("reviewer") REFERENCES Users("id") ON DELETE CASCADE
 );
@@ -371,7 +371,7 @@ CREATE TRIGGER notification_wishlist_cart_validity BEFORE INSERT OR UPDATE ON No
 CREATE OR REPLACE FUNCTION review_check_if_order_is_received() RETURNS TRIGGER AS $$
 BEGIN
 
-    IF (SELECT "status" FROM Orders WHERE "id"=NEW."reviewed_prder") <> 'received' THEN
+    IF (SELECT "status" FROM Orders WHERE "id"=NEW."reviewed_order") <> 'received' THEN
         RAISE EXCEPTION 'Order has not been received therefore it couldnt create a review';
     END IF;
     RETURN NEW;

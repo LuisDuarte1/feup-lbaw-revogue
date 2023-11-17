@@ -18,7 +18,7 @@ class Order extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'order_status',
+        'status',
     ];
 
     /**

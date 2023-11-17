@@ -18,7 +18,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_status' => fake()->randomElement(['pendingPayment', 'requestCancellation', 'cancelled', 'pendingShipment', 'shipped', 'received']),
+            'status' => 'received',
         ];
     }
 
