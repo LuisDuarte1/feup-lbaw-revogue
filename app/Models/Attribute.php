@@ -18,8 +18,8 @@ class Attribute extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'ProductAttributes', 'product', 'attribute');
+        return $this->belongsToMany(Product::class, 'product_attributes', 'product', 'attribute');
     }
 
-    protected $table = 'Attributes';
+    protected $table = 'attributes';
 }

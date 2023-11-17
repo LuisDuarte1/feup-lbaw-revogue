@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Message extends Model
 {
-    const CREATED_AT = 'sentDate';
+    use HasFactory;
+
+    const CREATED_AT = 'sent_date';
 
     const UPDATED_AT = null;
 
@@ -20,11 +23,11 @@ class Message extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'messageType',
-        'textContent',
-        'imagePath',
-        'proposedPrice',
-        'bargainStatus',
+        'message_type',
+        'text_content',
+        'image_path',
+        'proposed_price',
+        'bargain_status',
     ];
 
     /**
@@ -33,28 +36,28 @@ class Message extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'sentDate' => 'datetime',
-        'proposedPrice' => 'float',
+        'sent_date' => 'datetime',
+        'proposed_price' => 'float',
     ];
 
     public function fromUser(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'fromUser');
+        return $this->belongsTo(User::class, 'from_user');
     }
 
     public function toUser(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'toUser');
+        return $this->belongsTo(User::class, 'to_user');
     }
 
     public function subjectProduct(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'subjectProduct');
+        return $this->belongsTo(Product::class, 'subject_product');
     }
 
     public function voucher(): HasOne
     {
-        return $this->hasOne(Voucher::class, 'bargainMessage');
+        return $this->hasOne(Voucher::class, 'bargain_message');
     }
 
     public function notification(): HasOne
@@ -72,5 +75,5 @@ class Message extends Model
      *
      * @var string
      */
-    protected $table = 'Messages';
+    protected $table = 'messages';
 }

@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Notification extends Model
 {
-    const CREATED_AT = 'creationDate';
+    use HasFactory;
+
+    const CREATED_AT = 'creation_date';
 
     const UPDATED_AT = null;
 
@@ -26,12 +29,12 @@ class Notification extends Model
 
     public function notificationBelongsTo(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'belongsTo');
+        return $this->belongsTo(User::class, 'belongs_to');
     }
 
     public function order(): BelongsTo
     {
-        return $this->BelongsTo(Order::class, 'orderId');
+        return $this->BelongsTo(Order::class, 'order_id');
     }
 
     /*public function productWishlist(): BelongsTo
@@ -41,7 +44,7 @@ class Notification extends Model
 
     public function cartProduct(): BelongsTo
     {
-        return $this->BelongsTo(CartProduct::class, 'cartProduct');
+        return $this->BelongsTo(CartProduct::class, 'cart_product');
     }
 
     public function review(): BelongsTo
@@ -54,5 +57,5 @@ class Notification extends Model
         return $this->belongsTo(Message::class, 'message');
     }
 
-    protected $table = 'Notifications';
+    protected $table = 'notifications';
 }
