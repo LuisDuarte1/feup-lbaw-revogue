@@ -26,11 +26,13 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             $wishlistUsers = $users->random(ProductSeeder::WISHLIST_USERS);
             foreach ($wishlistUsers as $user) {
+                if($user->id == $product->soldBy()->get()[0]->id) continue;
                 $user->wishlist()->attach($product);
             }
 
             $cartUsers = $users->random(ProductSeeder::CART_USERS);
             foreach ($cartUsers as $user) {
+                if($user->id == $product->soldBy()->get()[0]->id) continue;
                 $user->cart()->attach($product);
             }
         }
