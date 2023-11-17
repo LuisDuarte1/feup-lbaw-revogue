@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Review extends Model
 {
     use HasFactory;
+
     public $timestamps = false;
 
     protected $primaryKey = 'id';
@@ -17,7 +18,7 @@ class Review extends Model
     protected $fillable = [
         'stars',
         'image_paths',
-        'description'
+        'description',
     ];
 
     protected $casts = [

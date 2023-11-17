@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Report extends Model
 {
     use HasFactory;
-    
+
     const CREATED_AT = 'creation_date';
 
     const UPDATED_AT = null;

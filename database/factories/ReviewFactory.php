@@ -20,7 +20,7 @@ class ReviewFactory extends Factory
         return [
             'stars' => fake()->randomFloat(1, 0, 5),
             'image_paths' => '{}',
-            'description' => fake()->paragraphs(3, true)
+            'description' => fake()->paragraphs(3, true),
         ];
     }
 
