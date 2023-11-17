@@ -82,9 +82,9 @@ class Product extends Model
         return $this->hasMany(Report::class, 'product');
     }
 
-    public function cartProducts(): BelongsTo
+    public function cartProducts(): BelongsToMany
     {
-        return $this->belongsTo(CartProduct::class, 'cartproduct');
+        return $this->belongsToMany(CartProduct::class, 'cartproduct', 'product', 'belongs_to')->using(CartProduct::class);
     }
 
     /**

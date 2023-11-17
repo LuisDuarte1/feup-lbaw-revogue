@@ -12,9 +12,9 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    const VERIFIED_COUNT = 20;
-    const BANNED_COUNT = 2;
-    const UNVERIFIED_COUNT = 10;
+    const VERIFIED_COUNT = 100;
+    const BANNED_COUNT = 10;
+    const UNVERIFIED_COUNT = 20;
 
     public function run(): void
     {

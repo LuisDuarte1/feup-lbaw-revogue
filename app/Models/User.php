@@ -110,7 +110,7 @@ class User extends Authenticatable
 
     public function cart(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->using(CartProduct::class);
+        return $this->belongsToMany(Product::class, 'cartproduct', 'belongs_to', 'product')->using(CartProduct::class);
     }
 
     public function wishlist(): BelongsToMany

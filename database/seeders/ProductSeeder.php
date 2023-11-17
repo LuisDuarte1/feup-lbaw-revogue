@@ -14,14 +14,25 @@ class ProductSeeder extends Seeder
      * Run the database seeds.
      */
     const PRODUCTS_COUNT = 100;
-    const WISHLIST_USERS = 0;
+    const WISHLIST_USERS = 5;
+    const CART_USERS = 2;
 
     public function run(): void
     {
-        //TODO: add to wishlist
-        $users = DB::table('users')->where('account_status', 'needsConfirmation')->get();
+        $users = User::where('account_status', 'needsConfirmation')->get();
 
-        Product::factory()->count(ProductSeeder::PRODUCTS_COUNT)->recycle($users)->hasWishlist(3)->state(['sold_by' => User::factory()])->create();
-        //TODO: add to cart
+        $products = Product::factory()->count(ProductSeeder::PRODUCTS_COUNT)->state(['sold_by' => $users->random()->id])->create();
+
+        foreach ($products as $product){
+            $wishlistUsers = $users->random(ProductSeeder::WISHLIST_USERS);
+            foreach ($wishlistUsers as $user){
+                $user->wishlist()->attach($product);
+            }
+
+            $cartUsers = $users->random(ProductSeeder::CART_USERS);
+            foreach ($cartUsers as $user) {
+                $user->cart()->attach($product);
+            }
+        }
     }
 }
