@@ -1,4 +1,5 @@
 @import 'theme';
+@import 'navbar';
 
 
 html {
@@ -6,6 +7,7 @@ html {
 }
 
 body {
+    font-family: 'Montserrat', sans-serif;
     padding: 3.75rem;
     display: flex;
     flex-direction: row;
@@ -13,11 +15,5 @@ body {
     gap: 4rem;
     .main-content{
         flex-grow: 2;
-    }
-    .navbar{
-        width: 14rem;
-        flex-grow: 0;
-        display: sticky;
-        height: 100svh;
     }
 }

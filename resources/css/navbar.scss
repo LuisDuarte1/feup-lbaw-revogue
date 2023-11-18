@@ -1,0 +1,65 @@
+@import 'theme';
+
+.navbar{
+    width: 14rem;
+    flex-grow: 0;
+    display: sticky;
+    //height: 100svh;
+    height: 80svh;
+    padding: 2.2rem 1.5rem;
+    border-radius: 2rem;
+    border-right: 1px solid $shadow;
+    background: $secondary-background;
+    position: relative;
+}
+
+.logo{
+    text-align: center;
+    font-family: 'Abril Fatface', serif;
+    a{
+        text-decoration: none;
+        color: $accent;
+        font-size: 2rem;
+        h1{
+            margin: 1rem;
+        }
+    }
+}
+
+.menu {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    margin-top: 2rem;
+    flex-direction: column;
+    gap: 0.85rem;
+    li {
+        width: 100%;
+        border-radius: 0.5rem;
+        transition: all 0.2s ease-in-out;
+        a {
+            display: flex;
+            padding: 1rem;
+            flex-direction: row;
+            gap: 1.25rem;
+            text-decoration: none;
+            color: $text-color;
+            font-size: 1.25rem;
+            align-items: center;
+            font-weight: 500;
+            ion-icon {
+                font-size: 2.5rem;
+                margin-right: 0.2rem;
+                color: $primary;
+            }
+        }
+        .logout{
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 1.5rem;
+        }
+    }
+    li:hover{
+        background: $secondary;
+    }
+}
