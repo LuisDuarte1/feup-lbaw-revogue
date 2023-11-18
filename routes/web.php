@@ -49,3 +49,13 @@ Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
 });
+
+Route::controler(RecoverPasswordController::class)->group(function () {
+    Route::get('/recover-password', 'showRecoverPasswordForm')->name('recover-password');
+    Route::post('/recover-password', 'recoverPassword');
+});
+
+Route::controler(ResetPasswordController::class)->group(function () {
+    Route::get('/reset-password/{token}', 'showResetPasswordForm')->name('reset-password');
+    Route::post('/reset-password', 'resetPassword');
+});
