@@ -61,10 +61,8 @@
     background-color: $secondary;
 }
 
-.sign-in, .sign-up{
-    margin: 1.5rem 1rem;
-}
 .sign-in, .sign-up, .logout{
+    margin: 1.5rem 1rem;
     transition: all 0.1s ease-out;
     border: 1px solid #dcdbdb;
     box-shadow: 0 0.1rem 0.2rem 0.3rem 0.3rem $secondary;
