@@ -71,11 +71,11 @@
     <div>
         <a href="#" class="menu-item sign-in">
             <ion-icon name="log-in"></ion-icon>
-            Sign-in
+            Login
         </a>
         <a href="#" class="menu-item sign-up">
             <ion-icon name="person-add"></ion-icon>
-            Sign-up
+            Register
         </a>
     </div>
     @endguest
