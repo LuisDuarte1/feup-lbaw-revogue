@@ -3,14 +3,13 @@
 .navbar{
     width: 14rem;
     flex-grow: 0;
-    display: sticky;
+    position: sticky;
     //height: 100svh;
     height: 80svh;
     padding: 2.2rem 1.5rem;
     border-radius: 2rem;
     border-right: 1px solid $shadow;
     background: $secondary-background;
-    position: relative;
 }
 
 .logo{
@@ -53,7 +52,7 @@
                 color: $primary;
             }
         }
-        .logout{
+        .logout, .sign-in{
             position: absolute;
             bottom: 0;
             margin-bottom: 1.5rem;
