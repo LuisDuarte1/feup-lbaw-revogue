@@ -13,12 +13,14 @@
                         Profile
                 </a>
             </li>
+            @endauth
             <li>
                 <a href="#" class="menu-item">
                         <ion-icon name="home"></ion-icon>
                         Home
                 </a>
             </li>
+            @auth
             <li>
                 <a href="#" class="menu-item">
                         <ion-icon name="bag-handle-sharp"></ion-icon>
@@ -37,28 +39,13 @@
                         Settings
                 </a>
             </li>
-            <li>
-                <a href="#" class="menu-item">
-                        <ion-icon name="help-circle"></ion-icon>
-                        FAQs
-                </a>
-            </li>
-            
             @endauth
-            @guest
-            <li>
-                <a href="#" class="menu-item">
-                        <ion-icon name="home"></ion-icon>
-                        Home
-                </a>
-            </li>
             <li>
                 <a href="#" class="menu-item">
                         <ion-icon name="help-circle"></ion-icon>
                         FAQs
                 </a>
-            </li>            
-            @endguest
+            </li>
         </ul>
     </div>
     @auth
@@ -67,7 +54,6 @@
         Logout
     </a>
     @endauth
-    @guest
     <div>
         <a href="#" class="menu-item sign-in">
             <ion-icon name="log-in"></ion-icon>
@@ -78,5 +64,4 @@
             Register
         </a>
     </div>
-    @endguest
 </nav>
