@@ -1,23 +1,24 @@
 @import 'theme';
-
+$page-margin: 3.75rem;
+* {
+    margin: 0;
+    padding: 0;
+}
 
 html {
     background-color: $background;
 }
 
 body {
-    padding: 3.75rem;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+    margin: $page-margin;
+    display: grid;
+    grid-template-columns: 16rem auto;
     gap: 4rem;
-    .main-content{
-        flex-grow: 2;
+    .main-content {
+        grid-column: 2;
     }
-    .navbar{
-        width: 14rem;
-        flex-grow: 0;
-        display: sticky;
-        height: 100svh;
+    .navbar {
+        position: fixed;
+        top: $page-margin;
     }
 }
