@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-Route::view('/', 'pages.landing');
+//Route::view('/', 'pages.landing');
+Route::view('/', 'pages.productListing');
 
 // Cards
 Route::controller(CardController::class)->group(function () {
