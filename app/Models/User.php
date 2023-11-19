@@ -127,15 +127,18 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $table = 'users';
 
     //email verification
-    public function hasVerifiedEmail(){
+    public function hasVerifiedEmail()
+    {
         return $this->account_status !== 'needsConfirmation';
     }
-    
-    public function markEmailAsVerified(){
-        $this->update(['account_status'=>'active']);
+
+    public function markEmailAsVerified()
+    {
+        $this->update(['account_status' => 'active']);
     }
 
-    public function getEmailForVerification(){
+    public function getEmailForVerification()
+    {
         return $this->email;
     }
 }

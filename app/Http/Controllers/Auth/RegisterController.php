@@ -46,6 +46,7 @@ class RegisterController extends Controller
         Auth::attempt($credentials);
         $request->session()->regenerate();
         event(new Registered($user));
+
         return redirect('/login/email-confirmation');
     }
 }

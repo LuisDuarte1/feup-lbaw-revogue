@@ -35,9 +35,10 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-            if($user->account_status == 'needsConfirmation'){
+            if ($user->account_status == 'needsConfirmation') {
                 return redirect('/login/email-confirmation');
             }
+
             return redirect()->intended('/');
         }
 

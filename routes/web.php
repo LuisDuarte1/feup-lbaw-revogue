@@ -5,7 +5,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\ItemController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,13 +49,13 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register', 'register');
 })->middleware('guest');
 
-Route::prefix('login')->group(function (){
+Route::prefix('login')->group(function () {
     Route::controller(LoginController::class)->group(function () {
         Route::get('/', 'showLoginForm')->name('login');
         Route::post('/', 'authenticate');
     })->middleware('guest');
 
-    Route::controller(EmailConfirmationController::class)->group(function (){
+    Route::controller(EmailConfirmationController::class)->group(function () {
         Route::get('/email-confirmation', 'getPage')->name('verification.notice');
         Route::post('/email-confirmation', 'resendEmail')->middleware('throttle:2,1');
         Route::get('/email-confirmation/verify/{id}/{hash}', 'verifyEmail')->middleware('signed')->name('verification.verify');
