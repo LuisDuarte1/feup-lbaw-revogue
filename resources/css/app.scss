@@ -2,11 +2,13 @@
 @import 'globals';
 
 @import 'navbar';
+@import 'productCard';
 
 @import 'pages/register';
 @import 'pages/login';
 @import 'pages/emailConfirmation';
 @import 'pages/profilePage';
+
 
 
 $page-margin: 3.75rem;
@@ -26,8 +28,8 @@ body {
     height: 100%;
     margin: $page-margin;
     display: grid;
-    grid-template-columns: 16rem auto;
-    gap: 4rem;
+    grid-template-columns: 14rem auto;
+    gap: 6rem;
     .main-content {
         grid-column: 2;
         height: 100%;

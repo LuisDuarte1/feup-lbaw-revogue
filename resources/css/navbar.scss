@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    padding: 2.2rem 1.5rem;
+    padding: 2.2rem 0.8rem;
     border-radius: 2rem;
     border-right: 1px solid $shadow;
     background: $secondary-background;
@@ -16,7 +16,7 @@
     a{
         text-decoration: none;
         color: $accent;
-        font-size: 2rem;
+        font-size: 1.5rem;
         h1{
             margin: 1rem;
         }
@@ -26,7 +26,7 @@
 .menu {
     list-style-type: none;
     display: flex;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -43,11 +43,11 @@
     gap: 1.25rem;
     text-decoration: none;
     color: $text-color;
-    font-size: 1.25rem;
+    font-size: 1rem;
     align-items: center;
     font-weight: 500;
     ion-icon {
-        font-size: 2.5rem;
+        font-size: 1.5rem;
         margin-right: 0.2rem;
         color: $primary;
     }
@@ -62,7 +62,7 @@
 }
 
 .sign-in, .sign-up, .logout{
-    margin: 1.5rem 1rem;
+    margin: 1rem;
     transition: all 0.1s ease-out;
     border: 1px solid #dcdbdb;
     box-shadow: 0 0.1rem 0.2rem 0.3rem 0.3rem $secondary;
