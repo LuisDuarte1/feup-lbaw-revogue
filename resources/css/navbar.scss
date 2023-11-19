@@ -1,0 +1,69 @@
+@import 'theme';
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 2.2rem 1.5rem;
+    border-radius: 2rem;
+    border-right: 1px solid $shadow;
+    background: $secondary-background;
+}
+
+.logo{
+    text-align: center;
+    font-family: 'Abril Fatface', serif;
+    a{
+        text-decoration: none;
+        color: $accent;
+        font-size: 2rem;
+        h1{
+            margin: 1rem;
+        }
+    }
+}
+
+.menu {
+    list-style-type: none;
+    display: flex;
+    margin-top: 2.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    li {
+        width: 100%;
+    }
+}
+
+.menu-item {
+    padding: 0.7rem 1rem; 
+    display: flex;
+    flex-direction: row;
+    gap: 1.25rem;
+    text-decoration: none;
+    color: $text-color;
+    font-size: 1.25rem;
+    align-items: center;
+    font-weight: 500;
+    ion-icon {
+        font-size: 2.5rem;
+        margin-right: 0.2rem;
+        color: $primary;
+    }
+}
+
+.menu-item{
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}
+.menu-item:hover{
+    background-color: $secondary;
+}
+
+.sign-in, .sign-up, .logout{
+    margin: 1.5rem 1rem;
+    transition: all 0.1s ease-out;
+    border: 1px solid #dcdbdb;
+    box-shadow: 0 0.1rem 0.2rem 0.3rem 0.3rem $secondary;
+}

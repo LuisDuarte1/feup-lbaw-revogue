@@ -1,14 +1,9 @@
 @import 'theme';
 @import 'globals';
 @import 'pages/register';
-
-
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
-
-
-
+@import 'navbar';
 $page-margin: 3.75rem;
+
 * {
     margin: 0;
     padding: 0;
@@ -28,8 +23,10 @@ body {
     gap: 4rem;
     .main-content {
         grid-column: 2;
+        height: 100%;
     }
     .navbar {
+        height: calc(100svh - #{$page-margin * 3});
         position: fixed;
         top: $page-margin;
     }
