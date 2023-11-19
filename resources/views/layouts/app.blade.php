@@ -24,7 +24,7 @@
 
     </head>
     <body>
-        <div class="navbar">Blablabla</div>
+        <x-navbar/>
         <div class="main-content">@yield('content')</div>
     </body>
 </html>

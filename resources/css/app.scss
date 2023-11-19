@@ -1,5 +1,8 @@
 @import 'theme';
+@import 'navbar';
+
 $page-margin: 3.75rem;
+
 * {
     margin: 0;
     padding: 0;
@@ -7,17 +10,22 @@ $page-margin: 3.75rem;
 
 html {
     background-color: $background;
+    height: 100%;
 }
 
 body {
+    height: 100%;
     margin: $page-margin;
     display: grid;
     grid-template-columns: 16rem auto;
     gap: 4rem;
+    font-family: 'Montserrat', sans-serif;
     .main-content {
         grid-column: 2;
+        height: 100%;
     }
     .navbar {
+        height: calc(100svh - #{$page-margin * 3});
         position: fixed;
         top: $page-margin;
     }
