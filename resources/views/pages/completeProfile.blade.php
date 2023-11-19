@@ -8,7 +8,7 @@
         <form class="complete-profile-form" action="{{ route('complete-profile') }}" method="POST">
             <div class="complete-profile-items">
                 <div class="select-image">
-                    <img src="{{$imagePath}}">
+                    <img id="image" src="{{$imagePath}}">
                     <input type="file" id="profileImage" name="profileImage" hidden>
                     <label for="profileImage">Upload photo</label>
                 </div>
