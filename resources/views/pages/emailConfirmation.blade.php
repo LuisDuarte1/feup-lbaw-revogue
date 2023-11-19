@@ -16,7 +16,7 @@
             </div>
         @endif
         <form method="POST" action="{{ route('verification.notice') }}">
-            <p style="text-align: center">Didn't receive the email?</p>
+            <p style="text-align: center; margin-bottom: 0.5rem;">Didn't receive the email?</p>
             @csrf
             <button type="submit">Resend confirmation email</button>
         </form>
