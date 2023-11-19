@@ -1,8 +1,13 @@
 @import 'theme';
 @import 'globals';
+
+@import 'navbar';
+
 @import 'pages/register';
 @import 'pages/login';
-@import 'navbar';
+@import 'pages/emailConfirmation';
+
+
 $page-margin: 3.75rem;
 
 * {

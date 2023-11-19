@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 // Added to define Eloquent relationships.
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -124,4 +125,17 @@ class User extends Authenticatable
      * @var string
      */
     protected $table = 'users';
+
+    //email verification
+    public function hasVerifiedEmail(){
+        return $this->account_status !== 'needsConfirmation';
+    }
+    
+    public function markEmailAsVerified(){
+        $this->update(['account_status'=>'active']);
+    }
+
+    public function getEmailForVerification(){
+        return $this->email;
+    }
 }

@@ -138,4 +138,4 @@ paths:
                   type: string
       responses:
         '200':
-          description: Always returns 200, and shows a sucessful reset page for security purposes even if the email doesn't exist      
+          description: Always returns 200, and shows a sucessful reset page for security purposes even if the email doesn't exist   
