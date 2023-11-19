@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,3 +62,12 @@ Route::prefix('login')->group(function () {
         Route::get('/email-confirmation/verify/{id}/{hash}', 'verifyEmail')->middleware('signed')->name('verification.verify');
     })->middleware('auth');
 });
+
+
+Route::prefix('profile')->group(function (){
+    Route::controller(CompleteProfileController::class)->group(function (){
+        Route::get('complete', 'getPage')->name('complete-profile');
+        Route::post('complete', 'postProfile');
+    });
+
+})->middleware(['auth', 'verified']);
