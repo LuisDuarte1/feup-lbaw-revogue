@@ -1,54 +1,54 @@
-@import 'theme';
-
-form {
-    display: flex;
-    min-width: 75%;
-    flex-grow: 2;
-
-}
-
-input[type="text"] {
-    color: $primary;
-    font-weight: 500;
-    font-size: 1.25rem;
-}
-
-input.search {
-    flex-grow: 2;
-    border: 1px solid $shadow;
-    display: block;
-    padding: 9px 4px 9px 40px;
-    background-color: $secondary-background ;
-
-}
-
-input.search:focus {
-    outline: none;
-    border: 2px solid $primary;
-}
+    @import 'theme';
 
 
-.topnav #search_icon {
-    left: 8px;
-    position: absolute;
-    color: $primary;
-    font-size: 1.5rem;
-}
+
+    form {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+    }
+
+    input[type="text"] {
+        color: $primary;
+        font-weight: 500;
+        font-size: 1.25rem;
+    }
+
+    input.search {
+        flex-grow: 1;
+        border: 1px solid $shadow;
+        display: block;
+        padding: 9px 4px 9px 40px;
+        background-color: $secondary-background ;
+
+    }
+
+    input.search:focus {
+        outline: none;
+        border: 2px solid $primary;
+    }
 
 
-.topnav ion-icon:not(#search_icon) {
+    .topnav #search_icon {
+        left: 8px;
+        position: absolute;
+        color: $primary;
+        font-size: 1.5rem;
+    }
 
-    margin-left: 15px;
-    color: $accent;
-    font-size: 3rem;
 
-}
+    .topnav ion-icon:not(#search_icon) {
+
+        margin-left: 0.5rem;
+        color: $accent;
+        font-size: 3rem;
+
+    }
 
 
-::placeholder {
-    color: $primary;
-    font-weight: 500;
-    font-size: 1.25rem;
-
-    opacity: 1;
-}
+    ::placeholder {
+        color: $primary;
+        font-weight: 500;
+        font-size: 1.25rem;
+        opacity: 1;
+    }
