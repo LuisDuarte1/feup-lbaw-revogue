@@ -20,8 +20,8 @@ body {
     height: 100%;
     margin: $page-margin;
     display: grid;
-    grid-template-columns: 16rem auto;
-    gap: 4rem;
+    grid-template-columns: 14rem auto;
+    gap: 6rem;
     .main-content {
         grid-column: 2;
         height: 100%;
