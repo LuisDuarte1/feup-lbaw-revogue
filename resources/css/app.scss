@@ -1,6 +1,7 @@
 @import 'theme';
+@import 'globals';
+@import 'pages/register';
 @import 'navbar';
-
 $page-margin: 3.75rem;
 
 * {
@@ -8,9 +9,10 @@ $page-margin: 3.75rem;
     padding: 0;
 }
 
-html {
-    background-color: $background;
+:root {
     height: 100%;
+    background-color: $background;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -19,7 +21,6 @@ body {
     display: grid;
     grid-template-columns: 16rem auto;
     gap: 4rem;
-    font-family: 'Montserrat', sans-serif;
     .main-content {
         grid-column: 2;
         height: 100%;
