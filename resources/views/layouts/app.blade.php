@@ -24,6 +24,7 @@
 
     </head>
     <body>
+        <x-search_bar/>
         <x-navbar/>
         <div class="main-content">@yield('content')</div>
     </body>
