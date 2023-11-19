@@ -25,6 +25,7 @@
     </head>
     <body>
         <x-navbar/>
+        
         <div class="main-content">@yield('content')</div>
     </body>
 </html>
