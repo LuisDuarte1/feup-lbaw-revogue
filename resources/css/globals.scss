@@ -1,0 +1,47 @@
+@import 'theme';
+input {
+    display: block;
+    background-color: #F3F3EB;
+    border: none;
+    height: 2.5rem;
+    padding: 0rem 0rem 0rem 1rem;
+    border-radius: 0.5rem;
+}
+
+input[type="checkbox"] {
+    display: inline;
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+    background-color: initial;
+}
+
+label[required]:after {
+    content: "*";
+    color: $secondary;
+}
+
+button {
+    border: none;
+    background: $secondary;
+    height: 3.625rem; 
+    padding: 0rem 0.5rem;
+    border-radius: 0.5rem;
+    color: $button-text-color;
+    font-size: 1.25rem;
+    font-weight: 500;
+    font-style: normal; 
+    line-height: normal;
+    text-align: center;
+}
+
+button:hover, button:active{
+    background: $secondary-hover;
+}
+
+
+.title {
+    font-family: 'Abril Fatface';
+    color: $accent;
+    font-size: 3rem;
+}
