@@ -49,19 +49,21 @@
         </ul>
     </div>
     @auth
-    <a href="#" class="menu-item logout">
+    <a href="/logout" class="menu-item logout">
         <ion-icon name="log-out"></ion-icon>
         Logout
     </a>
     @endauth
+    @guest
     <div>
-        <a href="#" class="menu-item sign-in">
+        <a href="/login" class="menu-item sign-in">
             <ion-icon name="log-in"></ion-icon>
             Login
         </a>
-        <a href="#" class="menu-item sign-up">
+        <a href="/register" class="menu-item sign-up">
             <ion-icon name="person-add"></ion-icon>
             Register
         </a>
     </div>
+    @endguest
 </nav>

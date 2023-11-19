@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-Route::redirect('/', '/login');
+Route::view('/', 'pages.landing');
 
 // Cards
 Route::controller(CardController::class)->group(function () {
