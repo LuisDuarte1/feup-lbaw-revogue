@@ -50,12 +50,12 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register', 'register');
 });
 
-Route::controler(RecoverPasswordController::class)->group(function () {
+Route::controller(RecoverPasswordController::class)->group(function () {
     Route::get('/recover-password', 'showRecoverPasswordForm')->name('recover-password');
     Route::post('/recover-password', 'recoverPassword');
 });
 
-Route::controler(ResetPasswordController::class)->group(function () {
+Route::controller(ResetPasswordController::class)->group(function () {
     Route::get('/reset-password/{token}', 'showResetPasswordForm')->name('reset-password');
     Route::post('/reset-password', 'resetPassword');
 });
