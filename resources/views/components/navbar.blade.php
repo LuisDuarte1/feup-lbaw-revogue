@@ -49,7 +49,7 @@
         </ul>
     </div>
     @auth
-    <a href="#" class="menu-item logout">
+    <a href="/logout" class="menu-item logout">
         <ion-icon name="log-out"></ion-icon>
         Logout
     </a>

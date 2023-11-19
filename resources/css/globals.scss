@@ -8,6 +8,14 @@ input {
     border-radius: 0.5rem;
 }
 
+input[type="checkbox"] {
+    display: inline;
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+    background-color: initial;
+}
+
 label[required]:after {
     content: "*";
     color: $secondary;
