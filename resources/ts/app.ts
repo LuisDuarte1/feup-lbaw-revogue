@@ -1,10 +1,12 @@
 import './bootstrap'
 import { landingPage } from './pages/landing'
+import { productListing } from './pages/productListing'
 
 type RouteList = Record<string, () => void>
 
 const routes: RouteList = {
-  '/': landingPage
+  '/': landingPage,
+  '/products/new': productListing
 }
 
 document.addEventListener('DOMContentLoaded', (_) => {

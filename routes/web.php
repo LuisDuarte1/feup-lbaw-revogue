@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ProductListingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-//Route::view('/', 'pages.landing');
-Route::view('/', 'pages.productListing');
+Route::view('/', 'pages.landing');
 
 // Cards
 Route::controller(CardController::class)->group(function () {
@@ -51,14 +51,21 @@ Route::controller(RegisterController::class)->group(function () {
 })->middleware('guest');
 
 Route::prefix('login')->group(function () {
-    Route::controller(LoginController::class)->group(function () {
+    Route::controller(LoginController::class)->middleware('guest')->group(function () {
         Route::get('/', 'showLoginForm')->name('login');
         Route::post('/', 'authenticate');
-    })->middleware('guest');
+    });
 
-    Route::controller(EmailConfirmationController::class)->group(function () {
+    Route::controller(EmailConfirmationController::class)->middleware('auth')->group(function () {
         Route::get('/email-confirmation', 'getPage')->name('verification.notice');
         Route::post('/email-confirmation', 'resendEmail')->middleware('throttle:2,1');
         Route::get('/email-confirmation/verify/{id}/{hash}', 'verifyEmail')->middleware('signed')->name('verification.verify');
-    })->middleware('auth');
+    });
+});
+
+Route::prefix('products')->group(function () {
+    Route::controller(ProductListingController::class)->middleware(['auth', 'verified'])->group(function () {
+        Route::get('/new', 'getPage')->name('productListing');
+        Route::post('/new', 'addProduct');
+    });
 });

@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <section class="list-item-wrapper">
     <div class="list-item column gap-3">
         <header>
@@ -10,9 +9,10 @@
                 List an item
             </h1>
         </header>
-        <form action="#" method="post" enctype="multipart/form-data">
+        <form action="{{ route('productListing')}}" method="post" enctype="multipart/form-data">
+            @csrf
             <div class="column justify-center gap-3">
-                <div class="layout-wrapper gap-4">
+                <div class="layout-wrapper">
                     <div class="photo-wrapper">
                         <h2> Photos </h2>
                         <p> Add up to 8 photos in JPG or PNG format. </p>
