@@ -18,7 +18,6 @@ class ProfileLayout extends Component
 
     public $rating;
 
-    public 
     public function __construct($profilePicture, $name, $username, $bio, $rating)
     {
         $this->profilePicture = $profilePicture;
