@@ -10,14 +10,14 @@
         input[type="text"] {
             color: $primary;
             font-weight: 500;
-            font-size: 1.25rem;
+            font-size: 1rem;
         }
 
         input.search {
             flex-grow: 1;
             border: 1px solid $shadow;
             display: block;
-            padding: 9px 4px 9px 40px;
+            padding: 3px 4px 3px 40px;
             background-color: $secondary-background ;
 
         }
@@ -44,14 +44,14 @@
 
             margin-left: 0.5rem;
             color: $accent;
-            font-size: 3rem;
+            font-size: 2rem;
 
         }
 
         ::placeholder {
             color: $primary;
             font-weight: 500;
-            font-size: 1.25rem;
+            font-size: 1rem;
             opacity: 1;
         }
     }
