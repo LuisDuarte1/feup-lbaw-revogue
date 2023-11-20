@@ -4,43 +4,49 @@
 
 
 <section class="list-item-wrapper">
-    <div class="list-item">
+    <div class="list-item column gap-3">
         <header>
             <h1 class="title">
                 List an item
             </h1>
         </header>
         <form action="#" method="post" enctype="multipart/form-data">
-            <div class="item-wrapper">
-                <h2> Photos </h2>
-                <p> Add up to 8 photos in JPG or PNG format. </p>
-                <div class="upload-photos">
-                    <div class="add-photo">
-                        <input type="file" id="product-photos" name="imageToUpload" multiple>
-                        <label for="product-photos" class="product-photos">
-                            <ion-icon name="camera"></ion-icon>
-                            Add photos
-                        </label>
+            <div class="column justify-center gap-3">
+                <div class="layout-wrapper gap-4">
+                    <div class="photo-wrapper">
+                        <h2> Photos </h2>
+                        <p> Add up to 8 photos in JPG or PNG format. </p>
+                        <div class="upload-photos">
+                            <div class="add-photo">
+                                <input type="file" id="product-photos" name="imageToUpload" multiple>
+                                <label for="product-photos" class="product-photos">
+                                    <ion-icon name="camera"></ion-icon>
+                                    Add photos
+                                </label>
+                            </div>
+                            <div class="add-photo"></div>
+                            <div class="add-photo"></div>
+                            <div class="add-photo"></div>
+                            <div class="add-photo"></div>
+                            <div class="add-photo"></div>
+                            <div class="add-photo"></div>
+                            <div class="add-photo"></div>
+                        </div>
                     </div>
-                    <div class="add-photo"></div>
-                    <div class="add-photo"></div>
-                    <div class="add-photo"></div>
-                    <div class="add-photo"></div>
-                    <div class="add-photo"></div>
-                    <div class="add-photo"></div>
-                    <div class="add-photo"></div>
-                </div>
-                <div class="item name">
-                    <label for="title">
-                        <h2>Title</h2>
-                    </label>
-                    <input type="text" id="title" name="title" placeholder="Nike t-shirt">
-                </div>
-                <div class="item description">
-                    <label for="description">
-                        <h2>Description</h2>
-                    </label>
-                    <textarea id="description" name="description" rows="4" cols="50" placeholder="Only worn a few times, true to size"></textarea>
+                    <div class="column justify-evenly">
+                    <div class="item name">
+                        <label for="title">
+                            <h2>Title</h2>
+                        </label>
+                        <input type="text" id="title" name="title" placeholder="Nike t-shirt">
+                    </div>
+                    <div class="item description">
+                        <label for="description">
+                            <h2>Description</h2>
+                        </label>
+                        <textarea id="description" name="description" rows="4" cols="50" placeholder="Only worn a few times, true to size"></textarea>
+                    </div>
+                    </div>
                 </div>
                 <div class="item info category">
                     <h2>Info</h2>

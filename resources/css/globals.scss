@@ -59,3 +59,26 @@ button:hover, button:active{
     align-items: center;
     padding: 3rem 0rem 0rem 0rem;
 }   
+
+.column{
+    display: flex;
+    flex-direction: column;
+}
+
+.justify-evenly{
+    justify-content: space-evenly;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+.gap-1{
+    gap: 1rem;
+}
+.gap-2{
+    gap: 2rem;
+}
+.gap-3{
+    gap: 3rem;
+}

@@ -9,10 +9,7 @@
 .list-item{
     $width: 6rem;
     width: 100%;
-    display: flex;
     padding: 3rem 0rem;
-    gap: 3rem;
-    flex-direction: column;
     align-items: center;
     
     h2{
@@ -20,16 +17,16 @@
         color: $primary;
     }
 
-    .item-wrapper{
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        p{
-            margin-top: 0.5rem;
-            color: $button-text-color;
-        }
+    p{
+        margin-top: 0.5rem;
+        color: $button-text-color;
     }
 
+    .layout-wrapper{
+        display: flex;
+        gap: 4rem;
+        align-content: center;
+    }
     .upload-photos{
         border-radius: 0.5rem;
         text-align: center;
@@ -62,9 +59,6 @@
 
     #product-photos{
         display: none;
-    }
-    .item{
-        margin: 1.5rem 0rem;
     }
     .info {
         h3 {
