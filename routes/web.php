@@ -63,9 +63,8 @@ Route::prefix('login')->group(function () {
     })->middleware('auth');
 });
 
-
-Route::prefix('profile')->group(function (){
-    Route::controller(CompleteProfileController::class)->group(function (){
+Route::prefix('profile')->group(function () {
+    Route::controller(CompleteProfileController::class)->group(function () {
         Route::get('complete', 'getPage')->name('complete-profile');
         Route::post('complete', 'postProfile');
     });
