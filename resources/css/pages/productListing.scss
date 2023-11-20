@@ -7,10 +7,17 @@
 }
 
 .list-item{
-    $width: 8rem;
+    $width: 10rem;
     width: 100%;
     padding: 3rem 0rem;
     align-items: center;
+
+    .tags,.price{
+        width: 100%;
+        input {
+            width: 100%;
+        }
+    }
     h2{
         font-size: 1.3rem;
         color: $primary;
@@ -75,6 +82,7 @@
             color: $secondary;
         }
         .category{
+            width: 100%;
             margin: 0.5rem 0rem;
             display: flex;
             flex-direction: column;
@@ -91,7 +99,6 @@
         padding-bottom: 4rem;
     }
     .name {
-        width: 100%;
         input {
             width:calc(100% - 1rem);
         }
