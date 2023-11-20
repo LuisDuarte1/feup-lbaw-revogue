@@ -40,7 +40,7 @@ class Product extends Model
 
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class, 'productattributes', 'attribute', 'product');
+        return $this->belongsToMany(Attribute::class, 'productattributes', 'product', 'attribute');
     }
 
     public function soldBy(): BelongsTo

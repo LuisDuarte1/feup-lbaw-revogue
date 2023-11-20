@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Attribute;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use League\CommonMark\Extension\Attributes\Node\Attributes;
 
 class ProductSeeder extends Seeder
 {
@@ -39,6 +42,13 @@ class ProductSeeder extends Seeder
                 }
                 $user->cart()->attach($product);
             }
+        }
+
+        $allProducts = Product::all();
+        $sizes = Attribute::where('key', 'Size')->get();
+        foreach($allProducts as $product){
+            $size = $sizes->random()->id;
+            $product->attributes()->attach($size);
         }
     }
 }

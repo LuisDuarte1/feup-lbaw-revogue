@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Attribute extends Model
 {
     use HasFactory;
-    
+
     public $timestamps = false;
 
     protected $primarykey = 'id';
@@ -21,7 +21,7 @@ class Attribute extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'product_attributes', 'product', 'attribute');
+        return $this->belongsToMany(Product::class, 'product_attributes', 'attribute', 'product');
     }
 
     protected $table = 'attributes';
