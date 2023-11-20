@@ -419,7 +419,7 @@ CREATE TRIGGER bargain_message_priceV_valid BEFORE INSERT OR UPDATE ON Messages
 
 CREATE OR REPLACE FUNCTION product_attribute_unique_key() RETURNS TRIGGER AS $$
 BEGIN
-    IF ((SELECT count(*) FROM ProductAttributes pa JOIN Attributes a ON a." "=pa."attribute"
+    IF ((SELECT count(*) FROM ProductAttributes pa JOIN Attributes a ON a."id"=pa."attribute"
                          WHERE a."key"=(SELECT "key" FROM Attributes WHERE "id"=NEW."attribute") AND pa."product"=NEW."product") <> 0) THEN
         RAISE EXCEPTION 'You can only have one value per key in a product attribute';
     END IF;

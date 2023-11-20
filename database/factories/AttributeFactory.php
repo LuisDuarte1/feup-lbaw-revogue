@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Attribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,8 @@ class AttributeFactory extends Factory
     public function definition(): array
     {
         return [
-            'key' => fake()->word(),
-            'value' => fake()->word(),
+            'key' => fake()->unique()->realText(10),
+            'value' => fake()->unique()->realText(10),
         ];
     }
 
