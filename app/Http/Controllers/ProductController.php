@@ -12,6 +12,7 @@ class ProductController extends Controller
         $product_id = $request->route('id');
         $product = Product::find($product_id);
         $attributes = $product->attributes()->get();
+
         return view('pages.product', ['product' => $product, 'attributes' => $attributes]);
     }
 }
