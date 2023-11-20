@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('cenoura-cozida-321'),
             'display_name' => 'Chloe Hall',
             'account_status' => 'active',
-            'settings' => json_encode([])
+            'settings' => json_encode([]),
         ]);
     }
 }

@@ -17,7 +17,7 @@ class ProductAttributeSeeder extends Seeder
     public function run(): void
     {
         $array = [];
-        for($i = 0; $i < ProductAttributeSeeder::ATTRIBUTE_COUNT; $i++){
+        for ($i = 0; $i < ProductAttributeSeeder::ATTRIBUTE_COUNT; $i++) {
             array_push($array, fake()->unique()->word());
         }
         for ($i = 0; $i < ProductAttributeSeeder::ATTRIBUTE_COUNT; $i++) {

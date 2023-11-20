@@ -5,8 +5,8 @@ use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CardController;
-use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\CompleteProfileController;
+use App\Http\Controllers\ProductListingController;
 use Illuminate\Support\Facades\Route;
 
 /*
