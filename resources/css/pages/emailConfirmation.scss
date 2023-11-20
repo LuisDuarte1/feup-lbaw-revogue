@@ -1,0 +1,18 @@
+@import '../theme.scss';
+
+.email-confirmation-page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 30rem;
+    .email-box{
+        background-color: $secondary-background;
+        padding: 1rem;
+        text-align: center;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+
+    }
+}

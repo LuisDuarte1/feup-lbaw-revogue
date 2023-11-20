@@ -15,7 +15,7 @@
             </li>
             @endauth
             <li>
-                <a href="#" class="menu-item">
+                <a href="/" class="menu-item">
                         <ion-icon name="home"></ion-icon>
                         Home
                 </a>
