@@ -94,6 +94,10 @@
                         <h2>Enhance your listing</h2>
                     </label>
                     <input type="text" id="search_tag" name="search_tag" placeholder="">
+                    <div class="tags-list">
+                    </div>
+                    <div class="input-list">
+                    </div>
                 </div>
                 <div class="item price">
                     <label for="price">
