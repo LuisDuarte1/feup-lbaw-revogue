@@ -1,5 +1,5 @@
 @import 'theme';
-input {
+input:not([type="file"]) {
     display: block;
     background-color: #F3F3EB;
     border: none;
@@ -8,6 +8,14 @@ input {
     border-radius: 0.5rem;
 }
 
+textarea{
+    border: none;
+    background-color: #F3F3EB;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    resize: none;
+
+}
 input[type="checkbox"] {
     display: inline;
     height: auto;
@@ -28,6 +36,7 @@ button {
     padding: 0rem 0.5rem;
     border-radius: 0.5rem;
     color: $button-text-color;
+    font-family: 'Montserrat';
     font-size: 1.25rem;
     font-weight: 500;
     font-style: normal; 

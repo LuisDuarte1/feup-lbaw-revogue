@@ -2,14 +2,13 @@
 @import 'globals';
 
 @import 'navbar';
+@import 'productCard';
+@import 'search_bar';
 
 @import 'pages/register';
 @import 'pages/login';
 @import 'pages/emailConfirmation';
-
-@import 'navbar';
-@import 'productCard';
-@import 'search_bar';
+@import 'pages/completeProfilePage';
 
 $page-margin: 3.75rem;
 $page-navbar-width: 16rem;

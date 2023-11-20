@@ -1,10 +1,12 @@
 import './bootstrap'
+import { completeProfile } from './pages/completeProfile'
 import { landingPage } from './pages/landing'
 
 type RouteList = Record<string, () => void>
 
 const routes: RouteList = {
-  '/': landingPage
+  '/': landingPage,
+  '/profile/complete': completeProfile
 }
 
 document.addEventListener('DOMContentLoaded', (_) => {
