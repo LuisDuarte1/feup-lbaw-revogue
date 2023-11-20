@@ -40,7 +40,6 @@ class EmailConfirmationController extends Controller
     {
         $request->fulfill();
 
-        //TODO (luisd): change the route to the complete profile page when it's done
-        return redirect('/');
+        return redirect('/profile/complete');
     }
 }

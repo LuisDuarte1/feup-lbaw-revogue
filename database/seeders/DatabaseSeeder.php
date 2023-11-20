@@ -22,9 +22,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call(
             [
+                ProductAttributeSeeder::class,
                 UserSeeder::class,
-                ProductSeeder::class,
                 ReviewSeeder::class,
+                ProductSeeder::class,
             ]
         );
     }
