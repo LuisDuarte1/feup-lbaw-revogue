@@ -1,4 +1,5 @@
 @import '../theme';
+
 .register-wrapper {
     height: 100%;
     display: flex;
@@ -8,7 +9,6 @@
 .register-page {
     height: 100%;
     display: flex;
-    padding: 3rem 0rem;
     gap: 3rem;
     flex-direction: column;
     align-items: center;
@@ -16,19 +16,20 @@
     .register-box {
         width: 30rem;
         margin-bottom: 0.5rem;
+
         input {
             margin-bottom: 1rem;
             width: calc(100% - 1em);
         }
+
         button {
             margin-top: 2rem;
             width: 100%;
         }
     }
 
-    .goto-login{
+    .goto-login {
         width: 100%;
         text-align: center;
     }
 }
-
