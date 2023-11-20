@@ -28,7 +28,6 @@ $topnav-height: 4rem;
 }
 
 body {
-    height: 100%;
     display: grid;
     grid-template-columns: $page-navbar-width auto;
     gap: $page-gap;
