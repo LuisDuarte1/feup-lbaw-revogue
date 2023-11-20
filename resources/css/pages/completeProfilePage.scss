@@ -23,6 +23,8 @@
             width: $width;
             height: auto;
             border-radius: 1rem;
+            aspect-ratio: 1;
+            object-fit: cover;
         }
 
         label{
@@ -55,4 +57,5 @@
     flex-direction: column;
     justify-content: center;
     gap: 3rem;
+    margin-bottom: 2rem;
 }
