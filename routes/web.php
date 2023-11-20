@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\api\AttributeController;
 use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\CompleteProfileController;
-use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,17 +29,11 @@ Route::controller(CardController::class)->group(function () {
 });
 
 // API
-Route::controller(CardController::class)->group(function () {
-    Route::put('/api/cards', 'create');
-    Route::delete('/api/cards/{card_id}', 'delete');
+Route::prefix('api')->group(function () {
+    Route::controller(AttributeController::class)->group(function () {
+        Route::get('/attributes', 'getValues');
+    });
 });
-
-Route::controller(ItemController::class)->group(function () {
-    Route::put('/api/cards/{card_id}', 'create');
-    Route::post('/api/item/{id}', 'update');
-    Route::delete('/api/item/{id}', 'delete');
-});
-
 // Authentication
 Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout');
