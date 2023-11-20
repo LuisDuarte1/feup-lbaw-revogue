@@ -70,11 +70,9 @@
                                 </label>
                                 <select id="size" name="size">
                                     <option value=""></option>
-                                    <option value="xs">XS</option>
-                                    <option value="s">S</option>
-                                    <option value="m">M</option>
-                                    <option value="l">L</option>
-                                    <option value="xl">XL</option>
+                                    @foreach ($sizes as $size)
+                                    <option value="{{ $size }}">{{ $size}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="category color">
@@ -83,11 +81,9 @@
                                 </label>
                                 <select id="color" name="color">
                                     <option value=""></option>
-                                    <option value="white">White</option>
-                                    <option value="blue">Blue</option>
-                                    <option value="black">Black</option>
-                                    <option value="red">Red</option>
-                                    <option value="yellow">Yellow</option>
+                                    @foreach ($colors as $color)
+                                    <option value="{{ $color }}">{{ $color }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -97,7 +93,7 @@
                     <label for="tags">
                         <h2>Enhance your listing</h2>
                     </label>
-                    <input type="text" id="price" name="price" placeholder="">
+                    <input type="text" id="search_tag" name="search_tag" placeholder="">
                 </div>
                 <div class="item price">
                     <label for="price">

@@ -1,4 +1,31 @@
-export function productListing (): void {
+import debounce from 'debounce'
+
+const bannedAttributes = ['Color', 'Size']
+
+function searchTag (): void {
+  const searchInput: HTMLInputElement | null = document.querySelector('#search_tag')
+  let fetchedAttributeList = false
+  let attributeList: string[] = []
+  if (searchInput === null) {
+    return
+  }
+  const searchFunction = debounce(async (ev) => {
+    if (!fetchedAttributeList) {
+      const req = await fetch('/api/attributes')
+      if (req.status !== 200) {
+        console.error('Something went wrong while getting the list of attributes...')
+      }
+      const data = await req.json()
+      attributeList = (data.attributes as string[]).filter((value) => !bannedAttributes.includes(value)).map((value) => value.toLowerCase())
+      fetchedAttributeList = true
+    }
+    const validAttributes = attributeList.filter((value) => value.includes(searchInput.value.toLowerCase()))
+    console.log(validAttributes)
+  }, 250)
+  searchInput?.addEventListener('input', async (ev) => await searchFunction(ev))
+}
+
+function imageUploader (): void {
   const input: HTMLInputElement | null = document.querySelector('#product-photos')
   if (input == null) {
     return
@@ -42,4 +69,9 @@ export function productListing (): void {
   }
 
   input.addEventListener('change', eventListener)
+}
+
+export function productListing (): void {
+  searchTag()
+  imageUploader()
 }

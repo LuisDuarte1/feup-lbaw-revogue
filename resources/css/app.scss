@@ -41,9 +41,9 @@ body {
     }
 
     .navbar {
-        height: calc(100svh - #{$page-margin * 3});
         position: fixed;
         top: $page-margin;
+        bottom: $page-margin;
         overflow: hidden;
     }
 
