@@ -34,6 +34,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
 
+            $user = Auth::user();
+            if ($user->account_status == 'needsConfirmation') {
+                return redirect('/login/email-confirmation');
+            }
+
             return redirect()->intended('/');
         }
 
