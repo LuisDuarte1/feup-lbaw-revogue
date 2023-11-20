@@ -1,54 +1,57 @@
     @import 'theme';
 
+    .topnav {
+        form {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        input[type="text"] {
+            color: $primary;
+            font-weight: 500;
+            font-size: 1.25rem;
+        }
+
+        input.search {
+            flex-grow: 1;
+            border: 1px solid $shadow;
+            display: block;
+            padding: 9px 4px 9px 40px;
+            background-color: $secondary-background ;
+
+        }
+
+        input.search:focus {
+            outline: none;
+            border: 2px solid $primary;
+        }
+
+        a {
+            text-decoration: none;
+        }
 
 
-    form {
-        display: flex;
-        align-items: center;
-        flex-grow: 1;
-    }
-
-    input[type="text"] {
-        color: $primary;
-        font-weight: 500;
-        font-size: 1.25rem;
-    }
-
-    input.search {
-        flex-grow: 1;
-        border: 1px solid $shadow;
-        display: block;
-        padding: 9px 4px 9px 40px;
-        background-color: $secondary-background ;
-
-    }
-
-    input.search:focus {
-        outline: none;
-        border: 2px solid $primary;
-    }
+        #search_icon {
+            left: 8px;
+            position: absolute;
+            color: $primary;
+            font-size: 1.5rem;
+        }
 
 
-    .topnav #search_icon {
-        left: 8px;
-        position: absolute;
-        color: $primary;
-        font-size: 1.5rem;
-    }
+        ion-icon:not(#search_icon) {
 
+            margin-left: 0.5rem;
+            color: $accent;
+            font-size: 3rem;
 
-    .topnav ion-icon:not(#search_icon) {
+        }
 
-        margin-left: 0.5rem;
-        color: $accent;
-        font-size: 3rem;
-
-    }
-
-
-    ::placeholder {
-        color: $primary;
-        font-weight: 500;
-        font-size: 1.25rem;
-        opacity: 1;
+        ::placeholder {
+            color: $primary;
+            font-weight: 500;
+            font-size: 1.25rem;
+            opacity: 1;
+        }
     }
