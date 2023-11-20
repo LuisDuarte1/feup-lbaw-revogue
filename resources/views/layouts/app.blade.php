@@ -24,6 +24,10 @@
 
     </head>
     <body>
+        
+        @if(isset($search_bar) == true && $search_bar == true)
+        <x-search_bar/>
+        @endif
         <x-navbar/>
         <div class="main-content">@yield('content')</div>
     </body>
