@@ -42,6 +42,10 @@
         font-weight: 600;
     }
 
+    .product-price > p::after{
+        content: "€";
+    }
+
     .product-size {
         flex-shrink: 0;
         padding: 0 1rem;

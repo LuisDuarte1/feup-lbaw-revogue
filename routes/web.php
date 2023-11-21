@@ -29,6 +29,9 @@ Route::prefix('api')->group(function () {
     Route::controller(AttributeController::class)->group(function () {
         Route::get('/attributes', 'getValues');
     });
+    Route::controller(SearchController::class)->group(function() {
+        Route::get('/search', 'searchGetApi');
+    });
 });
 // Authentication
 Route::controller(LoginController::class)->group(function () {

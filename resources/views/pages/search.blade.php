@@ -1,9 +1,5 @@
 @extends('layouts.app', ['search_bar' => 'true'])
 
-@push('head')
-    <meta name="cursor" value="{{$cursor->nextCursor()->encode()}}">
-@endpush
-
 @section('content')
     <div class="search-page">
         @foreach ($products as $product)
@@ -15,5 +11,7 @@
             @endphp
             <x-productCard :price="$price" :image="$image" :size="$size" :id="$id"/>
         @endforeach
+    </div>
+    <div id="page-end">
     </div>
 @endsection
