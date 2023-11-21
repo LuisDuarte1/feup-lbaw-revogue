@@ -18,12 +18,11 @@ class ProductController extends Controller
         $imagePath = $user->profile_image_path ?? '../defaultProfileImage.png';
         $categories = [];
         $category = $product->productCategory;
-        while(isset($category)){
+        while (isset($category)) {
             array_unshift($categories, $category);
             $category = $category->parentCategory;
         }
-        
 
-        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories'=>$categories]);
+        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories]);
     }
 }

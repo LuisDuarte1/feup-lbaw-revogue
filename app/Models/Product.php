@@ -36,7 +36,7 @@ class Product extends Model
     protected $casts = [
         'creation_date' => 'datetime',
         'price' => 'float',
-        'image_paths' => 'array'
+        'image_paths' => 'array',
     ];
 
     public function attributes(): BelongsToMany
