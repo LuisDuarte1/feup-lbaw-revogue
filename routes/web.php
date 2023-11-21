@@ -63,15 +63,15 @@ Route::prefix('products')->group(function () {
     });
 });
 
-Route::prefix('profile')->group(function () {
+Route::prefix('profile')->middleware(['auth', 'verified'])->group(function () {
     Route::controller(CompleteProfileController::class)->group(function () {
         Route::get('complete', 'getPage')->name('complete-profile');
         Route::post('complete', 'postProfile');
     });
-})->middleware(['auth', 'verified']);
+});
 
-Route::prefix('cart')->group(function () {
+Route::prefix('cart')->middleware(['auth', 'verified'])->group(function () {
     Route::controller(CartController::class)->group(function () {
         Route::get('/', 'getPage')->name('cart');
     });
-})->middleware(['auth', 'verified']);
+});
