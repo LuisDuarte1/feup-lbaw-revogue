@@ -108,7 +108,7 @@
             </div>
         </div>
         <div class="checkout-button column">
-            <button>Checkout</button>
+            <a href="{{ route('checkout') }}" class="column"><button>Checkout</button></a>
         </div>
     </div>
 </section>

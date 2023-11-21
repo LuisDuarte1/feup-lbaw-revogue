@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -73,5 +74,11 @@ Route::prefix('profile')->middleware(['auth', 'verified'])->group(function () {
 Route::prefix('cart')->middleware(['auth', 'verified'])->group(function () {
     Route::controller(CartController::class)->group(function () {
         Route::get('/', 'getPage')->name('cart');
+    });
+});
+
+Route::prefix('checkout')->middleware(['auth', 'verified'])->group(function () {
+    Route::controller(CheckoutController::class)->group(function () {
+        Route::get('/', 'getPage')->name('checkout');
     });
 });

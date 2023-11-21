@@ -87,3 +87,27 @@ button:hover, button:active{
 .w-full{
     width: 100%;
 }
+
+.line{
+    border-bottom: 1px solid #a9a8a8;
+    box-shadow: 0 1px 1px rgba(155, 155, 155, 0.2);
+}
+
+input[type="radio"] {
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 2px solid $accent;
+    border-radius: 50%;
+    appearance: none;
+    background-color: transparent;
+    outline: none;
+}
+
+input[type="radio"]:not(:disabled):checked {
+  border-color: $accent;
+  background-color: $primary;
+  background-clip: content-box;
+  padding: 2px;
+}
