@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,8 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-//Route::view('/', 'pages.landing');
-Route::view('/', 'pages.cart');
+Route::view('/', 'pages.landing');
 
 // API
 Route::prefix('api')->group(function () {
@@ -67,5 +67,11 @@ Route::prefix('profile')->group(function () {
     Route::controller(CompleteProfileController::class)->group(function () {
         Route::get('complete', 'getPage')->name('complete-profile');
         Route::post('complete', 'postProfile');
+    });
+})->middleware(['auth', 'verified']);
+
+Route::prefix('cart')->group(function () {
+    Route::controller(CartController::class)->group(function () {
+        Route::get('/', 'getPage')->name('cart');
     });
 })->middleware(['auth', 'verified']);
