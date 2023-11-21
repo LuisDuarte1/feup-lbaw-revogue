@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS
     CartProduct,
     Admins,
     OrderProduct,
+    Categories,
     Payouts CASCADE;
 
 DROP TYPE IF EXISTS
@@ -83,6 +84,13 @@ CREATE TABLE Products(
     "image_paths" JSON NOT NULL CHECK ( json_array_length("image_paths") > 0 ),
     "sold_by" INT,
     FOREIGN KEY ("sold_by") REFERENCES Users("id") ON DELETE SET NULL
+);
+
+CREATE TABLE Categories(
+    "id" SERIAL PRIMARY KEY NOT NULL,
+    "name" TEXT UNIQUE NOT NULL,
+    "category" INT,
+    FOREIGN KEY ("category") REFERENCES Categories("id") ON DELETE CASCADE
 );
 
 CREATE TABLE Attributes(
