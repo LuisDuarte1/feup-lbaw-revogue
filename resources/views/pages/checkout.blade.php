@@ -51,7 +51,7 @@
                 </div>
                 <div class="pay-on-collection">
                     <label for="pay-on-collection">Pay at delivery</label>
-                    <input type="radio" name="payment-method" id="pay-on-collection">
+                    <input type="radio" name="payment-method" id="pay-on-collection" checked>
                 </div>
             </div>
             <div class="submit-button">
