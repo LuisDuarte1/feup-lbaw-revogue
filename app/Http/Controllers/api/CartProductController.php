@@ -38,4 +38,33 @@ class CartProductController extends Controller
             }
         }
     }
+
+    public function RemoveProductFromCart(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'product' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        } else {
+            $productId = $request->product;
+            $userId = $request->user()->id;
+
+            $productInCart = CartProduct::where('product', $productId)->where('belongs_to', $userId)->first();
+
+            if ($productInCart == null) {
+                return response()->json(['error' => 'Product not in cart'], 404);
+            } else {
+                $product = Product::find($productId);
+                if ($product == null) {
+                    return response()->json(['error' => 'Product not found'], 404);
+                }
+
+                $cartProduct = $request->user()->cart()->detach($productId); // detach() is a method from BelongsToMany relationship (User.php
+
+                return response()->json(['success' => 'Product removed from cart successfully'], 200);
+            }
+        }
+    }
 }

@@ -31,6 +31,7 @@ Route::prefix('api')->group(function () {
     });
     Route::controller(CartProductController::class)->group(function () {
         Route::post('/cart', 'AddProductToCart');
+        Route::delete('/cart', 'RemoveProductFromCart');
     });
 });
 
