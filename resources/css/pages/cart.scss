@@ -1,6 +1,6 @@
 @import "../variables";
 
-.layout-wrapper{
+.layout-wrap{
     margin-top: 1rem;
     display: grid;
     grid-template-columns: 60% auto;
@@ -19,13 +19,21 @@
     
         .product{
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
             gap: 2rem;
             align-items: center;
             padding: 1rem 0rem 1.5rem 0rem;
-            border-bottom: 1px solid #a9a8a8;
-            box-shadow: 0 1px 1px rgba(155, 155, 155, 0.2);
-    
+
+
+                .layout-divider{
+                    display: flex;
+                    gap: 1.5rem;
+                }
+
+                ion-icon{
+                    font-size: 1.3rem;
+                    color: $accent;
+                }
                 .product-image{
                     width: 5rem;
                     height: 5rem;
@@ -42,6 +50,7 @@
                     flex-direction: column;
                     justify-content: center;
                     align-items: flex-start;
+                    color: $accent;
                     
                 }
                     .product-name{
@@ -61,8 +70,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 2rem 0rem 1rem 0rem;
-    border-bottom: 1px solid #a9a8a8;
-    box-shadow: 0 1px 1px rgba(155, 155, 155, 0.2);
 
     .title{
         font-size: 1.75rem;
@@ -95,14 +102,34 @@
     padding: 0rem 3rem;
     background-color: $secondary-background;
     border-radius: 0.5rem;
+    h3{
+        color: $accent;
+        font-size: 1.1rem;
+    }
+    .promo{
+        #promo-code{
+            border: 1px solid $accent;
+        }
+        button{
+            padding: 0rem 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            height: 2.5rem;
+        }
+    }
+    .total{
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+        font-size: 1.1rem;
+    }
 }
 
 .order-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #a9a8a8;
-    box-shadow: 0 1px 1px rgba(155, 155, 155, 0.2);
     padding: 2rem 0rem 1rem 0rem;
     .title{
         font-size: 1.75rem;
@@ -116,4 +143,33 @@
         background-color: $secondary;
         padding: 0.5rem;
     }
+    h3{
+        color: $accent;
+
+    }
+}
+
+.line{
+    border-bottom: 1px solid #a9a8a8;
+    box-shadow: 0 1px 1px rgba(155, 155, 155, 0.2);
+}
+
+.checkout-button{
+    button{
+        padding: 0rem 0.6rem;
+        height: 2.5rem;
+        font-weight: 600;
+        background-color: $accent;
+        color: $background;
+    }
+    button:hover{
+        background-color: darken($accent, 5%);
+    }
+
+}
+
+.apply-button{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
 }
