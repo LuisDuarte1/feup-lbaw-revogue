@@ -100,10 +100,17 @@
 
 .seller{
     justify-content: space-around;
+    .sold-by{
+        .title{
+            font-size: 1.5rem;
+            color: $accent;
+            text-align: start;
+        }
+    }
     .seller-wrapper{
         display: flex;
-        gap: 2rem;
-        align-items: center;
+        gap: 1.5rem;
+        align-items: start;
 
         p{
             font-size: 0.9rem;
@@ -118,7 +125,6 @@
                 font-weight: 500;
                 color: $text-color;
             }
-            
             ion-icon{
                 font-size: 1.3rem;
                 color: $secondary;
