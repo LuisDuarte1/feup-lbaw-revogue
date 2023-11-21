@@ -23,7 +23,7 @@ class CartProductController extends Controller
             $productInCart = $request->user()->cart()->where('product', $productId)->get()->first();
 
             if ($productInCart != null) {
-                return response()->json(['error' => 'Product already in cart'], 404);
+                return response()->json(['error' => 'Product already in cart'], 400);
             } else {
                 $product = Product::find($productId);
                 if ($product == null) {
@@ -51,7 +51,7 @@ class CartProductController extends Controller
             $productInCart = $request->user()->cart()->where('product', $productId)->get()->first();
 
             if ($productInCart == null) {
-                return response()->json(['error' => 'Product not in cart'], 404);
+                return response()->json(['error' => 'Product not in cart'], 400);
             } else {
                 $product = Product::find($productId);
                 if ($product == null) {

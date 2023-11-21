@@ -7,7 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class WishListController extends Controller
+class WishlistController extends Controller
 {
     public function AddProductToWishlist(Request $request)
     {
@@ -24,7 +24,7 @@ class WishListController extends Controller
             $productInWishlist = $request->user()->wishlist()->where('product', $productId)->get()->first();
 
             if ($productInWishlist != null) {
-                return response()->json(['error' => 'Product already in wishlist'], 404);
+                return response()->json(['error' => 'Product already in wishlist'], 400);
             } else {
                 $product = Product::find($productId);
                 if ($product == null) {
@@ -51,7 +51,7 @@ class WishListController extends Controller
 
             $productInWishlist = request()->user()->wishlist()->where('product', $productId)->get()->first();
             if ($productInWishlist == null) {
-                return response()->json(['error' => 'Product not in wishlist'], 404);
+                return response()->json(['error' => 'Product not in wishlist'], 400);
             } else {
                 $product = Product::find($productId);
                 if ($product == null) {
