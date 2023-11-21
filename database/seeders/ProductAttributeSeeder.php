@@ -16,9 +16,13 @@ class ProductAttributeSeeder extends Seeder
 
     public function run(): void
     {
+        $array = [];
         for ($i = 0; $i < ProductAttributeSeeder::ATTRIBUTE_COUNT; $i++) {
-            $key = fake()->unique()->realText(10);
-            Attribute::factory()->state(['key' => $key])->count(ProductAttributeSeeder::VALUE_COUNT)->create();
+            array_push($array, fake()->unique()->word());
+        }
+        for ($i = 0; $i < ProductAttributeSeeder::ATTRIBUTE_COUNT; $i++) {
+            $key = fake()->unique(true)->word();
+            Attribute::factory()->state(['key' => $array[$i]])->count(ProductAttributeSeeder::VALUE_COUNT)->create();
         }
         // size
         Attribute::factory()->create([

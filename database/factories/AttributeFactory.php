@@ -17,9 +17,10 @@ class AttributeFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
-            'key' => fake()->unique()->realText(10),
-            'value' => fake()->unique()->realText(10),
+            'key' => fake()->unique()->word(),
+            'value' => fake()->unique()->word(),
         ];
     }
 
