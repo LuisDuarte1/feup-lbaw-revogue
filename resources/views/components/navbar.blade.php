@@ -1,7 +1,7 @@
 <nav class="navbar">
     <div class="sidebar">
         <div class="logo title">
-            <a href="#">
+            <a href="/">
                 <h1> ReVogue </h1>
             </a>
         </div>

@@ -4,6 +4,7 @@ use App\Http\Controllers\api\AttributeController;
 use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
@@ -76,5 +77,11 @@ Route::prefix('profile')->middleware(['auth', 'verified'])->group(function () {
 Route::prefix('search')->group(function () {
     Route::controller(SearchController::class)->group(function () {
         Route::get('/', 'searchGet')->name('search');
+    });
+});
+
+Route::prefix('cart')->middleware(['auth', 'verified'])->group(function () {
+    Route::controller(CartController::class)->group(function () {
+        Route::get('/', 'getPage')->name('cart');
     });
 });

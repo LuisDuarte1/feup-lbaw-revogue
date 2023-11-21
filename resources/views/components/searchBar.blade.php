@@ -9,7 +9,7 @@
         <ion-icon name="heart-outline"></ion-icon>
     </a>
     
-    <a href="#">
+    <a href="{{route('cart')}}">
         <ion-icon name="cart"></ion-icon>
     </a>
     </div>
