@@ -5,24 +5,28 @@
     gap: 3rem;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    $width: 24rem;
-    
-    .main-square{
-        background-color: $shadow;
-        width: $width;
-        height: $width;
-        border-radius: 1rem;
-    }
+
     .product-image{
-        background-color: $shadow;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    img{
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
         border-radius: 1rem;
     }
+
     
     .product-details{
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
-        height: 100%;
+        justify-content: space-between;
+        gap: 0.5rem;
     }
     .product-title{
         .title{
@@ -114,6 +118,18 @@
             font-size: 1rem;
             padding: 0 0.8rem;
             height: 2rem;
+        }
+    }
+    .product-price-shipping{
+        display: flex;
+        gap: 2rem;
+        .product-shipping{
+            display: flex;
+            align-items: center;
+            h3{
+                color: $primary;
+                font-size: 0.9rem;
+            }
         }
     }
 }

@@ -5,14 +5,19 @@
 <section class="column justify-center gap-3">
     <div class="layout-wrapper">
         <div class="product-image">
-            <div class="main-square"></div>
+            <img src="https://picsum.photos/1020/720" alt="product image">
         </div>
         <div class="product-details">
             <div class="product-title">
                 <h1 class="title">{{$product->name}}</h1>
             </div>
-            <div class="product-price">
-                <h3> {{$product->price}}€</h3>
+            <div class="product-price-shipping">
+                <div class="product-price">
+                    <h3> {{$product->price}}€</h3>
+                </div>
+                <div class="product-shipping">
+                    <h3>Shipping: 2€</h3>
+                </div>
             </div>
             <div class="product-info">
                 <p>@foreach ($attributes as $attribute)
