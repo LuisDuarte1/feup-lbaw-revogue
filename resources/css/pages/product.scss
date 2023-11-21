@@ -1,6 +1,24 @@
 
+.categories{
+    display: flex;
+    align-items: end;
+    padding-top: 1rem;
+    .separator{
+        padding: 0rem 0.3rem;
+    }
+    p{
+        font-size: 0.8rem;
+    }
+    a{
+        text-decoration: none;
+        color: $button-text-color;
+    }
+    a:hover{
+        color: $secondary;
+        text-decoration: underline;
+    }
+}
 .layout-wrapper{
-    margin-top: 2rem;
     display: grid;
     gap: 3rem;
     grid-template-columns: 1fr 1fr;
