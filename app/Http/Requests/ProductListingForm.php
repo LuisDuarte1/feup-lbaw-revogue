@@ -16,22 +16,21 @@ class ProductListingForm extends FormRequest
         return true;
     }
 
-
     public function prepareForValidation()
     {
         $attributes = Attribute::select('key')->whereNotIn('key', ['Price', 'Color'])->get()->unique('key')->pluck('key')->values()->toArray();
         $inputs = $this->all();
-        $inputs_attribute = array_filter($inputs, function ($var) use ($attributes){
+        $inputs_attribute = array_filter($inputs, function ($var) use ($attributes) {
             return in_array($var, $attributes, true);
         }, ARRAY_FILTER_USE_KEY);
         $attribute_list = [];
-        foreach ($inputs_attribute as $key=>$value){
+        foreach ($inputs_attribute as $key => $value) {
             $attribute_list[$key] = $value;
         }
         $this->merge([
-            "attributes" => $attribute_list
+            'attributes' => $attribute_list,
         ]);
-        foreach ($inputs_attribute as $attribute){
+        foreach ($inputs_attribute as $attribute) {
             $this->request->remove($attribute);
         }
     }
@@ -40,7 +39,6 @@ class ProductListingForm extends FormRequest
     // {
     //        dd($validator->errors());
     // }
-
 
     /**
      * Get the validation rules that apply to the request.
@@ -56,7 +54,7 @@ class ProductListingForm extends FormRequest
             'category' => 'required|exists:categories,id',
             'size' => 'required|exists:attributes,value',
             'color' => 'required|exists:attributes,value',
-            'price' => 'required|gt:0'
+            'price' => 'required|gt:0',
         ];
     }
 }
