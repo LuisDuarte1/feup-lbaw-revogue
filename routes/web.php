@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AttributeController;
+use App\Http\Controllers\api\CartProductController;
 use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -28,7 +29,11 @@ Route::prefix('api')->group(function () {
     Route::controller(AttributeController::class)->group(function () {
         Route::get('/attributes', 'getValues');
     });
+    Route::controller(CartProductController::class)->group(function () {
+        Route::post('/cart', 'AddProductToCart');
+    });
 });
+
 // Authentication
 Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout');
