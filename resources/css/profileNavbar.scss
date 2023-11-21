@@ -3,7 +3,6 @@
     width: 55rem;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0;
 
     .profile-navbar-items{
         display: flex;
@@ -11,8 +10,6 @@
         height: 100%;
         justify-content: space-between;
         align-items: center;
-        flex-shrink: 0;
-        
     }
 
     .profile-navbar-item{
@@ -23,6 +20,15 @@
         flex-shrink: 0;
     }
 
+    a {
+        text-decoration: none;
+        color: $primary;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        font-size: 1.2rem;
+    }
+
     .profile-navbar-item a:hover{
         background-color: #F3F3EB;
     }
@@ -31,17 +37,6 @@
         background-color: $secondary;
         color: $accent;
     }
-
-    a {
-        text-decoration: none;
-        color: $primary;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: 500;
-        font-size: large;
-    }
-
-
 
     
 }
