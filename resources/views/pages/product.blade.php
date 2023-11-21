@@ -41,7 +41,7 @@
     </div>
     <div class="layout-wrapper">
         <div class="reviews w-full"> <!-- TODO --> </div>
-        <div class="seller column gap-2">
+        <div class="seller">
             <div class="seller-wrapper">
                 <div class="profile-pic"> 
                     <img id="image" src="/storage/{{ $imagePath }}">
