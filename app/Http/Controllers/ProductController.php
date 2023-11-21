@@ -19,5 +19,4 @@ class ProductController extends Controller
 
         return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath]);
     }
-
 }
