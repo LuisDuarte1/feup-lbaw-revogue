@@ -1,4 +1,4 @@
-async function endVisible (params: URLSearchParams, apiUrl: string, destElement: Element): Promise<void> {
+async function endVisible (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string): Promise<void> {
   const req = await fetch(`${apiUrl}?${params.toString()}`)
   if (req.status !== 200) {
     console.error('copa')
@@ -6,7 +6,7 @@ async function endVisible (params: URLSearchParams, apiUrl: string, destElement:
   }
   const html = document.createElement('html')
   html.innerHTML = await req.text()
-  const listElements = Array.from(html.querySelectorAll('a'))
+  const listElements = Array.from(html.querySelectorAll(sourceSelector))
   if (listElements.length === 0) {
     return
   }
@@ -23,11 +23,11 @@ async function endVisible (params: URLSearchParams, apiUrl: string, destElement:
   window.history.replaceState(null, '', '?' + params.toString())
 }
 
-export function addEndObserver (params: URLSearchParams, apiUrl: string, destElement: Element): void {
+export function addEndObserver (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string): void {
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.intersectionRatio > 0) {
-        void endVisible(params, apiUrl, destElement)
+        void endVisible(params, apiUrl, destElement, sourceSelector)
       }
     })
   }, {})
