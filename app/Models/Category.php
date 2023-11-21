@@ -16,16 +16,18 @@ class Category extends Model
     protected $primarykey = 'id';
 
     protected $fillable = [
-        'name'
+        'name',
     ];
 
-    function parentCategory() : BelongsTo{
+    public function parentCategory(): BelongsTo
+    {
         return $this->belongsTo(Category::class, 'parent_category');
     }
 
-    function childrenCategory(): HasMany{
+    public function childrenCategory(): HasMany
+    {
         return $this->hasMany(Category::class, 'parent_category');
     }
 
-    protected $table = "categories";
+    protected $table = 'categories';
 }
