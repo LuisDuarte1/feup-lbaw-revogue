@@ -167,3 +167,16 @@
         }
     }
 }
+
+.reviews{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    .title{
+        font-size: 1.6rem;
+    }
+    p{
+        text-align: center;
+    }
+}
