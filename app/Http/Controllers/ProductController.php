@@ -16,7 +16,14 @@ class ProductController extends Controller
         $user_id = $product->sold_by;
         $user = User::find($user_id);
         $imagePath = $user->profile_image_path ?? '../defaultProfileImage.png';
+        $categories = [];
+        $category = $product->productCategory;
+        while(isset($category)){
+            array_unshift($categories, $category);
+            $category = $category->parentCategory;
+        }
+        
 
-        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath]);
+        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories'=>$categories]);
     }
 }

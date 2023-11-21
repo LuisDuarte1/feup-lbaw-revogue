@@ -5,17 +5,20 @@
 <section class="column justify-center gap-1">
     <div class="categories">
         <p>
-            <a href="/">Home</a><span class="separator">/</span> 
-            <a href="#">Brand</a><span class="separator">/</span>
-            <a href="#">Zara</a><span class="separator">/</span>
-            <a href="#">Womenswear</a><span class="separator">/</span>
-            <a href="#">Dresses</a>
+            <a href="/">Home</a><span class="separator">/</span>
+            @foreach ($categories as $category)
+            
+            <a href="#">{{$category->name}}</a>
+            @if(!$loop->last)
+                <span class="separator">/</span>
+            @endif
+            @endforeach
         </p>
     </div>
     <div class="column justify-center gap-3">
         <div class="layout-wrapper">
             <div class="product-image column">
-                <img src="https://picsum.photos/1020/720" alt="product image">
+                <img src="{{$product->image_paths[0]}}" alt="product image">
             </div>
             <div class="product-details">
                 <div class="product-title">
