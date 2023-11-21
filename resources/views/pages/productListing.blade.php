@@ -57,11 +57,9 @@
                                 </label>
                                 <select id="type" name="type">
                                     <option value=""></option>
-                                    <option value="Tops">Tops</option>
-                                    <option value="Dresses and Jumpsuits">Dresses and Jumpsuits</option>
-                                    <option value="Jeans">Jeans</option>
-                                    <option value="Footwear">Footwear</option>
-                                    <option value="Accessories">Accessories</option>
+                                    @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="category size">

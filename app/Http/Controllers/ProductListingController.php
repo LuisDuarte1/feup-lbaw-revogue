@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\api\AttributeController;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductListingController extends Controller
@@ -12,6 +13,7 @@ class ProductListingController extends Controller
         return view('pages.productListing', [
             'colors' => AttributeController::getAttributeValues('Color'),
             'sizes' => AttributeController::getAttributeValues('Size'),
+            'categories' => Category::all()
         ]);
     }
 
