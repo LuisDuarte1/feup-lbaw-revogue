@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS
     CartProduct,
     Admins,
     OrderProduct,
+    Categories,
     Payouts CASCADE;
 
 DROP TYPE IF EXISTS
@@ -72,6 +73,12 @@ CREATE TABLE FederatedAuthentications(
   UNIQUE ("provider", "user_id"),
   FOREIGN KEY ("user_id") REFERENCES Users(id) ON DELETE CASCADE
 );
+CREATE TABLE Categories(
+    "id" SERIAL PRIMARY KEY NOT NULL,
+    "name" TEXT UNIQUE NOT NULL,
+    "parent_category" INT,
+    FOREIGN KEY ("parent_category") REFERENCES Categories("id") ON DELETE CASCADE
+);
 
 CREATE TABLE Products(
     "id" SERIAL PRIMARY KEY NOT NULL,
@@ -80,9 +87,11 @@ CREATE TABLE Products(
     "description" TEXT,
     "price" NUMERIC NOT NULL CHECK ( "price" >= 0 ),
     "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
-    "image_paths" TEXT[] check ( array_length("image_paths", 1) >= 1 ),
+    "image_paths" JSON NOT NULL CHECK ( json_array_length("image_paths") > 0 ),
     "sold_by" INT,
-    FOREIGN KEY ("sold_by") REFERENCES Users("id") ON DELETE SET NULL
+    "category" INT,
+    FOREIGN KEY ("sold_by") REFERENCES Users("id") ON DELETE SET NULL,
+    FOREIGN KEY ("category") REFERENCES Categories("id") ON DELETE SET NULL
 );
 
 CREATE TABLE Attributes(
