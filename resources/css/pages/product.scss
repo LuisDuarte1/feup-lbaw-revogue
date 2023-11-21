@@ -77,61 +77,69 @@
             height: 3rem;
         }
     }
-    
+
+}
+
+.seller{
+    justify-content: space-around;
     .seller-wrapper{
         display: flex;
         gap: 2rem;
         align-items: center;
-    }
-    .seller-info{
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        h3{
-            font-size: 1.3rem;
-            font-weight: 500;
-            color: $text-color;
-        }
-        ion-icon{
-            font-size: 1.4rem;
-            color: $secondary;
-        }
-    }
-    $width: 7rem;
-    .square{
-        width: $width;
-        height: $width;
-        background-color: $secondary-background;
-        border-radius: 0.5rem;
-    }
-    .seller{
-        justify-content: space-around;
-    }
-    
-    .seller-buttons{
-        display: flex;
-        gap: 1rem;
-        justify-content: flex-start;
-        align-items: center;
 
-        button{
-            font-size: 1rem;
-            padding: 0 0.8rem;
-            height: 2rem;
+        p{
+            font-size: 0.9rem;
         }
-    }
-    .product-price-shipping{
-        display: flex;
-        gap: 2rem;
-        .product-shipping{
+        
+        .seller-info{
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            gap: 0.5rem;
             h3{
-                color: $primary;
-                font-size: 0.9rem;
+                font-size: 1.2rem;
+                font-weight: 500;
+                color: $text-color;
             }
+            
+            ion-icon{
+                font-size: 1.3rem;
+                color: $secondary;
+            }
+        }
+
+        $width: 7rem;
+        img {
+            width: $width;
+            height: auto;
+            border-radius: 1rem;
+            aspect-ratio: 1;
+            object-fit: cover;
         }
     }
 }
 
+.seller-buttons{
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: center;
 
+    button{
+        font-size: 0.85rem;
+        padding: 0 0.5rem;
+        height: 1.8rem;
+    }
+}
+
+.product-price-shipping{
+    display: flex;
+    gap: 2rem;
+    .product-shipping{
+        display: flex;
+        align-items: center;
+        h3{
+            color: $primary;
+            font-size: 0.9rem;
+        }
+    }
+}

@@ -44,13 +44,16 @@
         <div class="seller column gap-2">
             <div class="seller-wrapper">
                 <div class="profile-pic"> 
-                    <!-- TODO, temporary --> 
-                    <div class="square"></div>
+                    <img id="image" src="/storage/{{ $imagePath }}">
                 </div>
-
                 <div class="seller-info">
                     <div class="seller-name">
-                        <h3>Anne Hathaway</h3>
+                        <div class="seller-display-name">
+                            <h3>{{$user->display_name}}</h3>
+                        </div>
+                        <div class="seller-username">
+                            <p>@ {{$user->username}}</p>
+                        </div>
                     </div>
                     <div class="seller-rating">
                         <ion-icon name="star"></ion-icon>
