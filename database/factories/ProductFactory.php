@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,6 +18,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $categories = Category::all();
         return [
             'slug' => fake()->slug(),
             'name' => fake()->words(5, true),
@@ -24,6 +26,7 @@ class ProductFactory extends Factory
             'price' => fake()->randomFloat(2, 0.1, 100),
             //TODO(luisd): list of static images
             'image_paths' => json_encode(['https://picsum.photos/1020/720']),
+            'category' => $categories->random()->id
         ];
     }
 

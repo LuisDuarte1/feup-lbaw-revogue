@@ -88,6 +88,11 @@ class Product extends Model
         return $this->belongsToMany(CartProduct::class, 'cartproduct', 'product', 'belongs_to')->using(CartProduct::class);
     }
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category');
+    }
+
     /**
      * The table associated with the model.
      *
