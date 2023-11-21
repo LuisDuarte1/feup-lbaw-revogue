@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-Route::view('/', 'pages.landing');
+//Route::view('/', 'pages.landing');
+Route::view('/', 'pages.cart');
 
 // API
 Route::prefix('api')->group(function () {

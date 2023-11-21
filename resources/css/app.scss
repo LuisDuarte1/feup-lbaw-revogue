@@ -1,5 +1,6 @@
 @import 'theme';
 @import 'globals';
+@import 'variables';
 
 @import 'navbar';
 @import 'productCard';
@@ -11,12 +12,8 @@
 @import 'pages/productListing';
 @import 'pages/completeProfilePage';
 @import 'pages/product';
+@import 'pages/cart';
 
-
-$page-margin: 3.75rem;
-$page-navbar-width: 16rem;
-$page-gap: 4rem;
-$topnav-height: 4rem;
 
 * {
     margin: 0;
