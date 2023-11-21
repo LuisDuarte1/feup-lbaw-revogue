@@ -8,8 +8,10 @@
 @import 'pages/register';
 @import 'pages/login';
 @import 'pages/emailConfirmation';
+@import 'pages/productListing';
 @import 'pages/completeProfilePage';
 @import 'pages/product';
+
 
 $page-margin: 3.75rem;
 $page-navbar-width: 16rem;
@@ -25,6 +27,7 @@ $topnav-height: 4rem;
     height: 100%;
     background-color: $background;
     font-family: 'Montserrat', sans-serif;
+    word-break: break-all;
 }
 
 body {
@@ -39,9 +42,9 @@ body {
     }
 
     .navbar {
-        height: calc(100svh - #{$page-margin * 3});
         position: fixed;
         top: $page-margin;
+        bottom: $page-margin;
         overflow: hidden;
     }
 
