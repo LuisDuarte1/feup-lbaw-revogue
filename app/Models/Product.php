@@ -36,6 +36,7 @@ class Product extends Model
     protected $casts = [
         'creation_date' => 'datetime',
         'price' => 'float',
+        'image_paths' => 'array',
     ];
 
     public function attributes(): BelongsToMany
@@ -88,7 +89,7 @@ class Product extends Model
         return $this->belongsToMany(CartProduct::class, 'cartproduct', 'product', 'belongs_to')->using(CartProduct::class);
     }
 
-    public function category(): BelongsTo
+    public function productCategory(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category');
     }
