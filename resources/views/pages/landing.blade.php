@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app', ['search_bar' => true])
+
+
 
 
 @section('content')

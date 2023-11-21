@@ -1,0 +1,61 @@
+@import '../theme.scss';
+
+
+.complete-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.complete-profile-items{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: stretch;
+    .select-image{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+
+        $width: 10rem;
+        img {
+            width: $width;
+            height: auto;
+            border-radius: 1rem;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+
+        label{
+            width: $width;
+            display: inline-block;
+            background-color: $secondary;
+            color: $button-text-color;
+            padding: 0.5rem 0rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+          }
+    }
+
+    .biography{
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        width: 100%;
+        textarea{
+            height: 100%;
+        }
+    }
+}
+
+.complete-profile-page{
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}

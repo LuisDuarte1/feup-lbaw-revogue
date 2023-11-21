@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\api\AttributeController;
+use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CardController;
-use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CompleteProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,25 +29,38 @@ Route::controller(CardController::class)->group(function () {
 });
 
 // API
-Route::controller(CardController::class)->group(function () {
-    Route::put('/api/cards', 'create');
-    Route::delete('/api/cards/{card_id}', 'delete');
+Route::prefix('api')->group(function () {
+    Route::controller(AttributeController::class)->group(function () {
+        Route::get('/attributes', 'getValues');
+    });
 });
-
-Route::controller(ItemController::class)->group(function () {
-    Route::put('/api/cards/{card_id}', 'create');
-    Route::post('/api/item/{id}', 'update');
-    Route::delete('/api/item/{id}', 'delete');
-});
-
 // Authentication
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/login', 'showLoginForm')->name('login');
-    Route::post('/login', 'authenticate');
     Route::get('/logout', 'logout')->name('logout');
-});
+})->middleware('auth');
 
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
+})->middleware('guest');
+
+Route::prefix('login')->group(function () {
+    Route::controller(LoginController::class)->group(function () {
+        Route::get('/', 'showLoginForm')->name('login');
+        Route::post('/', 'authenticate');
+    })->middleware('guest');
+
+    Route::controller(EmailConfirmationController::class)->group(function () {
+        Route::get('/email-confirmation', 'getPage')->name('verification.notice');
+        Route::post('/email-confirmation', 'resendEmail')->middleware('throttle:2,1');
+        Route::get('/email-confirmation/verify/{id}/{hash}', 'verifyEmail')->middleware('signed')->name('verification.verify');
+    })->middleware('auth');
 });
+
+Route::prefix('profile')->group(function () {
+    Route::controller(CompleteProfileController::class)->group(function () {
+        Route::get('complete', 'getPage')->name('complete-profile');
+        Route::post('complete', 'postProfile');
+    });
+
+})->middleware(['auth', 'verified']);

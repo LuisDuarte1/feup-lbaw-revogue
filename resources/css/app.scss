@@ -1,13 +1,21 @@
 @import 'theme';
 @import 'globals';
-@import 'pages/register';
-@import 'pages/login';
+
 @import 'navbar';
 @import 'productCard';
 @import 'profileLayout';
 @import 'profileNavbar';
+@import 'searchBar';
+
+@import 'pages/register';
+@import 'pages/login';
+@import 'pages/emailConfirmation';
+@import 'pages/completeProfilePage';
 
 $page-margin: 3.75rem;
+$page-navbar-width: 16rem;
+$page-gap: 4rem;
+$topnav-height: 4rem;
 
 * {
     margin: 0;
@@ -21,18 +29,36 @@ $page-margin: 3.75rem;
 }
 
 body {
-    height: 100%;
-    margin: $page-margin;
     display: grid;
-    grid-template-columns: 14rem auto;
-    gap: 6rem;
+    grid-template-columns: $page-navbar-width auto;
+    gap: $page-gap;
+    margin: $page-margin;
+
     .main-content {
+        max-height: calc(100vh - #{$page-margin*2});
         grid-column: 2;
-        height: 100%;
     }
+
     .navbar {
         height: calc(100svh - #{$page-margin * 3});
         position: fixed;
         top: $page-margin;
+        overflow: hidden;
     }
+
+    .topnav {
+        height: $topnav-height;
+        width: calc(100% - #{$page-margin*2 + $page-navbar-width + $page-gap});
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: calc($page-margin + $page-navbar-width + $page-gap);
+        gap: 3rem;
+        z-index: 2;
+        overflow: hidden;
+        background-color: $background;
+    }
+
 }

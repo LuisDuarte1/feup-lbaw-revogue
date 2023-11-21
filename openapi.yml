@@ -139,3 +139,30 @@ paths:
       responses:
         '200':
           description: Always returns 200, and shows a sucessful reset page for security purposes even if the email doesn't exist      
+  /login/email-confirmation:
+    summary: Email Confirmation page
+    get:
+      responses:
+        '200':
+          description: Returns the email confirmation page
+    post:
+      responses:
+        '200':
+          description: Resends the confirmation email and returns the same page
+  /login/email-confirmation/verify/{id}/{hash}:
+    summary: Email confirmation verification
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema: 
+            type: string
+          required: true
+        - in: path
+          name: hash
+          schema: 
+            type: string
+          required: true
+      responses:
+        '200': 
+          description: If the verification is valid, validate the email and redirect to the home page.

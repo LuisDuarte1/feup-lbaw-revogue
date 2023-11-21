@@ -40,7 +40,7 @@ class Product extends Model
 
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class, 'productattributes', 'attribute', 'product');
+        return $this->belongsToMany(Attribute::class, 'productattributes', 'product', 'attribute');
     }
 
     public function soldBy(): BelongsTo
@@ -86,6 +86,11 @@ class Product extends Model
     public function cartProducts(): BelongsToMany
     {
         return $this->belongsToMany(CartProduct::class, 'cartproduct', 'product', 'belongs_to')->using(CartProduct::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category');
     }
 
     /**

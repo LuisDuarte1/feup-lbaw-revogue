@@ -1,6 +1,6 @@
 @import 'theme';
 
-.navbar{
+.navbar {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -10,14 +10,16 @@
     background: $secondary-background;
 }
 
-.logo{
+.logo {
     text-align: center;
     font-family: 'Abril Fatface', serif;
-    a{
+
+    a {
         text-decoration: none;
         color: $accent;
         font-size: 1.5rem;
-        h1{
+
+        h1 {
             margin: 1rem;
         }
     }
@@ -26,18 +28,19 @@
 .menu {
     list-style-type: none;
     display: flex;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
+
     li {
         width: 100%;
     }
 }
 
 .menu-item {
-    padding: 0.7rem 1rem; 
+    padding: 0.7rem 1rem;
     display: flex;
     flex-direction: row;
     gap: 1.25rem;
@@ -46,6 +49,7 @@
     font-size: 1rem;
     align-items: center;
     font-weight: 500;
+
     ion-icon {
         font-size: 1.5rem;
         margin-right: 0.2rem;
@@ -53,16 +57,19 @@
     }
 }
 
-.menu-item{
+.menu-item {
     border-radius: 0.5rem;
     transition: all 0.2s ease-in-out;
 }
-.menu-item:hover{
+
+.menu-item:hover {
     background-color: $secondary;
 }
 
-.sign-in, .sign-up, .logout{
-    margin: 1rem;
+.sign-in,
+.sign-up,
+.logout {
+    margin: 1rem 1rem 0rem 1rem;
     transition: all 0.1s ease-out;
     border: 1px solid #dcdbdb;
     box-shadow: 0 0.1rem 0.2rem 0.3rem 0.3rem $secondary;
