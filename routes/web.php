@@ -6,9 +6,11 @@ use App\Http\Controllers\Api\WishListController;
 use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +39,9 @@ Route::prefix('api')->group(function () {
     Route::controller(WishListController::class)->group(function () {
         Route::post('/wishlist', 'AddProductToWishlist');
         Route::delete('/wishlist', 'RemoveProductFromWishlist');
+    });
+    Route::controller(SearchController::class)->group(function () {
+        Route::get('/search', 'searchGetApi');
     });
 });
 
@@ -73,9 +78,21 @@ Route::prefix('products')->group(function () {
     });
 });
 
-Route::prefix('profile')->group(function () {
+Route::prefix('profile')->middleware(['auth', 'verified'])->group(function () {
     Route::controller(CompleteProfileController::class)->group(function () {
         Route::get('complete', 'getPage')->name('complete-profile');
         Route::post('complete', 'postProfile');
     });
-})->middleware(['auth', 'verified']);
+});
+
+Route::prefix('search')->group(function () {
+    Route::controller(SearchController::class)->group(function () {
+        Route::get('/', 'searchGet')->name('search');
+    });
+});
+
+Route::prefix('cart')->middleware(['auth', 'verified'])->group(function () {
+    Route::controller(CartController::class)->group(function () {
+        Route::get('/', 'getPage')->name('cart');
+    });
+});
