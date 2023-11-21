@@ -4,10 +4,10 @@ use App\Http\Controllers\api\AttributeController;
 use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
-use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
