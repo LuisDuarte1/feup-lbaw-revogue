@@ -23,11 +23,6 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::view('/', 'pages.landing');
 
-// Cards
-Route::controller(CardController::class)->group(function () {
-    Route::get('/cards', 'list')->name('cards');
-    Route::get('/cards/{id}', 'show');
-});
 
 // API
 Route::prefix('api')->group(function () {

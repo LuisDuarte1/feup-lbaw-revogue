@@ -35,9 +35,9 @@
                 <div class="layout-wrapper">
                     <div class="column justify-evenly gap-2">
                         <div class="name">
-                            <label for="title">
-                                <h2>Title</h2>
-                            </label>
+                            <h2><label for="title" required>
+                                Title
+                            </label></h2>
                             <input type="text" id="title" name="title" placeholder="Nike t-shirt">
                         </div>
                         <div class="description">
@@ -52,10 +52,10 @@
                         <div class="info category">
                             <h2>Info</h2>
                             <div class="category type">
-                                <label for="type">
-                                    <h3>Category</h3>
-                                </label>
-                                <select id="type" name="type">
+                                <h3><label for="type" required>
+                                    Category
+                                </label></h3>
+                                <select id="type" name="category">
                                     <option value=""></option>
                                     @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -63,9 +63,9 @@
                                 </select>
                             </div>
                             <div class="category size">
-                                <label for="size">
-                                    <h3>Size</h3>
-                                </label>
+                                <h3><label for="size" required>
+                                    Size
+                                </label></h3>
                                 <select id="size" name="size">
                                     <option value=""></option>
                                     @foreach ($sizes as $size)
@@ -74,9 +74,9 @@
                                 </select>
                             </div>
                             <div class="category color">
-                                <label for="color">
-                                    <h3>Color</h3>
-                                </label>
+                                <h3><label for="color" required>
+                                    Color
+                                </label></h3>
                                 <select id="color" name="color">
                                     <option value=""></option>
                                     @foreach ($colors as $color)
@@ -98,10 +98,10 @@
                     </div>
                 </div>
                 <div class="item price">
-                    <label for="price">
-                        <h2>Price</h2>
-                    </label>
-                    <input type="text" id="price" name="price" placeholder="€ 0.00">
+                    <h2><label for="price" required>
+                        Price
+                    </label></h2>
+                    <input type="number" id="price" name="price" placeholder="€ 0.00" required>
                 </div>
                 <button type="submit">
                     List item

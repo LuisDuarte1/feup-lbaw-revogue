@@ -88,9 +88,9 @@ CREATE TABLE Products(
     "price" NUMERIC NOT NULL CHECK ( "price" >= 0 ),
     "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
     "image_paths" JSON NOT NULL CHECK ( json_array_length("image_paths") > 0 ),
-    "sold_by" INT,
+    "sold_by" INT NOT NULL,
     "category" INT,
-    FOREIGN KEY ("sold_by") REFERENCES Users("id") ON DELETE SET NULL,
+    FOREIGN KEY ("sold_by") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("category") REFERENCES Categories("id") ON DELETE SET NULL
 );
 

@@ -29,5 +29,10 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_category');
     }
 
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'category');
+    }
+
     protected $table = 'categories';
 }
