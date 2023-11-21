@@ -7,9 +7,9 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class CartProductController extends Controller
+class WishListController extends Controller
 {
-    public function AddProductToCart(Request $request)
+    public function AddProductToWishlist(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'product' => 'required',
@@ -19,25 +19,26 @@ class CartProductController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         } else {
             $productId = $request->product;
+            $userId = $request->user()->id;
 
-            $productInCart = $request->user()->cart()->where('product', $productId)->get()->first();
+            $productInWishlist = $request->user()->wishlist()->where('product', $productId)->get()->first();
 
-            if ($productInCart != null) {
-                return response()->json(['error' => 'Product already in cart'], 404);
+            if ($productInWishlist != null) {
+                return response()->json(['error' => 'Product already in wishlist'], 404);
             } else {
                 $product = Product::find($productId);
                 if ($product == null) {
                     return response()->json(['error' => 'Product not found'], 404);
                 }
 
-                $request->user()->cart()->attach($productId); // attach() is a method from BelongsToMany relationship (User.php
+                $request->user()->wishlist()->attach($productId); // attach() is a method from BelongsToMany relationship (User.php
 
-                return response()->json(['success' => 'Product added to cart successfully'], 200);
+                return response()->json(['success' => 'Product added to wishlist successfully'], 200);
             }
         }
     }
 
-    public function RemoveProductFromCart(Request $request)
+    public function RemoveProductFromWishlist(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'product' => 'required',
@@ -48,19 +49,18 @@ class CartProductController extends Controller
         } else {
             $productId = $request->product;
 
-            $productInCart = $request->user()->cart()->where('product', $productId)->get()->first();
-
-            if ($productInCart == null) {
-                return response()->json(['error' => 'Product not in cart'], 404);
+            $productInWishlist = request()->user()->wishlist()->where('product', $productId)->get()->first();
+            if ($productInWishlist == null) {
+                return response()->json(['error' => 'Product not in wishlist'], 404);
             } else {
                 $product = Product::find($productId);
                 if ($product == null) {
                     return response()->json(['error' => 'Product not found'], 404);
                 }
 
-                $request->user()->cart()->detach($productId); // detach() is a method from BelongsToMany relationship (User.php
+                $request->user()->wishlist()->detach($productId); // detach() is a method from BelongsToMany relationship (User.php
 
-                return response()->json(['success' => 'Product removed from cart successfully'], 200);
+                return response()->json(['success' => 'Product removed from wishlist successfully'], 200);
             }
         }
     }

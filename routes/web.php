@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AttributeController;
 use App\Http\Controllers\api\CartProductController;
+use App\Http\Controllers\Api\WishListController;
 use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -32,6 +33,10 @@ Route::prefix('api')->group(function () {
     Route::controller(CartProductController::class)->group(function () {
         Route::post('/cart', 'AddProductToCart');
         Route::delete('/cart', 'RemoveProductFromCart');
+    });
+    Route::controller(WishListController::class)->group(function () {
+        Route::post('/wishlist', 'AddProductToWishlist');
+        Route::delete('/wishlist', 'RemoveProductFromWishlist');
     });
 });
 
