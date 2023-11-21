@@ -29,7 +29,7 @@ Route::prefix('api')->group(function () {
     Route::controller(AttributeController::class)->group(function () {
         Route::get('/attributes', 'getValues');
     });
-    Route::controller(SearchController::class)->group(function() {
+    Route::controller(SearchController::class)->group(function () {
         Route::get('/search', 'searchGetApi');
     });
 });

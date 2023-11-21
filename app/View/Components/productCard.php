@@ -28,7 +28,7 @@ class ProductCard extends Component
             'image' => $this->image,
             'price' => $this->price,
             'size' => $this->size,
-            'id' => $this->id
+            'id' => $this->id,
         ]);
     }
 }
