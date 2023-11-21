@@ -26,7 +26,7 @@ class ProductFactory extends Factory
             'description' => fake()->paragraphs(3, true),
             'price' => fake()->randomFloat(2, 0.1, 100),
             //TODO(luisd): list of static images
-            'image_paths' => json_encode(['https://picsum.photos/1020/720']),
+            'image_paths' => ['https://picsum.photos/1020/720'],
             'category' => $categories->random()->id,
         ];
     }

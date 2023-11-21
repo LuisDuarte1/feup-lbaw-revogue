@@ -1,8 +1,8 @@
 
 <nav class= "topnav">
-    <form method="POST" action="#">
+    <form method="GET" action="/search">
         <ion-icon id="search_icon" name="search"></ion-icon>
-        <input class="search" type="text" placeholder="Search">
+        <input id="search" class="search" type="text" placeholder="Search" name="q">
     </form>
     <div>
     <a href="#">
