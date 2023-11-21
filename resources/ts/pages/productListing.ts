@@ -92,7 +92,7 @@ function searchTag (): void {
       tagsList.innerHTML = ''
       return
     }
-    searchFunction(ev)
+    void searchFunction(ev)
   })
 }
 
