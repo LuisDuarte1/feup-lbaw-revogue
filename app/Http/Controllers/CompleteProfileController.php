@@ -9,7 +9,7 @@ class CompleteProfileController extends Controller
 {
     public function getPage(Request $request)
     {
-        return view('pages.completeProfile', ['imagePath' => $request->user()->profile_image_path ?? '/defaultProfileImage.png']);
+        return view('pages.completeProfile', ['imagePath' => $request->user()->profile_image_path, 'bio' => $request->user()->bio, 'displayName' => $request->user()->display_name]);
     }
 
     public function postProfile(Request $request)
@@ -17,6 +17,7 @@ class CompleteProfileController extends Controller
         $validated = $request->validate([
             'bio' => 'nullable|string|max:10000',
             'profileImage' => 'nullable|image|max:5000',
+            'display_name' => 'string|max:100',
         ]);
 
         $user = $request->user();
@@ -32,6 +33,7 @@ class CompleteProfileController extends Controller
             $path = $request->file('profileImage')->storeAs('avatars', $filename, 'public');
             $user->update(['profile_image_path' => $path]);
         }
+        $user->update(['display_name' => $request->display_name]);
 
         return redirect('/');
     }

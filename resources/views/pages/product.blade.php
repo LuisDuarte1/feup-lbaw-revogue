@@ -87,7 +87,7 @@
                         </div>
                         <div class="seller-buttons">
                             <button class="ask-question">Ask a question</button>
-                            <button class="visit-shop">Visit shop</button>
+                            <button class="visit-shop"><a href="/profile/{{$user->id}}">Visit shop</a></button>
                         </div>
                     </div>
                 </div>
