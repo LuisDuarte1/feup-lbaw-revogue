@@ -1,7 +1,10 @@
 @extends('layouts.admin')
-
-
 @section('content')
+
+
+@php
+$states = ['active' => 'Active', 'needsConfirmation' => 'Needs Confirmation', 'banned'=>'Banned'];
+@endphp
 
 <section class="users column justify-center gap-1">
   <div class="admin-wrapper">
@@ -22,75 +25,34 @@
           </tr>
         </thead>
         <tbody>
+          @foreach ($users as $user)
           <tr>
-            <td scope="row" class="user-id">1</th>
+            <td scope="row" class="user-id">{{ $user->id }}</td>
             <td><img src="../defaultProfileImage.png" class="profile-pic" alt="Profile Picture"></td>
-            <td>Mark</td>
-            <td>@mdo</td>
+            <td>{{$user->display_name}}</td>
+            <td>{{$user->username}}</td>
             <td>
               <form method="POST" action=#>
+                @csrf
+                <input type="hidden" name="id" value="{{$user->id}}">
                 <select>
-                  <option value="active">active</option>
-                  <option value="needsConfirmation">needsConfirmation</option>
-                  <option value="banned">banned</option>
+                  @foreach ($states as $key => $state)
+                  <option value="{{$key}}" {{$user->account_status == $key ? 'selected' : '' }}>{{$state}}</option>
+                  @endforeach
                 </select>
               </form>
             </td>
-            <td> 3 years ago </td>
+            <td> {{$user->creation_date}} </td>
             <td>
               <form action="#" method='POST'>
+                @csrf
+                <input type="hidden" name="id" value="{{$user->id}}">
                 <button type="submit" formaction=""><ion-icon name="close-circle-outline"></ion-icon></button>
                 <button type="submit" formaction=""><ion-icon name="ban-outline"></ion-icon></button>
-                <button type="submit" formaction=""><ion-icon name="bar-chart-outline"></ion-icon></button>
               </form>
             </td>
           </tr>
-          <tr>
-            <td scope="row" class="user-id">2</th>
-            <td><img src="../defaultProfileImage.png" class="profile-pic" alt="Profile Picture"></td>
-            <td>Jacob</td>
-            <td>@fat</td>
-            <td>
-              <form method="POST" action=#>
-                <select>
-                  <option value="active">active</option>
-                  <option value="needsConfirmation">needsConfirmation</option>
-                  <option value="banned">banned</option>
-                </select>
-              </form>
-            </td>
-            <td> 3 years ago </td>
-            <td>
-              <form action="#" method='POST'>
-                <button type="submit" formaction=""><ion-icon name="close-circle-outline"></ion-icon></button>
-                <button type="submit" formaction=""><ion-icon name="ban-outline"></ion-icon></button>
-                <button type="submit" formaction=""><ion-icon name="bar-chart-outline"></ion-icon></button>
-              </form>
-            </td>
-          </tr>
-          <tr>
-            <td scope="row" class="user-id">3</th>
-            <td><img src="../defaultProfileImage.png" class="profile-pic" alt="Profile Picture"></td>
-            <td>Larry the Bird</td>
-            <td>@twitter</td>
-            <td>
-              <form method="POST" action=#>
-                <select>
-                  <option value="active">active</option>
-                  <option value="needsConfirmation">needsConfirmation</option>
-                  <option value="banned">banned</option>
-                </select>
-              </form>
-            </td>
-            <td> 3 years ago </td>
-            <td>
-              <form action="#" method='POST'>
-                <button type="submit" formaction=""><ion-icon name="close-circle-outline"></ion-icon></button>
-                <button type="submit" formaction=""><ion-icon name="ban-outline"></ion-icon></button>
-                <button type="submit" formaction=""><ion-icon name="bar-chart-outline"></ion-icon></button>
-              </form>
-            </td>
-          </tr>
+          @endforeach
         </tbody>
       </table>
     </div>

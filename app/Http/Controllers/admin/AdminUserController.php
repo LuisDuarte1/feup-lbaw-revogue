@@ -8,6 +8,13 @@ use App\Models\User;
 
 class AdminUserController extends Controller
 {
+    public function updateStatus(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->status = $request->status;
+        $user->save();
+        return redirect()->back();
+    }
     public function getPage(Request $request)
     {
         $users = User::paginate(20);
