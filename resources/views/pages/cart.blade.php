@@ -75,7 +75,7 @@
         <div class="total">
             <h3>Total: </h3>
             <div class="total-price">
-                <p>423€</p>
+                <p>{{$sum}}€</p>
             </div>
         </div>
         <div class="checkout-button column">

@@ -12,12 +12,12 @@ class CartController extends Controller
         $cart = $user->cart()->get();
 
         $sum = 0;
-        
+
         $list = [];
-        foreach($cart as $product){
+        foreach ($cart as $product) {
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
             $color = $product->attributes()->where('key', 'Color')->get()->first()->value;
-            array_push($list, ["product"=>$product, "size"=>$size, "color"=>$color]);
+            array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
             $sum += $product->price;
         }
 
