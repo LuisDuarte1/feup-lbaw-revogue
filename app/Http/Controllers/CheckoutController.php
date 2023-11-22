@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
@@ -12,5 +14,49 @@ class CheckoutController extends Controller
         $cart = $user->cart()->get();
 
         return view('pages.checkout', ['cart' => $cart]);
+    }
+
+    public function postPage(Request $request){
+        //dd($request);
+        $request->validate([
+            'full_name' => 'required|max:250',
+            'email' => 'required|email:rfc',
+            'address' => 'required|max:500',
+            'country' => 'required',
+            'zip_code' => 'required|max:1000',
+            'phone' => 'required|integer',
+            'payment_method' => 'required'
+        ]);
+
+        DB::beginTransaction();
+        if($request->payment_method === "0"){
+            $order = $request->user()->orders()->create([
+                'status' => 'pendingShipment', //payment at delivery goes straight to pendingShipment
+                'shipping_address' => [
+                    "name"=>$request->full_name,
+                    "email"=>$request->email,
+                    "country"=>$request->country,
+                    "address"=>$request->address,
+                    "zip-code"=>$request->zip_code,
+                    "phone"=>$request->phone,
+                ]
+                ]);
+            
+            $cart = $request->user()->cart()->get();
+            $ids = [];
+            foreach ($cart as $product){
+                array_push($ids,$product->id);
+            }
+            $order->products()->attach($ids);
+
+
+            // remove the cart of all users because it has been bought
+            // TODO(luisd): send notification
+            foreach($cart as $product){
+                $product->inCart()->detach();
+            }
+        }
+        DB::commit();
+        return redirect('/');
     }
 }

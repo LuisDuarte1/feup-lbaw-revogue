@@ -101,5 +101,7 @@ Route::prefix('cart')->middleware(['auth', 'verified'])->group(function () {
 Route::prefix('checkout')->middleware(['auth', 'verified'])->group(function () {
     Route::controller(CheckoutController::class)->group(function () {
         Route::get('/', 'getPage')->name('checkout');
+        Route::post('/', 'postPage');
+
     });
 });

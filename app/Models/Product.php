@@ -76,7 +76,7 @@ class Product extends Model
 
     public function inCart(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->using(CartProduct::class);
+        return $this->belongsToMany(User::class, 'cartproduct', 'product', 'belongs_to')->using(CartProduct::class);
     }
 
     public function report(): HasMany
