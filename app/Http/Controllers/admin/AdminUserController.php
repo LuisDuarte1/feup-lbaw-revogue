@@ -62,4 +62,12 @@ class AdminUserController extends Controller
             return back()->with('error', 'User already unbanned');
         }
     }
+
+    public function updateUserStatus(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->account_status = $user->status;
+        $user->save();
+        return back()->with('success', 'User unbanned successfully');
+    }
 }

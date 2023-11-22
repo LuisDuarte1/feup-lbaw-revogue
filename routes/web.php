@@ -125,11 +125,13 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
     Route::view('/payouts', 'pages.admin.payouts');
     Route::controller(AdminOrderController::class)->group(function () {
         Route::get('/orders', 'getPage')->name('admin.orders');
+        Route::post('/orders', 'updateStatus')->name('admin.orders.update');
     });
     Route::controller(AdminUserController::class)->group(function () {
         Route::get('/users', 'getPage')->name('admin.users');
         Route::post('/users/delete', 'removeUser')->name('admin.users.delete');
         Route::post('/users/block', 'banUser')->name('admin.users.block');
+        Route::post('/users/update', 'updateUserStatus')->name('admin.users.update');
     });
     Route::controller(AdminPayoutController::class)->group(function () {
         Route::get('/payouts', 'getPage')->name('admin.payouts');

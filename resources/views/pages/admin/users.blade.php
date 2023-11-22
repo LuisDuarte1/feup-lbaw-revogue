@@ -28,14 +28,14 @@ $states = ['active' => 'Active', 'needsConfirmation' => 'Needs Confirmation', 'b
           @foreach ($users as $user)
           <tr>
             <td scope="row" class="user-id">{{ $user->id }}</td>
-            <td><img src="../defaultProfileImage.png" class="profile-pic" alt="Profile Picture"></td>
+            <td><img src="{{isset($user->profile_photo_path) ? $user->profile_photo_path : '/defaultProfileImage.png'}}" class="profile-pic" alt="Profile Picture"></td>
             <td>{{$user->display_name}}</td>
             <td>{{$user->username}}</td>
             <td>
-              <form method="POST" action=#>
+              <form method="POST" action="{{route('admin.users.update')}}">
                 @csrf
                 <input type="hidden" name="id" value="{{$user->id}}">
-                <select>
+                <select name="status" id="account_status">
                   @foreach ($states as $key => $state)
                   <option value="{{$key}}" {{$user->account_status == $key ? 'selected' : '' }}>{{$state}}</option>
                   @endforeach
