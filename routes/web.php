@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\admin\AdminUserController;
+use App\Http\Controllers\admin\AdminPayoutController;
+use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\api\AttributeController;
 use App\Http\Controllers\api\CartProductController;
 use App\Http\Controllers\api\WishlistController;
@@ -113,4 +116,22 @@ Route::prefix('checkout')->middleware(['auth', 'verified'])->group(function () {
         Route::post('/', 'postPage');
 
     });
+});
+
+
+Route::prefix('admin')->group(function () {
+
+    Route::view('/', 'pages.admin.landing');
+    Route::view('/users', 'pages.admin.users');
+    Route::view('/payouts', 'pages.admin.payouts');
+    Route::controller(AdminOrderController::class)->group(function () {
+        Route::get('/orders', 'getPage')->name('admin.orders');
+    });
+    Route::controller(AdminUserController::class)->group(function () {
+        Route::get('/users', 'getPage')->name('admin.users');
+    });
+    Route::controller(AdminPayoutController::class)->group(function () {
+        Route::get('/payouts', 'getPage')->name('admin.payouts');
+    });
+    
 });

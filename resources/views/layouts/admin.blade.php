@@ -20,16 +20,29 @@
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
 
-    @vite(['resources/css/app.scss', 'resources/ts/app.ts'])
+    @vite(['resources/css/admin.scss', 'resources/ts/admin.ts'])
 
 </head>
 
 <body>
-
-    @if(isset($search_bar) == true && $search_bar == true)
-    <x-searchBar />
-    @endif
-    <x-navbar />
+    <header class="navbar">
+        <div class="separator">
+            <div class="logo">
+                <h1>ReVogue</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/admin" class="home">Home</a></li>
+                    <li><a href="/admin/users">Users</a></li>
+                    <li><a href="/admin/orders">Orders</a></li>
+                    <li><a href="/admin/payouts">Payouts</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="profile-pic">
+            <img src="../defaultProfileImage.png" class="profile-pic">
+        </div>
+    </header>
     <div class="main-content">@yield('content')</div>
 </body>
 
