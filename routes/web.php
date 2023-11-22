@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\admin\AdminLoginController;
-use App\Http\Controllers\admin\AdminUserController;
-use App\Http\Controllers\admin\AdminPayoutController;
 use App\Http\Controllers\admin\AdminOrderController;
+use App\Http\Controllers\admin\AdminPayoutController;
+use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\api\AttributeController;
 use App\Http\Controllers\api\CartProductController;
 use App\Http\Controllers\api\WishlistController;
@@ -128,6 +128,8 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
     });
     Route::controller(AdminUserController::class)->group(function () {
         Route::get('/users', 'getPage')->name('admin.users');
+        Route::post('/users/delete', 'removeUser')->name('admin.users.delete');
+        Route::post('/users/block', 'banUser')->name('admin.users.block');
     });
     Route::controller(AdminPayoutController::class)->group(function () {
         Route::get('/payouts', 'getPage')->name('admin.payouts');

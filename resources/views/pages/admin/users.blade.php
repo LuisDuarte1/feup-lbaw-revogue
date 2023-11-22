@@ -47,8 +47,8 @@ $states = ['active' => 'Active', 'needsConfirmation' => 'Needs Confirmation', 'b
               <form action="#" method='POST'>
                 @csrf
                 <input type="hidden" name="id" value="{{$user->id}}">
-                <button type="submit" formaction=""><ion-icon name="close-circle-outline"></ion-icon></button>
-                <button type="submit" formaction=""><ion-icon name="ban-outline"></ion-icon></button>
+                <button type="submit" formaction="{{ route('admin.users.delete') }}" title="Remove user"><ion-icon name="close-circle-outline"></ion-icon></button>
+                <button type="submit" formaction="{{ route('admin.users.block') }}" title="Ban user"><ion-icon name="ban-outline"></ion-icon></button>
               </form>
             </td>
           </tr>
