@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 class LandingPageController extends Controller
 {
-    
-    public function getTrendingProducts(){
+    public function getTrendingProducts()
+    {
         $products = ProductController::getTrendingProducts()->slice(0, 15);
         $list = [];
         foreach ($products as $product) {
@@ -16,8 +13,7 @@ class LandingPageController extends Controller
             $color = $product->attributes()->where('key', 'Color')->get()->first()->value;
             array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
         }
+
         return view('pages.landing', ['products' => $list]);
     }
-
-     
 }

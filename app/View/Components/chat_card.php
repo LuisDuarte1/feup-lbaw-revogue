@@ -2,22 +2,26 @@
 
 namespace App\View\Components;
 
-use Closure;
-use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 class chat_card extends Component
 {
     public $user_id;
+
     public $user_displayname;
+
     public $username;
+
     public $user_image;
+
     public $product_id;
+
     public $product_image;
 
     public $last_message;
-    public $last_message_time;
 
+    public $last_message_time;
 
     public function __construct($user_id, $user_displayname, $username, $user_image, $last_message, $last_message_time, $product_id, $product_image)
     {
@@ -31,18 +35,17 @@ class chat_card extends Component
         $this->product_image = $product_image;
 
     }
-    
-        //
-    
-    
-        //
-    
+
+    //
+
+    //
+
     /**
      * Get the view / contents that represent the component.
      */
     public function render()
     {
-        return view('components.chat_card',[
+        return view('components.chat_card', [
             'user_id' => $this->user_id,
             'user_displayname' => $this->user_displayname,
             'username' => $this->username,

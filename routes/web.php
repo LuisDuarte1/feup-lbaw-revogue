@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\LandingPageController;
+
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\AdminPayoutController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompleteProfileController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
@@ -33,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::controller(LandingPageController::class)->group(function () {
     Route::get('/', 'getTrendingProducts')->name('landing');
-}); 
+});
 
 // API
 Route::prefix('api')->group(function () {

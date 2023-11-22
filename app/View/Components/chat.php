@@ -3,16 +3,14 @@
 namespace App\View\Components;
 
 use Closure;
-use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 class chat extends Component
 {
-
     public $user;
-    public $messages;
-    
 
+    public $messages;
 
     /**
      * Create a new component instance.

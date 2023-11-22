@@ -39,7 +39,8 @@ class ProductController extends Controller
         return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist]);
     }
 
-    public static function getTrendingProducts(){
+    public static function getTrendingProducts()
+    {
         return Product::withCount('wishlist')->get()->sortBy('wishlist_count');
     }
 
