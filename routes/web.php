@@ -11,6 +11,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
@@ -83,6 +84,14 @@ Route::prefix('profile')->middleware(['auth', 'verified'])->group(function () {
     Route::controller(CompleteProfileController::class)->group(function () {
         Route::get('complete', 'getPage')->name('complete-profile');
         Route::post('complete', 'postProfile');
+    });
+    Route::prefix('{id}')->group(function () {
+        Route::controller(ProfileController::class)->group(function () {
+            Route::get('/', 'sellingProducts');
+            Route::get('/sold', 'soldProducts');
+            Route::get('/likes', 'likedProducts');
+            Route::get('/history', 'historyProducts');
+        });
     });
 });
 

@@ -158,6 +158,11 @@
         padding: 0 0.5rem;
         height: 1.8rem;
     }
+
+    .visit-shop  > a{
+        color: $text-color;
+        text-decoration: none;
+    }
 }
 
 .product-price-shipping{
@@ -171,6 +176,7 @@
             font-size: 0.9rem;
         }
     }
+    
 }
 
 .reviews{
