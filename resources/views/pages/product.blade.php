@@ -34,13 +34,11 @@
                 </div>
                 <div class="product-info">
                     <p>@foreach ($attributes as $attribute)
-                        {{$attribute->key}} - {{$attribute->value}} 
-                        <span class="separator">•</span>
+                        {{$attribute->key}} - {{$attribute->value}}
+                        @if (!$loop->last)
+                            <span class="separator">•</span>
+                        @endif
                         @endforeach
-                        <!-- temporary -->
-                        Category - Shoes
-                        <span class="separator">•</span>
-                        Color - Black
                     </p>
                 </div>
                 <div class="product-description">

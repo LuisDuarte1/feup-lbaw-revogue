@@ -13,66 +13,37 @@
             <p>Product details</p>
         </div>
         <div class="products column gap-1">
-            <article class="product line">
-                <div class="layout-divider">
-                    <div class="product-image">
-                        <img src="../test_image.png" alt="product">
+            @foreach ($cart as $product)
+                @php
+                    $image = $product['product']->image_paths[0];
+                    $title = $product['product']->name;
+                    $id = $product['product']->id;
+                    $color = $product['color'];
+                    $size = $product['size'];
+                    $price = $product['product']->price;
+
+                @endphp
+                <article class="product line" data-id="{{$id}}">
+                    <div class="layout-divider image-details-group">
+                        <div class="product-image">
+                            <img src="{{$image}}" alt="product">
+                        </div>
+                        <div class="product-details">
+                            <h3>{{$title}}</h3>
+                            <p>Color: <span>{{$color}}</span></p>
+                            <p>Size: <span>{{$size}}</span></p>
+                        </div>
                     </div>
-                    <div class="product-details">
-                        <h3>Product name</h3>
-                        <p>Color: <span>Red</span></p>
-                        <p>Size: <span>XL</span></p>
+                    <div class="layout-divider price-trash-group">
+                        <div class="product-price">
+                            <p>{{$price}}</p>
+                        </div>
+                        <div class="product-remove">
+                            <a href="#"><ion-icon name="trash"></ion-icon></a>
+                        </div>
                     </div>
-                </div>
-                <div class="layout-divider">
-                    <div class="product-price">
-                        <p>23€</p>
-                    </div>
-                    <div class="product-remove">
-                        <ion-icon name="trash"></ion-icon>
-                    </div>
-                </div>
-            </article>
-            <article class="product line">
-                <div class="layout-divider">
-                    <div class="product-image">
-                        <img src="../test_image.png" alt="product">
-                    </div>
-                    <div class="product-details">
-                        <h3>Product name</h3>
-                        <p>Color: <span>Red</span></p>
-                        <p>Size: <span>XL</span></p>
-                    </div>
-                </div>
-                <div class="layout-divider">
-                    <div class="product-price">
-                        <p>23€</p>
-                    </div>
-                    <div class="product-remove">
-                        <ion-icon name="trash"></ion-icon>
-                    </div>
-                </div>
-            </article>
-            <article class="product line">
-                <div class="layout-divider">
-                    <div class="product-image">
-                        <img src="../test_image.png" alt="product">
-                    </div>
-                    <div class="product-details">
-                        <h3>Product name</h3>
-                        <p>Color: <span>Red</span></p>
-                        <p>Size: <span>XL</span></p>
-                    </div>
-                </div>
-                <div class="layout-divider">
-                    <div class="product-price">
-                        <p>23€</p>
-                    </div>
-                    <div class="product-remove">
-                        <ion-icon name="trash"></ion-icon>
-                    </div>
-                </div>
-            </article>
+                </article>
+            @endforeach
         </div>
     </div>
     <div class="order-summary column gap-2">
@@ -80,8 +51,8 @@
             <h1 class="title">Order Summary</h1>
         </div>
         <div class="order-categories">
-            <p>3 items</p>
-            <p>423€</p>
+            <p>{{count($cart)}} items</p>
+            <p>{{$sum}}€</p>
         </div>
         <div class="shipping column justify-center gap-1">
             <h3>Shipping: </h3>
@@ -104,7 +75,7 @@
         <div class="total">
             <h3>Total: </h3>
             <div class="total-price">
-                <p>423€</p>
+                <p>{{$sum}}€</p>
             </div>
         </div>
         <div class="checkout-button column">
