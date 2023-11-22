@@ -3,15 +3,15 @@
 namespace App\View\Components;
 
 use Closure;
-use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 class ProfileLayout extends Component
 {
     public $profilePicture;
 
-    public $name;	
-    
+    public $name;
+
     public $username;
 
     public $bio;
@@ -32,7 +32,7 @@ class ProfileLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.profile-layout',[
+        return view('components.profile-layout', [
             'profilePicture' => $this->profilePicture,
             'name' => $this->name,
             'username' => $this->username,
