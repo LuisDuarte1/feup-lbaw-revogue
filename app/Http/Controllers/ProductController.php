@@ -44,7 +44,7 @@ class ProductController extends Controller
         $trendingProducts = []; //creates the array to store
         
         foreach($products as $product){
-            $wishlistCount = Product::find($product->id)->wishlistsCount()->first()->aggregate;
+            $wishlistCount = Product::find($product->id)->wishlist()->first()->aggregate;
             if($wishlistCount > 0){ //if the product is in wishlist
                     $trendingProducts[] = [
                         'product' => $product,

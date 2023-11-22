@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\api\AttributeController;
 use App\Http\Controllers\api\CartProductController;
 use App\Http\Controllers\api\WishlistController;
@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 
 // Home
 Route::view('/', 'pages.landing');
+Route::controller(LandingPageController::class)->group(function () {
+    Route::get('/', 'getTrendingProducts')->name('landing');
+}); 
 
 // API
 Route::prefix('api')->group(function () {

@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
 {
-    public function geTrendingProducts(){
-        
+    
+    public function getTrendingProducts(){
+        $products = ProductController::getTrendingProducts();
+        return view('pages.landing', ['products' => $products]);
     }
+
+     
 }

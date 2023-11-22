@@ -12,16 +12,14 @@
     <h1>Trending</h1>
     <div class="trend-carousel">
         @foreach ($products as $product)
-            @php
-                $price = $product['product']->price;
-                $image = $product['product']->image_paths[0];
-                $size = $product['size'];
-                $id = $product['product']->id;
-            @endphp
+            <div class="trend-card">
+                <img src="{{ asset('images/'.$product->image) }}" alt="product image">
+                <div class="trend-card-info">
+                    <h3>{{ $product->name }}</h3>
+                    <p>{{ $product->description }}</p>
+                    <p>{{ $product->price }}</p>
+                </div>
             
-            @if ($request->user()->wishlist()->where('id', $product_id)->exists() === 1)
-                @php $counter++; @endphp
-            @endif
 
             <x-productCard :price="$price" :image="$image" :size="$size" :id="$id"/>
         @endforeach
