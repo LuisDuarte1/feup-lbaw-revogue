@@ -1,0 +1,207 @@
+@import 'theme';
+@import 'globals';
+@import 'variables';
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    height: 100%;
+    background-color: $background;
+    font-family: 'Montserrat', sans-serif;
+    word-break: break-all;
+}
+
+body{
+    height: 100%;
+}
+
+.main-content{
+    height: 100%;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 0.5rem 1.5rem;
+    background-color: $accent;
+    position: sticky;
+
+    .logo{
+        font-family: 'Abril Fatface', serif;
+        font-size: 0.8rem;
+        padding-left: 0.5rem;
+        color: $background;
+    }
+    .profile-pic{
+        width: 2.8rem;
+        height: 2.8rem;
+        border-radius: 50%;
+        aspect-ratio: 1;
+        object-fit: cover;
+    }
+
+    .avatar-logout{
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        > a{
+            line-height: 0;
+            text-decoration: none;
+            ion-icon{
+                color: white;
+                font-size: 2rem;
+            }
+        }
+    }
+    .nav-links{
+        display: flex;
+        gap: 2rem;
+        list-style-type: none;
+        a{
+            text-decoration: none;
+            color: $background;
+            font-size: 1.1rem;
+        }
+        a:hover, a:active{
+            color: $secondary;
+        }
+    }
+}
+
+.separator{
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.main-section{
+    align-items: center;
+
+    img{
+        width: 30rem;
+        height: auto;
+        object-fit: cover;
+    }
+}
+
+section{
+    padding: 3rem;
+}
+
+.users-title{
+    h2{
+        font-size: 1.4rem;
+        color: $secondary;
+    }
+}
+
+#users-table{
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+
+    .user-id{
+        font-weight: 500;
+    }  
+    
+    tr{
+        border: 1px solid #ddd;
+    }
+    tr:nth-child(0){
+        background-color: $secondary;
+    }
+
+    th {
+        padding: 0.5rem 0rem;
+        background-color: $secondary;
+        color: $background;
+      }
+    .profile-pic{
+        width: 3rem;
+        height: auto;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+    td {
+        padding: 0.5rem 0rem; 
+        align-items: center;
+        select{
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 0.4rem;
+            text-align: left;
+        }
+      }
+      
+    td:first-child {
+        padding-right:0rem;
+    }
+
+    form{
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+    button{
+        font-size: 1.5rem;
+        color: $accent;
+        cursor: pointer;
+        padding: 0;
+        height: 1em;
+        background: none;
+    }
+}
+
+ 
+.users{
+    height: 100%;
+    justify-content: space-between;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1.5rem;
+    ion-icon{
+        color: $accent;
+    }
+    .pagination-buttons{
+        display: flex;
+        gap: 1rem;
+        list-style-type: none;
+        font-size: 1.3rem;
+
+    }
+    li, a{
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    .abled{
+        span {
+            color: $secondary;
+        }
+    }
+}
+
+.admin-login-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+
+    button{
+        margin-top: 2rem;
+        width: 100%;
+    }
+}
