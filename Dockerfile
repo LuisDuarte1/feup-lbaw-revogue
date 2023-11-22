@@ -2,7 +2,16 @@ FROM ubuntu:22.04
 
 # Install dependencies
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update; apt-get install -y --no-install-recommends libpq-dev nginx php8.1-fpm php8.1-mbstring php8.1-xml php8.1-pgsql php8.1-curl ca-certificates curl git zip unzip php-zip
+
+ENV NODE_MAJOR=20
+
+
+RUN apt-get update; 
+RUN apt-get install -y ca-certificates curl gnupg
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+RUN apt-get update; apt-get install -y --no-install-recommends libpq-dev nginx php8.1-fpm php8.1-mbstring php8.1-xml php8.1-pgsql php8.1-curl ca-certificates curl git zip unzip php-zip nodejs
 RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=compose
 RUN rm /tmp/composer-setup.php
@@ -21,9 +30,12 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Ensure that dependencies are available
 RUN compose install
+RUN npm install
+RUN npm run build
 RUN php artisan config:clear
 RUN php artisan clear-compiled
 RUN php artisan optimize
+
 
 WORKDIR /
 RUN apt-get purge -y curl git zip unzip

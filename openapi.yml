@@ -2,6 +2,13 @@
 info:
   title: ReVogue
   version: '1.0'
+tags:
+  - name: M01
+  - name: M02
+  - name: M03
+  - name: M04
+  - name: M05
+  - name: M06
 servers:
   - url: https://localhost
 components:
@@ -13,19 +20,28 @@ components:
 paths:
   /:
     get:
+      tags:
+        - M02
+      operationId: R201
       summary: Landing page of ReVogue
-      description: Returns HTML, contains a overview of the website from trending products and categories and redirects people to the website features.
+      description: Returns HTML, contains a overview of the website from trending products and categories and redirects people to the website features. PUB
       responses:
         '200':
           description: Returns the Landing Page
   /login:
     get:
+      tags:
+        - M01
+      operationId: R101
       summary: Login Page
-      description: Retuns HTML, contains the layout and the forms that the user should use to login. Should also contain buttons to OAuth login providers.
+      description: Retuns HTML, contains the layout and the forms that the user should use to login. Should also contain buttons to OAuth login providers. PUB
       responses:
         '200':
           description: Returns the Login Page
     post:
+      tags:
+        - M01
+      operationId: R102
       requestBody:
         required: true
         content:
@@ -41,7 +57,7 @@ paths:
                 - email
                 - password
       summary: Login Action
-      description: The Login Action, submitted by the form in the page
+      description: The Login Action, submitted by the form in the page PUB
       responses:
         '200':
           description: When the login is successful, redirect to the landing page or to the last page the user has been to.
@@ -53,6 +69,9 @@ paths:
 #     - 
   /search:
     get:
+      tags:
+        - M02
+      operationId: R202
       parameters:
         - in: query
           name: q
@@ -60,24 +79,25 @@ paths:
             type: string
           description: Query string, when not supplied returns an empty search page
         - in: query
-          name: limit
+          name: pages
           schema:
             type: integer
-          description: Limit of items to get, not required because the application sets a default
-        - in: query
-          name: after
-          schema:
-            type: integer
-          description: Starts the query from a certain index defaults to 0
+          description: Page index
       summary: Search products
+      description: PUB
       responses:
         '200':
           description: Returns the HTML for the search page
-  /products/{slug}:
+  /products/{id}:
     get:
+      summary: Product page
+      tags:
+        - M02
+      operationId: R203
+      description: PUB
       parameters:
         - in: path
-          name: slug
+          name: id
           schema:
             type: string
           required: true
@@ -88,12 +108,18 @@ paths:
           description: Return default 404 page if slug is not found
   /register:
     get:
+      tags:
+        - M01
+      operationId: R103
       summary: Register page 
-      description: Returns the register page if the user is not logged on, redirect to the landing page otherwise
+      description: Returns the register page if the user is not logged on, redirect to the landing page otherwise. PUB
       responses:
         '200':
           description: Returns the register Page
     post:
+      tags:
+        - M01
+      operationId: R104
       requestBody:
         required: true
         content:
@@ -115,18 +141,28 @@ paths:
                 - username
                 - displayName
       summary: Register Action
+      description: PUB
       responses:
         '200':
           description: If sucessful redirect to the profile settings page
         '400':
           description: Returns the register page with an error if something is wrong with the user submission
   /login/reset-password:
-    summary: Reset Password page
     get:
+      summary: Reset Password page
+      description: PUB
+      tags:
+        - M01
+      operationId: R105
       responses:
         '200':
           description: Returns the Reset Password
     post:
+      summary: Reset Password action
+      description: PUB
+      tags:
+        - M01
+      operationId: R106
       requestBody:
         required: true
         content:
@@ -140,18 +176,31 @@ paths:
         '200':
           description: Always returns 200, and shows a sucessful reset page for security purposes even if the email doesn't exist      
   /login/email-confirmation:
-    summary: Email Confirmation page
     get:
+      summary: Email Confirmation page
+      description: OWN
+      tags:
+        - M01
+      operationId: R107
       responses:
         '200':
           description: Returns the email confirmation page
     post:
+      summary: Resend Email Action
+      description: OWN
+      tags:
+        - M01
+      operationId: R108
       responses:
         '200':
           description: Resends the confirmation email and returns the same page
   /login/email-confirmation/verify/{id}/{hash}:
-    summary: Email confirmation verification
     get:
+      summary: Email confirmation verification
+      description: OWN
+      tags:
+        - M01
+      operationId: R109
       parameters:
         - in: path
           name: id
@@ -165,18 +214,371 @@ paths:
           required: true
       responses:
         '200': 
-          description: If the verification is valid, validate the email and redirect to the home page.
-          
+          description: If the verification is valid, validate the email and redirect to the home page.  
+  /admin:
+    get:
+      
+      summary: Admin landing pages
+      description: ADM
+      tags:
+          - M06
+      operationId: R601
+      responses:
+        '200':
+          description: Returns the admin page
   /admin/orders:
     get:
+      summary: Admin order managment page
+      description: ADM
+      tags:
+        - M06
+      operationId: R602
       responses:
         '200':
           description: Returns the admin orders page
+
+  /admin/users:
+    get:
+      summary: Admin user managment page
+      description: ADM
+      tags:
+          - M06
+      operationId: R603
+      responses:
+        '200':
+          description: Returns the admin users page
+  /admin/users/delete:
+    post:
+      summary: Delete user action
+      description: ADM
+      tags:
+          - M06
+      operationId: R604
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+              required:
+                - id
+      responses:
+        '200':
+          description: Returns the admin users page
+  /admin/users/block:
+    post:
+      summary: Ban user action
+      description: ADM
+      tags:
+          - M06
+      operationId: R605
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+              required:
+                - id
+      responses:
+        '200':
+          description: Returns the admin users page
+  /admin/payouts:
+    get:
+      summary: Admin Payout managment page 
+      description: ADM
+      tags:
+        - M06
+      operationId: R606
+      responses:
+        '200':
+          description: Returns the admin users payouts page
+  /api/attributes:
+    get:
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          required: false
+      tags:
+        - M02
+      operationId: R204
+      summary: Get all attributes or attribute
+      description: PUB
+      responses:
+        '200':
+          description: Returns all attributes
+  /api/cart:
+    delete:
+      tags:
+        - M04
+      operationId: R401
+      summary: Delete cart product
+      description: OWN
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  type: integer
+              required:
+                - product
+      responses:
+        '200':
+          description: Deletes from cart
+    post:
+      tags:
+        - M04
+      operationId: R405
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  type: integer
+              required:
+                - product
+      summary: Add a product to the cart
+      description: OWN
+      responses:
+        '200':
+          description: Returns the cart
+  /api/wishlist:
+    post:
+      tags:
+        - M02
+      operationId: R205
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  type: integer
+              required:
+                - product
+      summary: Add a product to the wishlist
+      description: OWN
+      responses:
+        '200':
+          description: Returns the wishlist
+    delete:
+
+      tags:
+        - M02
+      operationId: R206
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  type: integer
+              required:
+                - product
+      summary: Remove a product from the wishlist
+      description: OWN
+      responses:
+        '200':
+          description: Returns the wishlist
+  /api/search:
+    get:
+      tags:
+        - M02
+      operationId: R207
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: Query string, when not supplied returns an empty search page
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Limit of items to get, not required because the application sets a default
+        - in: query
+          name: after
+          schema:
+            type: integer
+          description: Starts the query from a certain index defaults to 0
+      summary: Search products
+      description: PUB
+      responses:
+        '200':
+          description: Returns the HTML for the search page
+  /logout:
+    get:
+      tags:
+        - M01
+      operationId: R110
+      summary: Logout Action
+      description: Logs out the user and redirects to the landing page USR
+      responses:
+        '200':
+          description: Returns the landing page
+  /products/new:
+    get:
+      tags:
+        - M02
+      operationId: R208
+      summary: New Products Page
+      description: Returns the new products page. USR
+      responses:
+        '200':
+          description: Returns the new products page
+    post:
+      tags:
+        - M02 
+      operationId: R209
+      summary: New Products Action
+      description: Adds a new product to the database. USR
+      responses:
+        '200':
+          description: Returns the new products page
+  /products:
+    get:
+      tags:
+        - M02
+      operationId: R210
+      summary: Products List Page
+      description: Returns the products page. PUB
+      responses:
+        '200':
+          description: Returns the products page
+  /profile/complete:
+    get:
+      tags:
+        - M01
+      operationId: R111
+      summary: Complete Profile Page
+      description: Returns the complete profile page. OWN
+      responses:
+        '200':
+          description: Returns the complete profile page
+    post:  
+      tags:
+        - M01
+      operationId: R112
+      summary: Complete Profile Action
+      description: Completes the profile of the user. OWN
+      responses:
+        '200':
+          description: Returns the complete profile page
+  /profile/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      tags:
+        - M01
+      operationId: R113
+      summary: Profile Page
+      description: Returns the profile page with selling products. USR
+      responses:
+        '200':
+          description: Returns the profile page
+  /profile/{id}/sold:
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      tags:
+        - M01
+      operationId: R114
+      summary: Profile Sold Page
+      description: Returns the profile sold page. USR
+      responses:
+        '200':
+          description: Returns the profile sold page
+  /profile/{id}/likes:
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      tags:
+        - M01
+      operationId: R115
+      summary: Profile Likes Page
+      description: Returns the profile likes page. USR
+      responses:
+        '200':
+          description: Returns the profile likes page
+  /profile/{id}/history:
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      tags:
+        - M01
+      operationId: R116
+      summary: Profile History Page
+      description: Returns the profile history page. OWN
+      responses:
+        '200':
+          description: Returns the profile history page
+  /cart:
+    get:
+      tags:
+        - M04
+      operationId: R402
+      summary: Cart Page
+      description: Returns the cart page. OWN
+      responses:
+        '200':
+          description: Returns the cart page
+  /checkout:
+    get:
+      tags:
+        - M04
+      operationId: R403
+      summary: Checkout Page
+      description: Returns the checkout page. OWN
+      responses:
+        '200':
+          description: Returns the checkout page
+    post:
+      tags:
+        - M04
+      operationId: R404
+      summary: Checkout Action
+      description: Completes the checkout. OWN
+      responses:
+        '200':
+          description: Complete the buy and redirect to the home page
+  
+  
+  
+  
   
 
   
-
-
-    
-
-    
