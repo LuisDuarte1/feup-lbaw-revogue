@@ -1,0 +1,22 @@
+@import '../variables';
+
+.profile-page{
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .profile-header {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+    }
+    .profile-products {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        a {
+            text-decoration: none;
+        }
+    }
+}

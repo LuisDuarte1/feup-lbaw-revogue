@@ -30,11 +30,12 @@ class ProductController extends Controller
         $imagePath = $user->profile_image_path ?? '../defaultProfileImage.png';
         $categories = [];
         $category = $product->productCategory;
+        $isInWishlist = $request->user()->wishlist()->where('id', $product_id)->exists();
         while (isset($category)) {
             array_unshift($categories, $category);
             $category = $category->parentCategory;
         }
 
-        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product)]);
+        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist]);
     }
 }

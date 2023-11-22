@@ -11,9 +11,17 @@ class ProfileNavbar extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public string $tab;
+
+    public bool $ownPage;
+
+    public string $id;
+
+    public function __construct($tab, $ownPage, $id)
     {
-        //
+        $this->tab = $tab;
+        $this->ownPage = $ownPage;
+        $this->id = $id;
     }
 
     /**
@@ -21,6 +29,6 @@ class ProfileNavbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.profile-navbar');
+        return view('components.profile-navbar', ['tab' => $this->tab, 'ownPage' => $this->ownPage, 'id' => $this->id]);
     }
 }

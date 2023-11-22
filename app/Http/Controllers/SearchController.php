@@ -9,7 +9,9 @@ class SearchController extends Controller
 {
     public static function search_products($searchTerm, $perPage = 20)
     {
-        return Product::whereRaw('(fts_search @@ plainto_tsquery(\'english\', ?) OR name = ?)', [$searchTerm, $searchTerm])
+        return Product::whereHas('orders', function ($q) {
+            $q->where('status', 'cancelled');
+        })->doesntHave('orders', 'or')->whereRaw('(fts_search @@ plainto_tsquery(\'english\', ?) OR name = ?)', [$searchTerm, $searchTerm])
             ->orderByRaw('ts_rank(fts_search, plainto_tsquery(\'english\', ?)) DESC', [$searchTerm])->paginate($perPage);
 
     }

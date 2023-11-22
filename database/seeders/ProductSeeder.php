@@ -21,8 +21,10 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $users = User::where('account_status', 'needsConfirmation')->get();
-
-        $products = Product::factory()->count(ProductSeeder::PRODUCTS_COUNT)->state(['sold_by' => $users->random()->id])->create();
+        $products = [];
+        for ($i = 0; $i < ProductSeeder::PRODUCTS_COUNT; $i++) {
+            array_push($products, Product::factory()->state(['sold_by' => $users->random()->id])->create());
+        }
 
         foreach ($products as $product) {
             $wishlistUsers = $users->random(ProductSeeder::WISHLIST_USERS);

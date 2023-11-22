@@ -19,6 +19,14 @@
         <div class="layout-wrapper">
             <div class="product-image column">
                 <img src="{{$product->image_paths[0]}}" alt="product image">
+                @if ($isInWishlist)
+                    <a href="#" id="wishlist" data-inWishlist="true">
+                            <ion-icon name="heart"></ion-icon>
+                    @else
+                    <a href="#" id="wishlist" data-inWishlist="false">
+                        <ion-icon name="heart-outline"></ion-icon>
+                    @endif
+                </a>
             </div>
             <div class="product-details">
                 <div class="product-title">
@@ -87,7 +95,7 @@
                         </div>
                         <div class="seller-buttons">
                             <button class="ask-question">Ask a question</button>
-                            <button class="visit-shop">Visit shop</button>
+                            <button class="visit-shop"><a href="/profile/{{$user->id}}">Visit shop</a></button>
                         </div>
                     </div>
                 </div>
