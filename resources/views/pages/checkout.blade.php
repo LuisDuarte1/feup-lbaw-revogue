@@ -3,7 +3,8 @@
 @section('content')
 
 <section class="checkout-page">
-    <form action="">
+    <form action="{{ route('checkout') }}" method="POST">
+        @csrf
         <div class="checkout-wrapper column justify-center gap-2">
             <header class="checkout-header">
                 <h1 class="title">Checkout</h1>
@@ -15,7 +16,7 @@
             
                 <div class="shipping-full-name">
                     <label for="full-name" required>Full name</label>
-                    <input type="text" name="full-name" id="full-name">
+                    <input type="text" name="full_name" id="full-name">
                 </div>
                 <div class="shipping-email">
                     <label for="email" required>Email</label>
@@ -38,7 +39,7 @@
                 </div>
                 <div class="shipping-zip">
                     <label for="zip-code" required>Zip or postal code</label>
-                    <input type="text" name="zip-code" id="country">
+                    <input type="text" name="zip_code" id="zip-code">
                 </div>
                 <div class="shipping-phone">
                     <label for="phone">Phone number</label>
@@ -51,7 +52,7 @@
                 </div>
                 <div class="pay-on-collection">
                     <label for="pay-on-collection">Pay at delivery</label>
-                    <input type="radio" name="payment-method" id="pay-on-collection" checked>
+                    <input type="radio" name="payment_method" id="pay-on-collection" value=0 checked>
                 </div>
             </div>
             <div class="submit-button">
