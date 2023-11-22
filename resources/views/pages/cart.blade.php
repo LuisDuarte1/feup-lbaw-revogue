@@ -13,66 +13,36 @@
             <p>Product details</p>
         </div>
         <div class="products column gap-1">
-            <article class="product line">
-                <div class="layout-divider">
-                    <div class="product-image">
-                        <img src="../test_image.png" alt="product">
+            @foreach ($cart as $product)
+                @php
+                    $image = $product['product']->image_paths[0];
+                    $title = $product['product']->name;
+                    $color = $product['color'];
+                    $size = $product['size'];
+                    $price = $product['product']->price;
+
+                @endphp
+                <article class="product line">
+                    <div class="layout-divider">
+                        <div class="product-image">
+                            <img src="{{$image}}" alt="product">
+                        </div>
+                        <div class="product-details">
+                            <h3>{{$title}}</h3>
+                            <p>Color: <span>{{$color}}</span></p>
+                            <p>Size: <span>{{$size}}</span></p>
+                        </div>
                     </div>
-                    <div class="product-details">
-                        <h3>Product name</h3>
-                        <p>Color: <span>Red</span></p>
-                        <p>Size: <span>XL</span></p>
+                    <div class="layout-divider">
+                        <div class="product-price">
+                            <p>{{$price}}</p>
+                        </div>
+                        <div class="product-remove">
+                            <ion-icon name="trash"></ion-icon>
+                        </div>
                     </div>
-                </div>
-                <div class="layout-divider">
-                    <div class="product-price">
-                        <p>23€</p>
-                    </div>
-                    <div class="product-remove">
-                        <ion-icon name="trash"></ion-icon>
-                    </div>
-                </div>
-            </article>
-            <article class="product line">
-                <div class="layout-divider">
-                    <div class="product-image">
-                        <img src="../test_image.png" alt="product">
-                    </div>
-                    <div class="product-details">
-                        <h3>Product name</h3>
-                        <p>Color: <span>Red</span></p>
-                        <p>Size: <span>XL</span></p>
-                    </div>
-                </div>
-                <div class="layout-divider">
-                    <div class="product-price">
-                        <p>23€</p>
-                    </div>
-                    <div class="product-remove">
-                        <ion-icon name="trash"></ion-icon>
-                    </div>
-                </div>
-            </article>
-            <article class="product line">
-                <div class="layout-divider">
-                    <div class="product-image">
-                        <img src="../test_image.png" alt="product">
-                    </div>
-                    <div class="product-details">
-                        <h3>Product name</h3>
-                        <p>Color: <span>Red</span></p>
-                        <p>Size: <span>XL</span></p>
-                    </div>
-                </div>
-                <div class="layout-divider">
-                    <div class="product-price">
-                        <p>23€</p>
-                    </div>
-                    <div class="product-remove">
-                        <ion-icon name="trash"></ion-icon>
-                    </div>
-                </div>
-            </article>
+                </article>
+            @endforeach
         </div>
     </div>
     <div class="order-summary column gap-2">
