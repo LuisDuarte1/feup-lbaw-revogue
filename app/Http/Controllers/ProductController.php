@@ -38,4 +38,17 @@ class ProductController extends Controller
 
         return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist]);
     }
+
+    public function listProductsDate(Request $request)
+    {
+        $products = Product::latest()->paginate(40);
+        $list = [];
+        foreach ($products as $product) {
+            $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
+            $color = $product->attributes()->where('key', 'Color')->get()->first()->value;
+            array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
+        }
+
+        return view('pages.product-list', ['products' => $list, 'paginator' => $products]);
+    }
 }
