@@ -38,4 +38,23 @@ class ProductController extends Controller
 
         return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist]);
     }
+
+    public static function getTrendingProducts() : array{
+        $products = Product::all(); //gets all products
+        $trendingProducts = []; //creates the array to store
+        
+        foreach($products as $product){
+            $wishlistCount = Product::find($product->id)->wishlistsCount()->first()->aggregate;
+            if($wishlistCount > 0){ //if the product is in wishlist
+                    $trendingProducts[] = [
+                        'product' => $product,
+                        'wishlist_count' => $wishlistCount
+                    ];
+            }
+        }
+        usort($trendingProducts, function($a, $b){ //sorts the array by the number of orders
+            return $b['wishlist_count'] <=> $a['wishlist_count'];
+        });
+        return $trendingProducts;
+    }
 }
