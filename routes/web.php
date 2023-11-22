@@ -31,7 +31,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-Route::view('/', 'pages.landing');
 Route::controller(LandingPageController::class)->group(function () {
     Route::get('/', 'getTrendingProducts')->name('landing');
 }); 

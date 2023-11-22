@@ -4,25 +4,23 @@
 
 
 @section('content')
-
-<div class="header-image">
-    <img src="{{ asset('images/landing.jpg') }}" alt="landing image">
-</div>
-<div class="trending-section">
-    <h1>Trending</h1>
-    <div class="trend-carousel">
-        @foreach ($products as $product)
-            <div class="trend-card">
-                <img src="{{ asset('images/'.$product->image) }}" alt="product image">
-                <div class="trend-card-info">
-                    <h3>{{ $product->name }}</h3>
-                    <p>{{ $product->description }}</p>
-                    <p>{{ $product->price }}</p>
-                </div>
-            
-
-            <x-productCard :price="$price" :image="$image" :size="$size" :id="$id"/>
-        @endforeach
+<div class="column gap-3 landing-page">
+    <div class="header-image">
+        <img src="/header.png" alt="landing image">
+    </div>
+    <div class="trending-section">
+        <h2 style="text-align: left">Most Liked</h2>
+        <div class="search-page">
+            @foreach ($products as $product)
+                @php
+                    $price = $product['product']->price;
+                    $image = $product['product']->image_paths[0];
+                    $size = $product['size'];
+                    $id = $product['product']->id;
+                @endphp
+                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id"/>
+            @endforeach
+        </div>
     </div>
 </div>
 
