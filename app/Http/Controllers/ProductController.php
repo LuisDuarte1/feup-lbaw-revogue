@@ -8,14 +8,15 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    static function isProductSold(Product $product) : bool 
+    public static function isProductSold(Product $product): bool
     {
         $orders = $product->orders()->get();
-        foreach($orders as $order){
-            if($order->status !== 'cancelled'){
+        foreach ($orders as $order) {
+            if ($order->status !== 'cancelled') {
                 return true;
             }
         }
+
         return false;
     }
 

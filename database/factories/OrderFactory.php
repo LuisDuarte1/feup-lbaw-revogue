@@ -20,13 +20,13 @@ class OrderFactory extends Factory
         return [
             'status' => 'received',
             'shipping_address' => [
-                "name"=>"Onyankopon",
-                "email"=>"onyankopon@example.com",
-                "country"=>"marley",
-                "address"=>"copa",
-                "zip-code"=>"4200-096",
-                "phone"=>"914356913"
-                ]
+                'name' => 'Onyankopon',
+                'email' => 'onyankopon@example.com',
+                'country' => 'marley',
+                'address' => 'copa',
+                'zip-code' => '4200-096',
+                'phone' => '914356913',
+            ],
         ];
     }
 

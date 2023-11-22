@@ -27,7 +27,7 @@ class CartProductController extends Controller
                 return response()->json(['error' => 'Product already in cart'], 400);
             } else {
                 $product = Product::find($productId);
-                if(ProductController::isProductSold($product)){
+                if (ProductController::isProductSold($product)) {
                     return response()->json(['error' => 'Product has been already sold'], 400);
                 }
                 if ($product == null) {
@@ -61,7 +61,7 @@ class CartProductController extends Controller
                 if ($product == null) {
                     return response()->json(['error' => 'Product not found'], 404);
                 }
-                if(ProductController::isProductSold($product)){
+                if (ProductController::isProductSold($product)) {
                     return response()->json(['error' => 'Product has been already sold'], 400);
                 }
                 $request->user()->cart()->detach($productId); // detach() is a method from BelongsToMany relationship (User.php

@@ -19,7 +19,7 @@ class Order extends Model
 
     protected $fillable = [
         'status',
-        'shipping_address'
+        'shipping_address',
     ];
 
     /**
@@ -29,7 +29,7 @@ class Order extends Model
      */
     protected $casts = [
         'creation_date' => 'datetime',
-        'shipping_address' => 'array'
+        'shipping_address' => 'array',
     ];
 
     public function notifications(): HasMany
