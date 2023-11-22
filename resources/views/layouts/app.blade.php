@@ -30,6 +30,7 @@
     @if(isset($search_bar) == true && $search_bar == true)
     <x-searchBar />
     @endif
+   
     <x-navbar />
     <div class="main-content">@yield('content')</div>
 </body>
