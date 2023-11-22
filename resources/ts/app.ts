@@ -1,7 +1,9 @@
 import './bootstrap'
+import { adminUser } from './pages/adminUser'
 import { cart } from './pages/cart'
 import { completeProfile } from './pages/completeProfile'
 import { landingPage } from './pages/landing'
+import { orderUser } from './pages/orderUser'
 import { productPage } from './pages/product'
 import { productListing } from './pages/productListing'
 import { searchPage } from './pages/search'
@@ -14,7 +16,9 @@ const routes: RouteList = {
   '/profile/complete': completeProfile,
   '/search': searchPage,
   '/products/{id}': productPage,
-  '/cart': cart
+  '/cart': cart,
+  '/admin/users': adminUser,
+  '/admin/orders': orderUser
 }
 
 document.addEventListener('DOMContentLoaded', (_) => {

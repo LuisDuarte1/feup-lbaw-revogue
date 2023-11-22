@@ -39,9 +39,18 @@
                 </ul>
             </nav>
         </div>
-        <div class="profile-pic">
-            <img src="../defaultProfileImage.png" class="profile-pic">
-        </div>
+        @auth('webadmin')
+            @php
+                $user = Auth::guard('webadmin')->user();   
+            @endphp
+            <div class="avatar-logout">
+                <div class="profile-pic">
+                    <img src="{{isset($user->profile_image_path) === false ? '/defaultProfileImage.png' : $user->profile_image_path}}" class="profile-pic">
+                </div>
+                <a href="/admin/logout"><ion-icon name="log-out"></ion-icon></a>
+            </div>
+        @endauth
+
     </header>
     <div class="main-content">@yield('content')</div>
 </body>

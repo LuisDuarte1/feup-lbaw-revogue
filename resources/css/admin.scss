@@ -47,6 +47,19 @@ header{
         object-fit: cover;
     }
 
+    .avatar-logout{
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        > a{
+            line-height: 0;
+            text-decoration: none;
+            ion-icon{
+                color: white;
+                font-size: 2rem;
+            }
+        }
+    }
     .nav-links{
         display: flex;
         gap: 2rem;
@@ -177,5 +190,18 @@ section{
         span {
             color: $secondary;
         }
+    }
+}
+
+.admin-login-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+
+    button{
+        margin-top: 2rem;
+        width: 100%;
     }
 }
