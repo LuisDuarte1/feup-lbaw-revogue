@@ -1,0 +1,82 @@
+@import 'theme';
+
+div.container {
+    display: flex;
+    width: 13.5rem;
+    height: 3.4375rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+div.container:hover {
+    background-color: $secondary-hover;
+
+}
+
+.user-images {
+    width: 2.375rem;
+    height: 2.375rem;
+    flex-shrink: 0;
+    border-radius: 2rem;
+}
+
+.product-images {
+    display: flex;
+    width: 2.25rem;
+    height: 2.1875rem;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 0.3rem;
+}
+
+.chat-card {
+    display: flex;
+    width: 7.3125rem;
+    padding: 0.1875rem 0rem;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.chat-card-info {
+    display: flex;
+    width: 7.8125rem;
+    height: 1.225rem;
+    padding-left: 0.3rem;
+    align-items: center;
+    gap: 0.3125rem;
+    flex-shrink: 0;
+}
+
+.chat-card-header {
+    color: #060604;
+    font-family: Montserrat;
+    font-size: 0.7rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+    /* 1.05rem */
+}
+
+#dot {
+    width: 0.075rem;
+    height: 0.075rem;
+    flex-shrink: 0;
+}
+
+div.container div>p {
+    color: #060604;
+    font-family: Montserrat;
+    font-size: 0.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    /* 0.7rem */
+}
