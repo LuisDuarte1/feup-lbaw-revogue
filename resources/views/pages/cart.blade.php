@@ -17,13 +17,14 @@
                 @php
                     $image = $product['product']->image_paths[0];
                     $title = $product['product']->name;
+                    $id = $product['product']->id;
                     $color = $product['color'];
                     $size = $product['size'];
                     $price = $product['product']->price;
 
                 @endphp
-                <article class="product line">
-                    <div class="layout-divider">
+                <article class="product line" data-id="{{$id}}">
+                    <div class="layout-divider image-details-group">
                         <div class="product-image">
                             <img src="{{$image}}" alt="product">
                         </div>
@@ -33,12 +34,12 @@
                             <p>Size: <span>{{$size}}</span></p>
                         </div>
                     </div>
-                    <div class="layout-divider">
+                    <div class="layout-divider price-trash-group">
                         <div class="product-price">
                             <p>{{$price}}</p>
                         </div>
                         <div class="product-remove">
-                            <ion-icon name="trash"></ion-icon>
+                            <a href="#"><ion-icon name="trash"></ion-icon></a>
                         </div>
                     </div>
                 </article>
@@ -50,8 +51,8 @@
             <h1 class="title">Order Summary</h1>
         </div>
         <div class="order-categories">
-            <p>3 items</p>
-            <p>423€</p>
+            <p>{{count($cart)}} items</p>
+            <p>{{$sum}}€</p>
         </div>
         <div class="shipping column justify-center gap-1">
             <h3>Shipping: </h3>

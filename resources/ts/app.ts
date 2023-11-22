@@ -1,4 +1,5 @@
 import './bootstrap'
+import { cart } from './pages/cart'
 import { completeProfile } from './pages/completeProfile'
 import { landingPage } from './pages/landing'
 import { productPage } from './pages/product'
@@ -12,7 +13,8 @@ const routes: RouteList = {
   '/products/new': productListing,
   '/profile/complete': completeProfile,
   '/search': searchPage,
-  '/products/{id}': productPage
+  '/products/{id}': productPage,
+  '/cart': cart
 }
 
 document.addEventListener('DOMContentLoaded', (_) => {
