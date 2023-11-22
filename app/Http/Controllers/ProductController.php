@@ -40,21 +40,20 @@ class ProductController extends Controller
     }
 
     public static function getTrendingProducts() : array{
-        $products = Product::all(); //gets all products
-        $trendingProducts = []; //creates the array to store
-        
-        foreach($products as $product){
-            $wishlistCount = Product::find($product->id)->wishlist()->first()->aggregate;
-            if($wishlistCount > 0){ //if the product is in wishlist
-                    $trendingProducts[] = [
-                        'product' => $product,
-                        'wishlist_count' => $wishlistCount
-                    ];
-            }
+        $products = Product::;
+         
+    }
+
+    public function listProductsDate(Request $request)
+    {
+        $products = Product::latest()->paginate(40);
+        $list = [];
+        foreach ($products as $product) {
+            $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
+            $color = $product->attributes()->where('key', 'Color')->get()->first()->value;
+            array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
         }
-        usort($trendingProducts, function($a, $b){ //sorts the array by the number of orders
-            return $b['wishlist_count'] <=> $a['wishlist_count'];
-        });
-        return $trendingProducts;
+
+        return view('pages.product-list', ['products' => $list, 'paginator' => $products]);
     }
 }

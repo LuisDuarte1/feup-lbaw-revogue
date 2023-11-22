@@ -166,3 +166,17 @@ paths:
       responses:
         '200': 
           description: If the verification is valid, validate the email and redirect to the home page.
+          
+  /admin/orders:
+    get:
+      responses:
+        '200':
+          description: Returns the admin orders page
+  
+
+  
+
+
+    
+
+    
