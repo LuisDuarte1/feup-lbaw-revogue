@@ -44,8 +44,8 @@ return [
         ],
         'webadmin' => [
             'driver' => 'session',
-            'provider' => 'admins'
-        ]  
+            'provider' => 'admins',
+        ],
     ],
 
     /*

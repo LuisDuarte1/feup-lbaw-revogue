@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,8 +14,8 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         Admin::create([
-            'email'=>'joseph.waldor@revogue.com',
-            'password'=>Hash::make("alface-torrada-149")
+            'email' => 'joseph.waldor@revogue.com',
+            'password' => Hash::make('alface-torrada-149'),
         ]);
     }
 }

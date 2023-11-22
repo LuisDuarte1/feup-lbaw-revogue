@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, Notifiable, HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     const CREATED_AT = 'creation_date';
 

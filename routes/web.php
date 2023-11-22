@@ -119,7 +119,6 @@ Route::prefix('checkout')->middleware(['auth:web', 'verified'])->group(function 
     });
 });
 
-
 Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
     Route::view('/', 'pages.admin.landing');
     Route::view('/payouts', 'pages.admin.payouts');
@@ -140,6 +139,6 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
         Route::get('/login', 'showLoginForm')->name('admin-login')->withoutMiddleware('auth:webadmin')->middleware('guest:webadmin');
         Route::post('/login', 'authenticate')->withoutMiddleware('auth:webadmin')->middleware('guest:webadmin');
         Route::get('/logout', 'logout');
-        
+
     });
 });
