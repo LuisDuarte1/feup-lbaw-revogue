@@ -114,3 +114,30 @@ input[type="radio"]:not(:disabled):checked {
 #page-end {
     padding-bottom: 2rem;
 }
+
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1.5rem;
+    ion-icon{
+        color: $accent;
+    }
+    .pagination-buttons{
+        display: flex;
+        gap: 1rem;
+        list-style-type: none;
+        font-size: 1.3rem;
+
+    }
+    li, a{
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    .abled{
+        span {
+            color: $secondary;
+        }
+    }
+}

@@ -22,7 +22,7 @@
             </li>
             @auth
             <li>
-                <a href="/search" class="menu-item">
+                <a href="/products" class="menu-item">
                         <ion-icon name="bag-handle-sharp"></ion-icon>
                         Listings
                 </a>
