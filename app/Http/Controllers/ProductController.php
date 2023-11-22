@@ -39,7 +39,8 @@ class ProductController extends Controller
         return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist]);
     }
 
-    public function listProductsDate(Request $request){
+    public function listProductsDate(Request $request)
+    {
         $products = Product::latest()->paginate(40);
         $list = [];
         foreach ($products as $product) {
@@ -48,6 +49,6 @@ class ProductController extends Controller
             array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
         }
 
-        return view('pages.product-list', ['products'=>$list, 'paginator'=>$products]);
+        return view('pages.product-list', ['products' => $list, 'paginator' => $products]);
     }
 }
