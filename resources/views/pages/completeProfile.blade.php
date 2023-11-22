@@ -9,6 +9,10 @@
                 this you can do it later by accessing the settings page. Welcome to ReVogue!</p>
             <form class="complete-profile-form" action="{{ route('complete-profile') }}" method="POST" enctype='multipart/form-data'>
                 @csrf
+                <div class="display-name-box">
+                    <label for="display_name">Display Name</label>
+                    <input id="display_name" type="text" name="display_name" value="{{$displayName}}">
+                </div>
                 <div class="complete-profile-items">
                     <div class="select-image">
                         <img id="image" src="{{$imagePath !== null ? '/storage/'.$imagePath :  '/defaultProfileImage.png'}}">

@@ -1,6 +1,7 @@
 <a href="/products/{{$id}}">
     <div class="product-card">
         <div class="product-image-card">
+            <!--TODO (luisd): do the random hash if only on debug mode -->
             <img src="{{ $image }}?hash={{fake()->lexify('???????????????')}}" alt="product image">
         </div>
         <div class="product-description-card">
