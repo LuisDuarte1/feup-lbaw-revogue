@@ -9,7 +9,7 @@ class CompleteProfileController extends Controller
 {
     public function getPage(Request $request)
     {
-        return view('pages.completeProfile', ['imagePath' => $request->user()->profile_image_path ?? '/defaultProfileImage.png']);
+        return view('pages.completeProfile', ['imagePath' => $request->user()->profile_image_path, 'bio' => $request->user()->bio]);
     }
 
     public function postProfile(Request $request)

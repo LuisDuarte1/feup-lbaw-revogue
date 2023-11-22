@@ -8,7 +8,7 @@
         <ul class="menu">
             @auth
             <li>
-                <a href="#" class="menu-item">
+                <a href="/profile/me" class="menu-item">
                     <ion-icon name="person-circle"></ion-icon>
                         Profile
                 </a>
@@ -22,7 +22,7 @@
             </li>
             @auth
             <li>
-                <a href="#" class="menu-item">
+                <a href="/search" class="menu-item">
                         <ion-icon name="bag-handle-sharp"></ion-icon>
                         Listings
                 </a>
@@ -34,7 +34,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="menu-item">
+                <a href="/profile/complete" class="menu-item">
                         <ion-icon name="settings"></ion-icon>
                         Settings
                 </a>
