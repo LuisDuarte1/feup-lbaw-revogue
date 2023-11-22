@@ -113,6 +113,7 @@ CREATE TABLE Orders(
     "id" SERIAL PRIMARY KEY,
     "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
     "status" OrderStatus,
+    "shipping_address" JSON NOT NULL,
     "belongs_to" INT NOT NULL,
     FOREIGN KEY ("belongs_to") REFERENCES Users("id") ON DELETE CASCADE
 );

@@ -1,0 +1,57 @@
+@import '../theme.scss';
+@import "../variables";
+
+
+.checkout-page{
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 0;
+
+}
+
+.checkout-wrapper{
+    width: 45rem;
+    align-items: center;
+}
+.checkout-header{
+    .title{
+        text-align: left;
+        font-size: 2.5rem;
+        padding-bottom: 1rem;
+    }
+}
+
+.shipping-details{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    input{
+        width: 100%;
+    }
+    select {
+        width: calc(100% + 1rem);
+    }
+}
+
+.payment-methods{
+    width: 100%;
+    .pay-on-collection{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+.shipping-title, .payment-methods-title{
+    h2{
+        color: $primary;
+    }
+}
+
+.submit-button{
+    width: 100%;
+    button{
+        width: 100%;
+    }
+}

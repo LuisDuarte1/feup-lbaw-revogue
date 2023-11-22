@@ -48,5 +48,10 @@ class ProductSeeder extends Seeder
             $size = $sizes->random()->id;
             $product->attributes()->attach($size);
         }
+        $colors = Attribute::where('key', 'Color')->get();
+        foreach ($allProducts as $product) {
+            $color = $colors->random()->id;
+            $product->attributes()->attach($color);
+        }
     }
 }

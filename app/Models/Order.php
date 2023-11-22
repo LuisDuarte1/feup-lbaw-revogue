@@ -19,6 +19,7 @@ class Order extends Model
 
     protected $fillable = [
         'status',
+        'shipping_address',
     ];
 
     /**
@@ -28,6 +29,7 @@ class Order extends Model
      */
     protected $casts = [
         'creation_date' => 'datetime',
+        'shipping_address' => 'array',
     ];
 
     public function notifications(): HasMany
@@ -43,6 +45,11 @@ class Order extends Model
     public function reviewedOrder(): HasOne
     {
         return $this->hasOne(Review::class, 'reviewed_order');
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'belongs_to');
     }
 
     protected $table = 'orders';

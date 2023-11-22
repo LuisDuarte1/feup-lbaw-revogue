@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public static function isProductSold(Product $product): bool
+    {
+        $orders = $product->orders()->get();
+        foreach ($orders as $order) {
+            if ($order->status !== 'cancelled') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getPage(Request $request)
     {
         $product_id = $request->route('id');
@@ -23,6 +35,6 @@ class ProductController extends Controller
             $category = $category->parentCategory;
         }
 
-        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories]);
+        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product)]);
     }
 }

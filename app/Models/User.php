@@ -119,6 +119,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Product::class, 'productwishlist', 'belongs_to', 'product');
     }
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'belongs_to');
+    }
+
     /**
      * The table associated with the model.
      *

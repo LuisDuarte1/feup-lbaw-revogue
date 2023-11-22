@@ -1,9 +1,10 @@
 @import "../variables";
+@import '../theme.scss';
 
 .layout-wrap{
     margin-top: 1rem;
     display: grid;
-    grid-template-columns: 60% auto;
+    grid-template-columns: auto 40%;
     align-items: center;
     min-height: calc(100vh - #{$page-margin*2});
 
@@ -11,8 +12,7 @@
 
 .shopping-cart{
     height: 100%;
-    padding: 0rem 3rem;
-
+    padding: 0rem 3rem 0rem 0rem;
     .products {
         height: 100%;
         overflow-y: auto;
@@ -20,10 +20,8 @@
         .product{
             display: flex;
             justify-content: space-between;
-            gap: 2rem;
             align-items: center;
             padding: 1rem 0rem 1.5rem 0rem;
-
 
                 .layout-divider{
                     display: flex;
@@ -37,7 +35,7 @@
                 .product-image{
                     width: 5rem;
                     height: 5rem;
-                    margin-right: 1rem;
+                    flex-grow: 2;
                     img{
                         width: 100%;
                         height: 100%;
@@ -51,14 +49,17 @@
                     justify-content: center;
                     align-items: flex-start;
                     color: $accent;
-                    
-                }
-                    .product-name{
-                        font-size: 1.25rem;
+                    flex-shrink: 100;
+                    h3{
+                        font-size: 1rem;
+                        height: 1.2rem;
                         font-weight: 600;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
                     }
+                }
                     .product-price{
-                        font-size: 1.15rem;
+                        font-size: 1rem;
                         font-weight: 600;
                         color: $secondary;
                     }
@@ -116,6 +117,10 @@
             font-weight: 500;
             height: 2.5rem;
         }
+        button:hover{
+            background-color: darken($secondary, 5%);
+            cursor: pointer;
+        }
     }
     .total{
         display: flex;
@@ -149,12 +154,12 @@
     }
 }
 
-.line{
-    border-bottom: 1px solid #a9a8a8;
-    box-shadow: 0 1px 1px rgba(155, 155, 155, 0.2);
-}
 
 .checkout-button{
+    a{
+        text-decoration: none;
+        
+    }
     button{
         padding: 0rem 0.6rem;
         height: 2.5rem;
@@ -164,6 +169,7 @@
     }
     button:hover{
         background-color: darken($accent, 5%);
+        cursor: pointer;
     }
 
 }

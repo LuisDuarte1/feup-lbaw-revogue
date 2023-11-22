@@ -34,22 +34,25 @@
                 </div>
                 <div class="product-info">
                     <p>@foreach ($attributes as $attribute)
-                        {{$attribute->key}} - {{$attribute->value}} 
-                        <span class="separator">•</span>
+                        {{$attribute->key}} - {{$attribute->value}}
+                        @if (!$loop->last)
+                            <span class="separator">•</span>
+                        @endif
                         @endforeach
-                        <!-- temporary -->
-                        Category - Shoes
-                        <span class="separator">•</span>
-                        Color - Black
                     </p>
                 </div>
                 <div class="product-description">
                     <p>{{$product->description}}</p>
                 </div>
-                <div class="product-buttons">
-                    <button class="buy-now">Buy now</button>
-                    <button class="add-to-cart">Add to cart</button>
-                </div>
+                @if ($sold === true)
+                    <h3 class="product-sold">This item already has been sold</h3>
+                @else
+                    <div class="product-buttons">
+                        <button class="buy-now">Buy now</button>
+                        <button class="add-to-cart">Add to cart</button>
+                    </div>
+                @endif
+
             </div>
         </div>
         <div class="layout-wrapper">
