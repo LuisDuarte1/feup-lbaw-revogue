@@ -17,7 +17,7 @@ class CompleteProfileController extends Controller
         $validated = $request->validate([
             'bio' => 'nullable|string|max:10000',
             'profileImage' => 'nullable|image|max:5000',
-            'display_name' => 'string|max:100'
+            'display_name' => 'string|max:100',
         ]);
 
         $user = $request->user();
