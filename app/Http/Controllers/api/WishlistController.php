@@ -30,7 +30,7 @@ class WishlistController extends Controller
                 if ($product == null) {
                     return response()->json(['error' => 'Product not found'], 404);
                 }
-                if($userId == $product->id){
+                if ($userId == $product->id) {
                     return response()->json(['error' => 'Cannot add own product to wishlist'], 400);
                 }
                 $request->user()->wishlist()->attach($productId); // attach() is a method from BelongsToMany relationship (User.php
@@ -59,7 +59,7 @@ class WishlistController extends Controller
                 if ($product == null) {
                     return response()->json(['error' => 'Product not found'], 404);
                 }
-                if($request->user()->id == $product->id){
+                if ($request->user()->id == $product->id) {
                     return response()->json(['error' => 'Cannot remove own product from wishlist'], 400);
                 }
                 $request->user()->wishlist()->detach($productId); // detach() is a method from BelongsToMany relationship (User.php

@@ -31,7 +31,7 @@ class ProductListingController extends Controller
         }
 
         foreach ($images as $image) {
-            $filename = "/storage/".$image->storePublicly('product-images', ['disk' => 'public']);
+            $filename = '/storage/'.$image->storePublicly('product-images', ['disk' => 'public']);
             array_push($image_paths, $filename);
         }
         DB::beginTransaction();
