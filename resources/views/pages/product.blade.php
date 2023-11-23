@@ -66,7 +66,7 @@
                                 @csrf
                                 <button class="delete-product" type="submit">Delete</button>
                             </form>
-                            <a href="/product/{{$product->id}}/edit" class="edit-product"><button>Edit</button></a>
+                            <a href="/products/{{$product->id}}/edit" class="edit-product"><button>Edit</button></a>
                         </div>
                     @endif
 

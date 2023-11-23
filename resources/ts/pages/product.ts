@@ -21,6 +21,7 @@ async function removeFromWishlist (productId: Number, wishlist: HTMLAnchorElemen
   })
   if (req.status !== 200) {
     console.error(`Add to cart failed with status ${req.status}`)
+    return
   }
   const icon = document.querySelector('#wishlist > ion-icon')
   if (icon === null) {
@@ -50,6 +51,7 @@ async function addToWishlist (productId: Number, wishlist: HTMLAnchorElement): P
   })
   if (req.status !== 200) {
     console.error(`Add to cart failed with status ${req.status}`)
+    return
   }
   const icon = document.querySelector('#wishlist > ion-icon')
   if (icon === null) {

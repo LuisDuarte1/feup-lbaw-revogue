@@ -33,7 +33,7 @@ class CartProductController extends Controller
                 if ($product == null) {
                     return response()->json(['error' => 'Product not found'], 404);
                 }
-                if ($request->user()->id == $product->id) {
+                if ($request->user()->id == $product->sold_by) {
                     return response()->json(['error' => 'Cannot add own product to cart'], 400);
                 }
                 $request->user()->cart()->attach($productId); // attach() is a method from BelongsToMany relationship (User.php
@@ -66,7 +66,7 @@ class CartProductController extends Controller
                 if (ProductController::isProductSold($product)) {
                     return response()->json(['error' => 'Product has been already sold'], 400);
                 }
-                if ($request->user()->id == $product->id) {
+                if ($request->user()->id == $product->sold_by) {
                     return response()->json(['error' => 'Cannot remove own product to cart'], 400);
                 }
                 $request->user()->cart()->detach($productId); // detach() is a method from BelongsToMany relationship (User.php
