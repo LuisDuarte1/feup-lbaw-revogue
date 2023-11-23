@@ -575,8 +575,46 @@ paths:
       responses:
         '200':
           description: Complete the buy and redirect to the home page
-  
-  
+  /products/{id}/delete:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+    post:
+      tags:
+        - M02
+      operationId: R211
+      summary: Delete Product action
+      description: Deletes product if it's own product and not sold. own
+      responses:
+        '200':
+          description: Delete the product and redirect to the home page
+  /products/{id}/edit:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+    get:
+      tags:
+        - M02
+      operationId: R212
+      summary: Edit product page
+      responses:
+        '200':
+          description: Returns edit product page
+    post:
+      tags:
+        - M02
+      operationId: R213
+      summary: Edit Product action
+      description: Edit product if it's own product and not sold. own
+      responses:
+        '200':
+          description: Edit the product and redirect to the product page
   
   
   

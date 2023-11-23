@@ -84,6 +84,9 @@ Route::prefix('products')->group(function () {
     });
     Route::controller(ProductController::class)->group(function () {
         Route::get('/{id}', 'getPage')->name('product');
+        Route::post('/{id}/delete', 'deleteProduct');
+        Route::get('/{id}/edit', 'editProductPage');
+        Route::post('/{id}/edit', 'editProduct');
         Route::get('/', 'listProductsDate');
     });
 });

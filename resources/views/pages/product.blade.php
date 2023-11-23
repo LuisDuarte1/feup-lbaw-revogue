@@ -55,10 +55,21 @@
                 @if ($sold === true)
                     <h3 class="product-sold">This item already has been sold</h3>
                 @else
-                    <div class="product-buttons">
-                        <button class="buy-now">Buy now</button>
-                        <button class="add-to-cart">Add to cart</button>
-                    </div>
+                    @if ($ownProduct === false)
+                        <div class="product-buttons">
+                            <button class="buy-now">Buy now</button>
+                            <button class="add-to-cart">Add to cart</button>
+                        </div>
+                    @else
+                        <div class="product-buttons">
+                            <form method="POST" action="/products/{{$product->id}}/delete">
+                                @csrf
+                                <button class="delete-product" type="submit">Delete</button>
+                            </form>
+                            <a href="/products/{{$product->id}}/edit" class="edit-product"><button>Edit</button></a>
+                        </div>
+                    @endif
+
                 @endif
 
             </div>
