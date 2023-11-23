@@ -36,7 +36,7 @@ class ProductController extends Controller
             $category = $category->parentCategory;
         }
 
-        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist]);
+        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist, 'ownProduct' => $user_id === $request->user()->id]);
     }
 
     public static function getTrendingProducts()
@@ -55,5 +55,21 @@ class ProductController extends Controller
         }
 
         return view('pages.product-list', ['products' => $list, 'paginator' => $products]);
+    }
+
+    public function deleteProduct(Request $request){
+        $product_id = $request->route('id');
+        $product = Product::find($product_id);
+        if($product === null){
+            return back()->with("errors", "Product not found");
+        }
+        if($request->user()->id !== $product->sold_by){
+            return back()->with("errors", "You cannot delete the product because you are not the seller");
+        }
+        if(ProductController::isProductSold($product)){
+            return back()->with("errors", "You cannot delete the item because the item has already been sold");
+        }
+        $product->delete();
+        return redirect('/');
     }
 }

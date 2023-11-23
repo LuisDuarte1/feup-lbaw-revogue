@@ -99,12 +99,19 @@
         word-wrap: break-word;
     }
 
-    .buy-now, .ask-question{
+    .buy-now, .ask-question, .delete-product{
         background-color: $button-text-color;
         color: $background;
+        cursor: pointer;
     }
     .buy-now:hover, .buy-now:active, .ask-question:hover, .ask-question:active{
         background: #444c63;
+    }
+
+    .edit-product{
+        cursor: pointer;
+        text-decoration: none;
+        color: $text-color;
     }
 
     .product-buttons{

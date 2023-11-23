@@ -53,7 +53,10 @@ class ProductListingController extends Controller
             $attr = Attribute::where('key', $key)->where('value', $value)->get();
             $product->attributes()->save($attr[0]);
         }
-
+        $attr = Attribute::where('key', 'Size')->where('value', $request->size)->get();
+        $product->attributes()->save($attr[0]);
+        $attr = Attribute::where('key', 'Color')->where('value', $request->color)->get();
+        $product->attributes()->save($attr[0]);
         DB::commit();
 
         //TODO (luisd): use named routed
