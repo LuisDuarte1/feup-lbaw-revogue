@@ -31,7 +31,7 @@ class ProductListingController extends Controller
         }
 
         foreach ($images as $image) {
-            $filename = $image->storePublicly('product-images', ['disk' => 'public']);
+            $filename = "/storage/".$image->storePublicly('product-images', ['disk' => 'public']);
             array_push($image_paths, $filename);
         }
         DB::beginTransaction();
@@ -41,7 +41,7 @@ class ProductListingController extends Controller
             'name' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
-            'image_paths' => json_encode($image_paths),
+            'image_paths' => $image_paths,
         ]);
 
         $product->productCategory()->associate($request->category);
