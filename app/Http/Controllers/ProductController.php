@@ -32,7 +32,7 @@ class ProductController extends Controller
         $category = $product->productCategory;
         $isInWishlist = false;
         $ownProduct = false;
-        if($request->user() !== null){
+        if ($request->user() !== null) {
             $isInWishlist = $request->user()->wishlist()->where('id', $product_id)->exists();
             $ownProduct = $user_id === $request->user()->id;
         }
@@ -80,7 +80,8 @@ class ProductController extends Controller
         return redirect('/');
     }
 
-    public function editProductPage(Request $request){
+    public function editProductPage(Request $request)
+    {
         $product_id = $request->route('id');
         $product = Product::find($product_id);
         if ($product === null) {
@@ -92,10 +93,12 @@ class ProductController extends Controller
         if (ProductController::isProductSold($product)) {
             return back()->with('errors', 'You cannot edit the item because the item has already been sold');
         }
+
         return view('pages.editProduct', ['product' => $product]);
     }
 
-    public function editProduct(Request $request){
+    public function editProduct(Request $request)
+    {
         $product_id = $request->route('id');
         $product = Product::find($product_id);
         if ($product === null) {
@@ -110,7 +113,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'description' => 'nullable|max:5000',
-            'price' => 'required|gt:0'
+            'price' => 'required|gt:0',
         ]);
 
         $product->name = $request->name;
