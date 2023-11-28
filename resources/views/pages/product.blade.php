@@ -19,14 +19,17 @@
         <div class="layout-wrapper">
             <div class="product-image column">
                 <img src="{{$product->image_paths[0]}}" alt="product image">
-                @if ($isInWishlist)
-                    <a href="#" id="wishlist" data-inWishlist="true">
-                            <ion-icon name="heart"></ion-icon>
-                    @else
-                    <a href="#" id="wishlist" data-inWishlist="false">
-                        <ion-icon name="heart-outline"></ion-icon>
-                    @endif
-                </a>
+                <!--TODO(luisd): maybe abstract this into a blade component? -->
+                @if ($sold === false)
+                    @if ($isInWishlist)
+                        <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
+                                <ion-icon name="heart"></ion-icon>
+                        @else
+                        <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
+                            <ion-icon name="heart-outline"></ion-icon>
+                        @endif
+                    </a>
+                @endif
             </div>
             <div class="product-details">
                 <div class="product-title">

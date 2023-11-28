@@ -38,7 +38,9 @@ $states = [
                         <td>{{$order->user->username}}</td>
                         <td>
                             <form method="POST" action="{{route('admin.orders.update')}}">
-                                <select id="orders" name="orders">
+                                @csrf
+                                <input name="id" type="hidden" value="{{$order->id}}">
+                                <select id="order_status" name="order_status">
                                     @foreach ($states as $key => $state)
                                     <option value="{{ $key }}" {{ $order->status === $key ? 'selected' : '' }}>{{ $state }}</option>
                                     @endforeach

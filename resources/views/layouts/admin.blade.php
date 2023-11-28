@@ -20,7 +20,7 @@
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
 
-    @vite(['resources/css/admin.scss', 'resources/ts/admin.ts'])
+    @vite(['resources/css/admin.scss', 'resources/ts/app.ts'])
 
 </head>
 

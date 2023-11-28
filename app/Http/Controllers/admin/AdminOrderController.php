@@ -11,15 +11,15 @@ class AdminOrderController extends Controller
     public function updateStatus(Request $request)
     {
         $order = Order::find($request->id);
-        $order->status = $request->status;
+        $order->status = $request->order_status;
         $order->save();
 
-        return response()->json(['success' => 'Status changed successfully.']);
+        return back()->with('order', 'User status changed successfully');
     }
 
     public function getPage(Request $request)
     {
-        $orders = Order::paginate(20);
+        $orders = Order::orderBy('id', 'asc')->paginate(20);
 
         return view('pages.admin.orders', ['orders' => $orders]);
     }

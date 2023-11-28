@@ -1,14 +1,16 @@
 import './bootstrap'
-import { adminUser } from './pages/adminUser'
+import imageUploader from './components/imageUploader'
+import submitFormOnChange from './components/submitFormOnChange'
+import wishlistButton from './components/wishlistButton'
 import { cart } from './pages/cart'
 import { completeProfile } from './pages/completeProfile'
 import { landingPage } from './pages/landing'
-import { orderUser } from './pages/orderUser'
 import { productPage } from './pages/product'
 import { productListing } from './pages/productListing'
 import { searchPage } from './pages/search'
 
 type RouteList = Record<string, () => void>
+type ComponentList = Record<string, (element: HTMLElement) => void>
 
 const routes: RouteList = {
   '/': landingPage,
@@ -16,12 +18,17 @@ const routes: RouteList = {
   '/profile/complete': completeProfile,
   '/search': searchPage,
   '/products/{id}': productPage,
-  '/cart': cart,
-  '/admin/users': adminUser,
-  '/admin/orders': orderUser
+  '/cart': cart
 }
 
-document.addEventListener('DOMContentLoaded', (_) => {
+const components: ComponentList = {
+  '#account_status': submitFormOnChange,
+  '#order_status': submitFormOnChange,
+  '.upload-photos': imageUploader,
+  '#wishlist_button': wishlistButton
+}
+
+function pageHandler (): void {
   let hasRan = false
   Object.keys(routes).forEach((value, _) => {
     const rule = '^' + value.replaceAll(/\{(.*)\}/g, '(.*)').replaceAll('/', '\\/') + '$'
@@ -35,4 +42,17 @@ document.addEventListener('DOMContentLoaded', (_) => {
   if (!hasRan) {
     console.log(`Could not find function for ${window.location.pathname}`)
   }
+}
+
+function componentHandler (): void {
+  Object.keys(components).forEach((value, _) => {
+    document.querySelectorAll<HTMLElement>(value).forEach((element, _) => {
+      components[value](element)
+    })
+  })
+}
+
+document.addEventListener('DOMContentLoaded', (_) => {
+  pageHandler()
+  componentHandler()
 })

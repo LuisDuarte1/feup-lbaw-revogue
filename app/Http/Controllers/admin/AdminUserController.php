@@ -66,9 +66,9 @@ class AdminUserController extends Controller
     public function updateUserStatus(Request $request)
     {
         $user = User::find($request->id);
-        $user->account_status = $user->status;
+        $user->account_status = $request->status;
         $user->save();
 
-        return back()->with('success', 'User unbanned successfully');
+        return back()->with('success', 'User status changed successfully');
     }
 }
