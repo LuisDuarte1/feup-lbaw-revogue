@@ -1,4 +1,5 @@
 import './bootstrap'
+import imageUploader from './components/imageUploader'
 import submitFormOnChange from './components/submitFormOnChange'
 import { cart } from './pages/cart'
 import { completeProfile } from './pages/completeProfile'
@@ -21,7 +22,8 @@ const routes: RouteList = {
 
 const components: ComponentList = {
   '#account_status': submitFormOnChange,
-  '#order_status': submitFormOnChange
+  '#order_status': submitFormOnChange,
+  '.upload-photos': imageUploader
 }
 
 function pageHandler (): void {
