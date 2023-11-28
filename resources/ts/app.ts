@@ -1,6 +1,7 @@
 import './bootstrap'
 import imageUploader from './components/imageUploader'
 import submitFormOnChange from './components/submitFormOnChange'
+import wishlistButton from './components/wishlistButton'
 import { cart } from './pages/cart'
 import { completeProfile } from './pages/completeProfile'
 import { landingPage } from './pages/landing'
@@ -23,7 +24,8 @@ const routes: RouteList = {
 const components: ComponentList = {
   '#account_status': submitFormOnChange,
   '#order_status': submitFormOnChange,
-  '.upload-photos': imageUploader
+  '.upload-photos': imageUploader,
+  '#wishlist_button': wishlistButton
 }
 
 function pageHandler (): void {
