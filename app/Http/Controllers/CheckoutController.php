@@ -53,6 +53,7 @@ class CheckoutController extends Controller
             // TODO(luisd): send notification
             foreach ($cart as $product) {
                 $product->inCart()->detach();
+                $product->wishlist()->detach();
             }
         }
         DB::commit();

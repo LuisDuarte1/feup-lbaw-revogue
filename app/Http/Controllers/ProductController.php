@@ -78,7 +78,6 @@ class ProductController extends Controller
         $product = Product::find($product_id);
         $this->authorize('update', $product);
 
-
         return view('pages.editProduct', ['product' => $product]);
     }
 

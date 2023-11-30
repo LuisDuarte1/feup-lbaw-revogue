@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
@@ -48,6 +47,7 @@ class ProductPolicy
         if (ProductController::isProductSold($product)) {
             return false;
         }
+
         return true;
     }
 
@@ -65,6 +65,7 @@ class ProductPolicy
         if (ProductController::isProductSold($product)) {
             return false;
         }
+
         return true;
     }
 }
