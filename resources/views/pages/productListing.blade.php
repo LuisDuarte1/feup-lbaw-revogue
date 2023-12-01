@@ -15,7 +15,7 @@
                 <div class="photo-wrapper">
                     <h2> Photos </h2>
                     <p> Add up to 8 photos in JPG or PNG format. </p>
-                    <x-product-photos />
+                    <x-productPhotos />
                 </div>
                 <div class="layout-wrapper">
                     <div class="column justify-evenly gap-2">

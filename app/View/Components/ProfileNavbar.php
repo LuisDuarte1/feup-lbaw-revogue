@@ -29,6 +29,6 @@ class ProfileNavbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.profile-navbar', ['tab' => $this->tab, 'ownPage' => $this->ownPage, 'id' => $this->id]);
+        return view('components.profileNavbar', ['tab' => $this->tab, 'ownPage' => $this->ownPage, 'id' => $this->id]);
     }
 }

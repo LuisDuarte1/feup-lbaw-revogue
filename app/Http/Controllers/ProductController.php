@@ -59,7 +59,7 @@ class ProductController extends Controller
             array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
         }
 
-        return view('pages.product-list', ['products' => $list, 'paginator' => $products]);
+        return view('pages.productList', ['products' => $list, 'paginator' => $products]);
     }
 
     public function deleteProduct(Request $request)
