@@ -12,11 +12,7 @@
         <form action="{{ route('productListing')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="column justify-center gap-3">
-                <div class="photo-wrapper">
-                    <h2> Photos </h2>
-                    <p> Add up to 8 photos in JPG or PNG format. </p>
-                    <x-productPhotos />
-                </div>
+                <x-productPhotos />
                 <div class="layout-wrapper">
                     <div class="column justify-evenly gap-2">
                         <div class="name">
