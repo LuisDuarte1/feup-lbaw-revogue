@@ -19,6 +19,17 @@
         <div class="layout-wrapper">
             <div class="product-image column">
                 <img src="{{$product->image_paths[0]}}" alt="product image">
+                <!--TODO(luisd): maybe abstract this into a blade component? -->
+                @if ($sold === false)
+                    @if ($isInWishlist)
+                        <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
+                                <ion-icon name="heart"></ion-icon>
+                        @else
+                        <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
+                            <ion-icon name="heart-outline"></ion-icon>
+                        @endif
+                    </a>
+                @endif
             </div>
             <div class="product-details">
                 <div class="product-title">
@@ -47,10 +58,21 @@
                 @if ($sold === true)
                     <h3 class="product-sold">This item already has been sold</h3>
                 @else
-                    <div class="product-buttons">
-                        <button class="buy-now">Buy now</button>
-                        <button class="add-to-cart">Add to cart</button>
-                    </div>
+                    @if ($ownProduct === false)
+                        <div class="product-buttons">
+                            <button class="buy-now">Buy now</button>
+                            <button class="add-to-cart">Add to cart</button>
+                        </div>
+                    @else
+                        <div class="product-buttons">
+                            <form method="POST" action="/products/{{$product->id}}/delete">
+                                @csrf
+                                <button class="delete-product" type="submit">Delete</button>
+                            </form>
+                            <a href="/products/{{$product->id}}/edit" class="edit-product"><button>Edit</button></a>
+                        </div>
+                    @endif
+
                 @endif
 
             </div>
@@ -87,7 +109,7 @@
                         </div>
                         <div class="seller-buttons">
                             <button class="ask-question">Ask a question</button>
-                            <button class="visit-shop">Visit shop</button>
+                            <button class="visit-shop"><a href="/profile/{{$user->id}}">Visit shop</a></button>
                         </div>
                     </div>
                 </div>

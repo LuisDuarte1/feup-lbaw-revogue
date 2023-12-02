@@ -19,17 +19,14 @@ export function productPage (): void {
   }
   const buyNow: HTMLButtonElement | null = document.querySelector('.buy-now')
   const addToCart: HTMLButtonElement | null = document.querySelector('.add-to-cart')
-  if (buyNow === null || addToCart === null) {
-    return
+  if (buyNow !== null && addToCart !== null) {
+    // TODO (luisd): add error if fails
+    buyNow.onclick = async () => {
+      await addToCartRequest(productId)
+      window.location.href = '/cart'
+    }
+    addToCart.onclick = async () => {
+      await addToCartRequest(productId)
+    }
   }
-  // TODO (luisd): add error if fails
-  buyNow.onclick = async () => {
-    await addToCartRequest(productId)
-    window.location.href = '/cart'
-  }
-  addToCart.onclick = async () => {
-    await addToCartRequest(productId)
-  }
-
-  console.log(productId)
 }

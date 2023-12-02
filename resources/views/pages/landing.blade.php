@@ -4,7 +4,25 @@
 
 
 @section('content')
+<div class="column gap-3 landing-page">
+    <div class="header-image">
+        <img src="/header.png" alt="landing image">
+    </div>
+    <div class="trending-section">
+        <h2 style="text-align: left">Most Liked</h2>
+        <div class="search-page">
+            @foreach ($products as $product)
+                @php
+                    $price = $product['product']->price;
+                    $image = $product['product']->image_paths[0];
+                    $size = $product['size'];
+                    $id = $product['product']->id;
+                @endphp
+                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id"/>
+            @endforeach
+        </div>
+    </div>
+</div>
 
-<h1>A lena é canss </h1>
 
 @endsection

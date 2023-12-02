@@ -1,0 +1,28 @@
+@import '../theme';
+
+.landing-page{
+    padding-top: 3rem;
+
+    .header-image{
+        width: 100%;
+        img {
+            width: 100%;
+            border-radius: 0.5rem;
+        }
+    }
+
+    .trending-section{
+        h2 {
+            color: $primary;
+        }
+    }
+
+    .product-card{
+        height: 13rem;
+        width: 15rem;
+    }
+
+    .search-page{
+        gap: 1rem 1rem;
+    }
+}

@@ -5,7 +5,10 @@
         <input id="search" class="search" type="text" placeholder="Search" name="q">
     </form>
     <div>
-    <a href="#">
+    <a href="/products/new">
+        <ion-icon name="add"></ion-icon>
+    </a>
+    <a href="/profile/me/likes">
         <ion-icon name="heart-outline"></ion-icon>
     </a>
     

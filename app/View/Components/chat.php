@@ -6,8 +6,12 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ProfileNavbar extends Component
+class chat extends Component
 {
+    public $user;
+
+    public $messages;
+
     /**
      * Create a new component instance.
      */
@@ -21,6 +25,6 @@ class ProfileNavbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.profile-navbar');
+        return view('components.chat');
     }
 }
