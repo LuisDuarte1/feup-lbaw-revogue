@@ -16,6 +16,10 @@ RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=compose
 RUN rm /tmp/composer-setup.php
 
+RUN curl https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz -o /tmp/ngrok.tgz
+RUN tar xvzf /tmp/ngrok.tgz -C /usr/local/bin
+RUN rm /tmp/ngrok.tgz
+
 # Copy project code and install project dependencies
 COPY --chown=www-data . /var/www/
 
@@ -36,6 +40,7 @@ RUN php artisan config:clear
 RUN php artisan clear-compiled
 RUN php artisan optimize
 
+RUN ngrok config add-authtoken 2YzpEOpjITWoALZPdAsUPRh4k6u_5v27kVin3zx676KCAXbEu
 
 WORKDIR /
 RUN apt-get purge -y curl git zip unzip
