@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS
     Messages,
     Vouchers,
     Reviews,
+    Purchases,
     Reports,
     Notifications,
     ProductWishlist,
@@ -20,7 +21,7 @@ DROP TABLE IF EXISTS
     Payouts CASCADE;
 
 DROP TYPE IF EXISTS
-    AccountStatus, OrderStatus, MessageType, BargainStatus, ReportType, NotificationType;
+    AccountStatus, OrderStatus, MessageType, BargainStatus, ReportType, NotificationType, PaymentMethod;
 
 
 CREATE TYPE AccountStatus AS ENUM('needsConfirmation', 'active', 'banned');
@@ -41,6 +42,11 @@ CREATE TYPE ReportType AS ENUM (
     'user',
     'product',
     'message'
+);
+
+CREATE TYPE PaymentMethod AS ENUM(
+    'delivery',
+    'stripe'
 );
 
 CREATE TYPE NotificationType AS ENUM (
@@ -109,13 +115,21 @@ CREATE TABLE ProductAttributes(
   FOREIGN KEY ("attribute") REFERENCES Attributes("id") ON DELETE CASCADE
 );
 
+CREATE TABLE Purchases(
+    "id" SERIAL PRIMARY KEY,
+    "method" PaymentMethod NOT NULL,
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP )
+);
+
 CREATE TABLE Orders(
     "id" SERIAL PRIMARY KEY,
     "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
     "status" OrderStatus,
     "shipping_address" JSON NOT NULL,
     "belongs_to" INT,
-    FOREIGN KEY ("belongs_to") REFERENCES Users("id") ON DELETE SET NULL
+    "purchase" INT NOT NULL,
+    FOREIGN KEY ("belongs_to") REFERENCES Users("id") ON DELETE SET NULL,
+    FOREIGN KEY ("purchase") REFERENCES Purchases("id")
 );
 
 CREATE TABLE Messages(

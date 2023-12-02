@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Order;
+use App\Models\Purchase;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
