@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use DateTime;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View; // Add this import
 
 class RegisterController extends Controller
 {
@@ -25,6 +27,12 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        Validator::extend('olderThan', function ($attribute, $value, $parameters) {
+            $minAge = (! empty($parameters)) ? (int) $parameters[0] : 13;
+
+            return (new DateTime)->diff(new DateTime($value))->y >= $minAge;
+        });
+
         $request->validate([
             'name' => 'required|string|max:250',
             'username' => 'required|string|max:250|unique:users',
