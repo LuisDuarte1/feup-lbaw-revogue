@@ -56,4 +56,8 @@
     .add-photo:hover{
         background-color: $shadow;
     }
+
+    .add-photo:nth-child(9){
+        display: none;
+    }
 }

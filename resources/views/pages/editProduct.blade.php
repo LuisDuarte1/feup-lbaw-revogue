@@ -4,7 +4,10 @@
     <div class="edit-product-page">
         <h1 class="title"> Edit product </h1>
         <form action="/products/{{$product->id}}/edit" method="POST" class="editForm">
-        <x-productPhotos />
+            @php
+                $imagePaths = $product->image_paths;
+            @endphp
+            <x-productPhotos :imagePaths="$imagePaths"/>
             <div class="name">
                 <label for="name" required>Title</label>
                 <input type="text" name="name" id="name" value="{{$product->name}}">

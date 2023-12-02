@@ -12,7 +12,7 @@
         <form action="{{ route('productListing')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="column justify-center gap-3">
-                <x-productPhotos />
+                <x-productPhotos :imagePaths=[] />
                 <div class="layout-wrapper">
                     <div class="column justify-evenly gap-2">
                         <div class="name">
