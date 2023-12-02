@@ -38,6 +38,7 @@ class RegisterController extends Controller
             'username' => 'required|string|max:250|unique:users',
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed',
+            'dateBirth' => 'required|date|olderThan:13|before:today',
         ]);
 
         $user = User::create([
@@ -46,6 +47,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'account_status' => 'needsConfirmation',
+            'dateBirth' => $request->dateBirth,
             //TODO: add settings schema default
             'settings' => json_encode([]),
         ]);

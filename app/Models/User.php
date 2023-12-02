@@ -39,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_image_path',
         'bio',
         'account_status',
-        'dob',
+        'dateBirth',
 
     ];
 
