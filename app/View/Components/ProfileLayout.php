@@ -32,7 +32,7 @@ class ProfileLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.profile-layout', [
+        return view('components.profileLayout', [
             'profilePicture' => $this->profilePicture,
             'name' => $this->name,
             'username' => $this->username,

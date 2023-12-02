@@ -5,7 +5,7 @@ namespace App\View\Components;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class chat_card extends Component
+class ChatCard extends Component
 {
     public $user_id;
 
@@ -45,7 +45,7 @@ class chat_card extends Component
      */
     public function render()
     {
-        return view('components.chat_card', [
+        return view('components.chatCard', [
             'user_id' => $this->user_id,
             'user_displayname' => $this->user_displayname,
             'username' => $this->username,
