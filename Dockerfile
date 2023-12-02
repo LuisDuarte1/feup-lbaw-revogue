@@ -43,6 +43,6 @@ RUN php artisan optimize
 RUN ngrok config add-authtoken 2YzpEOpjITWoALZPdAsUPRh4k6u_5v27kVin3zx676KCAXbEu
 
 WORKDIR /
-RUN apt-get purge -y curl git zip unzip
+RUN apt-get purge -y curl git zip unzip nodejs
 # Start command
 CMD sh /docker_run.sh

@@ -1,4 +1,5 @@
 import './bootstrap'
+import { loadStripe } from '@stripe/stripe-js'
 import imageUploader from './components/imageUploader'
 import submitFormOnChange from './components/submitFormOnChange'
 import wishlistButton from './components/wishlistButton'
@@ -56,3 +57,5 @@ document.addEventListener('DOMContentLoaded', (_) => {
   pageHandler()
   componentHandler()
 })
+
+export const stripe = await loadStripe('pk_test_51OH0XHBAaom7Im7itwb5Z5tQbNduKU9NTQskbczaPsQ5yB9vMObR2GpPoR8FaJPHwTR3kaz7ctIPjSfoxdURP5oE005DTwUZOK')
