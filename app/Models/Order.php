@@ -21,6 +21,7 @@ class Order extends Model
     protected $fillable = [
         'status',
         'shipping_address',
+        'purchase',
     ];
 
     /**
@@ -51,6 +52,11 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'belongs_to');
+    }
+
+    public function purchase(): BelongsTo
+    {
+        return $this->belongsTo(Purchase::class, 'purchase');
     }
 
     protected $table = 'orders';
