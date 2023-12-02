@@ -5,9 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
+
+    public function getPaymentIntent(Request $request)
+    {
+        $user = $request->user();
+        $cart = $user->cart()->get();
+        $amount = 0;
+        foreach($cart as $product){
+            $amount += $product->price;
+        }
+        $stripe = new StripeClient(config('payments.stripe_key'));
+        $paymentIntent = $stripe->paymentIntents->create([
+            'amount' => $amount,
+            'currentcy' => 'eur',
+            'automatic_payment_methods' => [
+                'enabled' => true,
+            ]
+        ]);
+        return response()->json(['clientSecret' => $paymentIntent->client_secret]);
+    }
+
     public function getPage(Request $request)
     {
         $user = $request->user();
