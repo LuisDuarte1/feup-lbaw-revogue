@@ -34,7 +34,7 @@ class CheckoutController extends Controller
         $cartGrouped = $cart->groupBy('sold_by');
         if ($request->payment_method === '0') {
             $purchase = Purchase::create(['method' => 'delivery']);
-            foreach($cartGrouped as $soldBy => $products){
+            foreach ($cartGrouped as $soldBy => $products) {
                 $order = $request->user()->orders()->create([
                     'status' => 'pendingShipment', //payment at delivery goes straight to pendingShipment
                     'shipping_address' => [
@@ -45,9 +45,9 @@ class CheckoutController extends Controller
                         'zip-code' => $request->zip_code,
                         'phone' => $request->phone,
                     ],
-                    'purchase' => $purchase->id
+                    'purchase' => $purchase->id,
                 ]);
-    
+
                 $ids = [];
                 foreach ($products as $product) {
                     array_push($ids, $product->id);

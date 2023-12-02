@@ -18,8 +18,9 @@ class PurchaseFactory extends Factory
     public function definition(): array
     {
         $methods = ['stripe', 'delivery'];
+
         return [
-            'method' => $methods[array_rand($methods)]
+            'method' => $methods[array_rand($methods)],
         ];
     }
 

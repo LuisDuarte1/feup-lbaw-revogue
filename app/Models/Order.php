@@ -21,7 +21,7 @@ class Order extends Model
     protected $fillable = [
         'status',
         'shipping_address',
-        'purchase'
+        'purchase',
     ];
 
     /**
@@ -54,7 +54,8 @@ class Order extends Model
         return $this->belongsTo(User::class, 'belongs_to');
     }
 
-    public function purchase(): BelongsTo{
+    public function purchase(): BelongsTo
+    {
         return $this->belongsTo(Purchase::class, 'purchase');
     }
 

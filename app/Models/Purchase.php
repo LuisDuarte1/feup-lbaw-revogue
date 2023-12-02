@@ -16,11 +16,12 @@ class Purchase extends Model
     const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
-    
+
     protected $fillable = ['method'];
 
-    function orders(): HasMany{
-        return $this->hasMany(Order::class, "purchase");
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'purchase');
     }
 
     protected $table = 'purchases';
