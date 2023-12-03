@@ -3,7 +3,7 @@
 @section('content')
     <div class="edit-product-page">
         <h1 class="title"> Edit product </h1>
-        <form action="/products/{{$product->id}}/edit" method="POST" class="editForm">
+        <form action="/products/{{$product->id}}/edit" method="POST" class="editForm" enctype="multipart/form-data">
             @php
                 $imagePaths = $product->image_paths;
             @endphp
