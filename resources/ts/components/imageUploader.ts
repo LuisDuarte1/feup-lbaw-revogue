@@ -1,10 +1,11 @@
-export default function (element: Element): void {
-  const input: HTMLInputElement | null = element.querySelector('#product-photos')
+export default function (imageElement: Element): void {
+  const input: HTMLInputElement | null = imageElement.querySelector('#product-photos')
   if (input == null) {
     return
   }
-  let photos: NodeListOf<HTMLDivElement> = element.querySelectorAll('.add-photo')
+  let photos: NodeListOf<HTMLDivElement> = imageElement.querySelectorAll('.add-photo')
   const normalSquare = photos[photos.length - 1].cloneNode(true)
+  const inputSquare = photos[0]
   const parent = photos[photos.length - 1].parentElement
   if (parent == null) {
     return
@@ -20,7 +21,6 @@ export default function (element: Element): void {
       // TODO: Show error message
       return
     }
-    count += input.files.length
     let insertPhotoIndex = -1
     photos.forEach((value, index) => {
       if (value.querySelector('#product-photos') != null) {
@@ -32,13 +32,35 @@ export default function (element: Element): void {
         parent.lastElementChild?.remove()
         const element = normalSquare.cloneNode(true)
         const img = document.createElement('img')
+        const a = document.createElement('a')
+        a.href = '#'
+        a.classList.add('close-icon')
+        a.innerHTML = '<ion-icon name="close"></ion-icon>'
         img.src = URL.createObjectURL(input.files[i])
         element.appendChild(img)
-        parent.prepend(element)
+        element.appendChild(a)
+        a.onclick = () => {
+          if (element.parentElement != null) {
+            element.parentElement.removeChild(element)
+          }
+          if (count === 8) {
+            parent.appendChild(inputSquare)
+          } else {
+            parent.appendChild(normalSquare.cloneNode(true))
+          }
+          count--
+
+          photos = imageElement.querySelectorAll('.add-photo')
+        }
+        if (count !== 0) {
+          parent.insertBefore(element, photos[count - 1].nextSibling)
+        } else {
+          parent.prepend(element)
+        }
       }
+      count += input.files.length
     }
-    photos = element.querySelectorAll('.add-photo')
-    console.log(input.files)
+    photos = imageElement.querySelectorAll('.add-photo')
   }
 
   input.addEventListener('change', eventListener)
