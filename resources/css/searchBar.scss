@@ -1,7 +1,7 @@
     @import 'theme';
 
     .topnav {
-        
+
         form {
             display: flex;
             align-items: center;
@@ -55,4 +55,21 @@
             font-size: 1rem;
             opacity: 1;
         }
+
+        .badge:after {
+            content: attr(value);
+            font-size: 12px;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            padding: 0.1rem 0.2rem 0.1rem 0.1rem;
+            border-radius: 20%;
+            position: relative;
+            left: -1rem;
+            top: -1.6rem;
+            background-color: $primary;
+
+        }
+
+
     }

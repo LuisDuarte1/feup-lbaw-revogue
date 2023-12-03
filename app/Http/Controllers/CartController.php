@@ -23,4 +23,12 @@ class CartController extends Controller
 
         return view('pages.cart', ['cart' => $list, 'sum' => $sum]);
     }
+
+    public function count(Request $request)
+    {
+        $user = $request->user();
+        $cart = $user->cart()->get();
+
+        return response()->json(['count' => count($cart)]);
+    }
 }

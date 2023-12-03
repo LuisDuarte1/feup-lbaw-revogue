@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::controller(LandingPageController::class)->group(function () {
     Route::get('/', 'getTrendingProducts')->name('landing');
+
 });
 
 // API
@@ -44,6 +45,7 @@ Route::prefix('api')->group(function () {
     Route::controller(CartProductController::class)->group(function () {
         Route::post('/cart', 'AddProductToCart');
         Route::delete('/cart', 'RemoveProductFromCart');
+
     });
     Route::controller(WishlistController::class)->group(function () {
         Route::post('/wishlist', 'AddProductToWishlist');
