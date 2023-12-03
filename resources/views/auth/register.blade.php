@@ -48,8 +48,17 @@
                         </span>
                     @endif
 
-                    <label for="date_of_birth" required>Date of Birth</label>
-                    <input id="date_of_birth" type="date" name="date_of_birth" value="{{ old('dob') }}" required
+                    <label for="postalCode" required>Postal Code</label>
+                    <input id="postalCode" type="text" name="postalCode" value="{{ old('postalCode') }}" required
+                        autofocus>
+                    @if ($errors->has('postalCode'))
+                        <span class="error">
+                            {{ $errors->first('postalCode') }}
+                        </span>
+                    @endif
+
+                    <label for="dateBirth" required>Date of Birth</label>
+                    <input id="dateBirth" type="date" name="dateBirth" value="{{ old('dateBirth') }}" required
                         autofocus>
                     @if ($errors->has('dob'))
                         <span class="error">

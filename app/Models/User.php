@@ -39,7 +39,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_image_path',
         'bio',
         'account_status',
-        'dateBirth',
 
     ];
 
@@ -62,7 +61,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'creation_date' => 'datetime',
         'password' => 'hashed',
         'settings' => 'array',
-        'dob' => 'date',
     ];
 
     public function messagesFrom(): HasMany

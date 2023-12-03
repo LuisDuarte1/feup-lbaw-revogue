@@ -39,6 +39,11 @@ class RegisterController extends Controller
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed',
             'dateBirth' => 'required|date|olderThan:13|before:today',
+            'phone' => 'nullable|string|max:250',
+            'address' => 'nullable|string|max:250',
+            'city' => 'nullable|string|max:250',
+            'postalCode' => 'nullable|string|max:250',
+
         ]);
 
         $user = User::create([
@@ -47,9 +52,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'account_status' => 'needsConfirmation',
-            'dateBirth' => $request->dateBirth,
-            //TODO: add settings schema default
-            'settings' => json_encode([]),
+            'settings' => json_encode(['dateBirth' => $request->dateBirth, 'address' => $request->address, 'city' => $request->city, 'postalCode' => $request->postalCode, 'phone' => $request->phone]),
         ]);
 
         $credentials = $request->only('email', 'password');
