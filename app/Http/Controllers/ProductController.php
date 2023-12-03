@@ -87,15 +87,50 @@ class ProductController extends Controller
         $product = Product::find($product_id);
         $this->authorize('update', $product);
 
+        if ($product === null) {
+            return back()->with('errors', 'Product not found');
+        }
+        if ($request->user()->id !== $product->sold_by) {
+            return back()->with('errors', 'You cannot edit the product because you are not the seller');
+        }
+        if (ProductController::isProductSold($product)) {
+            return back()->with('errors', 'You cannot edit the item because the item has already been sold');
+        }
+
+        if ($request->hasfile('imageToUpload')) {
+            $existingImages = $product->image_paths;
+            if (count($existingImages) > 0) {
+                foreach ($existingImages as $existingImage) {
+                    $filename = public_path($existingImage);
+                    unlink($filename);
+                }
+            }
+        }
+
         $request->validate([
             'name' => 'required|max:100',
             'description' => 'nullable|max:5000',
             'price' => 'required|gt:0',
+            'imageToUpload' => 'required',
         ]);
+
+        $image_paths = [];
+
+        $images = $request->file('imageToUpload');
+
+        if (! is_array($images)) {
+            $images = [$images];
+        }
+
+        foreach ($images as $image) {
+            $filename = '/storage/'.$image->storePublicly('product-images', ['disk' => 'public']);
+            array_push($image_paths, $filename);
+        }
 
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
+        $product->image_paths = $image_paths;
         $product->save();
 
         return redirect('/products/'.$product->id);
