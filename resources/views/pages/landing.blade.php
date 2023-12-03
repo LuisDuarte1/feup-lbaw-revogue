@@ -17,8 +17,10 @@
                     $image = $product['product']->image_paths[0];
                     $size = $product['size'];
                     $id = $product['product']->id;
+                    $shipping = $product['product']->shipping;
+                    $condition = $product['product']->condition;
                 @endphp
-                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id"/>
+                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="$shipping" :condition="$condition"/>
             @endforeach
         </div>
     </div>
