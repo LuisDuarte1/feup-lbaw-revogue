@@ -5,11 +5,21 @@
             <img src="{{ $image }}?hash={{fake()->lexify('???????????????')}}" loading="lazy" decoding="async" alt="product image">
         </div>
         <div class="product-description-card">
-            <div class="product-size">
-                <p>{{ $size }}</p>
+            <div class="product-top">
+                <div class ="product-name">
+                    <p>{{ $name }}</p>
+                </div>
+                <div class="product-size">
+                    <p>{{ $size }}</p>
+                </div>
             </div>
-            <div class="product-price">
-                <p>{{ $price }}</p>
+            <div class="product-bottom">
+                <div class="product-price">
+                    <p>{{ $price }}</p>
+                </div>
+                <div class="product-condition">
+                    <p>{{ $condition }}</p>
+                </div>
             </div>
         </div>
     </div>
