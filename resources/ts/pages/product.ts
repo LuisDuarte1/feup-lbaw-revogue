@@ -15,13 +15,22 @@ async function addToCartRequest (productId: Number): Promise<void> {
 }
 
 export function productPage (): void {
+  const galleryThumbs = new Swiper('.gallery-thumbs', {
+    spaceBetween: 10,
+    loop: true,
+    freeMode: true,
+    watchSlidesProgress: true
+  })
   new Swiper('.gallery-main', {
-    modules: [Navigation, Pagination],
+    modules: [Navigation, Pagination, Thumbs],
     spaceBetween: 10,
     loop: true,
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev'
+    },
+    thumbs: {
+      swiper: galleryThumbs
     }
   })
   const productId = Number.parseInt(window.location.pathname.match(/^\/products\/(.*)$/)?.at(1) ?? '-1')

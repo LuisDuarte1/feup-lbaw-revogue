@@ -20,22 +20,21 @@
             <div class="product-image column">
                 <div class="swiper gallery-main">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-1.jpg)"></div>
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-2.jpg)"></div>
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-3.jpg)"></div>
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-4.jpg)"></div>
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-5.jpg)"></div>
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-6.jpg)"></div>
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-7.jpg)"></div>
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-8.jpg)"></div>
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-9.jpg)"></div>
-                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-10.jpg)"></div>
+                        @foreach ($product->image_paths as $productPhoto)
+                            <div class="swiper-slide" style='background-image:url("{{ $productPhoto }}")'></div>
+                        @endforeach
                     </div>
                     <!-- Add Arrows -->
                     <div class="swiper-button-next swiper-button-white"></div>
                     <div class="swiper-button-prev swiper-button-white"></div>
                 </div>
-                <!-- <img src="{{$product->image_paths[0]}}" alt="product image"> -->
+                <div class="swiper gallery-thumbs">
+                    <div class="swiper-wrapper">
+                        @foreach ($product->image_paths as $previewPhoto)
+                            <div class="swiper-slide" style='background-image:url("{{ $previewPhoto }}")'></div>
+                        @endforeach
+                    </div>
+                </div>
                 <!--TODO(luisd): maybe abstract this into a blade component? -->
                 @if ($sold === false)
                 @if ($isInWishlist)
