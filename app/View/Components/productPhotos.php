@@ -8,12 +8,11 @@ use Illuminate\View\Component;
 
 class ProductPhotos extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public $imagePaths;
+
+    public function __construct($imagePaths)
     {
-        //
+        $this->imagePaths = $imagePaths;
     }
 
     /**
@@ -21,6 +20,8 @@ class ProductPhotos extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.productPhotos');
+        return view('components.productPhotos', [
+            'imagePaths' => $this->imagePaths,
+        ]);
     }
 }
