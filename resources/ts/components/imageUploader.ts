@@ -29,6 +29,8 @@ export default async function (imageElement: Element): Promise<void> {
     input.id = 'product-photos'
     input.name = 'imageToUpload[]'
     input.type = 'file'
+    input.multiple = true
+    input.accept = 'image/png, image/jpeg, image/jpg'
   }
   let photos: NodeListOf<HTMLDivElement> = imageElement.querySelectorAll('.add-photo')
   const normalSquare = document.createElement('div')
