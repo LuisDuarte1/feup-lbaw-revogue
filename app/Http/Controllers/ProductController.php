@@ -125,6 +125,7 @@ class ProductController extends Controller
             'name' => 'required|max:100',
             'description' => 'nullable|max:5000',
             'price' => 'required|gt:0',
+            'imageToUpload' => 'required',
         ]);
 
         $image_paths = [];
