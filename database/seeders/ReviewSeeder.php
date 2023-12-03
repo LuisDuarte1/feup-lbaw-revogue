@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -28,7 +29,7 @@ class ReviewSeeder extends Seeder
             }
 
             $product = Product::factory()->state(['sold_by' => $random_user])->create();
-            $order = Order::factory()->state(['belongs_to' => $reviewer])->create();
+            $order = Order::factory()->state(['belongs_to' => $reviewer, 'purchase' => Purchase::factory()->create()])->create();
             $order->products()->attach($product->id, ['discount' => 0]);
 
             $review = Review::factory()->state(['reviewer' => $reviewer,

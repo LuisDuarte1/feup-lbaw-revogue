@@ -66,15 +66,7 @@ class ProductController extends Controller
     {
         $product_id = $request->route('id');
         $product = Product::find($product_id);
-        if ($product === null) {
-            return back()->with('errors', 'Product not found');
-        }
-        if ($request->user()->id !== $product->sold_by) {
-            return back()->with('errors', 'You cannot delete the product because you are not the seller');
-        }
-        if (ProductController::isProductSold($product)) {
-            return back()->with('errors', 'You cannot delete the item because the item has already been sold');
-        }
+        $this->authorize('delete', $product);
         $product->delete();
 
         return redirect('/');
@@ -84,15 +76,7 @@ class ProductController extends Controller
     {
         $product_id = $request->route('id');
         $product = Product::find($product_id);
-        if ($product === null) {
-            return back()->with('errors', 'Product not found');
-        }
-        if ($request->user()->id !== $product->sold_by) {
-            return back()->with('errors', 'You cannot edit the product because you are not the seller');
-        }
-        if (ProductController::isProductSold($product)) {
-            return back()->with('errors', 'You cannot edit the item because the item has already been sold');
-        }
+        $this->authorize('update', $product);
 
         return view('pages.editProduct', ['product' => $product]);
     }
@@ -101,6 +85,8 @@ class ProductController extends Controller
     {
         $product_id = $request->route('id');
         $product = Product::find($product_id);
+        $this->authorize('update', $product);
+        
         if ($product === null) {
             return back()->with('errors', 'Product not found');
         }
