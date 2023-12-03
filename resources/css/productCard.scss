@@ -1,7 +1,7 @@
 .product-card {
     display: flex;
     height: 13rem;
-    width: 10rem;
+    width: 11rem;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.33rem;
@@ -16,7 +16,7 @@
 
     .product-image-card {
         width: 100%;
-        height: 10rem;
+        height: 11rem;
         flex-shrink: 0;
         border-radius: 0.75rem 0.75rem 0rem 0rem;
         background: #F3F3EB;
