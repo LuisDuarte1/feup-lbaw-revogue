@@ -18,7 +18,6 @@
     </div>
     @else
     <div class="add-photo"></div>
-
     @endif
     @endfor
 </div>
