@@ -1,5 +1,4 @@
 import './bootstrap'
-import { loadStripe } from '@stripe/stripe-js'
 import imageUploader from './components/imageUploader'
 import submitFormOnChange from './components/submitFormOnChange'
 import wishlistButton from './components/wishlistButton'
@@ -9,6 +8,7 @@ import { landingPage } from './pages/landing'
 import { productPage } from './pages/product'
 import { productListing } from './pages/productListing'
 import { searchPage } from './pages/search'
+import { checkout } from './pages/checkout'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -19,7 +19,8 @@ const routes: RouteList = {
   '/profile/complete': completeProfile,
   '/search': searchPage,
   '/products/{id}': productPage,
-  '/cart': cart
+  '/cart': cart,
+  '/checkout': checkout
 }
 
 const components: ComponentList = {
@@ -54,8 +55,6 @@ function componentHandler (): void {
 }
 
 document.addEventListener('DOMContentLoaded', (_) => {
-  pageHandler()
   componentHandler()
+  pageHandler()
 })
-
-export const stripe = await loadStripe('pk_test_51OH0XHBAaom7Im7itwb5Z5tQbNduKU9NTQskbczaPsQ5yB9vMObR2GpPoR8FaJPHwTR3kaz7ctIPjSfoxdURP5oE005DTwUZOK')

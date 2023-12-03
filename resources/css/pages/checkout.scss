@@ -36,7 +36,7 @@
 
 .payment-methods{
     width: 100%;
-    .pay-on-collection{
+    .payment-item{
         display: flex;
         align-items: center;
         gap: 1rem;
@@ -54,4 +54,8 @@
     button{
         width: 100%;
     }
+}
+
+#stripe-payment-method{
+    width: 100%;
 }
