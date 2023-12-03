@@ -86,7 +86,7 @@ class ProductController extends Controller
         $product_id = $request->route('id');
         $product = Product::find($product_id);
         $this->authorize('update', $product);
-        
+
         if ($product === null) {
             return back()->with('errors', 'Product not found');
         }
