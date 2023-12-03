@@ -1,3 +1,6 @@
+import { Swiper } from 'swiper'
+import { Navigation, Pagination, Thumbs } from 'swiper/modules'
+
 async function addToCartRequest (productId: Number): Promise<void> {
   const req = await fetch('/api/cart', {
     method: 'POST',
@@ -12,6 +15,15 @@ async function addToCartRequest (productId: Number): Promise<void> {
 }
 
 export function productPage (): void {
+  new Swiper('.gallery-main', {
+    modules: [Navigation, Pagination],
+    spaceBetween: 10,
+    loop: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    }
+  })
   const productId = Number.parseInt(window.location.pathname.match(/^\/products\/(.*)$/)?.at(1) ?? '-1')
   if (productId === -1) {
     console.error("Couldn't get product id")

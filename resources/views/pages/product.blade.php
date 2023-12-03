@@ -7,10 +7,10 @@
         <p>
             <a href="/">Home</a><span class="separator">/</span>
             @foreach ($categories as $category)
-            
+
             <a href="#">{{$category->name}}</a>
             @if(!$loop->last)
-                <span class="separator">/</span>
+            <span class="separator">/</span>
             @endif
             @endforeach
         </p>
@@ -18,18 +18,35 @@
     <div class="column justify-center gap-3">
         <div class="layout-wrapper">
             <div class="product-image column">
-                <img src="{{$product->image_paths[0]}}" alt="product image">
+                <div class="swiper gallery-main">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-1.jpg)"></div>
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-2.jpg)"></div>
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-3.jpg)"></div>
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-4.jpg)"></div>
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-5.jpg)"></div>
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-6.jpg)"></div>
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-7.jpg)"></div>
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-8.jpg)"></div>
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-9.jpg)"></div>
+                        <div class="swiper-slide" style="background-image:url(https://swiperjs.com/demos/images/nature-10.jpg)"></div>
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next swiper-button-white"></div>
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                </div>
+                <!-- <img src="{{$product->image_paths[0]}}" alt="product image"> -->
                 <!--TODO(luisd): maybe abstract this into a blade component? -->
                 @if ($sold === false)
-                    @if ($isInWishlist)
-                        <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
-                                <ion-icon name="heart"></ion-icon>
-                        @else
-                        <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
-                            <ion-icon name="heart-outline"></ion-icon>
+                @if ($isInWishlist)
+                <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
+                    <ion-icon name="heart"></ion-icon>
+                    @else
+                    <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
+                        <ion-icon name="heart-outline"></ion-icon>
                         @endif
                     </a>
-                @endif
+                    @endif
             </div>
             <div class="product-details">
                 <div class="product-title">
@@ -47,7 +64,7 @@
                     <p>@foreach ($attributes as $attribute)
                         {{$attribute->key}} - {{$attribute->value}}
                         @if (!$loop->last)
-                            <span class="separator">•</span>
+                        <span class="separator">•</span>
                         @endif
                         @endforeach
                     </p>
@@ -56,22 +73,22 @@
                     <p>{{$product->description}}</p>
                 </div>
                 @if ($sold === true)
-                    <h3 class="product-sold">This item already has been sold</h3>
+                <h3 class="product-sold">This item already has been sold</h3>
                 @else
-                    @if ($ownProduct === false)
-                        <div class="product-buttons">
-                            <button class="buy-now">Buy now</button>
-                            <button class="add-to-cart">Add to cart</button>
-                        </div>
-                    @else
-                        <div class="product-buttons">
-                            <form method="POST" action="/products/{{$product->id}}/delete">
-                                @csrf
-                                <button class="delete-product" type="submit">Delete</button>
-                            </form>
-                            <a href="/products/{{$product->id}}/edit" class="edit-product"><button>Edit</button></a>
-                        </div>
-                    @endif
+                @if ($ownProduct === false)
+                <div class="product-buttons">
+                    <button class="buy-now">Buy now</button>
+                    <button class="add-to-cart">Add to cart</button>
+                </div>
+                @else
+                <div class="product-buttons">
+                    <form method="POST" action="/products/{{$product->id}}/delete">
+                        @csrf
+                        <button class="delete-product" type="submit">Delete</button>
+                    </form>
+                    <a href="/products/{{$product->id}}/edit" class="edit-product"><button>Edit</button></a>
+                </div>
+                @endif
 
                 @endif
 
@@ -80,15 +97,15 @@
         <div class="layout-wrapper">
             <div class="reviews w-full">
                 <h3 class="title">Reviews</h3>
-                <p>There are no reviews yet.</p> 
-                <!-- TODO --> 
+                <p>There are no reviews yet.</p>
+                <!-- TODO -->
             </div>
             <div class="seller column gap-1">
                 <div class="sold-by">
                     <h3 class="title">Sold by:</h3>
                 </div>
                 <div class="seller-wrapper">
-                    <div class="profile-pic"> 
+                    <div class="profile-pic">
                         <img id="image" src="/storage/{{ $imagePath }}">
                     </div>
                     <div class="seller-info">

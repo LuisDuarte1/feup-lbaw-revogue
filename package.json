@@ -23,6 +23,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "debounce": "^2.0.0"
+        "debounce": "^2.0.0",
+        "swiper": "^11.0.5"
     }
 }
