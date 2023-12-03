@@ -6,16 +6,21 @@
         </div>
         <div class="product-description-card">
             <div class="product-top">
-                <div class ="product-name">
-                    <p>{{ $name }}</p>
+                <div class="product-price">
+                    <p>{{ $price }}</p>
                 </div>
                 <div class="product-size">
                     <p>{{ $size }}</p>
                 </div>
             </div>
             <div class="product-bottom">
-                <div class="product-price">
-                    <p>{{ $price }}</p>
+                <div class="product-shipping">
+                    <div class="product-shipping-text @if($shipping === 'Free') free-shipping @endif">
+                        <p>{{ $shipping }}</p>
+                    </div>
+                    <div class="product-shipping-icon">
+                        <ion-icon name="airplane"></ion-icon>
+                    </div>
                 </div>
                 <div class="product-condition">
                     <p>{{ $condition }}</p>

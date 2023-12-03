@@ -11,14 +11,14 @@
         width: 100%;
         height: 100%;
         flex-shrink: 0;
-        border-radius: 0.75rem;
+        border-radius: 0.75rem 0.75rem 0rem 0rem;
     }
 
     .product-image-card {
         width: 100%;
         height: 10rem;
         flex-shrink: 0;
-        border-radius: 0.75rem;
+        border-radius: 0.75rem 0.75rem 0rem 0rem;
         background: #F3F3EB;
     }
     
@@ -30,7 +30,7 @@
         justify-content: space-around;
         align-items: left;
         flex-shrink: 0;
-        border-radius: 0.5rem;
+        border-radius: 0rem 0rem 0.75rem 0.75rem;
         padding: 0.5rem 0;
         background: #6064A4;
     }
@@ -46,6 +46,34 @@
         background: #6064A4;
     }
 
+    .product-shipping{
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
+        padding: 0 1rem;
+        color: #FBFBF3;
+        text-align: left;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    .product-shipping-text > p::before{
+        content: "+";
+    }
+
+    .product-shipping-text:not(.free-shipping) > p::after {
+        content: "€";
+    }
+
+    .product-shipping ion-icon{
+        rotate: 315deg;
+        padding: 0 0.2rem;
+    }
+
+    .product-price > p::after{
+        content: "€";
+    }
+
     .product-bottom {
         display: flex;
         flex-direction: row;
@@ -55,13 +83,6 @@
         flex-shrink: 0;
         border-radius: 0.5rem;
         background: #6064A4;
-    }
-
-    .product-name {
-        color: #FBFBF3;
-        font-size: 1rem;
-        padding: 0 1rem;
-        font-weight: 300;
     }
     
     .product-price {
