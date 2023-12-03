@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS
     Admins,
     OrderProduct,
     Categories,
+    Jobs,
     Payouts CASCADE;
 
 DROP TYPE IF EXISTS
@@ -258,15 +259,26 @@ CREATE TABLE OrderProduct(
 );
 
 CREATE TABLE Payouts(
-    "id" TEXT PRIMARY KEY NOT NULL,
+    "id" SERIAL PRIMARY KEY,
     "creation_date" DATE NOT NULL DEFAULT CURRENT_DATE CHECK ( "creation_date" <= CURRENT_DATE ),
     "tax" NUMERIC NOT NULL CHECK ( "tax" <= 1 AND "tax" >= 0 ),
     "paid_to" INT,
     FOREIGN KEY ("paid_to") REFERENCES Users("id") ON DELETE SET NULL
 );
 
+CREATE TABLE Jobs(
+    "id" SERIAL PRIMARY KEY,
+    "queue" TEXT NOT NULL,
+    "payload" TEXT NOT NULL,
+    "attempts" INT NOT NULL,
+    "reserved_at" INT,
+    "available_at" INT NOT NULL,
+    "created_at" INT NOT NULL
+);
+
 -- INDICES
 
+CREATE INDEX jobs_queue_index ON Jobs USING btree("queue");
 
 CREATE INDEX notification_search_index ON Notifications USING hash(belongs_to);
 
