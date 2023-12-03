@@ -150,7 +150,6 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
     });
 });
 
-
 Route::prefix('admin')->group(function () {
 
     Route::view('/', 'pages.admin.landing');
@@ -165,5 +164,5 @@ Route::prefix('admin')->group(function () {
     Route::controller(AdminPayoutController::class)->group(function () {
         Route::get('/payouts', 'getPage')->name('admin.payouts');
     });
-    
+
 });

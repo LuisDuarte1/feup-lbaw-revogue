@@ -26,12 +26,12 @@ class ProductListingController extends Controller
         $image_paths = [];
 
         $images = $request->file('imageToUpload');
-        if (!is_array($images)) {
+        if (! is_array($images)) {
             $images = [$images];
         }
 
         foreach ($images as $image) {
-            $filename = '/storage/' . $image->storePublicly('product-images', ['disk' => 'public']);
+            $filename = '/storage/'.$image->storePublicly('product-images', ['disk' => 'public']);
             array_push($image_paths, $filename);
         }
         DB::beginTransaction();
@@ -47,7 +47,7 @@ class ProductListingController extends Controller
         $product->productCategory()->associate($request->category);
 
         $product->update([
-            'slug' => $product->id . '-' . Str::slug($request->title),
+            'slug' => $product->id.'-'.Str::slug($request->title),
         ]);
         foreach ($request->input('attributes') as $key => $value) {
             $attr = Attribute::where('key', $key)->where('value', $value)->get();
@@ -60,6 +60,6 @@ class ProductListingController extends Controller
         DB::commit();
 
         //TODO (luisd): use named routed
-        return redirect('/products/' . $product->id);
+        return redirect('/products/'.$product->id);
     }
 }
