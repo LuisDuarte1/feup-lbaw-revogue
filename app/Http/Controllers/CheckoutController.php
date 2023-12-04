@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Stripe\StripeClient;
 
 class CheckoutController extends Controller
@@ -24,7 +25,11 @@ class CheckoutController extends Controller
 
     public function getPaymentIntent(Request $request)
     {
-        CheckoutController::validateCheckoutRequest($request);
+        try{
+            CheckoutController::validateCheckoutRequest($request);
+        } catch( ValidationException $e){
+            return response()->json(['error' => $e->errors()], 400);
+        }
         if($request->payment_method !== '1'){
             return response()->json(['error' => "In order to use payment intents you must use stripe as a payment method"], 400);
         }
@@ -36,12 +41,26 @@ class CheckoutController extends Controller
         }
         $stripe = new StripeClient(config('payments.stripe_key'));
         $paymentIntent = $stripe->paymentIntents->create([
-            'amount' => $amount,
-            'currentcy' => 'eur',
+            'amount' => $amount*100,
+            'currency' => 'eur',
             'automatic_payment_methods' => [
                 'enabled' => true,
             ]
         ]);
+
+        $purchaseIntent = $request->user()->purchaseIntents()->create([
+            'shipping_address' => [
+                'name' => $request->full_name,
+                'email' => $request->email,
+                'country' => $request->country,
+                'address' => $request->address,
+                'zip-code' => $request->zip_code,
+                'phone' => $request->phone,
+            ],
+            'payment_intent_id' => $paymentIntent->id
+        ]);
+        $purchaseIntent->products()->attach($cart);
+
         return response()->json(['clientSecret' => $paymentIntent->client_secret]);
     }
 
@@ -57,10 +76,13 @@ class CheckoutController extends Controller
     {
         //dd($request);
         CheckoutController::validateCheckoutRequest($request);
-
+        if($request->payment_method === '1'){
+            return back(); //this is never supposed to happen 
+        }
         DB::beginTransaction();
         $cart = $request->user()->cart()->get();
         $cartGrouped = $cart->groupBy('sold_by');
+
         if ($request->payment_method === '0') {
             $purchase = Purchase::create(['method' => 'delivery']);
             foreach ($cartGrouped as $soldBy => $products) {

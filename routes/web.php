@@ -41,16 +41,23 @@ Route::prefix('api')->group(function () {
     Route::controller(AttributeController::class)->group(function () {
         Route::get('/attributes', 'getValues');
     });
-    Route::controller(CartProductController::class)->group(function () {
-        Route::post('/cart', 'AddProductToCart');
-        Route::delete('/cart', 'RemoveProductFromCart');
-    });
-    Route::controller(WishlistController::class)->group(function () {
-        Route::post('/wishlist', 'AddProductToWishlist');
-        Route::delete('/wishlist', 'RemoveProductFromWishlist');
-    });
-    Route::controller(SearchController::class)->group(function () {
-        Route::get('/search', 'searchGetApi');
+    Route::middleware(['auth:web', 'verified'])->group(function () {
+        Route::controller(CartProductController::class)->group(function () {
+            Route::post('/cart', 'AddProductToCart');
+            Route::delete('/cart', 'RemoveProductFromCart');
+        });
+        Route::controller(WishlistController::class)->group(function () {
+            Route::post('/wishlist', 'AddProductToWishlist');
+            Route::delete('/wishlist', 'RemoveProductFromWishlist');
+        });
+        Route::controller(SearchController::class)->group(function () {
+            Route::get('/search', 'searchGetApi');
+        });
+        Route::prefix('checkout')->group(function () {
+            Route::controller(CheckoutController::class)->group(function () {
+                Route::post('/getPaymentIntent', 'getPaymentIntent');
+            });
+        });
     });
 });
 

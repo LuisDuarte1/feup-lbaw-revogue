@@ -20,6 +20,11 @@ class PurchaseIntent extends Model
         'payment_intent_id'
     ];
 
+    protected $casts = [
+        'creation_data'=>'datetime',
+        'shipping_address'=>'array',
+    ];
+
     public function user(): BelongsTo{
         return $this->belongsTo(User::class, 'user');
     }

@@ -8,7 +8,7 @@
     }
 @endphp
 <section class="checkout-page">
-    <form action="{{ route('checkout') }}" method="POST">
+    <form class="checkout-form" action="{{ route('checkout') }}" method="POST">
         @csrf
         <div class="checkout-wrapper column justify-center gap-2">
             <header class="checkout-header">
@@ -66,7 +66,7 @@
             </div>
             <div id="stripe-payment-method" amount="{{$amount}}"></div>
             <div class="submit-button">
-                <button class="">Place Order</button>
+                <button type="submit">Place Order</button>
             </div>
         </div>
     </form>
