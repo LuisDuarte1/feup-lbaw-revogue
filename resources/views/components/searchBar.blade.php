@@ -1,3 +1,12 @@
+@php
+    $cartCount = 0;
+    if (Auth::check()) {
+        $cartCount = Auth::user()
+            ->cart()
+            ->count();
+    }
+@endphp
+
 <nav class= "topnav">
     <form method="GET" action="/search">
         <ion-icon id="search_icon" name="search"></ion-icon>
@@ -13,7 +22,7 @@
 
         <a href="{{ route('cart') }}">
             <ion-icon name="cart"></ion-icon>
-            <i class="fa badge" style="font-size:24px" content={{ $cartCount }}></i>
+            <span class="cart-badge" style="font-size:24px" value={{ $cartCount }}></span>
         </a>
     </div>
 </nav>

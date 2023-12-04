@@ -8,7 +8,11 @@ async function addToCartRequest (productId: Number): Promise<void> {
   })
   if (req.status !== 200) {
     console.error(`Add to cart failed with status ${req.status}`)
+    return
   }
+
+  const cartBadge = document.querySelector('.cart-badge')
+  cartBadge?.setAttribute('value', (Number.parseInt(cartBadge?.getAttribute('value') ?? '0') + 1).toString())
 }
 
 export function productPage (): void {
