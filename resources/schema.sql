@@ -3,6 +3,8 @@ SET search_path TO lbaw23107;
 DROP TABLE IF EXISTS
     Users,
     Products,
+    PurchaseIntents,
+    PurchaseIntentProduct,
     Orders,
     Attributes,
     ProductAttributes,
@@ -114,6 +116,22 @@ CREATE TABLE ProductAttributes(
   PRIMARY KEY ("product", "attribute"),
   FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE,
   FOREIGN KEY ("attribute") REFERENCES Attributes("id") ON DELETE CASCADE
+);
+
+CREATE TABLE PurchaseIntents(
+    "id" SERIAL PRIMARY KEY,
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "shipping_address" JSON NOT NULL,
+    "payment_intent_id" TEXT UNIQUE NOT NULL,
+    "user" INT NOT NULL,
+    FOREIGN KEY ("user") REFERENCES Users("id") ON DELETE CASCADE
+);
+
+CREATE TABLE PurchaseIntentProduct(
+    "purchase_intent" INT NOT NULL,
+    "product" INT NOT NULL,
+    FOREIGN KEY ("purchase_intent") REFERENCES PurchaseIntents("id") ON DELETE CASCADE,
+    FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE
 );
 
 CREATE TABLE Purchases(

@@ -10,8 +10,24 @@ use Stripe\StripeClient;
 class CheckoutController extends Controller
 {
 
+    public static function validateCheckoutRequest(Request $request){
+        $request->validate([
+            'full_name' => 'required|max:250',
+            'email' => 'required|email:rfc',
+            'address' => 'required|max:500',
+            'country' => 'required',
+            'zip_code' => 'required|max:1000',
+            'phone' => 'required|integer',
+            'payment_method' => 'required',
+        ]);
+    }
+
     public function getPaymentIntent(Request $request)
     {
+        CheckoutController::validateCheckoutRequest($request);
+        if($request->payment_method !== '1'){
+            return response()->json(['error' => "In order to use payment intents you must use stripe as a payment method"], 400);
+        }
         $user = $request->user();
         $cart = $user->cart()->get();
         $amount = 0;
@@ -40,15 +56,7 @@ class CheckoutController extends Controller
     public function postPage(Request $request)
     {
         //dd($request);
-        $request->validate([
-            'full_name' => 'required|max:250',
-            'email' => 'required|email:rfc',
-            'address' => 'required|max:500',
-            'country' => 'required',
-            'zip_code' => 'required|max:1000',
-            'phone' => 'required|integer',
-            'payment_method' => 'required',
-        ]);
+        CheckoutController::validateCheckoutRequest($request);
 
         DB::beginTransaction();
         $cart = $request->user()->cart()->get();
