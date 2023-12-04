@@ -91,6 +91,13 @@ Route::prefix('products')->group(function () {
     });
 });
 
+Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function () {
+    Route::controller(SettingsController::class)->group(function () {
+        Route::get('/', 'pages')->name('settings');
+        Route::post('/', 'updateProfile');
+    });
+});
+
 Route::prefix('profile')->middleware(['auth:web', 'verified'])->group(function () {
     Route::controller(CompleteProfileController::class)->group(function () {
         Route::get('complete', 'getPage')->name('complete-profile');
@@ -102,6 +109,7 @@ Route::prefix('profile')->middleware(['auth:web', 'verified'])->group(function (
             Route::get('/sold', 'soldProducts');
             Route::get('/likes', 'likedProducts');
             Route::get('/history', 'historyProducts');
+
         });
     });
 });
