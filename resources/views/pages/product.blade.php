@@ -17,17 +17,7 @@
     </div>
     <div class="column justify-center gap-3">
         <div class="layout-wrapper">
-            <div class="product-image column">
-                <div class="swiper gallery-main">
-                    <div class="swiper-wrapper">
-                        @foreach ($product->image_paths as $productPhoto)
-                            <div class="swiper-slide" style='background-image:url("{{ $productPhoto }}")'></div>
-                        @endforeach
-                    </div>
-                    <!-- Add Arrows -->
-                    <div class="swiper-button-next swiper-button-white"></div>
-                    <div class="swiper-button-prev swiper-button-white"></div>
-                </div>
+            <div class="product-image">
                 <div class="swiper gallery-thumbs">
                     <div class="swiper-wrapper">
                         @foreach ($product->image_paths as $previewPhoto)
@@ -35,10 +25,17 @@
                         @endforeach
                     </div>
                 </div>
-                <!--TODO(luisd): maybe abstract this into a blade component? -->
-                @if ($sold === false)
-                @if ($isInWishlist)
-                <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
+                <div class="swiper gallery-main">
+                    <div class="swiper-wrapper">
+                        @foreach ($product->image_paths as $productPhoto)
+                            <div class="swiper-slide" style='background-image:url("{{ $productPhoto }}")'></div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-next swiper-button-white"></div>
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                    @if ($sold === false)
+                    @if ($isInWishlist)
+                    <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
                     <ion-icon name="heart"></ion-icon>
                     @else
                     <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
@@ -46,6 +43,7 @@
                         @endif
                     </a>
                     @endif
+                </div>
             </div>
             <div class="product-details">
                 <div class="product-title">

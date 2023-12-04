@@ -23,14 +23,14 @@
     display: grid;
     gap: 3rem;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
+    align-items: start;
 
     .product-image{
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
+        display: grid;
+        grid-template-columns: 20% auto;
+        gap: 1.5rem;
         position: relative;
+        min-height: 30rem;
 
         #wishlist_button {
             z-index: 5;
@@ -50,22 +50,18 @@
         }
 
         .gallery-main{
-            width: 30rem;
-            height: 30rem;
             margin: 0;
-
+            height: 100%;
             .swiper-slide{
                 background-size: cover;
                 background-position: center;
             }
         }
         .gallery-thumbs{
-            height: 20%;
-            box-sizing: border-box;
+            width: 10rem;
             margin: 0;
 
             .swiper-slide {
-                height: 100%;
                 opacity: 0.4;
                 background-size: cover;
                 background-position: center;
@@ -96,6 +92,7 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 0.5rem;
+        align-self: center;
     }
     .product-title{
         .title{

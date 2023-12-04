@@ -15,12 +15,20 @@ async function addToCartRequest (productId: Number): Promise<void> {
 }
 
 export function productPage (): void {
+  const mainHeight = document.querySelector('.gallery-main')?.clientHeight
+  const thumbs = document.querySelector('.gallery-thumbs')
+  if (mainHeight === undefined || thumbs === null) {
+    console.error('Could not get main height')
+    return
+  }
+  thumbs.setAttribute('style', `height: ${mainHeight}px`)
   const galleryThumbs = new Swiper('.gallery-thumbs', {
     spaceBetween: 10,
     loop: true,
     freeMode: true,
-    slidesPerView: 8,
-    watchSlidesProgress: true
+    slidesPerView: 4,
+    watchSlidesProgress: true,
+    direction: 'vertical'
   })
   new Swiper('.gallery-main', {
     modules: [Navigation, Pagination, Thumbs],
