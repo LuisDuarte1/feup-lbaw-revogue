@@ -172,7 +172,12 @@ class CheckoutController extends Controller
     public function paymentConfirmationPage(Request $request){
         if($request->query('redirect_status') === 'failed'){
             //TODO: add error
-            return redirect('/checkout');
+            return redirect()->route('checkout')->with('modal-error', 
+                [
+                    'title' => 'Payment error',
+                    'content' => 'Something went wrong while processing your payment, please try again.',
+                    'confirm-button' => 'Close'
+                ]);
         }
         return view('pages.paymentConfirmation');
     }

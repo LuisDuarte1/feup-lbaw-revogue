@@ -9,6 +9,7 @@ import { productPage } from './pages/product'
 import { productListing } from './pages/productListing'
 import { searchPage } from './pages/search'
 import { checkout } from './pages/checkout'
+import errorModal from './components/errorModal'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -27,7 +28,8 @@ const components: ComponentList = {
   '#account_status': submitFormOnChange,
   '#order_status': submitFormOnChange,
   '.upload-photos': imageUploader,
-  '#wishlist_button': wishlistButton
+  '#wishlist_button': wishlistButton,
+  'meta[name="modal-error"]': errorModal
 }
 
 function pageHandler (): void {

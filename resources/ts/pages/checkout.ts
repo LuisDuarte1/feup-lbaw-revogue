@@ -1,5 +1,6 @@
 import { type StripePaymentElement, type Stripe, type StripeElements } from '@stripe/stripe-js'
 import { loadStripe } from '@stripe/stripe-js/pure'
+import Swal from 'sweetalert2'
 
 let paymentElement: StripePaymentElement | null = null
 let elements: StripeElements | null = null
@@ -85,6 +86,12 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
     })
 
     console.log(result.error)
+    await Swal.fire({
+      title: 'Payment error',
+      text: result.error.message,
+      icon: 'error',
+      confirmButtonText: 'Close'
+    })
   })()
 }
 
