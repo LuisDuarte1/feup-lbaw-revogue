@@ -20,8 +20,8 @@ class CheckoutController extends Controller
                 break;
             }
             else if($product->purchase_intents_count === 1){
-                $purchaseIntent = $product->purchaseIntents()->get()->first;
-                if($purchaseIntent->user()->id !== $request->user()->id){
+                $purchaseIntent = $product->purchaseIntents()->get()->first();
+                if($purchaseIntent->user !== $request->user()->id){
                     $hasPurchaseIntent = true;
                     break;
                 }
@@ -67,7 +67,7 @@ class CheckoutController extends Controller
             'payment_intent_id' => $paymentIntent->id
         ]);
         $purchaseIntent->products()->attach($cart);
-        PurchaseIntentTimeoutJob::dispatch($purchaseIntent)->delay(now()->addMinutes(5));
+        PurchaseIntentTimeoutJob::dispatch($purchaseIntent)->delay(now()->addMinutes(15));
         return $paymentIntent;
     }
 
@@ -93,14 +93,14 @@ class CheckoutController extends Controller
                 return response()->json(['error' => "A product has been sold while on the checkout."], 409);
             }
         }
-        $purchaseIntent = $user->purchaseIntents()->get();
-        if(!$purchaseIntent->isEmpty() && $purchaseIntent->first->products()->get()->diff($cart)->isEmpty()){
+        $purchaseIntent = $user->purchaseIntents()->get()->first();
+        if(isset($purchaseIntent) && $purchaseIntent->first()->products()->get()->diff($cart)->isEmpty()){
             $paymentIntent = $stripe->paymentIntents->retrieve($purchaseIntent->payment_intent_id);
 
             return response()->json(['clientSecret' => $paymentIntent->client_secret]);
-        } else if(!$purchaseIntent->isEmpty()){
+        } else if(isset($purchaseIntent)){
             //delete old paymentIntent and create a new one if the cart changes
-            $stripe->paymentIntents->cancel($purchaseIntent->first->payment_intent_id);
+            $stripe->paymentIntents->cancel($purchaseIntent->payment_intent_id);
             $purchaseIntent->delete();
         }
         $paymentIntent = CheckoutController::createPaymentIntent($stripe, $cart, $request);
@@ -170,6 +170,10 @@ class CheckoutController extends Controller
     }
 
     public function paymentConfirmationPage(Request $request){
+        if($request->query('redirect_status') === 'failed'){
+            //TODO: add error
+            return redirect('/checkout');
+        }
         return view('pages.paymentConfirmation');
     }
 }
