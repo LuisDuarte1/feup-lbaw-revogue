@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\PurchaseIntentTimeoutJob;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,29 +42,11 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function getPaymentIntent(Request $request)
-    {
-        try{
-            CheckoutController::validateCheckoutRequest($request);
-        } catch( ValidationException $e){
-            return response()->json(['error' => $e->errors()], 400);
-        }
-        if($request->payment_method !== '1'){
-            return response()->json(['error' => "In order to use payment intents you must use stripe as a payment method"], 400);
-        }
-        if(!CheckoutController::canEnterCheckout($request)){
-            return response()->json(['error' => "Can't get paymentIntent because there's someone buying a product in cart"], 401);
-        }
-        $user = $request->user();
-        $cart = $user->cart()->get();
+    public static function createPaymentIntent(StripeClient $stripe, $cart, Request $request): \Stripe\PaymentIntent{
         $amount = 0;
         foreach($cart as $product){
-            if(ProductController::isProductSold($product)){
-                return response()->json(['error' => "A product has been sold while on the checkout."], 409);
-            }
             $amount += $product->price;
         }
-        $stripe = new StripeClient(config('payments.stripe_key'));
         $paymentIntent = $stripe->paymentIntents->create([
             'amount' => $amount*100,
             'currency' => 'eur',
@@ -84,7 +67,43 @@ class CheckoutController extends Controller
             'payment_intent_id' => $paymentIntent->id
         ]);
         $purchaseIntent->products()->attach($cart);
+        PurchaseIntentTimeoutJob::dispatch($purchaseIntent)->delay(now()->addMinutes(5));
+        return $paymentIntent;
+    }
 
+    public function getPaymentIntent(Request $request)
+    {
+        $stripe = new StripeClient(config('payments.stripe_key'));
+
+        try{
+            CheckoutController::validateCheckoutRequest($request);
+        } catch( ValidationException $e){
+            return response()->json(['error' => $e->errors()], 400);
+        }
+        if($request->payment_method !== '1'){
+            return response()->json(['error' => "In order to use payment intents you must use stripe as a payment method"], 400);
+        }
+        if(!CheckoutController::canEnterCheckout($request)){
+            return response()->json(['error' => "Can't get paymentIntent because there's someone buying a product in cart"], 401);
+        }
+        $user = $request->user();
+        $cart = $user->cart()->get();
+        foreach($cart as $product){
+            if(ProductController::isProductSold($product)){
+                return response()->json(['error' => "A product has been sold while on the checkout."], 409);
+            }
+        }
+        $purchaseIntent = $user->purchaseIntents()->get()->first;
+        if(isset($purchaseIntent) && $purchaseIntent->products()->get()->diff($cart)->isEmpty){
+            $paymentIntent = $stripe->paymentIntents->retrieve($purchaseIntent->payment_intent_id);
+
+            return response()->json(['clientSecret' => $paymentIntent->client_secret]);
+        } else {
+            //delete old paymentIntent and create a new one if the cart changes
+            $stripe->paymentIntents->cancel($purchaseIntent->payment_intent_id);
+            $purchaseIntent->delete();
+        }
+        $paymentIntent = CheckoutController::createPaymentIntent($stripe, $cart, $request);
         return response()->json(['clientSecret' => $paymentIntent->client_secret]);
     }
 
