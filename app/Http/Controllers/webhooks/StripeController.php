@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\webhooks;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\StripeWebhookJob;
 use Illuminate\Http\Request;
 
 
@@ -17,6 +18,7 @@ class StripeController extends Controller
 
         }
         //TODO (luisd): send job to process webhook
+        StripeWebhookJob::dispatch($event);
 
         return response()->json([], 200);
     }

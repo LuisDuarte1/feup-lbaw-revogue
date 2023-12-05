@@ -80,7 +80,7 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
       elements,
       clientSecret: paymentIntentSecret,
       confirmParams: {
-        return_url: 'https://www.google.com'
+        return_url: location.protocol + '//' + location.host + '/checkout/paymentConfirmation'
       }
     })
 

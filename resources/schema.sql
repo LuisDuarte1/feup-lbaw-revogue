@@ -129,7 +129,7 @@ CREATE TABLE PurchaseIntents(
 
 CREATE TABLE PurchaseIntentProduct(
     "purchase_intent" INT NOT NULL,
-    "product" INT NOT NULL,
+    "product" INT UNIQUE NOT NULL,
     FOREIGN KEY ("purchase_intent") REFERENCES PurchaseIntents("id") ON DELETE CASCADE,
     FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE
 );

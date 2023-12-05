@@ -10,6 +10,24 @@ use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
+    public static function canEnterCheckout(Request $request): bool {
+        $cart = $request->user()->cart()->withCount('purchaseIntents')->get();
+        $hasPurchaseIntent = false;
+        foreach($cart as $product){
+            if($product->purchase_intents_count > 1){
+                $hasPurchaseIntent = true;
+                break;
+            }
+            else if($product->purchase_intents_count === 1){
+                $purchaseIntent = $product->purchaseIntent()->get()->first;
+                if($purchaseIntent->user()->id !== $request->user()->id){
+                    $hasPurchaseIntent = true;
+                    break;
+                }
+            }
+        }
+        return !$hasPurchaseIntent;
+    }
 
     public static function validateCheckoutRequest(Request $request){
         $request->validate([
@@ -32,6 +50,9 @@ class CheckoutController extends Controller
         }
         if($request->payment_method !== '1'){
             return response()->json(['error' => "In order to use payment intents you must use stripe as a payment method"], 400);
+        }
+        if(!CheckoutController::canEnterCheckout($request)){
+            return response()->json(['error' => "Can't get paymentIntent because there's someone buying a product in cart"], 401);
         }
         $user = $request->user();
         $cart = $user->cart()->get();
@@ -67,9 +88,12 @@ class CheckoutController extends Controller
     public function getPage(Request $request)
     {
         $user = $request->user();
-        $cart = $user->cart()->get();
 
-        return view('pages.checkout', ['cart' => $cart]);
+        if (!CheckoutController::canEnterCheckout($request)){
+            //TODO(luisd): redirect to cart with an error
+            return redirect('/cart');
+        }
+        return view('pages.checkout', ['cart' => $user->cart()->get()]);
     }
 
     public function postPage(Request $request)
@@ -79,10 +103,12 @@ class CheckoutController extends Controller
         if($request->payment_method === '1'){
             return back(); //this is never supposed to happen 
         }
+        if(!CheckoutController::canEnterCheckout($request)){
+            return back();
+        }
         DB::beginTransaction();
         $cart = $request->user()->cart()->get();
         $cartGrouped = $cart->groupBy('sold_by');
-
         if ($request->payment_method === '0') {
             $purchase = Purchase::create(['method' => 'delivery']);
             foreach ($cartGrouped as $soldBy => $products) {
@@ -115,5 +141,9 @@ class CheckoutController extends Controller
         DB::commit();
 
         return redirect('/');
+    }
+
+    public function paymentConfirmationPage(Request $request){
+        return view('pages.paymentConfirmation');
     }
 }
