@@ -20,7 +20,7 @@ function intializeStripeElement (stripe: Stripe | null): void {
     elements = stripe.elements(
       {
         mode: 'payment',
-        amount,
+        amount: Math.round(amount),
         currency: 'eur',
         appearance: { theme: 'stripe', variables: { colorPrimary: '#6064A4', colorText: '#060604', colorBackground: '#F3F3EB' } }
       })

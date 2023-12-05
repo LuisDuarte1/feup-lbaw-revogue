@@ -15,31 +15,25 @@ use Illuminate\Support\Facades\DB;
 class StripeWebhookJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    
     static public function handleSuccessfulPayment(\Stripe\Event $event){
         $paymentIntent = $event->data->object;
         
-        $purchaseIntent = PurchaseIntent::where('payment_intent_id', $paymentIntent->id)->get()->first();
+        $purchaseIntent = PurchaseIntent::where('payment_intent_id', $paymentIntent->id)->first();
 
         //we assume if the paymentIntent isn't found we just skip it. But it's never supposed to happen
-        if(!isset($paymentIntent->id)){
+        if(!isset($purchaseIntent)){
+            error_log("cannot find paymentIntent ".$paymentIntent->id);
             return;
         }
         $cart = $purchaseIntent->products()->get();
-        $cartGrouped = $purchaseIntent->products()->groupBy('sold_by');
+        $cartGrouped = $purchaseIntent->products()->get()->groupBy('sold_by');
         DB::beginTransaction();
         $purchase = Purchase::create(['method' => 'stripe']);
         foreach ($cartGrouped as $soldBy => $products) {
-            $order = $purchaseIntent->user()->orders()->create([
+            $order = $purchaseIntent->user()->get()->first()->orders()->create([
                 'status' => 'pendingShipment', //payment at delivery goes straight to pendingShipment
-                'shipping_address' => [
-                    'name' => $purchaseIntent->shipping_address->full_name,
-                    'email' => $purchaseIntent->shipping_address->email,
-                    'country' => $purchaseIntent->shipping_address->country,
-                    'address' => $purchaseIntent->shipping_address->address,
-                    'zip-code' => $purchaseIntent->shipping_address->zip_code,
-                    'phone' => $purchaseIntent->shipping_address->phone,
-                ],
+                'shipping_address' => $purchaseIntent->shipping_address,
                 'purchase' => $purchase->id,
             ]);
 

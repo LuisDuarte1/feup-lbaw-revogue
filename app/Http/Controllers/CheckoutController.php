@@ -20,7 +20,7 @@ class CheckoutController extends Controller
                 break;
             }
             else if($product->purchase_intents_count === 1){
-                $purchaseIntent = $product->purchaseIntent()->get()->first;
+                $purchaseIntent = $product->purchaseIntents()->get()->first;
                 if($purchaseIntent->user()->id !== $request->user()->id){
                     $hasPurchaseIntent = true;
                     break;
@@ -93,14 +93,14 @@ class CheckoutController extends Controller
                 return response()->json(['error' => "A product has been sold while on the checkout."], 409);
             }
         }
-        $purchaseIntent = $user->purchaseIntents()->get()->first;
-        if(isset($purchaseIntent) && $purchaseIntent->products()->get()->diff($cart)->isEmpty){
+        $purchaseIntent = $user->purchaseIntents()->get();
+        if(!$purchaseIntent->isEmpty() && $purchaseIntent->first->products()->get()->diff($cart)->isEmpty()){
             $paymentIntent = $stripe->paymentIntents->retrieve($purchaseIntent->payment_intent_id);
 
             return response()->json(['clientSecret' => $paymentIntent->client_secret]);
-        } else {
+        } else if(!$purchaseIntent->isEmpty()){
             //delete old paymentIntent and create a new one if the cart changes
-            $stripe->paymentIntents->cancel($purchaseIntent->payment_intent_id);
+            $stripe->paymentIntents->cancel($purchaseIntent->first->payment_intent_id);
             $purchaseIntent->delete();
         }
         $paymentIntent = CheckoutController::createPaymentIntent($stripe, $cart, $request);

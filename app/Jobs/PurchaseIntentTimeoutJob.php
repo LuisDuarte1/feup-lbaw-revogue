@@ -13,7 +13,7 @@ use Illuminate\Queue\Attributes\WithoutRelations;
 class PurchaseIntentTimeoutJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    public $deleteWhenMissingModels = true;
     /**
      * Create a new job instance.
      */
@@ -29,6 +29,7 @@ class PurchaseIntentTimeoutJob implements ShouldQueue
      */
     public function handle(): void
     {
+        error_log("deleting purchase intent". $this->purchaseIntent->id);
         $this->purchaseIntent->delete();
     }
 }

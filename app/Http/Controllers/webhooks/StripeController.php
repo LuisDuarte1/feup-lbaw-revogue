@@ -17,7 +17,6 @@ class StripeController extends Controller
             return response()->json(["error" => "failed to process webhook"], 400);
 
         }
-        //TODO (luisd): send job to process webhook
         StripeWebhookJob::dispatch($event);
 
         return response()->json([], 200);

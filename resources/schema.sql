@@ -21,6 +21,7 @@ DROP TABLE IF EXISTS
     OrderProduct,
     Categories,
     Jobs,
+    "failed_jobs",
     Payouts CASCADE;
 
 DROP TYPE IF EXISTS
@@ -292,6 +293,16 @@ CREATE TABLE Jobs(
     "reserved_at" INT,
     "available_at" INT NOT NULL,
     "created_at" INT NOT NULL
+);
+
+CREATE TABLE "failed_jobs"(
+    "id" SERIAL PRIMARY KEY,
+    "uuid" TEXT UNIQUE NOT NULL,
+    "connection" TEXT NOT NULL,
+    "queue" TEXT NOT NULL,
+    "payload" TEXT NOT NULL,
+    "exception" TEXT NOT NULL,
+    "failed_at" TIMESTAMP NOT NULL
 );
 
 -- INDICES
