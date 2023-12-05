@@ -18,6 +18,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -93,8 +94,15 @@ Route::prefix('products')->group(function () {
 
 Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function () {
     Route::controller(SettingsController::class)->group(function () {
-        Route::get('/', 'pages')->name('settings');
-        Route::post('/', 'updateProfile');
+        Route::get('/settings/payment', 'PaymentsSettings')->name('payment-settings');
+        Route::get('/settings/shipping', 'ShippingSettings')->name('shipping-settings');
+        Route::get('/settings/general', 'GeneralSettings')->name('general-settings');
+        Route::get('/settings/profile', 'ProfileSettings')->name('profile-settings');
+        Route::post('/settings/payment', 'updatePaymentSettings');
+        Route::post('/settings/general', 'updateGeneralSettings');
+        Route::post('/settings/profile', 'updateProfileSettings');
+        Route::post('/settings/shipping', 'updateShippingSettings');
+
     });
 });
 

@@ -22,6 +22,7 @@
 @import 'pages/profile';
 @import 'pages/landingPage';
 @import 'pages/editProduct';
+@import 'pages/settings';
 
 
 
@@ -74,7 +75,7 @@ body {
 }
 
 @media screen and (max-height: 700px) {
-    :root{
+    :root {
         font-size: 15px;
     }
 }

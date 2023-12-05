@@ -30,7 +30,14 @@ class RegisterController extends Controller
             'username' => 'required|string|max:250|unique:users',
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed',
+            'company_name' => 'required|string|max:250',
+            'company_address' => 'required|string|max:250',
         ]);
+
+        $settings = [
+            'company_name' => $request->name,
+            'company_address' => $request->company_address,
+        ];
 
         $user = User::create([
             'username' => $request->username,
@@ -39,7 +46,7 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'account_status' => 'needsConfirmation',
             //TODO: add settings schema default
-            'settings' => json_encode([]),
+            'settings' => json_encode($settings),
         ]);
 
         $credentials = $request->only('email', 'password');
