@@ -58,6 +58,9 @@ class CheckoutController extends Controller
         $cart = $user->cart()->get();
         $amount = 0;
         foreach($cart as $product){
+            if(ProductController::isProductSold($product)){
+                return response()->json(['error' => "A product has been sold while on the checkout."], 409);
+            }
             $amount += $product->price;
         }
         $stripe = new StripeClient(config('payments.stripe_key'));
@@ -87,6 +90,8 @@ class CheckoutController extends Controller
 
     public function getPage(Request $request)
     {
+        //FIXME(luisd): there can be a race condition on checkout if a product is already sold, handle that notification
+        // and reload the checkout page
         $user = $request->user();
 
         if (!CheckoutController::canEnterCheckout($request)){
@@ -98,7 +103,6 @@ class CheckoutController extends Controller
 
     public function postPage(Request $request)
     {
-        //dd($request);
         CheckoutController::validateCheckoutRequest($request);
         if($request->payment_method === '1'){
             return back(); //this is never supposed to happen 
@@ -127,6 +131,9 @@ class CheckoutController extends Controller
 
                 $ids = [];
                 foreach ($products as $product) {
+                    if(ProductController::isProductSold($product)){
+                        return back()->with('error', 'A product has been sold while on the checkout page. Please check the cart details and try again');
+                    }
                     array_push($ids, $product->id);
                 }
                 $order->products()->attach($ids);
