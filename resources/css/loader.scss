@@ -1,0 +1,16 @@
+@import 'theme.scss';
+
+@keyframes rotating {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    border: 0.4rem solid rgba(0, 0, 0, 0.1);
+    border-top: 0.4rem solid $accent;
+    animation: rotating 1.2s infinite linear;
+}

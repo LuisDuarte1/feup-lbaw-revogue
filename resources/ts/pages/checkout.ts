@@ -33,6 +33,27 @@ function intializeStripeElement (stripe: Stripe | null): void {
   }
 }
 
+function toggleSpinner (): void {
+  const button = document.querySelector('.submit-button > button')
+  if (button === null) {
+    throw Error('cannot find checkout button')
+  }
+
+  const loader = button.querySelector('.loader')
+  const buttonStyle = getComputedStyle(button)
+  const buttonHeight = button.clientHeight - parseFloat(buttonStyle.paddingTop) - parseFloat(buttonStyle.paddingBottom)
+  console.log(buttonHeight)
+  button.innerHTML = ''
+  if (loader === null) {
+    const div = document.createElement('div')
+    div.classList.add('loader')
+    div.style.setProperty('--loader-height', `${buttonHeight}px`)
+    button.append(div)
+  } else {
+    button.textContent = 'Place order'
+  }
+}
+
 function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Event): void {
   ev.preventDefault()
   const submitButton: HTMLButtonElement | null = checkoutForm.querySelector('.submit-button > button')
@@ -42,6 +63,7 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
   if (submitButton.disabled) return
 
   submitButton.disabled = true
+  toggleSpinner()
   const formData = new FormData(checkoutForm)
   const formDataObject: any = {}
   formData.forEach((value, key) => { formDataObject[key] = value })
@@ -52,6 +74,7 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
     const { error: submitError } = await elements.submit()
     if (submitError !== undefined) {
       console.log(submitError)
+      toggleSpinner()
       return
     }
     if (paymentIntentSecret === null) {
@@ -66,6 +89,7 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
       if (req.status !== 200) {
         submitButton.disabled = false
         console.log(await req.json())
+        toggleSpinner()
         throw Error(`Payment intent failed with status ${req.status}`)
       }
 
@@ -75,6 +99,7 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
     }
     submitButton.disabled = false
     if (paymentIntentSecret === null) {
+      toggleSpinner()
       throw Error('paymentIntentSecret should never be null')
     }
     const result = await stripe.confirmPayment({
@@ -84,8 +109,9 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
         return_url: location.protocol + '//' + location.host + '/checkout/paymentConfirmation'
       }
     })
-
+    toggleSpinner()
     console.log(result.error)
+    submitButton.disabled = false
     await Swal.fire({
       title: 'Payment error',
       text: result.error.message,
