@@ -420,7 +420,7 @@ BEGIN
     IF NEW."type" = 'wishlist' AND (SELECT COUNT(*) FROM ProductWishlist WHERE "product"=NEW."wishlist_product" AND "belongs_to"=NEW."belongs_to") <> 1 THEN
         RAISE EXCEPTION 'User doesnt have product in his wishlist...';
     END IF;
-    IF NEW."type" = 'cart' AND (SELECT COUNT(*) FROM CartProduct WHERE "product"=NEW."wishlist_product" AND "belongs_to"=NEW."belongs_to") <> 1 THEN
+    IF NEW."type" = 'cart' AND (SELECT COUNT(*) FROM CartProduct WHERE "product"=NEW."cart_product" AND "belongs_to"=NEW."belongs_to") <> 1 THEN
         RAISE EXCEPTION 'User doesnt have product in his cart...';
     END IF;
     RETURN NEW;

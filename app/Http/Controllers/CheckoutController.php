@@ -4,13 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Jobs\PurchaseIntentTimeoutJob;
 use App\Models\Purchase;
+use App\Notifications\ProductCartGoneNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
+
+    public static function removePurchaseFromOtherUsers($user, $cart): void {
+        // TODO(luisd): send notification
+        foreach ($cart as $product) {
+            Notification::send(
+                $product->inCart()
+                    ->whereNot(
+                        function($query) use ($user) {$query->where('id',$user->id);})
+                    ->get(), new ProductCartGoneNotification($product));
+            $product->inCart()->detach();
+
+            $product->wishlist()->detach();
+        }
+    }
+
     public static function canEnterCheckout(Request $request): bool
     {
         $cart = $request->user()->cart()->withCount('purchaseIntents')->get();
@@ -165,11 +182,7 @@ class CheckoutController extends Controller
             }
         }
         // remove the cart of all users because it has been bought
-        // TODO(luisd): send notification
-        foreach ($cart as $product) {
-            $product->inCart()->detach();
-            $product->wishlist()->detach();
-        }
+        CheckoutController::removePurchaseFromOtherUsers($request->user(), $cart);
         DB::commit();
 
         return redirect('/');

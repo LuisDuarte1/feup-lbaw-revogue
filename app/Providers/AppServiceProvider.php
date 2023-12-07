@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Notifications\NotificationDatabaseChannel;
+use Illuminate\Notifications\Channels\MailChannel;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Register the custom notification driver
         if (env('FORCE_HTTPS', false)) {
             error_log('configuring https');
 
