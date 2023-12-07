@@ -14,6 +14,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
@@ -155,6 +156,10 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
         Route::get('/logout', 'logout');
 
     });
+});
+
+Route::controller(NotificationController::class)->middleware(['auth:web', 'verified'])->group(function () {
+    Route::get('/notifications', 'getPage')->name('notifications');
 });
 
 Route::prefix('admin')->group(function () {
