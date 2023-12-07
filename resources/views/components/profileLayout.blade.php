@@ -16,6 +16,7 @@
                 <ion-icon name="star-outline"></ion-icon>
                 <ion-icon name="star-outline"></ion-icon>
                 <ion-icon name="star-outline"></ion-icon>
+                <a href></a>
             </div>
         </div>
         <div class="profile-description-bottom">

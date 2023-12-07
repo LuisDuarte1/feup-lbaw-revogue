@@ -109,6 +109,7 @@ Route::prefix('profile')->middleware(['auth:web', 'verified'])->group(function (
             Route::get('/sold', 'soldProducts');
             Route::get('/likes', 'likedProducts');
             Route::get('/history', 'historyProducts');
+            Route::get('/reviews', 'reviews');
         });
     });
 });
