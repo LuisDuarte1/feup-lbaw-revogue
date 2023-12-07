@@ -226,7 +226,7 @@ CREATE TABLE Reports(
 
 CREATE TABLE Notifications(
     "id" SERIAL PRIMARY KEY,
-    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "read" BOOLEAN NOT NULL DEFAULT FALSE,
     "dismissed" BOOLEAN NOT NULL DEFAULT FALSE,
     "type" NotificationType NOT NULL,

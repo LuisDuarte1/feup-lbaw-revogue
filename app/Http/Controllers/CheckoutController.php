@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\PurchaseIntentTimeoutJob;
 use App\Models\Purchase;
 use App\Notifications\ProductCartGoneNotification;
+use App\Notifications\WishlistProductGoneNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -23,7 +24,11 @@ class CheckoutController extends Controller
                         function($query) use ($user) {$query->where('id',$user->id);})
                     ->get(), new ProductCartGoneNotification($product));
             $product->inCart()->detach();
-
+            Notification::send(
+                $product->wishlist()
+                    ->whereNot(
+                        function($query) use ($user) {$query->where('id',$user->id);})
+                    ->get(), new WishlistProductGoneNotification($product));
             $product->wishlist()->detach();
         }
     }
