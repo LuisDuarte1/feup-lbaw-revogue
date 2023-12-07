@@ -58,7 +58,8 @@ CREATE TYPE NotificationType AS ENUM (
     'cart',
     'order_status',
     'review',
-    'message'
+    'message',
+    'sold'
 );
 
 CREATE TABLE Users(
@@ -235,18 +236,21 @@ CREATE TABLE Notifications(
     "wishlist_product" INT,
     "cart_product" INT,
     "review" INT,
-    "message" INTEGER,
+    "message" INT,
+    "sold_product" INT,
     FOREIGN KEY ("belongs_to") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("order_id") REFERENCES Orders("id") ON DELETE CASCADE,
     FOREIGN KEY ("wishlist_product") REFERENCES Products("id"),
     FOREIGN KEY ("cart_product") REFERENCES Products("id"),
+    FOREIGN KEY ("sold_product") REFERENCES Products("id"),
     FOREIGN KEY ("review") REFERENCES Reviews("id"),
     FOREIGN KEY ("message") REFERENCES  Messages("id"),
     CHECK ( ("type" = 'order_status' AND "order_id" IS NOT NULL) OR
             ("type" = 'wishlist' AND "wishlist_product" IS NOT NULL) OR
             ("type" = 'cart' AND "cart_product" IS NOT NULL) OR
             ("type" = 'review' AND "review" IS NOT NULL) OR
-            ("type" = 'message' AND "message" IS NOT NULL)
+            ("type" = 'message' AND "message" IS NOT NULL) OR
+            ("type" = 'sold' AND "sold_product" IS NOT NULL)
     )
 );
 

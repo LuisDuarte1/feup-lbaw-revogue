@@ -24,7 +24,8 @@ class Notification extends Model
         "wishlist_product",
         "cart_product",
         "review",
-        "message"
+        "message",
+        "sold_product"
     ];
 
     protected $casts = [

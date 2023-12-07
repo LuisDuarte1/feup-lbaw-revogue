@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\PurchaseIntentTimeoutJob;
 use App\Models\Purchase;
 use App\Notifications\ProductCartGoneNotification;
+use App\Notifications\ProductSoldNotification;
 use App\Notifications\WishlistProductGoneNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,12 @@ class CheckoutController extends Controller
                         function($query) use ($user) {$query->where('id',$user->id);})
                     ->get(), new WishlistProductGoneNotification($product));
             $product->wishlist()->detach();
+            Notification::send(
+                $product->soldBy()->get(),
+                new ProductSoldNotification($product)
+            );
         }
+
     }
 
     public static function canEnterCheckout(Request $request): bool
