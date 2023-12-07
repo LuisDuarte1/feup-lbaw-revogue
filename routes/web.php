@@ -41,16 +41,23 @@ Route::prefix('api')->group(function () {
     Route::controller(AttributeController::class)->group(function () {
         Route::get('/attributes', 'getValues');
     });
-    Route::controller(CartProductController::class)->group(function () {
-        Route::post('/cart', 'AddProductToCart');
-        Route::delete('/cart', 'RemoveProductFromCart');
-    });
-    Route::controller(WishlistController::class)->group(function () {
-        Route::post('/wishlist', 'AddProductToWishlist');
-        Route::delete('/wishlist', 'RemoveProductFromWishlist');
-    });
-    Route::controller(SearchController::class)->group(function () {
-        Route::get('/search', 'searchGetApi');
+    Route::middleware(['auth:web', 'verified'])->group(function () {
+        Route::controller(CartProductController::class)->group(function () {
+            Route::post('/cart', 'AddProductToCart');
+            Route::delete('/cart', 'RemoveProductFromCart');
+        });
+        Route::controller(WishlistController::class)->group(function () {
+            Route::post('/wishlist', 'AddProductToWishlist');
+            Route::delete('/wishlist', 'RemoveProductFromWishlist');
+        });
+        Route::controller(SearchController::class)->group(function () {
+            Route::get('/search', 'searchGetApi');
+        });
+        Route::prefix('checkout')->group(function () {
+            Route::controller(CheckoutController::class)->group(function () {
+                Route::post('/getPaymentIntent', 'getPaymentIntent');
+            });
+        });
     });
 });
 
@@ -122,7 +129,7 @@ Route::prefix('checkout')->middleware(['auth:web', 'verified'])->group(function 
     Route::controller(CheckoutController::class)->group(function () {
         Route::get('/', 'getPage')->name('checkout');
         Route::post('/', 'postPage');
-
+        Route::get('/paymentConfirmation', 'paymentConfirmationPage');
     });
 });
 
@@ -148,4 +155,21 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
         Route::get('/logout', 'logout');
 
     });
+});
+
+Route::prefix('admin')->group(function () {
+
+    Route::view('/', 'pages.admin.landing');
+    Route::view('/users', 'pages.admin.users');
+    Route::view('/payouts', 'pages.admin.payouts');
+    Route::controller(AdminOrderController::class)->group(function () {
+        Route::get('/orders', 'getPage')->name('admin.orders');
+    });
+    Route::controller(AdminUserController::class)->group(function () {
+        Route::get('/users', 'getPage')->name('admin.users');
+    });
+    Route::controller(AdminPayoutController::class)->group(function () {
+        Route::get('/payouts', 'getPage')->name('admin.payouts');
+    });
+
 });
