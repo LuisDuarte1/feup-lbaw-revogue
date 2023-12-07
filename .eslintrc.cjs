@@ -25,6 +25,7 @@ module.exports = {
     "rules": {
         "@typescript-eslint/ban-types": "off",
         "@typescript-eslint/no-misused-promises": "off",
-        "@typescript-eslint/return-await": "off"
+        "@typescript-eslint/return-await": "off",
+        "no-new": "off",
     }
 }

@@ -1,4 +1,3 @@
-import './bootstrap'
 import imageUploader from './components/imageUploader'
 import submitFormOnChange from './components/submitFormOnChange'
 import wishlistButton from './components/wishlistButton'
@@ -8,6 +7,7 @@ import { landingPage } from './pages/landing'
 import { productPage } from './pages/product'
 import { productListing } from './pages/productListing'
 import { searchPage } from './pages/search'
+import 'swiper/css/bundle'
 import { checkout } from './pages/checkout'
 import errorModal from './components/errorModal'
 
