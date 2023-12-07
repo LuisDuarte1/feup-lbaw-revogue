@@ -23,6 +23,8 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "debounce": "^2.0.0"
+        "@stripe/stripe-js": "^2.2.0",
+        "debounce": "^2.0.0",
+        "sweetalert2": "^11.10.1"
     }
 }
