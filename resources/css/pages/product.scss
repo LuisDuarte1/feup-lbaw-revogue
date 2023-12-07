@@ -57,7 +57,10 @@
                 background-position: center;
             }
             .swiper-button-white{
-                color: $secondary-background;
+                color: rgba($secondary-background, 0.9);
+            }
+            .swiper-button-white:hover{
+                color: $background;
             }
         }
         .gallery-thumbs{
