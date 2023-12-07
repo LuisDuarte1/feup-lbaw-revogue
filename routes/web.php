@@ -156,3 +156,20 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
 
     });
 });
+
+Route::prefix('admin')->group(function () {
+
+    Route::view('/', 'pages.admin.landing');
+    Route::view('/users', 'pages.admin.users');
+    Route::view('/payouts', 'pages.admin.payouts');
+    Route::controller(AdminOrderController::class)->group(function () {
+        Route::get('/orders', 'getPage')->name('admin.orders');
+    });
+    Route::controller(AdminUserController::class)->group(function () {
+        Route::get('/users', 'getPage')->name('admin.users');
+    });
+    Route::controller(AdminPayoutController::class)->group(function () {
+        Route::get('/payouts', 'getPage')->name('admin.payouts');
+    });
+
+});

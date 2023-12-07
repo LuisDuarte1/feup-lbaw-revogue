@@ -13,8 +13,8 @@
             $rating = 3;
             $id = $ownPage ? 'me' : $user->id;
         @endphp
-            <x-ProfileLayout :profilePicture="$productPicture" :name="$name" :username="$username" :bio="$bio" :rating="$rating" />
-            <x-ProfileNavbar :tab="$tab" :ownPage="$ownPage" :id="$id"/>
+            <x-profileLayout :profilePicture="$productPicture" :name="$name" :username="$username" :bio="$bio" :rating="$rating" />
+            <x-profileNavbar :tab="$tab" :ownPage="$ownPage" :id="$id"/>
         </div>
         <div class="profile-products">
             @foreach ($products as $product)

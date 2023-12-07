@@ -5,6 +5,10 @@
     flex-direction: column;
     align-items: center;
     gap: 3rem;
+    
+    form {
+        padding-bottom: 4rem;
+    }
     .editForm{
         display: flex;
         flex-direction: column;

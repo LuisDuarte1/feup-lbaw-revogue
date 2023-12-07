@@ -6,14 +6,13 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class search_bar extends Component
+class ProductPhotos extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public $imagePaths;
+
+    public function __construct($imagePaths)
     {
-        //
+        $this->imagePaths = $imagePaths;
     }
 
     /**
@@ -21,6 +20,8 @@ class search_bar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.search_bar');
+        return view('components.productPhotos', [
+            'imagePaths' => $this->imagePaths,
+        ]);
     }
 }
