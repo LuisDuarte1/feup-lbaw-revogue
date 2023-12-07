@@ -22,7 +22,7 @@
 .layout-wrapper{
     display: grid;
     gap: 3rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 60% auto;
     align-items: start;
 
     .product-image{
