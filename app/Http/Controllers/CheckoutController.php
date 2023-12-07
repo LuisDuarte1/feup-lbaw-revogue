@@ -11,26 +11,28 @@ use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
-    public static function canEnterCheckout(Request $request): bool {
+    public static function canEnterCheckout(Request $request): bool
+    {
         $cart = $request->user()->cart()->withCount('purchaseIntents')->get();
         $hasPurchaseIntent = false;
-        foreach($cart as $product){
-            if($product->purchase_intents_count > 1){
+        foreach ($cart as $product) {
+            if ($product->purchase_intents_count > 1) {
                 $hasPurchaseIntent = true;
                 break;
-            }
-            else if($product->purchase_intents_count === 1){
+            } elseif ($product->purchase_intents_count === 1) {
                 $purchaseIntent = $product->purchaseIntents()->get()->first();
-                if($purchaseIntent->user !== $request->user()->id){
+                if ($purchaseIntent->user !== $request->user()->id) {
                     $hasPurchaseIntent = true;
                     break;
                 }
             }
         }
-        return !$hasPurchaseIntent;
+
+        return ! $hasPurchaseIntent;
     }
 
-    public static function validateCheckoutRequest(Request $request){
+    public static function validateCheckoutRequest(Request $request)
+    {
         $request->validate([
             'full_name' => 'required|max:250',
             'email' => 'required|email:rfc',
@@ -42,17 +44,18 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public static function createPaymentIntent(StripeClient $stripe, $cart, Request $request): \Stripe\PaymentIntent{
+    public static function createPaymentIntent(StripeClient $stripe, $cart, Request $request): \Stripe\PaymentIntent
+    {
         $amount = 0;
-        foreach($cart as $product){
+        foreach ($cart as $product) {
             $amount += $product->price;
         }
         $paymentIntent = $stripe->paymentIntents->create([
-            'amount' => $amount*100,
+            'amount' => $amount * 100,
             'currency' => 'eur',
             'automatic_payment_methods' => [
                 'enabled' => true,
-            ]
+            ],
         ]);
 
         $purchaseIntent = $request->user()->purchaseIntents()->create([
@@ -64,10 +67,11 @@ class CheckoutController extends Controller
                 'zip-code' => $request->zip_code,
                 'phone' => $request->phone,
             ],
-            'payment_intent_id' => $paymentIntent->id
+            'payment_intent_id' => $paymentIntent->id,
         ]);
         $purchaseIntent->products()->attach($cart);
         PurchaseIntentTimeoutJob::dispatch($purchaseIntent)->delay(now()->addMinutes(15));
+
         return $paymentIntent;
     }
 
@@ -75,35 +79,36 @@ class CheckoutController extends Controller
     {
         $stripe = new StripeClient(config('payments.stripe_key'));
 
-        try{
+        try {
             CheckoutController::validateCheckoutRequest($request);
-        } catch( ValidationException $e){
+        } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 400);
         }
-        if($request->payment_method !== '1'){
-            return response()->json(['error' => "In order to use payment intents you must use stripe as a payment method"], 400);
+        if ($request->payment_method !== '1') {
+            return response()->json(['error' => 'In order to use payment intents you must use stripe as a payment method'], 400);
         }
-        if(!CheckoutController::canEnterCheckout($request)){
+        if (! CheckoutController::canEnterCheckout($request)) {
             return response()->json(['error' => "Can't get paymentIntent because there's someone buying a product in cart"], 401);
         }
         $user = $request->user();
         $cart = $user->cart()->get();
-        foreach($cart as $product){
-            if(ProductController::isProductSold($product)){
-                return response()->json(['error' => "A product has been sold while on the checkout."], 409);
+        foreach ($cart as $product) {
+            if (ProductController::isProductSold($product)) {
+                return response()->json(['error' => 'A product has been sold while on the checkout.'], 409);
             }
         }
         $purchaseIntent = $user->purchaseIntents()->get()->first();
-        if(isset($purchaseIntent) && $purchaseIntent->first()->products()->get()->diff($cart)->isEmpty()){
+        if (isset($purchaseIntent) && $purchaseIntent->first()->products()->get()->diff($cart)->isEmpty()) {
             $paymentIntent = $stripe->paymentIntents->retrieve($purchaseIntent->payment_intent_id);
 
             return response()->json(['clientSecret' => $paymentIntent->client_secret]);
-        } else if(isset($purchaseIntent)){
+        } elseif (isset($purchaseIntent)) {
             //delete old paymentIntent and create a new one if the cart changes
             $stripe->paymentIntents->cancel($purchaseIntent->payment_intent_id);
             $purchaseIntent->delete();
         }
         $paymentIntent = CheckoutController::createPaymentIntent($stripe, $cart, $request);
+
         return response()->json(['clientSecret' => $paymentIntent->client_secret]);
     }
 
@@ -113,20 +118,21 @@ class CheckoutController extends Controller
         // and reload the checkout page
         $user = $request->user();
 
-        if (!CheckoutController::canEnterCheckout($request)){
+        if (! CheckoutController::canEnterCheckout($request)) {
             //TODO(luisd): redirect to cart with an error
             return redirect('/cart');
         }
+
         return view('pages.checkout', ['cart' => $user->cart()->get()]);
     }
 
     public function postPage(Request $request)
     {
         CheckoutController::validateCheckoutRequest($request);
-        if($request->payment_method === '1'){
-            return back(); //this is never supposed to happen 
+        if ($request->payment_method === '1') {
+            return back(); //this is never supposed to happen
         }
-        if(!CheckoutController::canEnterCheckout($request)){
+        if (! CheckoutController::canEnterCheckout($request)) {
             return back();
         }
         DB::beginTransaction();
@@ -150,7 +156,7 @@ class CheckoutController extends Controller
 
                 $ids = [];
                 foreach ($products as $product) {
-                    if(ProductController::isProductSold($product)){
+                    if (ProductController::isProductSold($product)) {
                         return back()->with('error', 'A product has been sold while on the checkout page. Please check the cart details and try again');
                     }
                     array_push($ids, $product->id);
@@ -169,16 +175,18 @@ class CheckoutController extends Controller
         return redirect('/');
     }
 
-    public function paymentConfirmationPage(Request $request){
-        if($request->query('redirect_status') === 'failed'){
+    public function paymentConfirmationPage(Request $request)
+    {
+        if ($request->query('redirect_status') === 'failed') {
             //TODO: add error
-            return redirect()->route('checkout')->with('modal-error', 
+            return redirect()->route('checkout')->with('modal-error',
                 [
                     'title' => 'Payment error',
                     'content' => 'Something went wrong while processing your payment, please try again.',
-                    'confirm-button' => 'Close'
+                    'confirm-button' => 'Close',
                 ]);
         }
+
         return view('pages.paymentConfirmation');
     }
 }

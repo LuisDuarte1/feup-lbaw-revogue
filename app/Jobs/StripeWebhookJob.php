@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\Purchase;
 use App\Models\PurchaseIntent;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -15,15 +14,17 @@ use Illuminate\Support\Facades\DB;
 class StripeWebhookJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    
-    static public function handleSuccessfulPayment(\Stripe\Event $event){
+
+    public static function handleSuccessfulPayment(\Stripe\Event $event)
+    {
         $paymentIntent = $event->data->object;
-        
+
         $purchaseIntent = PurchaseIntent::where('payment_intent_id', $paymentIntent->id)->first();
 
         //we assume if the paymentIntent isn't found we just skip it. But it's never supposed to happen
-        if(!isset($purchaseIntent)){
-            error_log("cannot find paymentIntent ".$paymentIntent->id);
+        if (! isset($purchaseIntent)) {
+            error_log('cannot find paymentIntent '.$paymentIntent->id);
+
             return;
         }
         $cart = $purchaseIntent->products()->get();
@@ -65,7 +66,7 @@ class StripeWebhookJob implements ShouldQueue
     public function handle(): void
     {
         //TODO (luisd): in the future we can maybe handle the payment_intent.processing but it's uncommon be cause we don't support bank debits when it's most common
-        if($this->event->type === 'payment_intent.succeeded'){
+        if ($this->event->type === 'payment_intent.succeeded') {
             StripeWebhookJob::handleSuccessfulPayment($this->event);
         }
     }

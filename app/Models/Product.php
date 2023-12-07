@@ -94,8 +94,8 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category');
     }
 
-
-    public function purchaseIntents(): BelongsToMany{
+    public function purchaseIntents(): BelongsToMany
+    {
         return $this->belongsToMany(PurchaseIntent::class, 'purchaseintentproduct', 'product', 'purchase_intent');
     }
 
