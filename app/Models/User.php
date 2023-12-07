@@ -151,4 +151,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->email;
     }
+
+    public function updateUserSettings($settings)
+    {
+        $this->update(['settings' => $settings]);
+    }
 }

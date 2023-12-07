@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth; // Add this import statement if not already present
+
+// Add this import statement
 
 class SettingsController extends Controller
 {
@@ -53,35 +56,37 @@ class SettingsController extends Controller
         return $list;
     }
 
+    public function updatePaymentSettings(Request $request)
+    {
+        $user = User::find(Auth::id());
+
+        if ($user === null) {
+            return redirect('/login');
+        }
+        $settings = json_decode($user->settings, true);
+
+        $settings['company_name'] = $request->get('company_name');
+        $settings['company_address'] = $request->get('company_address');
+
+        $user->settings = json_encode($settings);
+        $user->save(); // Call the save() method to persist the changes
+
+        return redirect('/settings/payment');
+    }
+    // ...
+
     public function updateGeneralSettings(Request $request)
     {
-        $user = Auth::user();
+        $user = User::find(Auth::id());
         if ($user === null) {
             return redirect('/login');
         }
         $settings = json_decode($user->settings, true);
         $settings['general_'.$request->key] = $request->value;
         $user->settings = json_encode($settings);
-        //$user->save();
+        $user->save(); // Save the updated user object
 
         return redirect('/settings/general');
-    }
-
-    public function updatePaymentSettings(Request $request)
-    {
-        $user = Auth::user();
-        if ($user === null) {
-            return redirect('/login');
-        }
-        $settings = json_decode($user->settings, true);
-        //dd($settings);
-        //dd($request);
-        $settings['company_name'] = $request->value;
-        //dd($settings);
-        $user->settings = json_encode($settings);
-        //$user->save();
-
-        return redirect('/settings/payment');
     }
 
     public function ShippingSettings(Request $request)
