@@ -55,6 +55,7 @@
             .swiper-slide{
                 background-size: cover;
                 background-position: center;
+                border-radius: 0.5rem;
             }
             .swiper-button-white{
                 color: rgba($secondary-background, 0.9);
@@ -67,6 +68,7 @@
             margin: 0;
 
             .swiper-slide {
+                border-radius: 0.5rem;
                 opacity: 0.4;
                 background-size: cover;
                 background-position: center;

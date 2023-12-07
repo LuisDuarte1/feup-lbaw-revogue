@@ -26,7 +26,7 @@ export function productPage (): void {
     thumbs.setAttribute('style', `height: ${document.querySelector('.gallery-main')?.clientHeight}px`)
   })
   const galleryThumbs = new Swiper('.gallery-thumbs', {
-    spaceBetween: 6,
+    spaceBetween: 5,
     loop: true,
     freeMode: true,
     slidesPerView: 4,
