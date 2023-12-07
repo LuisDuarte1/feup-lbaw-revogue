@@ -8,6 +8,8 @@ import { productPage } from './pages/product'
 import { productListing } from './pages/productListing'
 import { searchPage } from './pages/search'
 import 'swiper/css/bundle'
+import { checkout } from './pages/checkout'
+import errorModal from './components/errorModal'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -18,14 +20,16 @@ const routes: RouteList = {
   '/profile/complete': completeProfile,
   '/search': searchPage,
   '/products/{id}': productPage,
-  '/cart': cart
+  '/cart': cart,
+  '/checkout': checkout
 }
 
 const components: ComponentList = {
   '#account_status': submitFormOnChange,
   '#order_status': submitFormOnChange,
   '.upload-photos': imageUploader,
-  '#wishlist_button': wishlistButton
+  '#wishlist_button': wishlistButton,
+  'meta[name="modal-error"]': errorModal
 }
 
 function pageHandler (): void {
@@ -53,6 +57,6 @@ function componentHandler (): void {
 }
 
 document.addEventListener('DOMContentLoaded', (_) => {
-  pageHandler()
   componentHandler()
+  pageHandler()
 })

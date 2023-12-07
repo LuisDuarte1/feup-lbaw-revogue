@@ -22,6 +22,10 @@
     </script>
     
 
+    @if (session('modal-error'))
+        <meta name="modal-error" confirm-button="{{session('modal-error')['confirm-button']}}" title="{{session('modal-error')['title']}}" content="{{session('modal-error')['content']}}">
+    @endif
+
     @vite(['resources/css/app.scss', 'resources/ts/app.ts'])
 
 </head>

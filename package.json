@@ -23,7 +23,9 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "swiper": "^11.0.5",
+        "@stripe/stripe-js": "^2.2.0",
         "debounce": "^2.0.0",
-        "swiper": "^11.0.5"
+        "sweetalert2": "^11.10.1"
     }
 }

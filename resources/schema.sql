@@ -3,6 +3,8 @@ SET search_path TO lbaw23107;
 DROP TABLE IF EXISTS
     Users,
     Products,
+    PurchaseIntents,
+    PurchaseIntentProduct,
     Orders,
     Attributes,
     ProductAttributes,
@@ -18,6 +20,8 @@ DROP TABLE IF EXISTS
     Admins,
     OrderProduct,
     Categories,
+    Jobs,
+    "failed_jobs",
     Payouts CASCADE;
 
 DROP TYPE IF EXISTS
@@ -113,6 +117,22 @@ CREATE TABLE ProductAttributes(
   PRIMARY KEY ("product", "attribute"),
   FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE,
   FOREIGN KEY ("attribute") REFERENCES Attributes("id") ON DELETE CASCADE
+);
+
+CREATE TABLE PurchaseIntents(
+    "id" SERIAL PRIMARY KEY,
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "shipping_address" JSON NOT NULL,
+    "payment_intent_id" TEXT UNIQUE NOT NULL,
+    "user" INT NOT NULL,
+    FOREIGN KEY ("user") REFERENCES Users("id") ON DELETE CASCADE
+);
+
+CREATE TABLE PurchaseIntentProduct(
+    "purchase_intent" INT NOT NULL,
+    "product" INT UNIQUE NOT NULL,
+    FOREIGN KEY ("purchase_intent") REFERENCES PurchaseIntents("id") ON DELETE CASCADE,
+    FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE
 );
 
 CREATE TABLE Purchases(
@@ -258,15 +278,36 @@ CREATE TABLE OrderProduct(
 );
 
 CREATE TABLE Payouts(
-    "id" TEXT PRIMARY KEY NOT NULL,
+    "id" SERIAL PRIMARY KEY,
     "creation_date" DATE NOT NULL DEFAULT CURRENT_DATE CHECK ( "creation_date" <= CURRENT_DATE ),
     "tax" NUMERIC NOT NULL CHECK ( "tax" <= 1 AND "tax" >= 0 ),
     "paid_to" INT,
     FOREIGN KEY ("paid_to") REFERENCES Users("id") ON DELETE SET NULL
 );
 
+CREATE TABLE Jobs(
+    "id" SERIAL PRIMARY KEY,
+    "queue" TEXT NOT NULL,
+    "payload" TEXT NOT NULL,
+    "attempts" INT NOT NULL,
+    "reserved_at" INT,
+    "available_at" INT NOT NULL,
+    "created_at" INT NOT NULL
+);
+
+CREATE TABLE "failed_jobs"(
+    "id" SERIAL PRIMARY KEY,
+    "uuid" TEXT UNIQUE NOT NULL,
+    "connection" TEXT NOT NULL,
+    "queue" TEXT NOT NULL,
+    "payload" TEXT NOT NULL,
+    "exception" TEXT NOT NULL,
+    "failed_at" TIMESTAMP NOT NULL
+);
+
 -- INDICES
 
+CREATE INDEX jobs_queue_index ON Jobs USING btree("queue");
 
 CREATE INDEX notification_search_index ON Notifications USING hash(belongs_to);
 
