@@ -94,6 +94,11 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category');
     }
 
+    public function purchaseIntents(): BelongsToMany
+    {
+        return $this->belongsToMany(PurchaseIntent::class, 'purchaseintentproduct', 'product', 'purchase_intent');
+    }
+
     /**
      * The table associated with the model.
      *
