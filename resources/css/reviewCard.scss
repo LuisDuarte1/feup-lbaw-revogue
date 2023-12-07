@@ -3,8 +3,10 @@
     flex-direction: column;
     background-color: $secondary-background;
     border-radius: 0.5rem;
-    $width: 5rem;
-    padding: 1rem;
+    gap: 0.8rem;
+    $width: 4rem;
+    padding: 1rem 1.5rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     
     .profile-picture-container {
         width: $width;
@@ -24,10 +26,30 @@
 
     .review-card-header{
         display: flex;
+        width: 100%;
         align-items: center;
+        justify-content: space-between;
         gap: 1.5rem;
     }
     .review-card-wrapper{
-        color: $accent;
+        gap: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: $text-color;
+        .review-card-username{
+            color: $primary;
+            font-size: 0.85rem;
+        }
+    }
+    .review-card-rating{
+        ion-icon{
+            color: $secondary;
+        }
+    }
+    .review-card-description{
+        font-size: 0.85rem;
+        color: $text-color;
+        text-align: justify;
     }
 }
