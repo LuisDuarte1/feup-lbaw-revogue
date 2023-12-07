@@ -22,8 +22,11 @@ export function productPage (): void {
     return
   }
   thumbs.setAttribute('style', `height: ${mainHeight}px`)
+  thumbs.addEventListener('resize', () => {
+    thumbs.setAttribute('style', `height: ${document.querySelector('.gallery-main')?.clientHeight}px`)
+  })
   const galleryThumbs = new Swiper('.gallery-thumbs', {
-    spaceBetween: 10,
+    spaceBetween: 6,
     loop: true,
     freeMode: true,
     slidesPerView: 4,
