@@ -46,7 +46,7 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'account_status' => 'needsConfirmation',
             //TODO: add settings schema default
-            'settings' => json_encode($settings),
+            'settings' => $settings,
         ]);
 
         $credentials = $request->only('email', 'password');

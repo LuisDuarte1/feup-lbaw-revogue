@@ -22,7 +22,7 @@ class UserFactory extends Factory
             'display_name' => fake()->name(),
             'email' => fake()->unique()->email(),
             'password' => password_hash('bloat123', PASSWORD_DEFAULT),
-            'settings' => [],
+            'settings' => ['payment'],
             'bio' => fake()->paragraph(),
             'account_status' => fake()->randomElement(['active', 'needsConfirmation', 'banned']),
         ];

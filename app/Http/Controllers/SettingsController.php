@@ -10,18 +10,13 @@ class SettingsController extends Controller
     public function getPaymentSettings()
     {
         $user = Auth::user();
-        /*if ($user === null) {
+        if ($user === null) {
             return redirect('/login');
-        }*/
-        $settings = json_decode($user->settings, true);
-        $list = [];
-        foreach ($settings as $key => $value) {
-            if (strpos($key, 'company_') === 0) {
-                array_push($list, ['key' => $key, 'value' => $value]);
-            }
         }
+        //$settings = $user->settings['payment'];
+        $settings = json_decode($user->settings);
 
-        return $list;
+        return $settings;
     }
 
     public function getGeneralSettings()
@@ -67,7 +62,7 @@ class SettingsController extends Controller
         $settings = json_decode($user->settings, true);
         $settings['general_'.$request->key] = $request->value;
         $user->settings = json_encode($settings);
-        $user->save();
+        //$user->save();
 
         return redirect('/settings/general');
     }
@@ -79,11 +74,14 @@ class SettingsController extends Controller
             return redirect('/login');
         }
         $settings = json_decode($user->settings, true);
-        $settings['company_'.$request->key] = $request->value;
+        //dd($settings);
+        //dd($request);
+        $settings['company_name'] = $request->value;
+        //dd($settings);
         $user->settings = json_encode($settings);
-        $user->save();
+        //$user->save();
 
-        return redirect('/settings/payments');
+        return redirect('/settings/payment');
     }
 
     public function ShippingSettings(Request $request)

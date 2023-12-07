@@ -94,14 +94,14 @@ Route::prefix('products')->group(function () {
 
 Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function () {
     Route::controller(SettingsController::class)->group(function () {
-        Route::get('/settings/payment', 'PaymentsSettings')->name('payment-settings');
-        Route::get('/settings/shipping', 'ShippingSettings')->name('shipping-settings');
-        Route::get('/settings/general', 'GeneralSettings')->name('general-settings');
-        Route::get('/settings/profile', 'ProfileSettings')->name('profile-settings');
-        Route::post('/settings/payment', 'updatePaymentSettings');
-        Route::post('/settings/general', 'updateGeneralSettings');
-        Route::post('/settings/profile', 'updateProfileSettings');
-        Route::post('/settings/shipping', 'updateShippingSettings');
+        Route::get('/payment', 'PaymentsSettings')->name('payment-settings');
+        Route::get('/shipping', 'ShippingSettings')->name('shipping-settings');
+        Route::get('/general', 'GeneralSettings')->name('general-settings');
+        Route::get('/profile', 'ProfileSettings')->name('profile-settings');
+        Route::post('/payment', 'updatePaymentSettings');
+        Route::post('/general', 'updateGeneralSettings');
+        Route::post('/profile', 'updateProfileSettings');
+        Route::post('/shipping', 'updateShippingSettings');
 
     });
 });
