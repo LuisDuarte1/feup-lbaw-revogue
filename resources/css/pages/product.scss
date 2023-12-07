@@ -22,15 +22,15 @@
 .layout-wrapper{
     display: grid;
     gap: 3rem;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+    grid-template-columns: 60% auto;
+    align-items: start;
 
     .product-image{
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
+        display: grid;
+        grid-template-columns: 20% auto;
         position: relative;
+        min-height: 30rem;
+        gap: 0.3rem;
 
         #wishlist_button {
             z-index: 5;
@@ -49,6 +49,36 @@
             }
         }
 
+        .gallery-main{
+            margin: 0;
+            height: 100%;
+            .swiper-slide{
+                background-size: cover;
+                background-position: center;
+                border-radius: 0.5rem;
+            }
+            .swiper-button-white{
+                color: rgba($secondary-background, 0.9);
+            }
+            .swiper-button-white:hover{
+                color: $background;
+            }
+        }
+        .gallery-thumbs{
+            margin: 0;
+
+            .swiper-slide {
+                border-radius: 0.5rem;
+                opacity: 0.4;
+                background-size: cover;
+                background-position: center;
+            }
+
+            .swiper-slide-thumb-active {
+                opacity: 1;
+              }
+        }
+      
         #wishlist:hover {
             color: $accent-hover;
         }
@@ -69,6 +99,7 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 0.5rem;
+        align-self: center;
     }
     .product-title{
         .title{
