@@ -2,37 +2,28 @@
 
 .edit-settings-page {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem 0;
+
+}
+
+.settings-wrapper {
+    width: 45rem;
     align-items: center;
-    gap: 3rem;
+}
 
-    form {
-        padding-bottom: 4rem;
+
+.settings-details {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+
+    input {
+        width: 100%;
     }
 
-    .editForm {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-
-        .name,
-        .price {
-            width: 100%;
-
-            input {
-                width: calc(100% - 1rem);
-            }
-        }
-
-        .description {
-            display: flex;
-            flex-direction: column;
-        }
-
-        button {
-            margin-top: 2rem;
-        }
+    select {
+        width: calc(100% + 1rem);
     }
-
-    margin-bottom: 2rem;
 }
