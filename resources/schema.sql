@@ -186,6 +186,7 @@ CREATE TABLE Vouchers(
 CREATE TABLE Reviews(
     "id" SERIAL PRIMARY KEY,
     "stars" NUMERIC NOT NULL CHECK ( "stars" >= 0 AND "stars" <= 5 ),
+    "sent_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "sent_date" <= CURRENT_TIMESTAMP ),
     "description" TEXT,
     "image_paths" TEXT[] NOT NULL CHECK (array_length("image_paths", 1) >= 1),
     "reviewed_order" INT NOT NULL,

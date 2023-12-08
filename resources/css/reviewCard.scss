@@ -6,7 +6,7 @@
     gap: 0.8rem;
     $width: 4rem;
     padding: 1rem 1.5rem;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     
     .profile-picture-container {
         width: $width;
@@ -34,12 +34,20 @@
     .review-card-wrapper{
         gap: 1rem;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         color: $text-color;
+        .review-card-info{
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
         .review-card-username{
             color: $primary;
             font-size: 0.85rem;
+        }
+        .review-card-date{
+            font-size: 0.75rem;
         }
     }
     .review-card-rating{

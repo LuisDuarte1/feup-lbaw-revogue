@@ -4,13 +4,18 @@
             <div class="profile-picture-container">
                 <img src="{{ $reviewerPicture }}" alt="profile picture">
             </div>
-            <div class="review-card-name">
-                <div class="review-card-displayName">
-                    {{ $reviewerName }}
+            <div class="review-card-info">
+                <div class="review-card-name">
+                    <div class="review-card-displayName">
+                        {{ $reviewerName }}
+                    </div>
+                    <div class="review-card-username">
+                        {{ '@' . $reviewerUsername }}
+                    </div> 
                 </div>
-                <div class="review-card-username">
-                    {{ '@' . $reviewerUsername }}
-                </div>
+                <div class="review-card-date">
+                    {{ $reviewDate }}
+                </div>  
             </div>
         </div>
         <div class="review-card-rating">

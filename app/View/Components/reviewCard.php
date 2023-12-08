@@ -16,8 +16,9 @@ class reviewCard extends Component
     public $reviewDescription;
     public $reviewImagePaths;
 
+    public $reviewDate;
     
-    public function __construct($reviewerName, $reviewerUsername, $reviewerPicture, $reviewerRating, $reviewDescription, $reviewImagePaths)
+    public function __construct($reviewerName, $reviewerUsername, $reviewerPicture, $reviewerRating, $reviewDescription, $reviewImagePaths, $reviewDate)
     {
         $this->reviewerName = $reviewerName;
         $this->reviewerUsername = $reviewerUsername;
@@ -25,6 +26,7 @@ class reviewCard extends Component
         $this->reviewerRating = $reviewerRating;
         $this->reviewDescription = $reviewDescription;
         $this->reviewImagePaths = $reviewImagePaths;
+        $this->reviewDate = $reviewDate;
     }
 
     public function render(): View|Closure|string
@@ -36,6 +38,7 @@ class reviewCard extends Component
             'reviewerRating' => $this->reviewerRating,
             'reviewDescription' => $this->reviewDescription,
             'reviewImagePaths' => $this->reviewImagePaths,
+            'reviewDate' => $this->reviewDate,
         ]);
     }
 }
