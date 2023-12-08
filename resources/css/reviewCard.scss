@@ -35,19 +35,22 @@
         gap: 1rem;
         display: flex;
         align-items: flex-start;
-        justify-content: space-between;
+        justify-content: space-around;
         color: $text-color;
         .review-card-info{
             display: flex;
             flex-direction: column;
             gap: 0.45rem;
         }
+        .review-card-displayName{
+            font-weight: 500;
+        }
         .review-card-username{
-            color: $primary;
             font-size: 0.85rem;
         }
         .review-card-date{
             font-size: 0.75rem;
+            color: $primary
         }
     }
     .review-card-rating{

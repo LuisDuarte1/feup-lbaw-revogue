@@ -8,16 +8,20 @@ use Illuminate\View\Component;
 
 class reviewCard extends Component
 {
-
     public $reviewerName;
+
     public $reviewerUsername;
+
     public $reviewerPicture;
+
     public $reviewerRating;
+
     public $reviewDescription;
+
     public $reviewImagePaths;
 
     public $reviewDate;
-    
+
     public function __construct($reviewerName, $reviewerUsername, $reviewerPicture, $reviewerRating, $reviewDescription, $reviewImagePaths, $reviewDate)
     {
         $this->reviewerName = $reviewerName;

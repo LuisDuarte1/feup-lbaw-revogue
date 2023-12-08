@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Review;
 use Illuminate\Http\Request;
 
 //TODO (luisd): use pagination
