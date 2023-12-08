@@ -32,23 +32,6 @@
                         </span>
                     @endif
 
-                    <label for="company_name" required>Company</label>
-                    <input id="company_name" type="text" name="company_name" value="{{ old('company_name') }}" required
-                        autofocus>
-                    @if ($errors->has('company_name'))
-                        <span class="error">
-                            {{ $errors->first('company_name') }}
-                        </span>
-                    @endif
-
-                    <label for="company_address" required>Address</label>
-                    <input id="company_address" type="text" name="company_address" value="{{ old('company_address') }}"
-                        required autofocus>
-                    @if ($errors->has('company_address'))
-                        <span class="error">
-                            {{ $errors->first('company_address') }}
-                        </span>
-                    @endif
 
 
                     <label for="password" required>Password</label>

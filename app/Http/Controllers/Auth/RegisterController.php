@@ -30,8 +30,6 @@ class RegisterController extends Controller
             'username' => 'required|string|max:250|unique:users',
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed',
-            'company_name' => 'required|string|max:250',
-            'company_address' => 'required|string|max:250',
         ]);
 
         $settings = [

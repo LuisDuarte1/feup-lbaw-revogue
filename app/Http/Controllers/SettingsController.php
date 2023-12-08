@@ -5,31 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Add this import statement if not already present
+use Stripe\Tax\Settings;
 
 // Add this import statement
 
 class SettingsController extends Controller
 {
-    public function getSettings()
-    {
-        $user = Auth::user();
-        if ($user === null) {
-            return redirect('/login');
-        }
-        $settings = json_decode($user->settings, true);
-
-        return $settings;
-    }
-
     public function getPaymentSettings()
     {
         $user = Auth::user();
         if ($user === null) {
             return redirect('/login');
         }
-        //$settings = $user->settings['payment'];
-        $settings = json_decode($user->settings);
-        dd($settings);
+
+        $settings = $user->settings['payment'];
 
         return $settings;
     }
@@ -40,7 +29,7 @@ class SettingsController extends Controller
         if ($user === null) {
             return redirect('/login');
         }
-        $settings = json_decode($user->settings, true);
+        $settings = ($user->settings['general']);
 
         return $settings;
     }
@@ -51,7 +40,7 @@ class SettingsController extends Controller
         if ($user === null) {
             return redirect('/login');
         }
-        $settings = json_decode($user->settings, true);
+        $settings = ($user->settings['shipping']);
 
         return $settings;
     }
@@ -62,7 +51,7 @@ class SettingsController extends Controller
         if ($user === null) {
             return redirect('/login');
         }
-        $settings = json_decode($user->settings, true);
+        $settings = json_decode($user->settings->profile, true);
 
         return $settings;
     }
@@ -74,16 +63,23 @@ class SettingsController extends Controller
         if ($user === null) {
             return redirect('/login');
         }
-        $settings = json_decode($user->settings, true);
 
-        $settings['company_name'] = $request->get('company_name');
-        $settings['company_address'] = $request->get('company_address');
+        $payment_settings = SettingsController::getPaymentSettings();
+        $settings = $user->settings;
 
-        $user->settings = json_encode($settings);
-        $user->save(); // Call the save() method to persist the changes
+        foreach ($request->all() as $key => $value) {
+            $payment_settings[$key] = $value;
+        }
+
+        $settings['payment'] = $payment_settings;
+
+        $user->settings = $settings;
+
+        $user->save();
 
         return redirect('/settings/payment');
     }
+
     // ...
 
     public function updateGeneralSettings(Request $request)
@@ -112,6 +108,84 @@ class SettingsController extends Controller
         $user->save(); // Save the updated user object
 
         return redirect('/settings/shipping');
+    }
+
+    public function resetPaymentSettings()
+    {
+        $user = User::find(Auth::id());
+
+        if ($user === null) {
+            return redirect('/login');
+        }
+
+        $payment_settings = SettingsController::getPaymentSettings();
+        $settings = $user->settings;
+
+        foreach ($payment_settings as $key => $value) {
+            $payment_settings[$key] = null;
+        }
+
+        $settings['payment'] = $payment_settings;
+
+        $user->settings = $settings;
+
+        $user->save();
+
+        return redirect('/settings/payment');
+    }
+
+    public function resetGeneralSettings()
+    {
+        $user = User::find(Auth::id());
+        if ($user === null) {
+            return redirect('/login');
+        }
+        $settings = json_decode($user->settings, true);
+        $settings['general_currency'] = null;
+        $settings['general_currency_symbol'] = null;
+        $user->settings = json_encode($settings);
+        $user->save(); // Save the updated user object
+
+        return redirect('/settings/general');
+    }
+
+    public function resetShippingSettings()
+    {
+        $user = User::find(Auth::id());
+        if ($user === null) {
+            return redirect('/login');
+        }
+        $settings = json_decode($user->settings, true);
+        $settings['shipping_address'] = null;
+        $settings['shipping_city'] = null;
+        $settings['shipping_state'] = null;
+        $settings['shipping_zip'] = null;
+        $settings['shipping_country'] = null;
+        $user->settings = json_encode($settings);
+        $user->save(); // Save the updated user object
+
+        return redirect('/settings/shipping');
+    }
+
+    public function resetProfileSettings()
+    {
+        $user = User::find(Auth::id());
+        if ($user === null) {
+            return redirect('/login');
+        }
+        $settings = json_decode($user->settings, true);
+        $settings['profile_name'] = null;
+        $settings['profile_email'] = null;
+        $settings['profile_phone'] = null;
+        $settings['profile_address'] = null;
+        $settings['profile_city'] = null;
+        $settings['profile_state'] = null;
+        $settings['profile_zip'] = null;
+        $settings['profile_country'] = null;
+        $user->settings = json_encode($settings);
+        $user->save(); // Save the updated user object
+
+        return redirect('/settings/profile');
     }
 
     public function ShippingSettings()
@@ -147,4 +221,5 @@ class SettingsController extends Controller
 
         return view('pages.settings', ['settings' => $settings, 'user' => $user, 'tab' => 'profile']);
     }*/
+
 }
