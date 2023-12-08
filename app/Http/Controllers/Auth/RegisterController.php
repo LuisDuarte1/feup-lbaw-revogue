@@ -35,8 +35,28 @@ class RegisterController extends Controller
         ]);
 
         $settings = [
-            'company_name' => $request->name,
-            'company_address' => $request->company_address,
+            'payment' => [
+                'bank_name' => '',
+                'bank_account_number' => '',
+                'bank_routing_number' => '',
+                'bank_account_type' => '',
+                'bank_account_name' => '',
+                'paypal_email' => '',
+
+            ],
+            'general' => [
+                'currency' => 'USD',
+                'currency_symbol' => '$',
+
+            ],
+            'shipping' => [
+                'address' => '',
+                'city' => '',
+                'state' => '',
+                'zip' => '',
+                'country' => '',
+            ],
+
         ];
 
         $user = User::create([

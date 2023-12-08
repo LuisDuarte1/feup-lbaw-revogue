@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth; // Add this import statement if not already
 
 class SettingsController extends Controller
 {
+    public function getSettings()
+    {
+        $user = Auth::user();
+        if ($user === null) {
+            return redirect('/login');
+        }
+        $settings = json_decode($user->settings, true);
+
+        return $settings;
+    }
+
     public function getPaymentSettings()
     {
         $user = Auth::user();
@@ -18,6 +29,7 @@ class SettingsController extends Controller
         }
         //$settings = $user->settings['payment'];
         $settings = json_decode($user->settings);
+        dd($settings);
 
         return $settings;
     }
@@ -29,14 +41,8 @@ class SettingsController extends Controller
             return redirect('/login');
         }
         $settings = json_decode($user->settings, true);
-        $list = [];
-        foreach ($settings as $key => $value) {
-            if (strpos($key, 'general_') === 0) {
-                array_push($list, ['key' => $key, 'value' => $value]);
-            }
-        }
 
-        return $list;
+        return $settings;
     }
 
     public function getShippingSettings()
@@ -46,14 +52,19 @@ class SettingsController extends Controller
             return redirect('/login');
         }
         $settings = json_decode($user->settings, true);
-        $list = [];
-        foreach ($settings as $key => $value) {
-            if (strpos($key, 'shipping_') === 0) {
-                array_push($list, ['key' => $key, 'value' => $value]);
-            }
-        }
 
-        return $list;
+        return $settings;
+    }
+
+    public function getProfileSettings()
+    {
+        $user = Auth::user();
+        if ($user === null) {
+            return redirect('/login');
+        }
+        $settings = json_decode($user->settings, true);
+
+        return $settings;
     }
 
     public function updatePaymentSettings(Request $request)
@@ -89,28 +100,51 @@ class SettingsController extends Controller
         return redirect('/settings/general');
     }
 
-    public function ShippingSettings(Request $request)
+    public function updateShippingSettings(Request $request)
+    {
+        $user = User::find(Auth::id());
+        if ($user === null) {
+            return redirect('/login');
+        }
+        $settings = json_decode($user->settings, true);
+        $settings['shipping_'.$request->key] = $request->value;
+        $user->settings = json_encode($settings);
+        $user->save(); // Save the updated user object
+
+        return redirect('/settings/shipping');
+    }
+
+    public function ShippingSettings()
     {
         $user = Auth::user();
         $settings = SettingsController::getShippingSettings();
 
-        return view('pages.settings', ['settings' => $settings, 'user' => $user]);
+        return view('pages.settings', ['settings' => $settings, 'user' => $user, 'tab' => 'shipping']);
     }
 
-    public function GeneralSettings(Request $request)
+    public function GeneralSettings()
     {
         $user = Auth::user();
         $settings = SettingsController::getGeneralSettings();
 
-        return view('pages.settings', ['settings' => $settings, 'user' => $user]);
+        return view('pages.settings', ['settings' => $settings, 'user' => $user, 'tab' => 'general']);
     }
 
-    public function PaymentsSettings(Request $request)
+    public function PaymentsSettings()
     {
         $user = Auth::user();
 
         $settings = SettingsController::getPaymentSettings();
 
-        return view('pages.settings', ['settings' => $settings, 'user' => $user]);
+        return view('pages.settings', ['settings' => $settings, 'user' => $user, 'tab' => 'payment']);
     }
+
+    /*public function ProfileSettings()
+    {
+        $user = Auth::user();
+
+        $settings = SettingsController::getProfileSettings();
+
+        return view('pages.settings', ['settings' => $settings, 'user' => $user, 'tab' => 'profile']);
+    }*/
 }

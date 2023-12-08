@@ -13,12 +13,10 @@ class SettingsNavbar extends Component
      */
     public string $tab;
 
-    public string $id;
-
-    public function __construct($tab, $id)
+    public function __construct($tab)
     {
-        $this->tab = '$tab';
-        $this->id = '$id';
+        $this->tab = $tab;
+
         //
     }
 
@@ -27,6 +25,6 @@ class SettingsNavbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.settings-navbar');
+        return view('components.settingsNavbar', ['tab' => $this->tab]);
     }
 }
