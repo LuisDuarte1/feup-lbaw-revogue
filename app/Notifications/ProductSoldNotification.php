@@ -13,6 +13,11 @@ class ProductSoldNotification extends BaseNotification
     use Queueable;
     protected string $notificationType = 'sold';
     protected array $via = ['mail'];
+
+    protected static function notificationRenderer(\App\Models\Notification $notification):string{
+        return view('notifications.productSold')->render();
+    }
+
     /**
      * Create a new notification instance.
      */

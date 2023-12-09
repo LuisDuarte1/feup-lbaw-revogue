@@ -59,6 +59,11 @@ Route::prefix('api')->group(function () {
                 Route::post('/getPaymentIntent', 'getPaymentIntent');
             });
         });
+        Route::prefix('notifications')->group(function () {
+            Route::controller(NotificationController::class)->group(function () {
+                Route::get('/', 'getNotificationsAPI');
+            });
+        });
     });
 });
 

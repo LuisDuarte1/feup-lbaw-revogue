@@ -1,5 +1,11 @@
 async function endVisible (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string, editPage = true): Promise<void> {
   const req = await fetch(`${apiUrl}?${params.toString()}`)
+  const endElement = destElement.querySelector('#page-end')
+
+  if (req.status === 204) {
+    console.log('no content left... skipping')
+    return
+  }
   if (req.status !== 200) {
     console.error('copa')
     return
@@ -10,7 +16,9 @@ async function endVisible (params: URLSearchParams, apiUrl: string, destElement:
   if (listElements.length === 0) {
     return
   }
-  destElement.append(...listElements)
+  listElements.forEach((val) => {
+    destElement.insertBefore(val, endElement)
+  })
 
   let page = params.get('page')
   if (page === null) {
@@ -32,7 +40,7 @@ export function addEndObserver (params: URLSearchParams, apiUrl: string, destEle
     })
   }, {})
 
-  const element = document.querySelector('#page-end')
+  const element = destElement.querySelector('#page-end')
   if (element === null) {
     return
   }

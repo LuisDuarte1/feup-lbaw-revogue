@@ -15,6 +15,10 @@ class ProductCartGoneNotification extends BaseNotification
     protected string $notificationType = 'cart';
     protected array $via = ['mail'];
 
+    protected static function notificationRenderer(\App\Models\Notification $notification):string{
+        return view('notifications.productCartGone')->render();
+    }
+
     /**
      * Create a new notification instance.
      */

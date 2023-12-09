@@ -27,6 +27,9 @@
                     <h3>Notifications</h3>
                     <a href="{{route('notifications')}}">See all</a>
                 </div>
+                <div class="notification-content">
+                    
+                </div>
             </div>
         </div>
     @endauth

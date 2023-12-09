@@ -14,6 +14,10 @@ class WishlistProductGoneNotification extends BaseNotification
     protected string $notificationType = 'wishlist';
     protected array $via = ['mail'];
 
+    protected static function notificationRenderer(\App\Models\Notification $notification):string{
+        return view('notifications.wishlistProductGone')->render();
+    }
+
     /**
      * Create a new notification instance.
      */
