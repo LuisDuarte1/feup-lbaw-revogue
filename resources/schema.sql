@@ -232,6 +232,7 @@ CREATE TABLE Notifications(
     "dismissed" BOOLEAN NOT NULL DEFAULT FALSE,
     "type" NotificationType NOT NULL,
     "belongs_to" INT NOT NULL,
+    "class_name" TEXT NOT NULL, -- we store the laravel class name in order to do automatic rendering of a notification
     "order_id" INT,
     "wishlist_product" INT,
     "cart_product" INT,

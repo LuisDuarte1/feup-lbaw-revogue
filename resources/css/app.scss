@@ -68,7 +68,6 @@ body {
         left: calc($page-margin + $page-navbar-width + $page-gap);
         gap: 1.5rem;
         z-index: 10;
-        overflow: hidden;
         background-color: $background;
     }
 

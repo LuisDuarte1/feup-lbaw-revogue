@@ -10,6 +10,7 @@ import { searchPage } from './pages/search'
 import 'swiper/css/bundle'
 import { checkout } from './pages/checkout'
 import errorModal from './components/errorModal'
+import notificationDropdown from './components/notificationDropdown'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -29,7 +30,8 @@ const components: ComponentList = {
   '#order_status': submitFormOnChange,
   '.upload-photos': imageUploader,
   '#wishlist_button': wishlistButton,
-  'meta[name="modal-error"]': errorModal
+  'meta[name="modal-error"]': errorModal,
+  '#notifications-icon': notificationDropdown
 }
 
 function pageHandler (): void {

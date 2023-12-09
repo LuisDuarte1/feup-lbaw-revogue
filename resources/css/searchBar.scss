@@ -59,8 +59,10 @@
         }
 
         #notifications-icon{
+            display: inline-block;
             text-decoration: none;
             position: relative;
+            color: $text-color;
             span {
                 position: absolute;
                 top: 0;
@@ -70,5 +72,35 @@
                 margin: -0.2rem -0.1rem;
                 border-radius: 50%;
             }
+            .notification-wrapper {
+                $width: 15rem;
+                width: $width;
+                height: #{$width * 1.5};
+                margin-top: 0.5rem;
+                display: none;
+                position: absolute;
+                overflow-y: scroll;
+                top: 100%;
+                z-index: 100;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 0.5rem;
+                background-color: $background;
+                border: 1px rgba(0,0,0, 0.1) solid;
+                padding: 0.5rem 1rem;
+                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+
+                .dismiss-buttton{
+                    padding: 0.25rem 0.5rem;
+                    font-size: 1.2rem;
+                }
+            }
+
+
+            .show-dropdown {
+                display: block;
+            }
+            
         }
     }

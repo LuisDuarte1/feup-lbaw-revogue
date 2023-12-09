@@ -147,8 +147,12 @@ class CheckoutController extends Controller
         $user = $request->user();
 
         if (! CheckoutController::canEnterCheckout($request)) {
-            //TODO(luisd): redirect to cart with an error
-            return redirect('/cart');
+            return redirect('/cart', )->with('modal-error',
+            [
+                'title' => 'Item reserved',
+                'content' => 'Looks like someone is trying to buy the same item as you at the same time. Please wait and try again.',
+                'confirm-button' => 'Close',
+            ]);;
         }
 
         return view('pages.checkout', ['cart' => $user->cart()->get()]);

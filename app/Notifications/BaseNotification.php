@@ -7,14 +7,21 @@ use ErrorException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class BaseNotification extends Notification
+class BaseNotification extends \Illuminate\Notifications\Notification
 {
     use Queueable;
     protected string $notificationType;
     protected array $via = [];
     protected array $notificationData;
+
+    protected static function notificationRenderer(\App\Models\Notification $notification):string{
+        throw new ErrorException(get_called_class().' has not defined a notification render handler...');
+    }
+
+    final public static function renderNotification(\App\Models\Notification $notification):string{
+        return static::notificationRenderer($notification);
+    }
 
     /**
      * Create a new notification instance.
@@ -46,6 +53,7 @@ class BaseNotification extends Notification
             throw new ErrorException('notificationData is not defined in '.get_class($this));
         }
         return [
+            'class_name' => get_class($this),
             'type' => $this->notificationType,
             'read' => false,
             'dismissed' => false,

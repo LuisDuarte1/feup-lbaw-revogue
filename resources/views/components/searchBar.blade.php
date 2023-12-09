@@ -9,19 +9,26 @@
         <ion-icon name="add"></ion-icon>
     </a>
     @auth
-    <a href="#" id="notifications-icon">
+    <div id="notifications-icon">
             @php
                 $unreadNotificationCount = Auth::user()->notifications()->where('read', 'false')->count();
                 $hasNotifications = $unreadNotificationCount !== 0;
             @endphp
+            <a href="#">
             @if ($hasNotifications === true)
-                <ion-icon name="notifications"></ion-icon>
-                <span></span>
-
+                    <ion-icon name="notifications"></ion-icon>
+                    <span></span>
             @else 
-                <ion-icon name="notifications-outline"></ion-icon>
+                    <ion-icon name="notifications-outline"></ion-icon>
             @endif
-    </a>
+            </a>
+            <div class="notification-wrapper">
+                <div class="row justify-between">
+                    <h3>Notifications</h3>
+                    <a href="{{route('notifications')}}">See all</a>
+                </div>
+            </div>
+        </div>
     @endauth
     @guest
         <a href="{{route('notifications')}}">
