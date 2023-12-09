@@ -23,8 +23,11 @@ class NotificationController extends Controller
         $user = $request->user();
 
         $notifications = $user->notifications()->where('dismissed', 'false')->paginate(10)->withQueryString();
+        if($notifications->isEmpty()){
+            return response('',204);
+        }
         $renderedNotifications = NotificationController::renderNotifications($notifications);
-        
+
         return view('api.notificationList', ['notifications' => $renderedNotifications]);
     }
 }

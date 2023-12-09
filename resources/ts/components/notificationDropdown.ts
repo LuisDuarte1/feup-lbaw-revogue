@@ -8,7 +8,7 @@ export default function (element: HTMLElement): void {
   const notificationWrapper = element.querySelector('.notification-wrapper')
   const notificationContent = element.querySelector('.notification-wrapper > .notification-content')
   const urlParams = new URLSearchParams()
-  urlParams.set('page', '1')
+  urlParams.set('page', '2')
 
   if (notificationWrapper === null || notificationToggle === null || notificationContent === null) {
     throw Error('required elements not found')
@@ -66,7 +66,7 @@ export default function (element: HTMLElement): void {
       notificationContent.append(...listElements)
 
       const endPage = document.createElement('div')
-      endPage.id = 'end-page'
+      endPage.id = 'page-end'
       notificationContent.appendChild(endPage)
 
       addEndObserver(urlParams, '/api/notifications', notificationContent, '.notification', false)
