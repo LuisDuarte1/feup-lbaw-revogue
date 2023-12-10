@@ -1,8 +1,10 @@
     @import 'theme';
+    @import 'variables';
 
     .topnav {
         
         form {
+            max-width: 75%;
             display: flex;
             align-items: center;
             flex-grow: 1;
@@ -28,7 +30,7 @@
             border: 2px solid $primary;
         }
 
-        a {
+        > div > a {
             text-decoration: none;
             display: inline-block;
             height: 100%;
@@ -73,9 +75,8 @@
                 border-radius: 50%;
             }
             .notification-wrapper {
-                $width: 15rem;
-                width: $width;
-                height: #{$width * 1.5};
+                width: $notification-width;
+                height: #{$notification-width * 1.5};
                 margin-top: 0.5rem;
                 display: none;
                 position: absolute;
@@ -85,18 +86,13 @@
                 top: 100%;
                 z-index: 100;
                 left: 50%;
-                transform: translateX(-50%);
+                transform: translateX(-75%);
                 border-radius: 0.5rem;
                 background-color: $background;
                 border: 1px rgba(0,0,0, 0.1) solid;
                 padding: 0.5rem 1rem;
+                padding-top: 1rem;
                 box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-
-
-                .dismiss-buttton{
-                    padding: 0.25rem 0.5rem;
-                    font-size: 1.2rem;
-                }
 
                 .notification-content{
                     flex-grow: 2;

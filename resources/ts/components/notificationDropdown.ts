@@ -25,7 +25,8 @@ export default function (element: HTMLElement): void {
     }
   })
 
-  notificationToggle.addEventListener('click', async () => {
+  notificationToggle.addEventListener('click', async (ev) => {
+    ev.preventDefault()
     notificationWrapper.classList.toggle('show-dropdown')
     if (notificationContent.childElementCount === 0) {
       // this means that we have to get the inital notification content

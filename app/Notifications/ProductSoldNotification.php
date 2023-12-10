@@ -15,7 +15,11 @@ class ProductSoldNotification extends BaseNotification
     protected array $via = ['mail'];
 
     protected static function notificationRenderer(\App\Models\Notification $notification):string{
-        return view('notifications.productSold')->render();
+        $product = Product::where('id', $notification->sold_product)->get()->first();
+        $order = $product->orders()->where('status', '<>', 'cancelled')->get()->first();
+        $broughtBy = $order->user()->get()->first();
+        $price = $product->price - $order->pivot->discount;
+        return view('notifications.productSold', ['product' => $product, 'broughtBy' => $broughtBy, 'notification' => $notification, 'price' => $price])->render();
     }
 
     /**

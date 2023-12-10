@@ -10,6 +10,7 @@
 @import 'chat_card';
 @import 'loader';
 @import 'productPhotos';
+@import 'notifications';
 
 @import 'pages/register';
 @import 'pages/login';
@@ -62,7 +63,7 @@ body {
         width: calc(100% - #{$page-margin*2 + $page-navbar-width + $page-gap});
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         position: fixed;
         top: 0;
         left: calc($page-margin + $page-navbar-width + $page-gap);
