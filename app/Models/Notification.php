@@ -41,13 +41,13 @@ class Notification extends Model
 
     public function order(): BelongsTo
     {
-        return $this->BelongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
-    /*public function productWishlist(): BelongsTo
+    public function wishlistProduct(): BelongsTo
     {
-        return $this->BelongsTo(ProductWishlist::class, 'wishlistProduct');
-    }*/
+        return $this->belongsTo(Product::class, 'wishlist_product');
+    }
 
     public function cartProduct(): BelongsTo
     {
