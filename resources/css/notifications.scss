@@ -4,23 +4,19 @@
     display: flex;
     gap: 1rem;
     word-break: keep-all;
-    align-items: flex-start;
+    align-items: stretch;
     padding: 0.5rem;
     border-radius: 0.5rem;
     .notification-image {
-        display: flex;
-        height: 100%;
-
-        img{
-            width: 100%;
-            object-fit: cover;
-            aspect-ratio: 1;
-            border-radius: 0.5rem;
-        }
+        background-size: cover;
+        aspect-ratio: 1;
+        border-radius: 0.5rem;
+        flex-basis: 25%;
+        flex-shrink: 0;
+        align-self: center;
     }
 
     .notification-card-content {
-        align-self: stretch;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

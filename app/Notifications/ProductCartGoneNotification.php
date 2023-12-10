@@ -16,7 +16,8 @@ class ProductCartGoneNotification extends BaseNotification
     protected array $via = ['mail'];
 
     protected static function notificationRenderer(\App\Models\Notification $notification):string{
-        return view('notifications.productCartGone')->render();
+        $product = $notification->cartProduct()->get()->first();
+        return view('notifications.productCartGone', ['product' => $product, 'notification' => $notification])->render();
     }
 
     /**

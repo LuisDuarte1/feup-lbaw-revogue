@@ -51,7 +51,7 @@ class Notification extends Model
 
     public function cartProduct(): BelongsTo
     {
-        return $this->BelongsTo(CartProduct::class, 'cart_product');
+        return $this->belongsTo(Product::class, 'cart_product');
     }
 
     public function review(): BelongsTo
