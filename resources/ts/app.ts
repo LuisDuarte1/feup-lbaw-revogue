@@ -58,6 +58,22 @@ function componentHandler (): void {
   })
 }
 
+export function componentAJAXHandler (elements: Element[]): void {
+  elements.forEach((element) => {
+    // first we check if the element itself matches any of the componentlist
+    Object.keys(components)
+      .filter((value) => element.matches(value))
+      .forEach((value) => { components[value](element as HTMLElement) })
+
+    // then we check for the children of the element
+    Object.keys(components).forEach((value, _) => {
+      element.querySelectorAll<HTMLElement>(value).forEach((el, _) => {
+        components[value](el)
+      })
+    })
+  })
+}
+
 document.addEventListener('DOMContentLoaded', (_) => {
   componentHandler()
   pageHandler()

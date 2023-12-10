@@ -1,3 +1,4 @@
+import { componentAJAXHandler } from '../app'
 import { addEndObserver } from '../utils/infiniteScrolling'
 
 export default function (element: HTMLElement): void {
@@ -64,6 +65,8 @@ export default function (element: HTMLElement): void {
       const html = document.createElement('html')
       html.innerHTML = await req.text()
       const listElements = Array.from(html.querySelectorAll('.notification'))
+      componentAJAXHandler(listElements)
+
       notificationContent.append(...listElements)
 
       const endPage = document.createElement('div')

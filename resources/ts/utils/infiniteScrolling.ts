@@ -1,3 +1,5 @@
+import { componentAJAXHandler } from '../app'
+
 async function endVisible (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string, editPage = true): Promise<void> {
   const req = await fetch(`${apiUrl}?${params.toString()}`)
   const endElement = destElement.querySelector('#page-end')
@@ -16,6 +18,7 @@ async function endVisible (params: URLSearchParams, apiUrl: string, destElement:
   if (listElements.length === 0) {
     return
   }
+  componentAJAXHandler(listElements)
   listElements.forEach((val) => {
     destElement.insertBefore(val, endElement)
   })
