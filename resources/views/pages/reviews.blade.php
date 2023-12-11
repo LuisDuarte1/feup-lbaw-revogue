@@ -10,10 +10,10 @@
         $username = $user->username;
         $bio = $user->bio === null ? '' : $user->bio;
         //TODO: dynamic rating
-        $rating = 3;
+        $rating = $user->reviewed()->avg('stars');
         $id = $ownPage ? 'me' : $user->id;
         @endphp
-        <x-profileLayout :profilePicture="$productPicture" :name="$name" :username="$username" :bio="$bio" :rating="$rating" />
+        <x-profileLayout :profilePicture="$productPicture" :name="$name" :username="$username" :bio="$bio" :rating="$rating" :id="$id"/>
         <x-profileNavbar :tab="$tab" :ownPage="$ownPage" :id="$id" />
     </div>
     <div class="profile-reviews column gap-2">
