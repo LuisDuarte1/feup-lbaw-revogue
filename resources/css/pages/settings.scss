@@ -7,6 +7,10 @@
 
 }
 
+.settings-title {
+    font-size: 2.4rem;
+}
+
 .settings-wrapper {
     width: 45rem;
     align-items: center;
@@ -26,4 +30,14 @@
     select {
         width: calc(100% + 1rem);
     }
+}
+
+.reset {
+    background-color: $primary;
+
+    &:hover {
+        background-color: darken($primary, 10%);
+    }
+
+    color: $background;
 }

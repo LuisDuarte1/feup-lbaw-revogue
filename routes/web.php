@@ -107,9 +107,12 @@ Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function 
         Route::get('/profile', 'ProfileSettings')->name('profile-settings');
         Route::post('/settings/payment/save', 'updatePaymentSettings')->name('settings.payment.save');
         Route::post('/settings/payment/reset', 'resetPaymentSettings')->name('settings.payment.reset');
-        Route::post('/general', 'updateGeneralSettings');
-        Route::post('/profile', 'updateProfileSettings');
-        Route::post('/shipping', 'updateShippingSettings');
+        Route::post('/settings/general/save', 'updateGeneralSettings')->name('settings.general.save');
+        Route::post('/settings/general/reset', 'updateGeneralSettings')->name('settings.general.reset');
+        Route::post('/settings/shipping/save', 'updateShippingSettings')->name('settings.shipping.save');
+        Route::post('/settings/shipping/reset', 'resetShippingSettings')->name('settings.shipping.reset');
+        Route::post('/settings/profile/save', 'updateProfileSettings')->name('settings.profile.save');
+        Route::post('/settings/profile/reset', 'resetProfileSettings')->name('settings.profile.reset');
 
     });
 });

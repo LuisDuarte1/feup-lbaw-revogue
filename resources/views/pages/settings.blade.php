@@ -3,7 +3,11 @@
 
 @section('content')
     <x-settingsNavbar :tab="$tab" />
+    <header>
+        <h1 class="title settings-title">Payment Settings</h1>
+    </header>
     <div class="edit-settings-page">
+
         <form action="{{ route('settings.payment.save') }}" method="POST" class="editForm" enctype="multipart/form-data">
             @csrf
             <div class="settings-wrapper column justify-center gap-2">
@@ -44,7 +48,7 @@
         </form>
 
         <form action="{{ route('settings.payment.reset') }}" method="POST" class="editForm">
-            <button class="submit-button" type="submit">Reset</button>
+            <button class="submit-button reset" type="submit">Reset</button>
         </form>
 
     </div>
