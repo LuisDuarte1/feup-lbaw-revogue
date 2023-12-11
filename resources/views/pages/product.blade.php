@@ -115,11 +115,21 @@
                             </div>
                         </div>
                         <div class="seller-rating">
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star-half-outline"></ion-icon>
-                            <ion-icon name="star-outline"></ion-icon>
+                            @php
+                            $ratings = $user->reviewed()->avg('stars');
+                            $ratingsRound = round($ratings * 2) / 2;
+                            $ratingsInt = floor($ratingsRound);
+                            $ratingsHalf = $ratingsRound - $ratingsInt;
+                            @endphp
+                            @for ($i = 0; $i < $ratingsInt; $i++)
+                                <ion-icon name="star"></ion-icon>
+                            @endfor
+                            @if ($ratingsHalf > 0)
+                                <ion-icon name="star-half"></ion-icon>
+                            @endif
+                            @for ($i = 0; $i < 5 - round($ratingsRound); $i++)
+                                <ion-icon name="star-outline"></ion-icon>
+                            @endfor
                         </div>
                         <div class="seller-buttons">
                             <button class="ask-question">Ask a question</button>
