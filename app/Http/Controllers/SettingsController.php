@@ -81,28 +81,38 @@ class SettingsController extends Controller
 
     // ...
 
-    public function updateGeneralSettings(Request $request)
+    // GENERAL SETTINGS
+
+    public function delete_account(Request $request)
     {
-        $user = User::find(Auth::id());
-        if ($user === null) {
-            return redirect('/login');
-        }
+        $user = Auth::user();
 
-        $general_settings = SettingsController::getGeneralSettings();
-        $settings = $user->settings;
+        /* if (Hash::check($request->password, $user->password)) {
+            Auth::logout();
+            Session::flush();
+             $user->delete();
 
-        foreach ($request->all() as $key => $value) {
-            $general_settings[$key] = $value;
-        }
-
-        $settings['general'] = $general_settings;
-
-        $user->settings = $settings;
-
-        $user->save(); // Save the updated user object
-
-        return redirect('/settings/general');
+             return redirect()->route('landing')->with('success', 'Account deleted successfully');
+         } else {
+             return back()->withErrors(['password' => 'The password is incorrect']);
+         }*/
     }
+
+    public function change_password(Request $request)
+    {
+        $user = Auth::user();
+
+        /* if (Hash::check($request->password, $user->password)) {
+             $user->password = Hash::make($request->new_password);
+             $user->save();
+
+             return redirect()->route('landing')->with('success', 'Password changed successfully');
+         } else {
+             return back()->withErrors(['password' => 'The password is incorrect']);
+         }*/
+    }
+
+    // END OF GENERAL SETTINGS
 
     public function updateShippingSettings(Request $request)
     {
