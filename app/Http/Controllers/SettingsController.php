@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Add this import statement if not already present
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 // Add this import statement
 
@@ -83,33 +85,43 @@ class SettingsController extends Controller
 
     // GENERAL SETTINGS
 
-    public function delete_account(Request $request)
+    public function deleteAccount(Request $request)
     {
-        $user = Auth::user();
-
-        /* if (Hash::check($request->password, $user->password)) {
+        $user = User::find(Auth::id());
+        if (Hash::check($request->password, $user->password)) {
             Auth::logout();
-            Session::flush();
-             $user->delete();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
-             return redirect()->route('landing')->with('success', 'Account deleted successfully');
-         } else {
-             return back()->withErrors(['password' => 'The password is incorrect']);
-         }*/
+            Session::flush();
+            $user->delete();
+
+            return redirect()->route('login')
+                ->withSuccess('You have logged out successfully!');
+        } else {
+
+            return redirect()->route('general-settings')->withErrors(['password' => 'The password is incorrect']);
+        }
     }
 
-    public function change_password(Request $request)
+    public function changePassword(Request $request)
     {
-        $user = Auth::user();
+        $user = User::find(Auth::id());
+        dd(Hash::check($request->old_password, $user->password));
 
-        /* if (Hash::check($request->password, $user->password)) {
-             $user->password = Hash::make($request->new_password);
-             $user->save();
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed|min:8',
+        ]);
 
-             return redirect()->route('landing')->with('success', 'Password changed successfully');
-         } else {
-             return back()->withErrors(['password' => 'The password is incorrect']);
-         }*/
+        if (! Hash::check($request->old_password, $user->password)) {
+            return back()->withErrors(['old_password' => 'The old password is incorrect']);
+        }
+
+        User::whereId($user->id)->update(['password' => Hash::make($request->new_password)]);
+
+        return back()->with('success', 'Password changed successfully');
+
     }
 
     // END OF GENERAL SETTINGS

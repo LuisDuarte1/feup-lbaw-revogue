@@ -56,10 +56,12 @@
 
         <div class="card">
             <header class="settings-title">{{ __('Delete Account') }}</header>
-            <form method="POST" action="{{ route('settings.general.delete') }}" accept-charset="UTF-8"
-                style="display:inline">
+            <form method="POST" action="{{ route('settings.general.delete') }}" class="editForm">
                 @csrf
-                <button class="btn btn-xs btn-danger delete-user" type="button">
+                <label for="password" class="form-label">Password</label>
+                <input name="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                    id="password" placeholder="Password">
+                <button class="btn btn-xs btn-danger delete-user">
                     <i class="glyphicon glyphicon-trash"></i> Delete Account
                 </button>
             </form>
