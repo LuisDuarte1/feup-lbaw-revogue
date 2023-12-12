@@ -21,14 +21,14 @@
                 <div class="swiper gallery-thumbs">
                     <div class="swiper-wrapper">
                         @foreach ($product->image_paths as $previewPhoto)
-                            <div class="swiper-slide" style='background-image:url("{{ $previewPhoto }}")'></div>
+                        <div class="swiper-slide" style='background-image:url("{{ $previewPhoto }}")'></div>
                         @endforeach
                     </div>
                 </div>
                 <div class="swiper gallery-main">
                     <div class="swiper-wrapper">
                         @foreach ($product->image_paths as $productPhoto)
-                            <div class="swiper-slide" style='background-image:url("{{ $productPhoto }}")'></div>
+                        <div class="swiper-slide" style='background-image:url("{{ $productPhoto }}")'></div>
                         @endforeach
                     </div>
                     <div class="swiper-button-next swiper-button-white"></div>
@@ -36,13 +36,13 @@
                     @if ($sold === false)
                     @if ($isInWishlist)
                     <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
-                    <ion-icon name="heart"></ion-icon>
-                    @else
-                    <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
-                        <ion-icon name="heart-outline"></ion-icon>
+                        <ion-icon name="heart"></ion-icon>
+                        @else
+                        <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
+                            <ion-icon name="heart-outline"></ion-icon>
+                            @endif
+                        </a>
                         @endif
-                    </a>
-                    @endif
                 </div>
             </div>
             <div class="product-details">
@@ -92,30 +92,35 @@
             </div>
         </div>
         <div class="layout-wrapper">
+            @if (count($reviews) === 0)
             <div class="reviews w-full column">
-                @php
-                $reviews = $user->reviewed;
-                @endphp
-                @if (count($reviews) === 0)
                 <h3 class="title">Reviews</h3>
-                <p>There are no reviews yet.</p>
-                @else
-                <div class="column gap-2">
-                @foreach ($reviews as $review)
-                @php
-                $reviewDescription = $review->description;
-                $reviewerName = $review->reviewer()->get()->first()->display_name;
-                $reviewerUsername = $review->reviewer()->get()->first()->username;
-                $reviewerProfilePicture = $review->reviewer()->get()->first()->profile_image_path !== null ? "/storage/".$user->profile_image_path : '/defaultProfileImage.png';
-                $reviewerRating = $review->stars;
-                $reviewImagePaths = $review->image_paths;
-                $reviewDate = $review->sent_date->format('d/m/Y');
-                @endphp
-                <x-reviewCard :reviewerName="$reviewerName" :reviewerUsername="$reviewerUsername" :reviewerPicture="$reviewerProfilePicture" :reviewerRating="$reviewerRating" :reviewDescription="$reviewDescription" :reviewImagePaths="$reviewImagePaths" :reviewDate="$reviewDate" />
-                @endforeach
-                </div>
-                @endif
+                <p>This user has no reviews yet.</p>
             </div>
+            @else
+            <div class="w-full h-full">
+                <div class="swiper scrollSwiper">
+                    <div class="swiper-wrapper">
+                        @foreach ($reviews as $review)
+                        @php
+                        $reviewDescription = $review->description;
+                        $reviewerName = $review->reviewer()->get()->first()->display_name;
+                        $reviewerUsername = $review->reviewer()->get()->first()->username;
+                        $reviewerProfilePicture = $review->reviewer()->get()->first()->profile_image_path !== null ? "/storage/".$user->profile_image_path : '/defaultProfileImage.png';
+                        $reviewerRating = $review->stars;
+                        $reviewImagePaths = $review->image_paths;
+                        $reviewDate = $review->sent_date->format('d/m/Y');
+                        @endphp
+                        <div class="swiper-slide">
+                            <x-reviewCard :reviewerName="$reviewerName" :reviewerUsername="$reviewerUsername" :reviewerPicture="$reviewerProfilePicture" :reviewerRating="$reviewerRating" :reviewDescription="$reviewDescription" :reviewImagePaths="$reviewImagePaths" :reviewDate="$reviewDate" />
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+
+            @endif
             <div class="seller column gap-1">
                 <div class="sold-by">
                     <h3 class="title">Sold by:</h3>
@@ -140,15 +145,13 @@
                             $ratingsInt = floor($ratingsRound);
                             $ratingsHalf = $ratingsRound - $ratingsInt;
                             @endphp
-                            @for ($i = 0; $i < $ratingsInt; $i++)
-                                <ion-icon name="star"></ion-icon>
-                            @endfor
-                            @if ($ratingsHalf > 0)
+                            @for ($i = 0; $i < $ratingsInt; $i++) <ion-icon name="star"></ion-icon>
+                                @endfor
+                                @if ($ratingsHalf > 0)
                                 <ion-icon name="star-half"></ion-icon>
-                            @endif
-                            @for ($i = 0; $i < 5 - round($ratingsRound); $i++)
-                                <ion-icon name="star-outline"></ion-icon>
-                            @endfor
+                                @endif
+                                @for ($i = 0; $i < 5 - round($ratingsRound); $i++) <ion-icon name="star-outline"></ion-icon>
+                                    @endfor
                         </div>
                         <div class="seller-buttons">
                             <button class="ask-question">Ask a question</button>

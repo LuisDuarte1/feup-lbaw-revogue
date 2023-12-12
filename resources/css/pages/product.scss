@@ -2,6 +2,13 @@
 
 .product-layout{
     padding-bottom: 2rem;
+
+    .scrollSwiper{
+        height: 100%;
+    }
+    .swiper-pagination-bullet-active-main{
+        background-color: $primary;
+    }
 }
 .categories{
     display: flex;

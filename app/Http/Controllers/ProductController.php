@@ -32,6 +32,7 @@ class ProductController extends Controller
         $category = $product->productCategory;
         $isInWishlist = false;
         $ownProduct = false;
+        $reviews = $user->reviewed()->orderBy('sent_date', 'desc')->limit(5)->get();
         if ($request->user() !== null) {
             $isInWishlist = $request->user()->wishlist()->where('id', $product_id)->exists();
             $ownProduct = $user_id === $request->user()->id;
@@ -41,7 +42,7 @@ class ProductController extends Controller
             $category = $category->parentCategory;
         }
 
-        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist, 'ownProduct' => $ownProduct]);
+        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist, 'ownProduct' => $ownProduct, 'reviews' => $reviews]);
     }
 
     public static function getTrendingProducts()
@@ -118,12 +119,12 @@ class ProductController extends Controller
 
         $images = $request->file('imageToUpload');
 
-        if (! is_array($images)) {
+        if (!is_array($images)) {
             $images = [$images];
         }
 
         foreach ($images as $image) {
-            $filename = '/storage/'.$image->storePublicly('product-images', ['disk' => 'public']);
+            $filename = '/storage/' . $image->storePublicly('product-images', ['disk' => 'public']);
             array_push($image_paths, $filename);
         }
 
@@ -133,6 +134,6 @@ class ProductController extends Controller
         $product->image_paths = $image_paths;
         $product->save();
 
-        return redirect('/products/'.$product->id);
+        return redirect('/products/' . $product->id);
     }
 }

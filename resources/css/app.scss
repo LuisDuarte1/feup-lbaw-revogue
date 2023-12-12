@@ -48,6 +48,7 @@ body {
 
     .main-content {
         max-height: calc(100vh - #{$page-margin*2});
+        max-width: calc(100vw - #{$page-margin*2 + $page-navbar-width + $page-gap});
         grid-column: 2;
     }
 

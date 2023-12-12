@@ -9,7 +9,6 @@
         $name = $user->display_name;
         $username = $user->username;
         $bio = $user->bio === null ? '' : $user->bio;
-        //TODO: dynamic rating
         $rating = $user->reviewed()->avg('stars');
         $id = $ownPage ? 'me' : $user->id;
         @endphp
