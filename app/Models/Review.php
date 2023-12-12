@@ -24,7 +24,7 @@ class Review extends Model
     ];
 
     protected $casts = [
-        'stars' => 'integer',
+        'stars' => 'float',
         'sent_date' => 'datetime',
     ];
 

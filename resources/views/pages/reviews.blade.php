@@ -16,7 +16,7 @@
         <x-profileLayout :profilePicture="$productPicture" :name="$name" :username="$username" :bio="$bio" :rating="$rating" :id="$id"/>
         <x-profileNavbar :tab="$tab" :ownPage="$ownPage" :id="$id" />
     </div>
-    <div class="profile-reviews column gap-2">
+    <div class="profile-reviews column gap-3">
         @foreach ($reviews as $review)
         @php
         $reviewDescription = $review->description;

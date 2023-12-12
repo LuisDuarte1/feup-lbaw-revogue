@@ -1,7 +1,7 @@
 .review-card{
     display: flex;
     flex-direction: column;
-    background-color: $secondary-background;
+    background-color: lighten($secondary-background, 0.5%);
     border-radius: 0.5rem;
     gap: 0.8rem;
     $width: 4rem;

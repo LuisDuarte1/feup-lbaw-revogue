@@ -19,12 +19,7 @@
             </div>
         </div>
         <div class="review-card-rating">
-            @for ($i = 0; $i < $reviewerRating; $i++)
-                <ion-icon name="star"></ion-icon>
-            @endfor
-            @for ($i = 0; $i < 5 - $reviewerRating; $i++)
-                <ion-icon name="star-outline"></ion-icon>
-            @endfor
+            <x-reviewStars :rating="$reviewerRating" />
         </div>
 
     </div>

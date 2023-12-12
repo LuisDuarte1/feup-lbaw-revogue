@@ -11,22 +11,8 @@
                 <h2> {{'@' . $username }}</h2>
             </div>
             <div class="rating">
-                @php
-                $rating = round($rating * 2) / 2;
-                $aux = floor($rating);
-                $half = $rating - $aux;
-                @endphp
-                @for ($i = 0; $i < $aux; $i++)
-                    <ion-icon name="star"></ion-icon>
-                @endfor
-                @if ($half > 0)
-                    <ion-icon name="star-half"></ion-icon>
-                @endif
-                @for ($i = 0; $i < 5 - round($rating); $i++)
-                    <ion-icon name="star-outline"></ion-icon>
-                @endfor
-                
-                <a href="/profile/{{ $id }}/reviews">({{ $rating }})</a>
+                <x-reviewStars :rating="$rating" />                
+                <a href="/profile/{{ $id }}/reviews">({{ round($rating,1) }})</a>
             </div>
         </div>
         <div class="profile-description-bottom">
