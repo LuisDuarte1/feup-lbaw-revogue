@@ -62,6 +62,11 @@ Route::prefix('api')->group(function () {
         Route::prefix('notifications')->group(function () {
             Route::controller(NotificationController::class)->group(function () {
                 Route::get('/', 'getNotificationsAPI');
+                Route::prefix('{id}')->group(function () {
+                    Route::post('/read', 'toggleReadNotificationAPI');
+
+                    Route::post('/dismiss', 'toggleDismissNotificationAPI');
+                });
             });
         });
     });

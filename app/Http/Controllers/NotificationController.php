@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -25,7 +26,7 @@ class NotificationController extends Controller
         }
         $renderedNotifications = NotificationController::renderNotifications($notifications);
 
-        return view('pages.notifications', ['notifications' => $renderedNotifications]);
+        return view('pages.notifications', ['notifications' => $renderedNotifications, 'dismissed'=>$request->query('dismissed')]);
     }
 
     function getNotificationsAPI(Request $request){
@@ -39,4 +40,45 @@ class NotificationController extends Controller
 
         return view('api.notificationList', ['notifications' => $renderedNotifications]);
     }
+
+
+    function toggleReadNotificationAPI(Request $request){
+        $notificationId = $request->route('id');
+        $notification = Notification::where('id', $notificationId)->get()->first();
+
+        if(!isset($notification)){
+            return response()->json([], 404);
+        }
+
+        if(!$request->user()->can('toggleRead', $notification)){
+            return response()->json([], 403);
+        }
+
+        $notification->read = !$notification->read;
+
+        $notification->save();
+
+        return response()->json([], 200);
+    }
+
+
+    function toggleDismissNotificationAPI(Request $request){
+        $notificationId = $request->route('id');
+        $notification = Notification::where('id', $notificationId)->get()->first();
+
+        if(!isset($notification)){
+            return response()->json([], 404);
+        }
+
+        if(!$request->user()->can('toggleDismissed', $notification)){
+            return response()->json([], 403);
+        }
+
+        $notification->dismissed = !$notification->dismissed;
+        
+        $notification->save();
+
+        return response()->json([], 200);
+    }
+
 }

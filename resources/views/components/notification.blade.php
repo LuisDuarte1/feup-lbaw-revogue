@@ -8,7 +8,7 @@
         <div class="notification-actions">
             
             <a href="#" class="mark-as-read-notification"><ion-icon name="{{$notification->read ? 'mail-open-outline' : 'mail-outline'}}"></ion-icon></a>
-            <a href="#" class="dismiss-notification"><ion-icon name="close-outline"></ion-icon></a>
+            <a href="#" class="dismiss-notification"><ion-icon name="{{$notification->dismissed ? 'arrow-back-outline' : 'trash-outline' }}"></ion-icon></a>
         </div>
     </div>
 </div>
