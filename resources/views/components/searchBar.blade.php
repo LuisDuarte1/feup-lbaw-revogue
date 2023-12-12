@@ -20,7 +20,7 @@
             @endif
             </a>
             <div class="notification-wrapper">
-                <div class="row justify-between">
+                <div class="row justify-between notification-wrapper-title">
                     <h3>Notifications</h3>
                     <a href="{{route('notifications')}}">See all</a>
                 </div>

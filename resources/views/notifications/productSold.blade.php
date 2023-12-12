@@ -1,5 +1,4 @@
-<x-notification :route="'/product/'.$product->id" :notification="$notification">
-
+<x-notification :route="'/products/'.$product->id" :notification="$notification">
         @php
             $firstImage = $product->image_paths[0];    
         @endphp
