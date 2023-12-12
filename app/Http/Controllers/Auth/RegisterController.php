@@ -48,11 +48,13 @@ class RegisterController extends Controller
 
             ],
             'shipping' => [
+                'name' => '',
                 'address' => '',
-                'city' => '',
-                'state' => '',
-                'zip' => '',
                 'country' => '',
+                'city' => '',
+                'zip-code' => '',
+                'phone' => '',
+                'email' => '',
             ],
 
         ];
