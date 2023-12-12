@@ -2,7 +2,7 @@
 
 
 @section('content')
-<section class="column justify-center gap-1">
+<section class="product-layout column justify-center gap-1">
     <div class="categories">
         <p>
             <a href="/">Home</a><span class="separator">/</span>
@@ -92,10 +92,29 @@
             </div>
         </div>
         <div class="layout-wrapper">
-            <div class="reviews w-full">
+            <div class="reviews w-full column">
+                @php
+                $reviews = $user->reviewed;
+                @endphp
+                @if (count($reviews) === 0)
                 <h3 class="title">Reviews</h3>
                 <p>There are no reviews yet.</p>
-                <!-- TODO -->
+                @else
+                <div class="column gap-2">
+                @foreach ($reviews as $review)
+                @php
+                $reviewDescription = $review->description;
+                $reviewerName = $review->reviewer()->get()->first()->display_name;
+                $reviewerUsername = $review->reviewer()->get()->first()->username;
+                $reviewerProfilePicture = $review->reviewer()->get()->first()->profile_image_path !== null ? "/storage/".$user->profile_image_path : '/defaultProfileImage.png';
+                $reviewerRating = $review->stars;
+                $reviewImagePaths = $review->image_paths;
+                $reviewDate = $review->sent_date->format('d/m/Y');
+                @endphp
+                <x-reviewCard :reviewerName="$reviewerName" :reviewerUsername="$reviewerUsername" :reviewerPicture="$reviewerProfilePicture" :reviewerRating="$reviewerRating" :reviewDescription="$reviewDescription" :reviewImagePaths="$reviewImagePaths" :reviewDate="$reviewDate" />
+                @endforeach
+                </div>
+                @endif
             </div>
             <div class="seller column gap-1">
                 <div class="sold-by">

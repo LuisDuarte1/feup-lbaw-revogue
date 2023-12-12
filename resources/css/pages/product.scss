@@ -1,5 +1,8 @@
 @import '../theme';
 
+.product-layout{
+    padding-bottom: 2rem;
+}
 .categories{
     display: flex;
     align-items: end;
@@ -30,7 +33,7 @@
         grid-template-columns: 20% auto;
         position: relative;
         min-height: 30rem;
-        gap: 0.3rem;
+        gap: 0.5rem;
 
         #wishlist_button {
             z-index: 5;
@@ -100,6 +103,7 @@
         justify-content: space-between;
         gap: 0.5rem;
         align-self: center;
+        position: sticky;
     }
     .product-title{
         .title{
@@ -167,6 +171,7 @@
 
 .seller{
     justify-content: space-around;
+    position: sticky;
     .sold-by{
         .title{
             font-size: 1.5rem;
@@ -244,6 +249,7 @@
 .reviews{
     display: flex;
     flex-direction: column;
+    justify-self: right;
     height: 100%;
     justify-content: center;
     .title{
