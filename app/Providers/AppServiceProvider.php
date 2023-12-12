@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Notifications\NotificationDatabaseChannel;
-use Illuminate\Notifications\Channels\MailChannel;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 

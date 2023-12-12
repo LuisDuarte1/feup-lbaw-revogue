@@ -15,20 +15,24 @@ use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
-
-    public static function removePurchaseFromOtherUsers($user, $cart): void {
+    public static function removePurchaseFromOtherUsers($user, $cart): void
+    {
         // TODO(luisd): send notification
         foreach ($cart as $product) {
             Notification::send(
                 $product->inCart()
                     ->whereNot(
-                        function($query) use ($user) {$query->where('id',$user->id);})
+                        function ($query) use ($user) {
+                            $query->where('id', $user->id);
+                        })
                     ->get(), new ProductCartGoneNotification($product));
             $product->inCart()->detach();
             Notification::send(
                 $product->wishlist()
                     ->whereNot(
-                        function($query) use ($user) {$query->where('id',$user->id);})
+                        function ($query) use ($user) {
+                            $query->where('id', $user->id);
+                        })
                     ->get(), new WishlistProductGoneNotification($product));
             $product->wishlist()->detach();
             Notification::send(
@@ -147,12 +151,12 @@ class CheckoutController extends Controller
         $user = $request->user();
 
         if (! CheckoutController::canEnterCheckout($request)) {
-            return redirect('/cart', )->with('modal-error',
-            [
-                'title' => 'Item reserved',
-                'content' => 'Looks like someone is trying to buy the same item as you at the same time. Please wait and try again.',
-                'confirm-button' => 'Close',
-            ]);;
+            return redirect('/cart')->with('modal-error',
+                [
+                    'title' => 'Item reserved',
+                    'content' => 'Looks like someone is trying to buy the same item as you at the same time. Please wait and try again.',
+                    'confirm-button' => 'Close',
+                ]);
         }
 
         return view('pages.checkout', ['cart' => $user->cart()->get()]);

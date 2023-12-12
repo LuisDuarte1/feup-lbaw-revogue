@@ -20,13 +20,13 @@ class Notification extends Model
         'read',
         'dismissed',
         'type',
-        "order_id",
-        "wishlist_product",
-        "cart_product",
-        "review",
-        "message",
-        "sold_product",
-        "class_name"
+        'order_id',
+        'wishlist_product',
+        'cart_product',
+        'review',
+        'message',
+        'sold_product',
+        'class_name',
     ];
 
     protected $casts = [
