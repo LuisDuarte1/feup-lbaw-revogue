@@ -1,6 +1,5 @@
-<div class="notification-container">
-    <div class="notification" actionUrl="/">
-        <!--TODO(luisd): add action URL to redirect to order message -->
+<x-notification :route="'/product/'.$product->id" :notification="$notification">
+
         @php
             $firstImage = $product->image_paths[0];    
         @endphp
@@ -9,12 +8,4 @@
             <p>Hurray! Seems like your product '<b>{{$product->name}}</b>' was bought by <a href="/profile/{{$broughtBy->id}}">{{$broughtBy->display_name}}</a> for <b>{{$price}}€</b>.</p>
             <p class="notification-date">{{$notification->creation_date->diffForHumans()}}</p>
         </div>
-        @if (!$notification->read)
-            <div class="notification-read">
-            </div>
-        @endif
-        <div class="notification-actions">
-
-        </div>
-    </div>
-</div>
+</x-notification>

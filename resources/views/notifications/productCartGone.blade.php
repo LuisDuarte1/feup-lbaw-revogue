@@ -1,6 +1,4 @@
-<div class="notification-container">
-    <div class="notification" actionUrl="/products/{{$product->id}}">
-        <!--TODO(luisd): add action URL to redirect to product -->
+<x-notification :route="'/product/'.$product->id" :notification="$notification">
         @php
             $firstImage = $product->image_paths[0];    
         @endphp
@@ -10,9 +8,4 @@
             <p>It seems like someone bought '<b>{{$product->name}}</b>' before you did. It was automatically removed from your cart.</p>
             <p class="notification-date">{{$notification->creation_date->diffForHumans()}}</p>
         </div>
-        @if (!$notification->read)
-            <div class="notification-read">
-            </div>
-        @endif
-    </div>
-</div>
+</x-notification>
