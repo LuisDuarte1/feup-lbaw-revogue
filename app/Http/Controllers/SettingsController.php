@@ -59,38 +59,6 @@ class SettingsController extends Controller
         return $settings;
     }
 
-    public function updatePaymentSettings(Request $request)
-    {
-        $user = User::find(Auth::id());
-
-        if ($user === null) {
-            return redirect('/login');
-        }
-
-        $payment_settings = SettingsController::getPaymentSettings();
-        $settings = $user->settings;
-
-        $request->validate([
-            'bank_name' => 'required',
-            'bank_account_number' => 'required',
-            'bank_account_name' => 'required',
-            'bank_routing_number' => 'required',
-            'paypal_email' => 'required',
-        ]);
-
-        foreach ($request->all() as $key => $value) {
-            $payment_settings[$key] = $value;
-        }
-
-        $settings['payment'] = $payment_settings;
-
-        $user->settings = $settings;
-
-        $user->save();
-
-        return redirect('/settings/payment');
-    }
-
     // ...
 
     // GENERAL SETTINGS
@@ -135,6 +103,43 @@ class SettingsController extends Controller
     }
 
     // END OF GENERAL SETTINGS
+
+    public function updatePaymentSettings(Request $request)
+    {
+        $user = User::find(Auth::id());
+
+        if ($user === null) {
+            return redirect('/login');
+        }
+
+        $payment_settings = SettingsController::getPaymentSettings();
+        $settings = $user->settings;
+
+        $validator = Validator::make($request->all(), [
+            'bank_name' => 'required|regex:/^[a-zA-Z0-9\s]+$/',
+            'bank_account_number' => 'required|regex:/^[0-9]+$/',
+            'bank_account_name' => 'required|regex:/^[a-zA-Z0-9\s]+$/',
+            'bank_routing_number' => 'required|regex:/^[0-9]+$/',
+            'paypal_email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+
+            return back()->withErrors($validator)->withInput();
+        }
+
+        foreach ($request->all() as $key => $value) {
+            $payment_settings[$key] = $value;
+        }
+
+        $settings['payment'] = $payment_settings;
+
+        $user->settings = $settings;
+
+        $user->save();
+
+        return redirect('/settings/payment');
+    }
 
     public function updateShippingSettings(Request $request)
     {

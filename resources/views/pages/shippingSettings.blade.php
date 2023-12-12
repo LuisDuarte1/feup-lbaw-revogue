@@ -33,7 +33,7 @@
                         <input type="text" name="city" id="city" value="{{ old('city', $settings['city']) }}">
                     </div>
                     <div class="zip-code">
-                        <label for="zip-code" required>Zip-code</label>
+                        <label for="zip-code" required>Zip or postal code</label>
                         <input type="text" name="zip-code" id="zip-code"
                             value="{{ old('zip-code', $settings['zip-code']) }}">
                         @if ($errors->has('zip-code'))
