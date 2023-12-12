@@ -12,6 +12,7 @@ import { checkout } from './pages/checkout'
 import errorModal from './components/errorModal'
 import notificationDropdown from './components/notificationDropdown'
 import notification from './components/notification'
+import { notifications } from './pages/notifications'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -23,7 +24,8 @@ const routes: RouteList = {
   '/search': searchPage,
   '/products/{id}': productPage,
   '/cart': cart,
-  '/checkout': checkout
+  '/checkout': checkout,
+  '/notifications': notifications
 }
 
 const components: ComponentList = {

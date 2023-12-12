@@ -62,6 +62,8 @@ Route::prefix('api')->group(function () {
         Route::prefix('notifications')->group(function () {
             Route::controller(NotificationController::class)->group(function () {
                 Route::get('/', 'getNotificationsAPI');
+                Route::get('unreadCount', 'unreadNotificationCountAPI');
+
                 Route::prefix('{id}')->group(function () {
                     Route::post('/read', 'toggleReadNotificationAPI');
 
@@ -170,6 +172,8 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
 
 Route::controller(NotificationController::class)->middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/notifications', 'getPage')->name('notifications');
+    Route::post('/notifications', 'actionPost');
+
 });
 
 Route::prefix('admin')->group(function () {

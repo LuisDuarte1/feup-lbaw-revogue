@@ -1,5 +1,5 @@
 <div class="notification-container">
-    <div class="notification" actionUrl="{{$route}}" data-notificationId="{{$notification->id}}">
+    <div class="notification" actionUrl="{{$route}}" data-notificationId="{{$notification->id}}" data-notificationRead="{{$notification->read}}">
         {{ $slot }}
         @if (!$notification->read)
             <div class="notification-read">

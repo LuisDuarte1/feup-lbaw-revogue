@@ -1,5 +1,6 @@
 import { componentAJAXHandler } from '../app'
 import { addEndObserver } from '../utils/infiniteScrolling'
+import { notificationLoadCallback } from '../utils/notificationUtils'
 
 export default function (element: HTMLElement): void {
   if (!(element instanceof HTMLDivElement)) {
@@ -66,6 +67,7 @@ export default function (element: HTMLElement): void {
       html.innerHTML = await req.text()
       const listElements = Array.from(html.querySelectorAll('.notification-container'))
       componentAJAXHandler(listElements)
+      notificationLoadCallback(listElements)
 
       notificationContent.append(...listElements)
 
@@ -73,7 +75,7 @@ export default function (element: HTMLElement): void {
       endPage.id = 'page-end'
       notificationContent.appendChild(endPage)
 
-      addEndObserver(urlParams, '/api/notifications', notificationContent, '.notification-container', false)
+      addEndObserver(urlParams, '/api/notifications', notificationContent, '.notification-container', false, notificationLoadCallback)
     }
   })
 }

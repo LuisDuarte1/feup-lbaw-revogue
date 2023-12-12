@@ -81,4 +81,23 @@ class NotificationController extends Controller
         return response()->json([], 200);
     }
 
+    function actionPost(Request $request){
+        $action = $request->input('action');
+        if(!isset($action)){
+            return back()->with("error", "Unknown action");
+        }
+
+        if($action == 'readAll'){
+            $request->user()->notifications()->update(['read' => false]);
+        } else if ($action == 'dismissAll'){
+            $request->user()->notifications()->update(['dismissed' => true]);
+        }
+
+        return back();
+    }
+
+    function unreadNotificationCountAPI(Request $request){
+        return response()->json(['count' => $request->user()->notifications()->where('read', false)->where('dismissed', false)->count()], 200);
+    }
+
 }

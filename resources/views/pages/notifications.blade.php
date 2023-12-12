@@ -12,14 +12,24 @@
         </div>
 
         <div class="action-buttons">
-            <button>Mark all as read</button>
-            <button>Dismiss all</button>
+            <form method="POST" action="/notifications">
+                @csrf
+                <input type="hidden" name="action" value="readAll">
+                <button type="submit">Mark all as read</button>
+            </form>
+            <form method="POST" action="/notifications">
+                @csrf
+                <input type="hidden" name="action" value="dismissAll">
+                <button type="submit">Dismiss all</button>
+            </form>
         </div>
 
         <div class="notifications-list column gap-2 ">
             @foreach ($notifications as $notification)
                 {!!$notification !!}
             @endforeach
+            <div id="page-end">
+            </div>
         </div>
     </div>
 @endsection 

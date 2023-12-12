@@ -1,6 +1,8 @@
 import { componentAJAXHandler } from '../app'
 
-async function endVisible (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string, editPage = true): Promise<void> {
+type NewElementCallback = (element: Element[]) => void
+
+async function endVisible (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string, editPage = true, callback: NewElementCallback): Promise<void> {
   const req = await fetch(`${apiUrl}?${params.toString()}`)
   const endElement = destElement.querySelector('#page-end')
 
@@ -19,6 +21,7 @@ async function endVisible (params: URLSearchParams, apiUrl: string, destElement:
     return
   }
   componentAJAXHandler(listElements)
+  callback(listElements)
   listElements.forEach((val) => {
     destElement.insertBefore(val, endElement)
   })
@@ -34,11 +37,11 @@ async function endVisible (params: URLSearchParams, apiUrl: string, destElement:
   if (editPage) window.history.replaceState(null, '', '?' + params.toString())
 }
 
-export function addEndObserver (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string, editPage = true): void {
+export function addEndObserver (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string, editPage = true, callback: NewElementCallback = (e) => {}): void {
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.intersectionRatio > 0) {
-        void endVisible(params, apiUrl, destElement, sourceSelector, editPage)
+        void endVisible(params, apiUrl, destElement, sourceSelector, editPage, callback)
       }
     })
   }, {})

@@ -8,13 +8,13 @@
     @auth
     <div id="notifications-icon">
             @php
-                $unreadNotificationCount = Auth::user()->notifications()->where('read', 'false')->count();
+                $unreadNotificationCount = Auth::user()->notifications()->where('read', 'false')->where('dismissed', '<>', 'true')->count();
                 $hasNotifications = $unreadNotificationCount !== 0;
             @endphp
             <a href="#">
             @if ($hasNotifications === true)
                     <ion-icon name="notifications"></ion-icon>
-                    <span></span>
+                    <span class="notification-ball"></span>
             @else 
                     <ion-icon name="notifications-outline"></ion-icon>
             @endif
