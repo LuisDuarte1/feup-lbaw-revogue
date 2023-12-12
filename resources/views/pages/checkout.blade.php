@@ -20,21 +20,21 @@
                     </div>
 
                     <div class="shipping-full-name">
-                        <label for="full-name" required>Full name</label>
-                        <input type="text" name="full_name" id="full-name" value={{ $settings['name'] }} required>
+                        <label for="name" required>Full name</label>
+                        <input type="text" name="name" id="name" value="{{ $settings['name'] }}" required>
                     </div>
                     <div class="shipping-email">
                         <label for="email" required>Email</label>
-                        <input type="text" name="email" id="email" value={{ $settings['email'] }} required>
+                        <input type="text" name="email" id="email" value="{{ $settings['email'] }}" required>
                     </div>
                     <div class="shipping-address">
                         <label for="address" required>Address line</label>
-                        <input type="text" name="address" id="address" value={{ $settings['address'] }} required>
+                        <input type="text" name="address" id="address" value="{{ $settings['address'] }}" required>
                     </div>
                     <div class="shipping-country">
                         <label for="country" required>Country</label>
                         <select id="country" name="country">
-                            <option value={{ $settings['country'] }}></option>
+                            <option value="{{ $settings['country'] }}"></option>
                             <option value="Portugal">Portugal
                             </option>
                             <option value="Finlandia">Finlândia
@@ -50,11 +50,11 @@
                     </div>
                     <div class="shipping-zip">
                         <label for="zip-code" required>Zip or postal code</label>
-                        <input type="text" name="zip_code" id="zip-code" value={{ $settings['zip-code'] }} required>
+                        <input type="text" name="zip_code" id="zip-code" value="{{ $settings['zip-code'] }}" required>
                     </div>
                     <div class="shipping-phone">
                         <label for="phone">Phone number</label>
-                        <input type="text" name="phone" id="phone" value={{ $settings['phone'] }} required>
+                        <input type="text" name="phone" id="phone" value="{{ $settings['phone'] }}" required>
                     </div>
                 </div>
                 <div class="payment-methods column gap-1">

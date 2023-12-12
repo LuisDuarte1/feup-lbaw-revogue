@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Add this import statement if not already present
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 // Add this import statement
 
@@ -67,6 +69,14 @@ class SettingsController extends Controller
 
         $payment_settings = SettingsController::getPaymentSettings();
         $settings = $user->settings;
+
+        $request->validate([
+            'bank_name' => 'required',
+            'bank_account_number' => 'required',
+            'bank_account_name' => 'required',
+            'bank_routing_number' => 'required',
+            'paypal_email' => 'required',
+        ]);
 
         foreach ($request->all() as $key => $value) {
             $payment_settings[$key] = $value;
@@ -137,12 +147,25 @@ class SettingsController extends Controller
 
         $settings = $user->settings;
 
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+            'phone' => 'required|regex:/^(?:[0-9\-\(\)\/\.]\s?){6,15}[0-9]{1}$/',
+            'address' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'zip-code' => 'required|regex:/^[A-Za-z0-9- ]{3,10}$/',
+        ]);
+
+        if ($validator->fails()) {
+
+            return back()->withErrors($validator)->withInput();
+        }
+
         foreach ($request->all() as $key => $value) {
             $shipping_settings[$key] = $value;
         }
 
         $settings['shipping'] = $shipping_settings;
-
         $user->settings = $settings;
 
         $user->save(); // Save the updated user object
