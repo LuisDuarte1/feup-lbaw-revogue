@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 class ReviewStars extends Component
 {
     public $rating;
+
     public function __construct($rating)
     {
         $this->rating = $rating;

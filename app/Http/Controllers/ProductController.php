@@ -119,12 +119,12 @@ class ProductController extends Controller
 
         $images = $request->file('imageToUpload');
 
-        if (!is_array($images)) {
+        if (! is_array($images)) {
             $images = [$images];
         }
 
         foreach ($images as $image) {
-            $filename = '/storage/' . $image->storePublicly('product-images', ['disk' => 'public']);
+            $filename = '/storage/'.$image->storePublicly('product-images', ['disk' => 'public']);
             array_push($image_paths, $filename);
         }
 
@@ -134,6 +134,6 @@ class ProductController extends Controller
         $product->image_paths = $image_paths;
         $product->save();
 
-        return redirect('/products/' . $product->id);
+        return redirect('/products/'.$product->id);
     }
 }
