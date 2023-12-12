@@ -1,5 +1,10 @@
 @import 'theme';
 
+.notification-container{
+    container-name: notification-card;
+    container-type: inline-size;
+}
+
 .notification{
     display: flex;
     gap: 1rem;
@@ -39,4 +44,12 @@
 
 .notification:hover{
     background-color: $secondary-background;
+}
+
+@container notification-card (max-width: #{$notification-width}){
+    .notification{
+        .notification-actions{
+            display: none;
+        }
+    }
 }

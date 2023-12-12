@@ -64,7 +64,7 @@ export default function (element: HTMLElement): void {
 
       const html = document.createElement('html')
       html.innerHTML = await req.text()
-      const listElements = Array.from(html.querySelectorAll('.notification'))
+      const listElements = Array.from(html.querySelectorAll('.notification-container'))
       componentAJAXHandler(listElements)
 
       notificationContent.append(...listElements)
@@ -73,7 +73,7 @@ export default function (element: HTMLElement): void {
       endPage.id = 'page-end'
       notificationContent.appendChild(endPage)
 
-      addEndObserver(urlParams, '/api/notifications', notificationContent, '.notification', false)
+      addEndObserver(urlParams, '/api/notifications', notificationContent, '.notification-container', false)
     }
   })
 }

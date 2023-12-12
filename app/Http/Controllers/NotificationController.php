@@ -16,7 +16,16 @@ class NotificationController extends Controller
     }
 
     function getPage(Request $request){
-        return view('pages.notifications');
+        $user = $request->user();
+        $notifications = [];
+        if($request->query('dismissed') === '1'){
+            $notifications = $user->notifications()->where('dismissed', 'true')->orderBy('creation_date', 'DESC')->paginate(10)->withQueryString();
+        } else {
+            $notifications = $user->notifications()->where('dismissed', 'false')->orderBy('creation_date', 'DESC')->paginate(10)->withQueryString();
+        }
+        $renderedNotifications = NotificationController::renderNotifications($notifications);
+
+        return view('pages.notifications', ['notifications' => $renderedNotifications]);
     }
 
     function getNotificationsAPI(Request $request){
