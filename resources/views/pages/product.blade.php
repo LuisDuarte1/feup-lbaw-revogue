@@ -112,7 +112,9 @@
                         $reviewDate = $review->sent_date->format('d/m/Y');
                         @endphp
                         <div class="swiper-slide">
+                            <div class="review-card-swiper">
                             <x-reviewCard :reviewerName="$reviewerName" :reviewerUsername="$reviewerUsername" :reviewerPicture="$reviewerProfilePicture" :reviewerRating="$reviewerRating" :reviewDescription="$reviewDescription" :reviewImagePaths="$reviewImagePaths" :reviewDate="$reviewDate" />
+                            </div>
                         </div>
                         @endforeach
                     </div>
