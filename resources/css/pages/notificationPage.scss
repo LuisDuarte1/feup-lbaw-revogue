@@ -1,0 +1,49 @@
+@import '../theme.scss';
+
+$notifications-page-width: 75%;
+
+.notifications-page{
+    min-height: calc(100vh - #{$page-margin * 2});
+
+    .action-buttons{
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        width: $notifications-page-width;
+    }
+
+    .notification-tab{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: $notifications-page-width;
+    
+        a {
+            text-decoration: none;
+            color: $primary;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+    
+        a:hover{
+            background-color: #F3F3EB;
+        }
+    
+    
+        a.active{
+            background-color: $secondary;
+            color: $accent;
+        }
+    }
+    
+    .notifications-list{
+        margin-top: 2rem;
+        width: $notifications-page-width;
+    
+    }
+}
+
+
+
