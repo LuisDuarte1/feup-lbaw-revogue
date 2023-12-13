@@ -35,10 +35,10 @@
         #wishlist_button {
             z-index: 5;
             position: absolute;
-            top: 1rem;
+            top: 0.7rem;
             padding: 0.25rem;
             border-radius: 50%;
-            left: calc(100% - 3rem);
+            left: calc(100% - 3.2rem);
             background-color: rgba($background, 0.7);
             line-height: 0;
             color: $accent;
@@ -48,6 +48,7 @@
                 margin-left: 1px;
             }
         }
+
 
         #wishlist:hover {
             color: $accent-hover;
