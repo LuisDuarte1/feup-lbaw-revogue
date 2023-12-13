@@ -1,8 +1,7 @@
 @import '../theme';
 
 .landing-page{
-    padding-top: 3rem;
-
+    padding: 3rem 0 2rem 0;
     .header-image{
         width: 100%;
         img {
@@ -17,12 +16,4 @@
         }
     }
 
-    .product-card{
-        height: 13rem;
-        width: 15rem;
-    }
-
-    .search-page{
-        gap: 1rem 1rem;
-    }
 }
