@@ -1,45 +1,83 @@
 .product-card {
     display: flex;
-    height: 13rem;
-    width: 10rem;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.33rem;
-    flex-shrink: 0;
 
     .product-image-card img {
         width: 100%;
         height: 100%;
-        flex-shrink: 0;
-        border-radius: 0.75rem;
+        object-fit: cover;
+        border-radius: 0.5rem 0.5rem 0rem 0rem;
     }
 
     .product-image-card {
         width: 100%;
-        height: 10rem;
-        flex-shrink: 0;
-        border-radius: 0.75rem;
-        background: #F3F3EB;
+        height: 11rem;
+        border-radius: 0.5rem 0.5rem 0rem 0rem;
     }
     
     .product-description-card {
+        color: $secondary-background;
         display: flex;
         width: 100%;
-        height: 2.4rem;
+        gap: 0.5rem;
+        border-radius: 0rem 0rem 0.5rem 0.5rem;
+        padding: 0.6rem 0;
+        background: $primary;
+    }
+
+    .product-description-top{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        border-radius: 0.5rem;
+    }
+
+    .product-shipping{
+        display: flex;
+        padding: 0 1rem;
+        text-align: left;
+        font-size: 1rem;
+    }
+
+    .product-shipping-text > p::before{
+        content: "+";
+    }
+
+    .product-shipping-text:not(.free-shipping) > p::after {
+        content: "€";
+    }
+
+    .product-shipping ion-icon{
+        rotate: 315deg;
+        padding: 0 0.2rem;
+    }
+
+    .product-price > p::after{
+        content: "€";
+    }
+
+    .product-description-bottom {
+        display: flex;
+        width: 100%;
         justify-content: space-between;
         align-items: center;
-        flex-shrink: 0;
         border-radius: 0.5rem;
-        background: #6064A4;
     }
     
     .product-price {
-        flex-shrink: 0;
         padding: 0 1rem;
-        color: #FBFBF3;
         text-align: right;
         font-size: 1rem;
         font-weight: 600;
+    }
+
+    .product-condition {
+        padding: 0 1rem;
+        text-align: left;
+        font-size: 1rem;
+        font-weight: 500;
     }
 
     .product-price > p::after{
@@ -47,18 +85,9 @@
     }
 
     .product-size {
-        flex-shrink: 0;
         padding: 0 1rem;
-        color: #FBFBF3;
         text-align: left;
         font-size: 1rem;
         font-weight: 500;
-    }
-
-    p {
-        padding: 0;
-    }
-    
-    
-    
+    } 
 }
