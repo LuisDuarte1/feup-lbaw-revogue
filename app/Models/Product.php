@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\ProductFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 // Added to define Eloquent relationships.
@@ -97,6 +99,11 @@ class Product extends Model
     public function purchaseIntents(): BelongsToMany
     {
         return $this->belongsToMany(PurchaseIntent::class, 'purchaseintentproduct', 'product', 'purchase_intent');
+    }
+
+    public function scopeFilter(Builder $builder, $request)
+    {
+        return (new ProductFilter($request))->filter($builder);
     }
 
     /**

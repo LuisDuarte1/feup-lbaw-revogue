@@ -10,9 +10,9 @@
                     $size = $product['size'];
                     $id = $product['product']->id;
                 @endphp
-                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id"/>
+                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" />
             @endforeach
         </div>
         {{ $paginator->links('vendor.pagination.simple-default') }}
-    <div>
-@endsection
+        <div>
+        @endsection

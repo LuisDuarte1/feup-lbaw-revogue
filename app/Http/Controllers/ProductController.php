@@ -135,4 +135,9 @@ class ProductController extends Controller
 
         return redirect('/products/'.$product->id);
     }
+
+    public function index(Request $request)
+    {
+        return Product::filter($request)->get();
+    }
 }
