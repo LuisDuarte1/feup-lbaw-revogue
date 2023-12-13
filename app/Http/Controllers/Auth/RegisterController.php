@@ -33,18 +33,20 @@ class RegisterController extends Controller
             return (new DateTime)->diff(new DateTime($value))->y >= $minAge;
         });
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:250',
             'username' => 'required|string|max:250|unique:users',
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed',
             'dateBirth' => 'required|date|olderThan:13|before:today',
-            'phone' => 'nullable|string|max:250',
-            'address' => 'nullable|string|max:250',
-            'city' => 'nullable|string|max:250',
-            'postalCode' => 'nullable|string|max:250',
-
+        ], [
+            'dateBirth' => 'You must be at least 13 years old to register.',
+            'dateBirth' => 'Your birth date must be before today.',
         ]);
+
+        if ($validator->fails()) {
+            return redirect('/register')->withErrors($validator)->withInput();
+        }
 
         $user = User::create([
             'username' => $request->username,
@@ -52,7 +54,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'account_status' => 'needsConfirmation',
-            'settings' => json_encode(['dateBirth' => $request->dateBirth, 'address' => $request->address, 'city' => $request->city, 'postalCode' => $request->postalCode, 'phone' => $request->phone]),
+            'settings' => json_encode([]),
         ]);
 
         $credentials = $request->only('email', 'password');

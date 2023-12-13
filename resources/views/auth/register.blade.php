@@ -7,15 +7,15 @@
             <div class="register-content">
                 <form method="POST" class="register-box" action="{{ route('register') }}">
                     {{ csrf_field() }}
-
-                    <label for="name" required>Name</label>
-                    <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
-                    @if ($errors->has('name'))
-                        <span class="error">
-                            {{ $errors->first('name') }}
-                        </span>
-                    @endif
-
+                    <div>
+                        <label for="name" required>Name</label>
+                        <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
+                        @if ($errors->has('name'))
+                            <span class="error">
+                                {{ $errors->first('name') }}
+                            </span>
+                        @endif
+                    </div>
                     <label for="username" required>Username</label>
                     <input id="username" type="text" name="username" value="{{ old('username') }}" required autofocus>
                     @if ($errors->has('username'))
@@ -23,48 +23,16 @@
                             {{ $errors->first('username') }}
                         </span>
                     @endif
-
-                    <label for="phone" required>Phone</label>
-                    <input id="phone" type="text" name="phone" value="{{ old('phone') }}" required autofocus>
-                    @if ($errors->has('phone'))
-                        <span class="error">
-                            {{ $errors->first('phone') }}
-                        </span>
-                    @endif
-
-                    <label for="address" required>Address</label>
-                    <input id="address" type="text" name="address" value="{{ old('address') }}" required autofocus>
-                    @if ($errors->has('address'))
-                        <span class="error">
-                            {{ $errors->first('address') }}
-                        </span>
-                    @endif
-
-                    <label for="city" required>City</label>
-                    <input id="city" type="text" name="city" value="{{ old('city') }}" required autofocus>
-                    @if ($errors->has('city'))
-                        <span class="error">
-                            {{ $errors->first('city') }}
-                        </span>
-                    @endif
-
-                    <label for="postalCode" required>Postal Code</label>
-                    <input id="postalCode" type="text" name="postalCode" value="{{ old('postalCode') }}" required
-                        autofocus>
-                    @if ($errors->has('postalCode'))
-                        <span class="error">
-                            {{ $errors->first('postalCode') }}
-                        </span>
-                    @endif
-
-                    <label for="dateBirth" required>Date of Birth</label>
-                    <input id="dateBirth" type="date" name="dateBirth" value="{{ old('dateBirth') }}" required
-                        autofocus>
-                    @if ($errors->has('dob'))
-                        <span class="error">
-                            {{ $errors->first('dob') }}
-                        </span>
-                    @endif
+                    <div>
+                        <label for="dateBirth" required>Date of Birth</label>
+                        <input id="dateBirth" type="date" name="dateBirth" value="{{ old('dateBirth') }}" required
+                            autofocus>
+                        @if ($errors->has('dateBirth'))
+                            <span class="error">
+                                {{ $errors->first('dateBirth') }}
+                            </span>
+                        @endif
+                    </div>
 
                     <label for="email" required>E-mail</label>
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required>
