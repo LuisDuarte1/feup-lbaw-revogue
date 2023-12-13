@@ -173,3 +173,8 @@ Route::prefix('admin')->group(function () {
     });
 
 });
+
+//FAQs
+Route::get('/faqs', function () {
+    return view('pages.faqs');
+})->name('faqs');
