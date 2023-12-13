@@ -20,7 +20,7 @@
                     $shipping = $product['product']->shipping;
                     $condition = $product['product']->condition;
                 @endphp
-                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="$shipping" :condition="$condition"/>
+                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2" :condition="'Good'"/>
             @endforeach
         </div>
     </div>
