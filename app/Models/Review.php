@@ -26,6 +26,7 @@ class Review extends Model
     protected $casts = [
         'stars' => 'float',
         'sent_date' => 'datetime',
+        'image_paths' => 'array'
     ];
 
     public function reviewedOrder(): BelongsTo

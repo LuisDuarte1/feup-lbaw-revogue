@@ -149,3 +149,20 @@ input[type="radio"]:not(:disabled):checked {
         }
     }
 }
+
+.modal-expandable-image{
+    margin: 0;
+    border-radius: 0.5rem;
+}
+
+.modal-expandable-image-container{
+    border-radius: 0.5rem;
+}
+
+.modal-expandable-image-close-button:focus{
+    box-shadow: none !important;
+}
+
+.modal-expandable-image-close-button:hover{
+    color: $background;
+}

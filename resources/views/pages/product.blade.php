@@ -93,13 +93,14 @@
         </div>
         <div class="layout-wrapper">
             @if (count($reviews) === 0)
-            <div class="reviews w-full column">
+            <div class="reviews-empty w-full column">
                 <h3 class="title">Reviews</h3>
                 <p>This user has no reviews yet.</p>
             </div>
             @else
-            <div class="w-full h-full">
-                <div class="swiper scrollSwiper">
+            <div class="has-reviews w-full h-full">
+                <h3 class="title">Reviews:</h3>
+                <div class="has-reviews swiper scrollSwiper">
                     <div class="swiper-wrapper">
                         @foreach ($reviews as $review)
                         @php

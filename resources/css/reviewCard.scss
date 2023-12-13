@@ -8,21 +8,6 @@
     padding: 1rem 1.5rem;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     
-    .profile-picture-container {
-        width: $width;
-        height: auto;
-        border-radius:0.5rem;
-        flex-shrink: 0;
-        background: #F3F3EB;
-
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 1rem;
-            aspect-ratio: 1;
-            object-fit: cover;
-        }
-    }
 
     .review-card-header{
         display: flex;
@@ -62,5 +47,21 @@
         font-size: 0.85rem;
         color: $text-color;
         text-align: justify;
+    }
+
+    .review-photos{
+        display: flex;
+        gap: 0.5rem;
+    }
+    .review-photo{
+        width: 6rem;
+        height: auto;
+        img{
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
     }
 }

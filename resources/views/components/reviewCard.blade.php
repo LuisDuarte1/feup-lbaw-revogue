@@ -1,9 +1,6 @@
 <div class="review-card">
     <div class="review-card-header">
         <div class="review-card-wrapper">
-            <div class="profile-picture-container">
-                <img src="{{ $reviewerPicture }}" alt="profile picture">
-            </div>
             <div class="review-card-info">
                 <div class="review-card-name">
                     <div class="review-card-displayName">
@@ -25,5 +22,12 @@
     </div>
     <div class="review-card-description">
         {{ $reviewDescription }}
+    </div>
+    <div class="review-photos">
+        @foreach ($reviewImagePaths as $reviewImagePath)
+            <div class="review-photo">
+                <img class="expandable-image" src="{{ $reviewImagePath }}" alt="review image">
+            </div>
+        @endforeach
     </div>
 </div>
