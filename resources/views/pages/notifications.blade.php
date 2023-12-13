@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <div class="column justify-center items-center gap-2 notifications-page">
+    <div class="column items-center gap-2 notifications-page">
         <h1 class="title">Notifications</h1>
 
         <div class="notification-tab">
@@ -23,13 +23,19 @@
                 <button type="submit">Dismiss all</button>
             </form>
         </div>
-
-        <div class="notifications-list column gap-2 ">
-            @foreach ($notifications as $notification)
-                {!!$notification !!}
-            @endforeach
-            <div id="page-end">
+        @if(count($notifications) !== 0)
+            <div class="notifications-list column gap-2 ">
+                @foreach ($notifications as $notification)
+                    {!!$notification !!}
+                @endforeach
+                
+                <div id="page-end">
+                </div>
             </div>
-        </div>
+        @else
+            <div class="column items-center justify-center grow-2">
+                <p>It seems that your notification section is empty.</p>
+            </div>
+        @endif
     </div>
 @endsection 

@@ -67,7 +67,7 @@ export default function (element: HTMLElement): void {
       html.innerHTML = await req.text()
       const listElements = Array.from(html.querySelectorAll('.notification-container'))
       componentAJAXHandler(listElements)
-      notificationLoadCallback(listElements)
+      void notificationLoadCallback(listElements)
 
       notificationContent.append(...listElements)
 
