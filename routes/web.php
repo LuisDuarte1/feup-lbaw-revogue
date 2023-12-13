@@ -14,6 +14,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
@@ -56,6 +57,18 @@ Route::prefix('api')->group(function () {
         Route::prefix('checkout')->group(function () {
             Route::controller(CheckoutController::class)->group(function () {
                 Route::post('/getPaymentIntent', 'getPaymentIntent');
+            });
+        });
+        Route::prefix('notifications')->group(function () {
+            Route::controller(NotificationController::class)->group(function () {
+                Route::get('/', 'getNotificationsAPI');
+                Route::get('unreadCount', 'unreadNotificationCountAPI');
+
+                Route::prefix('{id}')->group(function () {
+                    Route::post('/read', 'toggleReadNotificationAPI');
+
+                    Route::post('/dismiss', 'toggleDismissNotificationAPI');
+                });
             });
         });
     });
@@ -155,6 +168,12 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
         Route::get('/logout', 'logout');
 
     });
+});
+
+Route::controller(NotificationController::class)->middleware(['auth:web', 'verified'])->group(function () {
+    Route::get('/notifications', 'getPage')->name('notifications');
+    Route::post('/notifications', 'actionPost');
+
 });
 
 Route::prefix('admin')->group(function () {
