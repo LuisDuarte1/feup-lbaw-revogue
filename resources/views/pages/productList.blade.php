@@ -1,7 +1,7 @@
 @extends('layouts.app', ['search_bar' => 'true'])
 
 @section('content')
-    <div class="column gap-2 justify-center">
+    <div class="column gap-2 justify-center product-list">
         <div class="search-page" style="justify-content: center">
             @foreach ($products as $product)
                 @php
@@ -12,7 +12,7 @@
                     $shipping = $product['product']->shipping;
                     $condition = $product['product']->condition;
                 @endphp
-                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="$shipping" :condition="$condition"/>
+                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2" :condition="'Good'"/>
             @endforeach
         </div>
         {{ $paginator->links('vendor.pagination.simple-default') }}

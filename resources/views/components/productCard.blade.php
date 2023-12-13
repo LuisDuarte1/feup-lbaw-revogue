@@ -4,8 +4,8 @@
             <!--TODO (luisd): do the random hash if only on debug mode -->
             <img src="{{ $image }}?hash={{fake()->lexify('???????????????')}}" loading="lazy" decoding="async" alt="product image">
         </div>
-        <div class="product-description-card">
-            <div class="product-top">
+        <div class="product-description-card column">
+            <div class="product-description-top">
                 <div class="product-price">
                     <p>{{ $price }}</p>
                 </div>
@@ -13,7 +13,7 @@
                     <p>{{ $size }}</p>
                 </div>
             </div>
-            <div class="product-bottom">
+            <div class="product-description-bottom">
                 <div class="product-shipping">
                     <div class="product-shipping-text @if($shipping === 'Free') free-shipping @endif">
                         <p>{{ $shipping }}</p>
