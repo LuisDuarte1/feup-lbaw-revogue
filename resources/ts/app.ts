@@ -1,3 +1,5 @@
+import './bootstrap.ts'
+
 import imageUploader from './components/imageUploader'
 import submitFormOnChange from './components/submitFormOnChange'
 import wishlistButton from './components/wishlistButton'
