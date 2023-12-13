@@ -15,10 +15,16 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+    <!-- Scripts -->
     <script type="text/javascript">
         // Fix for Firefox autofocus CSS bug
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
+    
+
+    @if (session('modal-error'))
+        <meta name="modal-error" confirm-button="{{session('modal-error')['confirm-button']}}" title="{{session('modal-error')['title']}}" content="{{session('modal-error')['content']}}">
+    @endif
 
     @vite(['resources/css/app.scss', 'resources/ts/app.ts'])
 

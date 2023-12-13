@@ -8,6 +8,9 @@
 @import 'profileNavbar';
 @import 'searchBar';
 @import 'chat_card';
+@import 'loader';
+@import 'productPhotos';
+@import 'notifications';
 
 @import 'pages/register';
 @import 'pages/login';
@@ -21,6 +24,7 @@
 @import 'pages/profile';
 @import 'pages/landingPage';
 @import 'pages/editProduct';
+@import 'pages/notificationPage';
 
 
 
@@ -60,13 +64,12 @@ body {
         width: calc(100% - #{$page-margin*2 + $page-navbar-width + $page-gap});
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         position: fixed;
         top: 0;
         left: calc($page-margin + $page-navbar-width + $page-gap);
-        gap: 3rem;
+        gap: 1.5rem;
         z-index: 10;
-        overflow: hidden;
         background-color: $background;
     }
 

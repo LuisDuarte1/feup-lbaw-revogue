@@ -20,6 +20,13 @@ class Notification extends Model
         'read',
         'dismissed',
         'type',
+        'order_id',
+        'wishlist_product',
+        'cart_product',
+        'review',
+        'message',
+        'sold_product',
+        'class_name',
     ];
 
     protected $casts = [
@@ -34,17 +41,17 @@ class Notification extends Model
 
     public function order(): BelongsTo
     {
-        return $this->BelongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
-    /*public function productWishlist(): BelongsTo
+    public function wishlistProduct(): BelongsTo
     {
-        return $this->BelongsTo(ProductWishlist::class, 'wishlistProduct');
-    }*/
+        return $this->belongsTo(Product::class, 'wishlist_product');
+    }
 
     public function cartProduct(): BelongsTo
     {
-        return $this->BelongsTo(CartProduct::class, 'cart_product');
+        return $this->belongsTo(Product::class, 'cart_product');
     }
 
     public function review(): BelongsTo
