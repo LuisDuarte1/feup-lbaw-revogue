@@ -28,6 +28,7 @@ $order = $review->reviewedOrder()->get()->first();
                     <ion-icon name="create-outline"></ion-icon>
                 </a>
                 <form class="review-card-delete" action="/orders/{{$order->id}}/review/delete" method="POST">
+                    @csrf
                     <button type="submit" class="delete-review">
                         <ion-icon name="trash-outline"></ion-icon>
                     </button>
