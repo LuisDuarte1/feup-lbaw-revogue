@@ -8,7 +8,10 @@
             <div class="question-category">
                 <h2>Orders</h2>
                     <div class="question-box">
-                        <button class="question">How can I contact you?</button>
+                        <div class="question">
+                            <p>How can I contact you?</p>
+                            <ion-icon name="chevron-down-outline"></ion-icon>
+                        </div>
                         <div class="answer">
                             <p>You can contact us by sending an <a href="mailto:revogue021@gmail.com">email</a></p>
                         </div>
@@ -17,4 +20,5 @@
         </div>
     </div>
 </div>
+
 @endsection
