@@ -1,0 +1,126 @@
+@import '../theme';
+@import '../globals';
+
+
+.messages-page{
+    display: grid;
+    grid-template-columns: 20% auto;
+    grid-template-rows: fit-content(5rem) auto;
+    gap: 2rem;
+    height: 100%;
+    margin-top: 1rem;
+    background-color: $background;
+    border-radius: 1rem;
+
+
+    .title{
+        grid-row: 1/1;
+        grid-column: 1/1;
+        font-size: revert;
+    }
+
+
+    .message-list{
+        margin-top: 0.5rem;
+        grid-row: 2/2;
+        grid-column: 1/1;
+
+
+        .messages-tab{
+            display:  flex;
+            justify-content: space-evenly;
+            align-self: stretch;
+            > a {
+                text-decoration: none;
+                color: $text-color;
+            }
+
+            a {
+                text-decoration: none;
+                color: $primary;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                font-weight: 500;
+                font-size: 1rem;
+            }
+        
+            a:hover{
+                background-color: #F3F3EB;
+            }
+        
+        
+            a.active{
+                background-color: $secondary;
+                color: $accent;
+            }
+        }
+    }
+
+    .message-thread-details{
+        grid-row: 1/1;
+        grid-column: 2/2;
+        align-items: center;
+        .username {
+            color: $text-color;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .message-thread-details-buttons{
+            display: flex;
+            gap: 1rem;
+        }
+    }
+
+    .message-thread{
+        grid-row: 2/2;
+        grid-row: 2/2;
+        background: $secondary-background;
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+
+        .message-thread-content{
+            flex-grow: 2;
+        }
+
+        .message-thread-input{
+            display: flex;
+            justify-content: space-evenly;
+            padding: 0rem 3rem;
+            align-items: center;
+            width: calc(100% - #{3rem * 2});
+            .text-input{
+                width: 75%;
+                position: relative;
+
+
+                > input[type=text]{
+                    width: calc(100% - 1rem);
+                    border-radius: 2rem;
+                    border: 2px $accent solid;
+                }
+    
+                > ion-icon{
+                    position: absolute;
+                    top: calc(( 2.75rem - 1.5rem)/2);
+                    right: 0.5rem;
+                    font-size: 1.5rem;
+                    color: $accent;
+                }
+            }
+            margin-bottom: 2rem;
+            .misc-buttons{
+                display: flex;
+                gap: 1.5rem;
+                > a {
+                    display: block;
+                    text-decoration: none;
+                    color: $accent;
+                    font-size: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+        }
+    }
+}

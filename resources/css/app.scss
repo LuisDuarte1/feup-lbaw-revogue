@@ -7,7 +7,6 @@
 @import 'profileLayout';
 @import 'profileNavbar';
 @import 'searchBar';
-@import 'chat_card';
 @import 'loader';
 @import 'productPhotos';
 @import 'notifications';
@@ -25,6 +24,7 @@
 @import 'pages/landingPage';
 @import 'pages/editProduct';
 @import 'pages/notificationPage';
+@import 'pages/messages';
 
 
 
@@ -52,6 +52,10 @@ body {
         grid-column: 2;
     }
 
+    .main-content.full-page-height{
+        min-height: calc(100vh - #{$page-margin*2});
+    }
+
     .navbar {
         position: fixed;
         top: $page-margin;
@@ -72,6 +76,7 @@ body {
         z-index: 10;
         background-color: $background;
     }
+
 
 }
 

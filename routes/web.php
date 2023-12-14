@@ -14,6 +14,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
@@ -191,4 +192,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/payouts', 'getPage')->name('admin.payouts');
     });
 
+});
+
+Route::prefix('messages')->group(function () {
+    Route::controller(MessageController::class)->group(function () {
+        Route::get('/', 'getPage');
+    });
 });

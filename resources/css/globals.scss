@@ -47,6 +47,21 @@ button:hover, button:active{
     background: $secondary-hover;
 }
 
+a.button{
+    background-color: $accent;
+    color: $background;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    padding: 0.3rem 1rem;
+    font-size: 1.1rem;
+}
+
+a.button.outline{
+    border: 2px $accent solid;
+    color: $accent;
+    background-color: inherit;
+}
+
 
 .title {
     font-family: 'Abril Fatface';
