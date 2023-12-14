@@ -8,5 +8,6 @@ class ProductFilter extends AbstractFilter
 {
     protected $filters = [
         'type' => TypeFilter::class,
+        'price' => PriceFilter::class,
     ];
 }

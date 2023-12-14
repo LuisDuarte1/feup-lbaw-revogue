@@ -103,6 +103,9 @@ class Product extends Model
 
     public function scopeFilter(Builder $builder, $request)
     {
+        /* $namespace = 'App\\Filters';
+         $filter = new FilterBuilder($builder, $request, $namespace);*/
+
         return (new ProductFilter($request))->filter($builder);
     }
 

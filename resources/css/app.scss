@@ -6,6 +6,7 @@
 @import 'productCard';
 @import 'profileLayout';
 @import 'profileNavbar';
+@import 'price_slider';
 @import 'searchBar';
 @import 'chat_card';
 @import 'loader';
@@ -76,7 +77,7 @@ body {
 }
 
 @media screen and (max-height: 700px) {
-    :root{
+    :root {
         font-size: 15px;
     }
 }
