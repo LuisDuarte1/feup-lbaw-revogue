@@ -87,7 +87,7 @@
         .message-thread-input{
             display: flex;
             justify-content: space-evenly;
-            padding: 0rem 3rem;
+            margin: 0rem 3rem;
             align-items: center;
             width: calc(100% - #{3rem * 2});
             .text-input{
@@ -98,7 +98,7 @@
                 > input[type=text]{
                     width: calc(100% - 1rem);
                     border-radius: 2rem;
-                    border: 2px $accent solid;
+                    border: 2px $primary solid;
                 }
     
                 > ion-icon{
@@ -106,7 +106,7 @@
                     top: calc(( 2.75rem - 1.5rem)/2);
                     right: 0.5rem;
                     font-size: 1.5rem;
-                    color: $accent;
+                    color: $primary;
                 }
             }
             margin-bottom: 2rem;
@@ -116,7 +116,7 @@
                 > a {
                     display: block;
                     text-decoration: none;
-                    color: $accent;
+                    color: $primary;
                     font-size: 1.5rem;
                     height: 1.5rem;
                 }

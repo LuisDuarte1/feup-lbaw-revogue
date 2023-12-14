@@ -456,6 +456,10 @@ CREATE TRIGGER review_check_order_validity BEFORE INSERT OR UPDATE ON Reviews
 
 CREATE OR REPLACE FUNCTION bargain_message_order_validity() RETURNS TRIGGER AS $$
 BEGIN
+    IF NEW."message_type" = 'text' THEN
+        RETURN NEW;
+    END IF;
+
     IF (SELECT COUNT(*) FROM OrderProduct WHERE "product"=NEW."subject_product") = 0 THEN
         RETURN NEW;
     END IF;

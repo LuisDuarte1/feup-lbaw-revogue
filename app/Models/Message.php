@@ -38,6 +38,7 @@ class Message extends Model
     protected $casts = [
         'sent_date' => 'datetime',
         'proposed_price' => 'float',
+        'image_path' => 'array'
     ];
 
     public function fromUser(): BelongsTo
