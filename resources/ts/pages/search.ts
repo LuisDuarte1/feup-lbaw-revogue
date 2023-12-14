@@ -20,7 +20,7 @@ export function searchPage (): void {
   }
   const element = document.querySelector('.search-page')
   if (element !== null) {
-    addEndObserver(URLParams, '/api/search', element, 'a')
+    addEndObserver(URLParams, '/api/search', element, 'a', false)
   }
   addQuery(URLParams.get('q'))
 }

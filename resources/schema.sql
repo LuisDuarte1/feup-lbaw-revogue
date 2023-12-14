@@ -58,7 +58,8 @@ CREATE TYPE NotificationType AS ENUM (
     'cart',
     'order_status',
     'review',
-    'message'
+    'message',
+    'sold'
 );
 
 CREATE TABLE Users(
@@ -226,27 +227,31 @@ CREATE TABLE Reports(
 
 CREATE TABLE Notifications(
     "id" SERIAL PRIMARY KEY,
-    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "read" BOOLEAN NOT NULL DEFAULT FALSE,
     "dismissed" BOOLEAN NOT NULL DEFAULT FALSE,
     "type" NotificationType NOT NULL,
     "belongs_to" INT NOT NULL,
+    "class_name" TEXT NOT NULL, -- we store the laravel class name in order to do automatic rendering of a notification
     "order_id" INT,
     "wishlist_product" INT,
     "cart_product" INT,
     "review" INT,
-    "message" INTEGER,
+    "message" INT,
+    "sold_product" INT,
     FOREIGN KEY ("belongs_to") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("order_id") REFERENCES Orders("id") ON DELETE CASCADE,
     FOREIGN KEY ("wishlist_product") REFERENCES Products("id"),
     FOREIGN KEY ("cart_product") REFERENCES Products("id"),
+    FOREIGN KEY ("sold_product") REFERENCES Products("id"),
     FOREIGN KEY ("review") REFERENCES Reviews("id"),
     FOREIGN KEY ("message") REFERENCES  Messages("id"),
     CHECK ( ("type" = 'order_status' AND "order_id" IS NOT NULL) OR
             ("type" = 'wishlist' AND "wishlist_product" IS NOT NULL) OR
             ("type" = 'cart' AND "cart_product" IS NOT NULL) OR
             ("type" = 'review' AND "review" IS NOT NULL) OR
-            ("type" = 'message' AND "message" IS NOT NULL)
+            ("type" = 'message' AND "message" IS NOT NULL) OR
+            ("type" = 'sold' AND "sold_product" IS NOT NULL)
     )
 );
 
@@ -420,7 +425,7 @@ BEGIN
     IF NEW."type" = 'wishlist' AND (SELECT COUNT(*) FROM ProductWishlist WHERE "product"=NEW."wishlist_product" AND "belongs_to"=NEW."belongs_to") <> 1 THEN
         RAISE EXCEPTION 'User doesnt have product in his wishlist...';
     END IF;
-    IF NEW."type" = 'cart' AND (SELECT COUNT(*) FROM CartProduct WHERE "product"=NEW."wishlist_product" AND "belongs_to"=NEW."belongs_to") <> 1 THEN
+    IF NEW."type" = 'cart' AND (SELECT COUNT(*) FROM CartProduct WHERE "product"=NEW."cart_product" AND "belongs_to"=NEW."belongs_to") <> 1 THEN
         RAISE EXCEPTION 'User doesnt have product in his cart...';
     END IF;
     RETURN NEW;
