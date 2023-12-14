@@ -17,9 +17,8 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ReviewController;
-use App\Models\Review;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -180,6 +179,6 @@ Route::prefix('admin')->group(function () {
 Route::prefix('order')->middleware(['auth:web', 'verified'])->group(function () {
     Route::controller(ReviewController::class)->group(function () {
         Route::get('/{id}/review/new', 'getPage')->name('review');
-        Route::post('/{id}/review/new', 'postPage'); 
+        Route::post('/{id}/review/new', 'postPage');
     });
 });
