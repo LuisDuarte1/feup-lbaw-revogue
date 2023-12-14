@@ -188,7 +188,7 @@ CREATE TABLE Reviews(
     "stars" NUMERIC NOT NULL CHECK ( "stars" >= 0 AND "stars" <= 5 ),
     "sent_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "sent_date" <= CURRENT_TIMESTAMP ),
     "description" TEXT,
-    "image_paths" JSON NOT NULL CHECK ( json_array_length("image_paths") > 0 ),
+    "image_paths" JSON NOT NULL,
     "reviewed_order" INT NOT NULL,
     "reviewer" INT NOT NULL,
     "reviewed" INT NOT NULL,

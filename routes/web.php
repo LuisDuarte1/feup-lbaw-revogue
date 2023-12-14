@@ -174,11 +174,14 @@ Route::prefix('admin')->group(function () {
     });
 });
 
-Route::prefix('order')->middleware(['auth:web', 'verified'])->group(function () {
+Route::prefix('orders')->middleware(['auth:web', 'verified'])->group(function () {
     Route::prefix('{id}')->group(function () {
         Route::controller(ReviewController::class)->group(function () {
             Route::get('/review/new', 'getPage')->name('review');
             Route::post('/review/new', 'postPage');
+            Route::get('/review/edit', 'editReviewPage');
+            Route::post('/review/edit', 'editReview');
+            Route::post('/review/delete', 'deleteReview');
         });
     });
 });

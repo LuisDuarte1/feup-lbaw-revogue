@@ -103,16 +103,9 @@
                 <div class="has-reviews swiper scrollSwiper">
                     <div class="swiper-wrapper">
                         @foreach ($reviews as $review)
-                        @php
-                        $reviewDescription = $review->description;
-                        $reviewer = $review->reviewer()->get()->first();
-                        $reviewerRating = $review->stars;
-                        $reviewImagePaths = $review->image_paths;
-                        $reviewDate = $review->sent_date->format('d/m/Y');
-                        @endphp
                         <div class="swiper-slide">
                             <div class="review-card-swiper">
-                                <x-reviewCard :reviewer="$reviewer" :reviewerRating="$reviewerRating" :reviewDescription="$reviewDescription" :reviewImagePaths="$reviewImagePaths" :reviewDate="$reviewDate" />
+                                <x-reviewCard :review="$review" />
                             </div>
                         </div>
                         @endforeach

@@ -5,7 +5,7 @@
 <section class="add-review-page column gap-3 justify-center">
     <h1 class="title">Add Review</h1>
 
-    <form action="/order/{{$orderId}}/review/new" class="add-review-form column gap-1" method="POST" class="reviewForm" enctype="multipart/form-data">
+    <form action="/orders/{{$order->id}}/review/new" class="add-review-form column gap-1" method="POST" class="reviewForm" enctype="multipart/form-data">
         <h2 required> Rating </h2>
         <div class="row">
             <div class="rating-stars">
