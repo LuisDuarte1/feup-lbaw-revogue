@@ -1,0 +1,80 @@
+@import 'theme';
+
+.notification-container{
+    container-name: notification-card;
+    container-type: inline-size;
+}
+
+.notification{
+    display: flex;
+    gap: 2rem;
+    word-break: keep-all;
+    align-items: stretch;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    .notification-image {
+        background-size: cover;
+        aspect-ratio: 1;
+        border-radius: 0.5rem;
+        flex-basis: 25%;
+        flex-shrink: 0;
+        align-self: center;
+    }
+
+    .notification-card-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+
+        .notification-date{
+            color: rgba($text-color, 0.5);
+        }
+    }
+
+    .notification-read{
+        align-self: center;
+        background-color: $accent;
+        padding: 0.4rem;
+        border-radius: 50%;
+        display: none;
+    }
+
+    .notification-actions{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        > a {
+            text-decoration: none;
+            color: $accent;
+            font-size: 2rem;
+        }
+
+        > a:hover{
+            color: rgba($accent, 0.7);
+        }
+
+    }
+}
+
+.notification:hover{
+    background-color: $secondary-background;
+}
+
+@container notification-card (max-width: #{$notification-width}){
+    .notification{
+        padding: 0.5rem;
+        gap: 1rem;
+        .notification-read{
+            display: block;
+        }
+
+        .notification-actions{
+            display: none;
+        }
+    }
+}

@@ -14,12 +14,18 @@ class ProductCard extends Component
 
     public $id;
 
-    public function __construct($image, $price, $size, $id)
+    public $condition;
+
+    public $shipping;
+
+    public function __construct($image, $price, $size, $id, $condition, $shipping)
     {
         $this->image = $image;
         $this->price = $price;
         $this->size = $size;
         $this->id = $id;
+        $this->condition = $condition;
+        $this->shipping = $shipping;
     }
 
     public function render()
@@ -29,6 +35,8 @@ class ProductCard extends Component
             'price' => $this->price,
             'size' => $this->size,
             'id' => $this->id,
+            'condition' => $this->condition,
+            'shipping' => $this->shipping,
         ]);
     }
 }

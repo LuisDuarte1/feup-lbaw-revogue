@@ -130,10 +130,10 @@ export async function checkout (): Promise<void> {
   if (checkoutForm === null) {
     throw Error('Cannot find checkout form')
   }
-
+  const submitHandler = submitFormStripe.bind(null, stripeObject, checkoutForm)
   if (document.querySelector<HTMLInputElement>('input[name=payment_method]:checked')?.value === '1') {
     intializeStripeElement(stripeObject)
-    checkoutForm.addEventListener('submit', submitFormStripe.bind(null, stripeObject, checkoutForm))
+    checkoutForm.addEventListener('submit', submitHandler)
   }
 
   const radios = document.querySelectorAll<HTMLInputElement>('input[type=radio][name=payment_method]')
@@ -141,10 +141,10 @@ export async function checkout (): Promise<void> {
     radio.addEventListener('change', (ev) => {
       if (radio.value === '1') {
         intializeStripeElement(stripeObject)
-        checkoutForm.addEventListener('submit', submitFormStripe.bind(null, stripeObject, checkoutForm))
-      } else if (paymentElement !== null) {
-        paymentElement.unmount()
-        checkoutForm.removeEventListener('submit', submitFormStripe.bind(null, stripeObject, checkoutForm))
+        checkoutForm.addEventListener('submit', submitHandler)
+      } else {
+        if (paymentElement !== null) paymentElement.unmount()
+        checkoutForm.removeEventListener('submit', submitHandler)
       }
     })
   })
