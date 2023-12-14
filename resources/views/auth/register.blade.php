@@ -33,26 +33,33 @@
                             </span>
                         @endif
                     </div>
-
-                    <label for="email" required>E-mail</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}" required>
-                    @if ($errors->has('email'))
-                        <span class="error">
-                            {{ $errors->first('email') }}
-                        </span>
-                    @endif
-
-                    <label for="password" required>Password</label>
-                    <input id="password" type="password" name="password" required>
-                    @if ($errors->has('password'))
-                        <span class="error">
-                            {{ $errors->first('password') }}
-                        </span>
-                    @endif
-
-                    <label for="password-confirm" required>Confirm Password</label>
-                    <input id="password-confirm" type="password" name="password_confirmation" required>
-
+                    <div>
+                        <label for="email" required>E-mail</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required>
+                        @if ($errors->has('email'))
+                            <span class="error">
+                                {{ $errors->first('email') }}
+                            </span>
+                        @endif
+                    </div>
+                    <div>
+                        <label for="password" required>Password</label>
+                        <input id="password" type="password" name="password" required>
+                        @if ($errors->has('password'))
+                            <span class="error">
+                                {{ $errors->first('password') }}
+                            </span>
+                        @endif
+                    </div>
+                    <div>
+                        <label for="password-confirm" required>Confirm Password</label>
+                        <input id="password-confirm" type="password" name="password_confirmation" required>
+                        @if ($errors->has('password'))
+                            <span class="error">
+                                {{ $errors->first('password') }}
+                            </span>
+                        @endif
+                    </div>
                     <button type="submit">
                         Register
                     </button>
