@@ -1,5 +1,15 @@
-async function endVisible (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string): Promise<void> {
+import { componentAJAXHandler } from '../app'
+
+type NewElementCallback = (element: Element[]) => void
+
+async function endVisible (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string, editPage = true, callback: NewElementCallback): Promise<void> {
   const req = await fetch(`${apiUrl}?${params.toString()}`)
+  const endElement = destElement.querySelector('#page-end')
+
+  if (req.status === 204) {
+    console.log('no content left... skipping')
+    return
+  }
   if (req.status !== 200) {
     console.error('copa')
     return
@@ -10,7 +20,11 @@ async function endVisible (params: URLSearchParams, apiUrl: string, destElement:
   if (listElements.length === 0) {
     return
   }
-  destElement.append(...listElements)
+  componentAJAXHandler(listElements)
+  callback(listElements)
+  listElements.forEach((val) => {
+    destElement.insertBefore(val, endElement)
+  })
 
   let page = params.get('page')
   if (page === null) {
@@ -20,19 +34,19 @@ async function endVisible (params: URLSearchParams, apiUrl: string, destElement:
   let pageNumber = Number.parseInt(page)
   pageNumber++
   params.set('page', pageNumber.toString())
-  window.history.replaceState(null, '', '?' + params.toString())
+  if (editPage) window.history.replaceState(null, '', '?' + params.toString())
 }
 
-export function addEndObserver (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string): void {
+export function addEndObserver (params: URLSearchParams, apiUrl: string, destElement: Element, sourceSelector: string, editPage = true, callback: NewElementCallback = (e) => {}): void {
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.intersectionRatio > 0) {
-        void endVisible(params, apiUrl, destElement, sourceSelector)
+        void endVisible(params, apiUrl, destElement, sourceSelector, editPage, callback)
       }
     })
   }, {})
 
-  const element = document.querySelector('#page-end')
+  const element = destElement.querySelector('#page-end')
   if (element === null) {
     return
   }

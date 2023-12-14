@@ -40,6 +40,7 @@ button {
     font-size: 1.25rem;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
+    cursor: pointer;
 }
 
 button:hover, button:active{
@@ -74,6 +75,10 @@ button:hover, button:active{
     justify-content: space-evenly;
 }
 
+.justify-between{
+    justify-content: space-between;
+}
+
 .justify-center{
     justify-content: center;
 }
@@ -94,6 +99,8 @@ button:hover, button:active{
 
 .h-full{
     height: 100%;
+.grow-2{
+    flex-grow: 2;
 }
 
 .items-center{

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Http\Controllers\CheckoutController;
 use App\Models\Purchase;
 use App\Models\PurchaseIntent;
 use Illuminate\Bus\Queueable;
@@ -27,6 +28,7 @@ class StripeWebhookJob implements ShouldQueue
 
             return;
         }
+        $user = $purchaseIntent->user()->get()->first();
         $cart = $purchaseIntent->products()->get();
         $cartGrouped = $purchaseIntent->products()->get()->groupBy('sold_by');
         DB::beginTransaction();
@@ -44,11 +46,7 @@ class StripeWebhookJob implements ShouldQueue
             }
             $order->products()->attach($ids);
         }
-        // TODO(luisd): send notification
-        foreach ($cart as $product) {
-            $product->inCart()->detach();
-            $product->wishlist()->detach();
-        }
+        CheckoutController::removePurchaseFromOtherUsers($user, $cart);
         $purchaseIntent->delete();
         DB::commit();
     }
