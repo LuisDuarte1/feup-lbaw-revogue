@@ -19,14 +19,12 @@
         @foreach ($reviews as $review)
         @php
         $reviewDescription = $review->description;
-        $reviewerName = $review->reviewer()->get()->first()->display_name;
-        $reviewerUsername = $review->reviewer()->get()->first()->username;
-        $reviewerProfilePicture = $review->reviewer()->get()->first()->profile_image_path !== null ? "/storage/".$user->profile_image_path : '/defaultProfileImage.png';
+        $reviewer = $review->reviewer()->get()->first();
         $reviewerRating = $review->stars;
         $reviewImagePaths = $review->image_paths;
         $reviewDate = $review->sent_date->format('d/m/Y');
         @endphp
-        <x-reviewCard :reviewerName="$reviewerName" :reviewerUsername="$reviewerUsername" :reviewerPicture="$reviewerProfilePicture" :reviewerRating="$reviewerRating" :reviewDescription="$reviewDescription" :reviewImagePaths="$reviewImagePaths" :reviewDate="$reviewDate" />
+        <x-reviewCard :reviewer="$reviewer" :reviewerRating="$reviewerRating" :reviewDescription="$reviewDescription" :reviewImagePaths="$reviewImagePaths" :reviewDate="$reviewDate" />
         @endforeach
     </div>
     <div id="page-end">

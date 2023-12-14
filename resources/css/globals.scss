@@ -66,6 +66,10 @@ button:hover, button:active{
     flex-direction: column;
 }
 
+.row{
+    display: flex;
+}
+
 .justify-evenly{
     justify-content: space-evenly;
 }

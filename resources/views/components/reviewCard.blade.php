@@ -4,15 +4,15 @@
             <div class="review-card-info">
                 <div class="review-card-name">
                     <div class="review-card-displayName">
-                        {{ $reviewerName }}
+                        <a href="/profile/{{$reviewer->id}}"> {{ $reviewer->display_name }} </a>
                     </div>
                     <div class="review-card-username">
-                        {{ '@' . $reviewerUsername }}
-                    </div> 
+                        <a href="/profile/{{$reviewer->id}}"> {{ '@' . $reviewer->username }} </a>
+                    </div>
                 </div>
                 <div class="review-card-date">
                     {{ $reviewDate }}
-                </div>  
+                </div>
             </div>
         </div>
         <div class="review-card-rating">
@@ -25,9 +25,9 @@
     </div>
     <div class="review-photos">
         @foreach ($reviewImagePaths as $reviewImagePath)
-            <div class="review-photo">
-                <img class="expandable-image" src="{{ $reviewImagePath }}" alt="review image">
-            </div>
+        <div class="review-photo">
+            <img class="expandable-image" loading="lazy" src="{{ $reviewImagePath }}" alt="review image">
+        </div>
         @endforeach
     </div>
 </div>

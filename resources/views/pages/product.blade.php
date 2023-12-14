@@ -105,16 +105,14 @@
                         @foreach ($reviews as $review)
                         @php
                         $reviewDescription = $review->description;
-                        $reviewerName = $review->reviewer()->get()->first()->display_name;
-                        $reviewerUsername = $review->reviewer()->get()->first()->username;
-                        $reviewerProfilePicture = $review->reviewer()->get()->first()->profile_image_path !== null ? "/storage/".$user->profile_image_path : '/defaultProfileImage.png';
+                        $reviewer = $review->reviewer()->get()->first();
                         $reviewerRating = $review->stars;
                         $reviewImagePaths = $review->image_paths;
                         $reviewDate = $review->sent_date->format('d/m/Y');
                         @endphp
                         <div class="swiper-slide">
                             <div class="review-card-swiper">
-                            <x-reviewCard :reviewerName="$reviewerName" :reviewerUsername="$reviewerUsername" :reviewerPicture="$reviewerProfilePicture" :reviewerRating="$reviewerRating" :reviewDescription="$reviewDescription" :reviewImagePaths="$reviewImagePaths" :reviewDate="$reviewDate" />
+                                <x-reviewCard :reviewer="$reviewer" :reviewerRating="$reviewerRating" :reviewDescription="$reviewDescription" :reviewImagePaths="$reviewImagePaths" :reviewDate="$reviewDate" />
                             </div>
                         </div>
                         @endforeach
@@ -144,17 +142,8 @@
                         <div class="seller-rating">
                             @php
                             $ratings = $user->reviewed()->avg('stars');
-                            $ratingsRound = round($ratings * 2) / 2;
-                            $ratingsInt = floor($ratingsRound);
-                            $ratingsHalf = $ratingsRound - $ratingsInt;
                             @endphp
-                            @for ($i = 0; $i < $ratingsInt; $i++) <ion-icon name="star"></ion-icon>
-                                @endfor
-                                @if ($ratingsHalf > 0)
-                                <ion-icon name="star-half"></ion-icon>
-                                @endif
-                                @for ($i = 0; $i < 5 - round($ratingsRound); $i++) <ion-icon name="star-outline"></ion-icon>
-                                    @endfor
+                            <x-reviewStars :rating="$ratings" />
                         </div>
                         <div class="seller-buttons">
                             <button class="ask-question">Ask a question</button>

@@ -8,11 +8,7 @@ use Illuminate\View\Component;
 
 class reviewCard extends Component
 {
-    public $reviewerName;
-
-    public $reviewerUsername;
-
-    public $reviewerPicture;
+    public $reviewer;
 
     public $reviewerRating;
 
@@ -22,11 +18,9 @@ class reviewCard extends Component
 
     public $reviewDate;
 
-    public function __construct($reviewerName, $reviewerUsername, $reviewerPicture, $reviewerRating, $reviewDescription, $reviewImagePaths, $reviewDate)
+    public function __construct($reviewer, $reviewerRating, $reviewDescription, $reviewImagePaths, $reviewDate)
     {
-        $this->reviewerName = $reviewerName;
-        $this->reviewerUsername = $reviewerUsername;
-        $this->reviewerPicture = $reviewerPicture;
+        $this->reviewer = $reviewer;
         $this->reviewerRating = $reviewerRating;
         $this->reviewDescription = $reviewDescription;
         $this->reviewImagePaths = $reviewImagePaths;
@@ -36,9 +30,7 @@ class reviewCard extends Component
     public function render(): View|Closure|string
     {
         return view('components.reviewCard', [
-            'reviewerName' => $this->reviewerName,
-            'reviewerUsername' => $this->reviewerUsername,
-            'reviewerPicture' => $this->reviewerPicture,
+            'reviewer' => $this->reviewer,
             'reviewerRating' => $this->reviewerRating,
             'reviewDescription' => $this->reviewDescription,
             'reviewImagePaths' => $this->reviewImagePaths,
