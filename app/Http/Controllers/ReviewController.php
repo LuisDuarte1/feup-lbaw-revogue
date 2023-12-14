@@ -12,8 +12,10 @@ class ReviewController extends Controller
     {
         $orderId = $request->route('id');
         $order = Order::find($orderId);
-        if ($request->user()->cannot('create', [Review::class, $order]))
+        if ($request->user()->cannot('create', [Review::class, $order])) {
             return redirect(route('landing'))->with('error', 'You cannot review this order');
+        }
+
         return view('pages.addReview', ['order' => $order]);
     }
 
@@ -26,20 +28,19 @@ class ReviewController extends Controller
         $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'description' => 'nullable|max:255',
-            'imageToUpload' => 'nullable'
+            'imageToUpload' => 'nullable',
         ]);
-
 
         $image_paths = [];
 
         $images = $request->file('imageToUpload');
 
-        if (!is_array($images)) {
+        if (! is_array($images)) {
             $images = [$images];
         }
 
         foreach ($images as $image) {
-            $filename = '/storage/' . $image->storePublicly('review-images', ['disk' => 'public']);
+            $filename = '/storage/'.$image->storePublicly('review-images', ['disk' => 'public']);
             array_push($image_paths, $filename);
         }
 
@@ -48,12 +49,13 @@ class ReviewController extends Controller
             'description' => $validated['description'],
             'image_paths' => $image_paths,
             'reviewer' => $request->user()->id,
-            'reviewed' => $order->products()->get()->first()->sold_by
+            'reviewed' => $order->products()->get()->first()->sold_by,
         ]);
 
         //TODO: redirect to order page
         return redirect('/')->with('success', 'Review added successfully');
     }
+
     public function editReviewPage(Request $request)
     {
         $order_id = $request->route('id');
@@ -63,6 +65,7 @@ class ReviewController extends Controller
 
         return view('pages.editReview', ['order' => $order, 'review' => $review]);
     }
+
     public function editReview(Request $request)
     {
         $order_id = $request->route('id');
@@ -83,7 +86,7 @@ class ReviewController extends Controller
         $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'description' => 'nullable|max:255',
-            'imageToUpload' => 'nullable'
+            'imageToUpload' => 'nullable',
         ]);
 
         $review->stars = $validated['rating'];
@@ -94,11 +97,11 @@ class ReviewController extends Controller
         $images = $request->file('imageToUpload');
 
         if ($images != null) {
-            if (!is_array($images)) {
+            if (! is_array($images)) {
                 $images = [$images];
             }
             foreach ($images as $image) {
-                $filename = '/storage/' . $image->storePublicly('review-images', ['disk' => 'public']);
+                $filename = '/storage/'.$image->storePublicly('review-images', ['disk' => 'public']);
                 array_push($image_paths, $filename);
             }
         }

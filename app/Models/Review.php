@@ -22,7 +22,7 @@ class Review extends Model
         'image_paths',
         'description',
         'reviewer',
-        'reviewed'
+        'reviewed',
     ];
 
     protected $casts = [

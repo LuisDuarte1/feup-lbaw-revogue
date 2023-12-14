@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Models\Order;
 use App\Models\Review;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ReviewPolicy
 {
@@ -28,7 +27,7 @@ class ReviewPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user, Order|null $order): bool
+    public function create(User $user, ?Order $order): bool
     {
         if ($order === null) {
             return false;
@@ -36,6 +35,7 @@ class ReviewPolicy
         if ($order->reviewedOrder()->get()->first() !== null) {
             return false;
         }
+
         return $user->account_status === 'active';
     }
 
