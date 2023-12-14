@@ -21,6 +21,8 @@ class Review extends Model
         'stars',
         'image_paths',
         'description',
+        'reviewer',
+        'reviewed'
     ];
 
     protected $casts = [

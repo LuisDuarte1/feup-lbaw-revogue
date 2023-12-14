@@ -155,7 +155,6 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
         Route::get('/login', 'showLoginForm')->name('admin-login')->withoutMiddleware('auth:webadmin')->middleware('guest:webadmin');
         Route::post('/login', 'authenticate')->withoutMiddleware('auth:webadmin')->middleware('guest:webadmin');
         Route::get('/logout', 'logout');
-
     });
 });
 
@@ -173,12 +172,13 @@ Route::prefix('admin')->group(function () {
     Route::controller(AdminPayoutController::class)->group(function () {
         Route::get('/payouts', 'getPage')->name('admin.payouts');
     });
-
 });
 
 Route::prefix('order')->middleware(['auth:web', 'verified'])->group(function () {
-    Route::controller(ReviewController::class)->group(function () {
-        Route::get('/{id}/review/new', 'getPage')->name('review');
-        Route::post('/{id}/review/new', 'postPage');
+    Route::prefix('{id}')->group(function () {
+        Route::controller(ReviewController::class)->group(function () {
+            Route::get('/review/new', 'getPage')->name('review');
+            Route::post('/review/new', 'postPage');
+        });
     });
 });

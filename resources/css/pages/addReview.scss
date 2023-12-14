@@ -20,6 +20,9 @@
         input:not(:checked) ~ label:hover, input:not(:checked) ~ label:hover ~ label {
             color: $secondary;
         }
+        input:checked ~ label {
+            color: $secondary;
+        }
     }
 }
 
