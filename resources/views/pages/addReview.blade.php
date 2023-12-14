@@ -6,7 +6,7 @@
     <h1 class="title">Add Review</h1>
 
     <form class="add-review-form column gap-1" method="POST" class="reviewForm" enctype="multipart/form-data">
-        <h2> Rating </h2>
+        <h2 required> Rating </h2>
         <div class="row">
             <div class="rating-stars">
                 @for ($i = 5; $i > 0; $i--)
@@ -18,8 +18,9 @@
             </div>
         </div>
         <h2> Description </h2>
-        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        <textarea name="description" id="description" cols="30" rows="7"></textarea>
         <x-productPhotos :imagePaths=[] />
+        <button>Submit</button>
     </form>
 </section>
 
