@@ -23,7 +23,7 @@
         $size = $product['size'];
         $id = $product['product']->id;
         @endphp
-        <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" />
+        <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2" :condition="'Good'" />
         @endforeach
     </div>
     <div id="page-end">
