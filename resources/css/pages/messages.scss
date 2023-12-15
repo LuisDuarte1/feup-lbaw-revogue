@@ -4,7 +4,7 @@
 
 .messages-page{
     display: grid;
-    grid-template-columns: 20% auto;
+    grid-template-columns: 30% auto;
     grid-template-rows: fit-content(5rem) auto;
     gap: 2rem;
     height: 100%;
@@ -24,11 +24,14 @@
         margin-top: 0.5rem;
         grid-row: 2/2;
         grid-column: 1/1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
 
 
         .messages-tab{
             display:  flex;
-            justify-content: space-evenly;
+            justify-content: space-between;
             align-self: stretch;
             > a {
                 text-decoration: none;
@@ -54,6 +57,12 @@
                 color: $accent;
             }
         }
+    }
+
+    .message-thread-list{
+        width: 100%;
+
+
     }
 
     .message-thread-details{
@@ -87,23 +96,27 @@
         .message-thread-input{
             display: flex;
             justify-content: space-evenly;
+            gap: 2rem;
             margin: 0rem 3rem;
             align-items: center;
             width: calc(100% - #{3rem * 2});
             .text-input{
-                width: 75%;
+                flex-grow: 2;
                 position: relative;
+                box-sizing: border-box;
 
-
-                > input[type=text]{
-                    width: calc(100% - 1rem);
-                    border-radius: 2rem;
+                > textarea{
+                    width: 100%;
+                    box-sizing: border-box;
+                    border-radius: 0.5rem;
                     border: 2px $primary solid;
+                    resize: none;
+                    max-height: 6rem;
                 }
     
                 > ion-icon{
                     position: absolute;
-                    top: calc(( 2.75rem - 1.5rem)/2);
+                    top: calc(50% - 1.5rem/2);
                     right: 0.5rem;
                     font-size: 1.5rem;
                     color: $primary;

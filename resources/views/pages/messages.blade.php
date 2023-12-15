@@ -19,8 +19,10 @@
                 <a href="#" class="active">Products</a>
                 <a href="#">Orders</a>
             </div>
-            <div class="message-thread-list">
-    
+            <div class="message-thread-list column gap-1">
+                @foreach ($messageThreads as $messageThread)
+                    <x-product-message-thread :product="$messageThread"></x-product-message-thread>
+                @endforeach
             </div>
         </div>
         <div class="message-thread">
@@ -28,7 +30,7 @@
             </div>
             <div class="message-thread-input">
                 <div class="text-input">
-                    <input type="text" class="message">
+                    <textarea class="message" rows="1" wrap="hard"></textarea>
                     <ion-icon name="send"></ion-icon>
                 </div>
                 <div class="misc-buttons">

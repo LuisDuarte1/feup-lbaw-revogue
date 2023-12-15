@@ -15,6 +15,8 @@ import errorModal from './components/errorModal'
 import notificationDropdown from './components/notificationDropdown'
 import notification from './components/notification'
 import { notifications } from './pages/notifications'
+import messageTextArea from './components/messageTextArea.js'
+import productMessageThread from './components/productMessageThread.js'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -37,7 +39,9 @@ const components: ComponentList = {
   '#wishlist_button': wishlistButton,
   'meta[name="modal-error"]': errorModal,
   '#notifications-icon': notificationDropdown,
-  '.notification': notification
+  '.notification': notification,
+  'textarea.message': messageTextArea,
+  '.product-message-thread': productMessageThread
 }
 
 function pageHandler (): void {
