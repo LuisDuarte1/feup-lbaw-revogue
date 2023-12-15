@@ -33,7 +33,7 @@
             <div class="message-thread-content">
                 @if($product !== null)
                     <!--TODO: add bargain logic  -->
-                    @foreach ($messages->reverse() as $message)
+                    @foreach ($messages as $message)
                         <x-message-bubble :message="$message" :current-user="$currentUser"></x-message-bubble>
                     @endforeach
                 @endif
