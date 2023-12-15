@@ -36,6 +36,9 @@ class ReviewPolicy
             return false;
         }
 
+        if ($order->status !== 'received') {
+            return false;
+        }
         return $user->account_status === 'active';
     }
 

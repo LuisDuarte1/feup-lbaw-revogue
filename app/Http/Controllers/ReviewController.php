@@ -35,13 +35,14 @@ class ReviewController extends Controller
 
         $images = $request->file('imageToUpload');
 
-        if (! is_array($images)) {
-            $images = [$images];
-        }
-
-        foreach ($images as $image) {
-            $filename = '/storage/'.$image->storePublicly('review-images', ['disk' => 'public']);
-            array_push($image_paths, $filename);
+        if ($images != null) {
+            if (! is_array($images)) {
+                $images = [$images];
+            }
+            foreach ($images as $image) {
+                $filename = '/storage/'.$image->storePublicly('review-images', ['disk' => 'public']);
+                array_push($image_paths, $filename);
+            }
         }
 
         $review = $order->reviewedOrder()->create([
