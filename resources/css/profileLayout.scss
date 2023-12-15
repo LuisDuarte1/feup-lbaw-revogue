@@ -51,9 +51,14 @@
     .rating {
         display: flex;
         gap: 0.5rem;
-        align-items: flex-start;
+        align-items: flex-end;
         flex-shrink: 0;
         padding: 0.5rem 0rem 0rem 0rem;
+        a{
+            text-decoration: none;
+            color: $secondary;
+            font-weight: 500;
+        }
     }
 
     .rating ion-icon {

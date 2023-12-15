@@ -32,6 +32,7 @@ class ProductController extends Controller
         $category = $product->productCategory;
         $isInWishlist = false;
         $ownProduct = false;
+        $reviews = $user->reviewed()->orderBy('sent_date', 'desc')->limit(5)->get();
         if ($request->user() !== null) {
             $isInWishlist = $request->user()->wishlist()->where('id', $product_id)->exists();
             $ownProduct = $user_id === $request->user()->id;
@@ -41,7 +42,7 @@ class ProductController extends Controller
             $category = $category->parentCategory;
         }
 
-        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist, 'ownProduct' => $ownProduct]);
+        return view('pages.product', ['product' => $product, 'attributes' => $attributes, 'user' => $user, 'imagePath' => $imagePath, 'categories' => $categories, 'sold' => ProductController::isProductSold($product), 'isInWishlist' => $isInWishlist, 'ownProduct' => $ownProduct, 'reviews' => $reviews]);
     }
 
     public static function getTrendingProducts()

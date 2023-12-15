@@ -18,6 +18,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
@@ -122,6 +123,7 @@ Route::prefix('profile')->middleware(['auth:web', 'verified'])->group(function (
             Route::get('/sold', 'soldProducts');
             Route::get('/likes', 'likedProducts');
             Route::get('/history', 'historyProducts');
+            Route::get('/reviews', 'reviews');
         });
     });
 });
@@ -166,7 +168,6 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
         Route::get('/login', 'showLoginForm')->name('admin-login')->withoutMiddleware('auth:webadmin')->middleware('guest:webadmin');
         Route::post('/login', 'authenticate')->withoutMiddleware('auth:webadmin')->middleware('guest:webadmin');
         Route::get('/logout', 'logout');
-
     });
 });
 
@@ -190,5 +191,16 @@ Route::prefix('admin')->group(function () {
     Route::controller(AdminPayoutController::class)->group(function () {
         Route::get('/payouts', 'getPage')->name('admin.payouts');
     });
+});
 
+Route::prefix('orders')->middleware(['auth:web', 'verified'])->group(function () {
+    Route::prefix('{id}')->group(function () {
+        Route::controller(ReviewController::class)->group(function () {
+            Route::get('/review/new', 'getPage')->name('review');
+            Route::post('/review/new', 'postPage');
+            Route::get('/review/edit', 'editReviewPage');
+            Route::post('/review/edit', 'editReview');
+            Route::post('/review/delete', 'deleteReview');
+        });
+    });
 });

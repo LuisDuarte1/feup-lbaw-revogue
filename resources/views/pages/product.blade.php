@@ -2,7 +2,7 @@
 
 
 @section('content')
-<section class="column justify-center gap-1">
+<section class="product-layout column justify-center gap-1">
     <div class="categories">
         <p>
             <a href="/">Home</a><span class="separator">/</span>
@@ -21,14 +21,14 @@
                 <div class="swiper gallery-thumbs">
                     <div class="swiper-wrapper">
                         @foreach ($product->image_paths as $previewPhoto)
-                            <div class="swiper-slide" style='background-image:url("{{ $previewPhoto }}")'></div>
+                        <div class="swiper-slide" style='background-image:url("{{ $previewPhoto }}")'></div>
                         @endforeach
                     </div>
                 </div>
                 <div class="swiper gallery-main">
                     <div class="swiper-wrapper">
                         @foreach ($product->image_paths as $productPhoto)
-                            <div class="swiper-slide" style='background-image:url("{{ $productPhoto }}")'></div>
+                        <div class="swiper-slide" style='background-image:url("{{ $productPhoto }}")'></div>
                         @endforeach
                     </div>
                     <div class="swiper-button-next swiper-button-white"></div>
@@ -36,13 +36,13 @@
                     @if ($sold === false)
                     @if ($isInWishlist)
                     <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
-                    <ion-icon name="heart"></ion-icon>
-                    @else
-                    <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
-                        <ion-icon name="heart-outline"></ion-icon>
+                        <ion-icon name="heart"></ion-icon>
+                        @else
+                        <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
+                            <ion-icon name="heart-outline"></ion-icon>
+                            @endif
+                        </a>
                         @endif
-                    </a>
-                    @endif
                 </div>
             </div>
             <div class="product-details">
@@ -92,11 +92,29 @@
             </div>
         </div>
         <div class="layout-wrapper">
-            <div class="reviews w-full">
+            @if (count($reviews) === 0)
+            <div class="reviews-empty w-full column">
                 <h3 class="title">Reviews</h3>
-                <p>There are no reviews yet.</p>
-                <!-- TODO -->
+                <p>This user has no reviews yet.</p>
             </div>
+            @else
+            <div class="has-reviews w-full h-full">
+                <h3 class="title">Reviews:</h3>
+                <div class="has-reviews swiper scrollSwiper">
+                    <div class="swiper-wrapper">
+                        @foreach ($reviews as $review)
+                        <div class="swiper-slide">
+                            <div class="review-card-swiper">
+                                <x-reviewCard :review="$review" />
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+
+            @endif
             <div class="seller column gap-1">
                 <div class="sold-by">
                     <h3 class="title">Sold by:</h3>
@@ -115,11 +133,10 @@
                             </div>
                         </div>
                         <div class="seller-rating">
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star-half-outline"></ion-icon>
-                            <ion-icon name="star-outline"></ion-icon>
+                            @php
+                            $ratings = $user->reviewed()->avg('stars');
+                            @endphp
+                            <x-reviewStars :rating="$ratings" />
                         </div>
                         <div class="seller-buttons">
                             <button class="ask-question">Ask a question</button>

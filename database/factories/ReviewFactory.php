@@ -19,7 +19,7 @@ class ReviewFactory extends Factory
     {
         return [
             'stars' => fake()->randomFloat(1, 0, 5),
-            'image_paths' => '{}',
+            'image_paths' => ['https://picsum.photos/1020/720'],
             'description' => fake()->paragraphs(3, true),
         ];
     }
