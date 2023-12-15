@@ -6,12 +6,16 @@
     <div class="messages-page">
         <h1 class="title">Messages</h1>
         <div class="message-thread-details row justify-between">
-            <a class="username" href="#">@@username</a>
-            <div class="message-thread-details-buttons">
-                <a href="#" class="button">View Item</a>
-                <a href="#" class="button outline">Visit Shop</a>
-
-            </div>
+            @if($product !== null)
+                @php
+                    $soldBy = $product->soldBy()->get()->first()
+                @endphp
+                <a class="username" href="#">{{'@'.$soldBy->username}}</a>
+                <div class="message-thread-details-buttons">
+                    <a href="/products/{{$product->id}}" class="button">View Item</a>
+                    <a href="/profile/{{$soldBy->id}}" class="button outline">Visit Shop</a>
+                </div>
+            @endif
         </div>
         <div class="message-list column gap-2 items-center">
 
@@ -27,6 +31,12 @@
         </div>
         <div class="message-thread">
             <div class="message-thread-content">
+                @if($product !== null)
+                    <!--TODO: add bargain logic  -->
+                    @foreach ($messages->reverse() as $message)
+                        <x-message-bubble :message="$message" :current-user="$currentUser"></x-message-bubble>
+                    @endforeach
+                @endif
             </div>
             <div class="message-thread-input">
                 <div class="text-input">

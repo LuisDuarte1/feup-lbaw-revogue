@@ -32,12 +32,13 @@ class MessageController extends Controller
             $productId = $messageThreads[0];
         }
         $messages = [];
+        $product = null;
         if($productId !== null){
             $product = Product::where('id', $productId)->get()->first();
             $messages = MessageController::getMessages($request->user(), $product);
         }
 
         
-        return view('pages.messages', ['messageThreads' => $messageThreads, 'messages' => $messages]);
+        return view('pages.messages', ['messageThreads' => $messageThreads, 'messages' => $messages, 'product' => $product, 'currentUser' => $request->user()]);
     }
 }
