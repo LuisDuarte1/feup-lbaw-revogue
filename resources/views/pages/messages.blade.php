@@ -25,7 +25,10 @@
             </div>
             <div class="message-thread-list column gap-1">
                 @foreach ($messageThreads as $messageThread)
-                    <x-product-message-thread :product="$messageThread"></x-product-message-thread>
+                    @php
+                        $isActive = $product->id == $messageThread->id
+                    @endphp
+                    <x-product-message-thread :product="$messageThread" :isActive="$isActive"></x-product-message-thread>
                 @endforeach
             </div>
         </div>

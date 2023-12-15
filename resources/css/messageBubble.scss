@@ -6,6 +6,12 @@
     padding: 1rem;
     border-radius: 0.5rem;
     color: #FBFBF3;
+
+    .message-date{
+        text-align: right;
+        color: darken(#FBFBF3, 15%);
+        font-size: 0.75rem;
+    }
 }
 
 .message-bubble.sent{

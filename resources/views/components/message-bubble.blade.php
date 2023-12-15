@@ -12,4 +12,5 @@
             <p>{{$message->text_content}}</p>
         </div>
     @endif
+    <div class="message-date">{{$message->sent_date->diffForHumans(['parts' => 2])}}</div>
 </div>

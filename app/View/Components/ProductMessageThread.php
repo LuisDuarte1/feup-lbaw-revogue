@@ -18,10 +18,10 @@ class ProductMessageThread extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public Product $product)
+    public function __construct(public Product $product, public bool $isActive)
     {
         $this->soldBy = $product->soldBy()->get()->first();
-        $this->latestMessage = MessageController::getMessages(Auth::user(), $product)[0];
+        $this->latestMessage = MessageController::getMessages(Auth::user(), $product)->last();
     }
 
     /**
@@ -29,6 +29,6 @@ class ProductMessageThread extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.product-message-thread', ['soldBy' => $this->soldBy, 'latestMessage' => $this-> latestMessage, 'product' => $this->product]);
+        return view('components.product-message-thread', ['soldBy' => $this->soldBy, 'latestMessage' => $this-> latestMessage, 'product' => $this->product, 'isActive' => $this->isActive]);
     }
 }

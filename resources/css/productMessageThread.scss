@@ -45,3 +45,7 @@
 .product-message-thread:hover{
     background-color: $secondary-background;
 }
+
+.product-message-thread.thread-active{
+    background-color: darken($secondary-background, 4%);
+}

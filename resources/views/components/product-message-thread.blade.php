@@ -1,4 +1,4 @@
-<div class="product-message-thread" data-product-id="{{$product->id}}">
+<div @class(['product-message-thread', 'thread-active' => $isActive]) data-product-id="{{$product->id}}">
     <img class="profile-image" src="{{$soldBy->profile_image_path !== null ? '/storage/'.$soldBy->profile_image_path :  '/defaultProfileImage.png'}}">
     <div class="product-message-thread-details">
         <a href="/profile/{{$soldBy->id}}" class="username">{{$soldBy->username}}</a>
