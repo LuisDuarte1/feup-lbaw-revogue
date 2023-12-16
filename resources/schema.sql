@@ -164,12 +164,12 @@ CREATE TABLE MessageThread(
     "id" SERIAL PRIMARY KEY,
     "last_updated" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "last_updated" <= CURRENT_TIMESTAMP ),
     "type" MessageThreadType NOT NULL,
-    "user_1" INT,
-    "user_2" INT,
+    "user_1" INT NOT NULL,
+    "user_2" INT NOT NULL,
     "product" INT,
     "order" INT,
-    FOREIGN KEY ("user_1") REFERENCES Users("id") ON DELETE SET NULL,
-    FOREIGN KEY ("user_2") REFERENCES Users("id") ON DELETE SET NULL,
+    FOREIGN KEY ("user_1") REFERENCES Users("id") ON DELETE CASCADE,
+    FOREIGN KEY ("user_2") REFERENCES Users("id") ON DELETE CASCADE,
     CHECK ( "user_1" <> "user_2"),
     CHECK ( ("type" = 'product' AND ("product" IS NOT NULL)) OR ("type" = 'order' AND ("order" IS NOT NULL)))
 );
@@ -183,11 +183,11 @@ CREATE TABLE Messages(
     "proposed_price" NUMERIC,
     "bargain_status" BargainStatus,
     "message_thread" INT NOT NULL,
-    "from_user" INT,
-    "to_user" INT,
+    "from_user" INT NOT NULL,
+    "to_user" INT NOT NULL,
     FOREIGN KEY ("message_thread") REFERENCES MessageThread("id") ON DELETE CASCADE,
-    FOREIGN KEY ("from_user") REFERENCES Users("id") ON DELETE SET NULL,
-    FOREIGN KEY ("to_user") REFERENCES Users("id") ON DELETE SET NULL,
+    FOREIGN KEY ("from_user") REFERENCES Users("id") ON DELETE CASCADE,
+    FOREIGN KEY ("to_user") REFERENCES Users("id") ON DELETE CASCADE,
     CHECK (("message_type" = 'text' AND
             ("text_content" IS NOT NULL OR "image_path" IS NOT NULL)) OR
            ("message_type" = 'bargain' AND

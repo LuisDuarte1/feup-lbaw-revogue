@@ -1,13 +1,13 @@
 import { createFormData } from '../utils/csrf'
 
-async function sendTextMessage (text: string, productId: string): Promise<void> {
+async function sendTextMessage (text: string, threadId: string): Promise<void> {
   const messageThreadContent = document.querySelector('.message-thread-content')
   if (messageThreadContent === null) {
     throw Error("Couldn't find .message-thread-content")
   }
   const formData = createFormData()
   formData.set('text', text)
-  const req = await fetch(`/api/products/${productId}/messages`, { method: 'POST', body: formData })
+  const req = await fetch(`/api/messages/${threadId}`, { method: 'POST', body: formData })
   if (req.status !== 200) {
     // TODO(luisd): maybe show popup or toast?
     throw Error(`Couldn't send message got ${req.status}`)
@@ -24,8 +24,8 @@ async function sendTextMessage (text: string, productId: string): Promise<void> 
 
 export default function (element: Element): void {
   const messageThreadContent = document.querySelector('.message-thread-content')
-  const productId = element.getAttribute('data-product-id')
-  if (productId === null || messageThreadContent === null) {
+  const threadId = element.getAttribute('data-thread-id')
+  if (threadId === null || messageThreadContent === null) {
     throw Error("couldn't find required elements")
   }
 
@@ -48,7 +48,7 @@ export default function (element: Element): void {
   input.addEventListener('keydown', (ev) => {
     if (ev.key === 'Enter' && !ev.shiftKey) {
       ev.preventDefault()
-      void sendTextMessage(input.value, productId).then(() => {
+      void sendTextMessage(input.value, threadId).then(() => {
         input.value = ''
       })
     }
@@ -62,7 +62,7 @@ export default function (element: Element): void {
   sendIcon.addEventListener('click', (ev) => {
     ev.stopImmediatePropagation()
     ev.preventDefault()
-    void sendTextMessage(input.value, productId).then(() => {
+    void sendTextMessage(input.value, threadId).then(() => {
       input.value = ''
     })
   })

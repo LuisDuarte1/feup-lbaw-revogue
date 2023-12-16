@@ -1,9 +1,9 @@
 export default function (element: Element): void {
-  const productId = element.getAttribute('data-product-id')
-  if (productId == null) {
-    throw Error("Couldn't find product id")
+  const messageThreadId = element.getAttribute('data-message-thread-id')
+  if (messageThreadId == null) {
+    throw Error("Couldn't find message thread id")
   }
   element.addEventListener('click', () => {
-    location.href = `/messages?product=${productId}`
+    location.href = `/messages?thread=${messageThreadId}`
   })
 }

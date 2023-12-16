@@ -6,9 +6,10 @@
     <div class="messages-page">
         <h1 class="title">Messages</h1>
         <div class="message-thread-details row justify-between">
-            @if($product !== null)
+            @if($currentThread !== null)
                 @php
-                    $soldBy = $product->soldBy()->get()->first()
+                    $product = $currentThread->messageProduct()->get()->first();
+                    $soldBy = $product->soldBy()->get()->first();
                 @endphp
                 <a class="username" href="#">{{'@'.$soldBy->username}}</a>
                 <div class="message-thread-details-buttons">
@@ -26,14 +27,14 @@
             <div class="message-thread-list column gap-1">
                 @foreach ($messageThreads as $messageThread)
                     @php
-                        $isActive = $product->id == $messageThread->id
+                        $isActive = $currentThread->id == $messageThread->id
                     @endphp
-                    <x-product-message-thread :product="$messageThread" :isActive="$isActive"></x-product-message-thread>
+                    <x-product-message-thread :messageThread="$messageThread" :isActive="$isActive"></x-product-message-thread>
                 @endforeach
             </div>
         </div>
         <div class="message-thread">
-            @if($product !== null)
+            @if($currentThread !== null)
                 <div class="message-thread-content">
                     <!--TODO: add bargain logic  -->
                     @foreach ($messages->reverse() as $message)
@@ -41,7 +42,7 @@
                     @endforeach
                 </div>
                 <div class="message-thread-input">
-                    <div class="text-input" data-product-id="{{$product->id}}">
+                    <div class="text-input" data-thread-id="{{$currentThread->id}}">
                         <textarea class="message" rows="1" wrap="hard"></textarea>
                         <a href="#" class="send-icon"><ion-icon name="send"></ion-icon></a>
                     </div>

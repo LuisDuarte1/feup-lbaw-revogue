@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use App\Http\Controllers\MessageController;
 use App\Models\Message;
+use App\Models\MessageThread;
 use App\Models\Product;
 use App\Models\User;
 use Closure;
@@ -15,13 +16,15 @@ class ProductMessageThread extends Component
 {
     public User $soldBy;
     public Message $latestMessage;
+    public Product $product;
     /**
      * Create a new component instance.
      */
-    public function __construct(public Product $product, public bool $isActive)
+    public function __construct(public MessageThread $messageThread, public bool $isActive)
     {
-        $this->soldBy = $product->soldBy()->get()->first();
-        $this->latestMessage = MessageController::getMessages(Auth::user(), $product)->first();
+        $this->product = $messageThread->messageProduct()->get()->first();
+        $this->soldBy = $this->product->soldBy()->get()->first();
+        $this->latestMessage = MessageController::getMessages(Auth::user(), $messageThread)->first();
     }
 
     /**
@@ -29,6 +32,6 @@ class ProductMessageThread extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.product-message-thread', ['soldBy' => $this->soldBy, 'latestMessage' => $this-> latestMessage, 'product' => $this->product, 'isActive' => $this->isActive]);
+        return view('components.product-message-thread', ['soldBy' => $this->soldBy, 'latestMessage' => $this-> latestMessage, 'messageThread' => $this->messageThread, 'isActive' => $this->isActive, 'product' => $this->product]);
     }
 }

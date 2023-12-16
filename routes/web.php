@@ -73,12 +73,10 @@ Route::prefix('api')->group(function () {
                 });
             });
         });
-        Route::prefix('products')->group(function () {
+        Route::prefix('messages')->group(function () {
             Route::prefix('{id}')->group(function () {
-                Route::prefix('/messages')->group(function () {
-                    Route::controller(MessageController::class)->group(function () {
-                        Route::post('/', 'sendMessageAPI');
-                    });
+                Route::controller(MessageController::class)->group(function () {
+                    Route::post('/', 'sendMessageAPI');
                 });
             });
         });
@@ -119,6 +117,13 @@ Route::prefix('products')->group(function () {
         Route::get('/{id}/edit', 'editProductPage');
         Route::post('/{id}/edit', 'editProduct');
         Route::get('/', 'listProductsDate');
+    });
+    Route::prefix('{id}')->group(function () {
+        Route::prefix('/messages')->group(function () {
+            Route::controller(MessageController::class)->group(function () {
+                Route::post('/', 'createMessageThread');
+            });
+        });
     });
 });
 

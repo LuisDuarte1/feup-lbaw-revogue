@@ -30,6 +30,7 @@ class Message extends Model
         'proposed_price',
         'bargain_status',
         'to_user',
+        'from_user',
         'message_thread'
     ];
 

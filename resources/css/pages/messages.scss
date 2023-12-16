@@ -4,7 +4,7 @@
 
 .messages-page{
     display: grid;
-    grid-template-columns: 30% auto;
+    grid-template-columns: fit-content(30%) auto;
     grid-template-rows: fit-content(5rem) auto;
     gap: 2rem;
     height: 100%;
