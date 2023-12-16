@@ -30,7 +30,7 @@ class Message extends Model
         'proposed_price',
         'bargain_status',
         'to_user',
-        'subject_product'
+        'message_thread'
     ];
 
     /**
@@ -52,11 +52,6 @@ class Message extends Model
     public function toUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'to_user');
-    }
-
-    public function subjectProduct(): BelongsTo
-    {
-        return $this->belongsTo(Product::class, 'subject_product');
     }
 
     public function voucher(): HasOne

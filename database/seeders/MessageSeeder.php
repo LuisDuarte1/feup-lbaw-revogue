@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Message;
+use App\Models\MessageThread;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -24,9 +25,10 @@ class MessageSeeder extends Seeder
         $products = Product::inRandomOrder()->limit(MessageSeeder::THREAD_COUNT)->get();
 
         foreach($products as $product){
+            $messageThread = MessageThread::factory()->state(["user_1" => $chloe->id, "user_2" => $product->sold_by, 'product' => $product->id])->create();
             for($i = 0; $i < MessageSeeder::NUM_OF_MESSAGES_PER_THREAD / 2; $i++){
-                Message::factory()->state(['subject_product' => $product->id, 'from_user'=>$chloe->id, 'to_user'=>$product->sold_by])->create();
-                Message::factory()->state(['subject_product' => $product->id, 'from_user'=>$product->sold_by, 'to_user'=>$chloe->id])->create();
+                Message::factory()->state(['message_thread' => $messageThread->id, 'from_user'=>$chloe->id, 'to_user'=>$product->sold_by])->create();
+                Message::factory()->state(['message_thread' => $messageThread->id, 'from_user'=>$product->sold_by, 'to_user'=>$chloe->id])->create();
             }
         }
     }
