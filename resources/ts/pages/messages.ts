@@ -11,7 +11,7 @@ export function messages (): void {
     throw new Error("Couldn't find attribute data-thread-id")
   }
   echo
-    .channel(`messagethreads.${threadId}`)
+    .private(`messagethreads.${threadId}`)
     .listen('ProductMessageEvent', (e: any) => {
       console.log(e)
     })
