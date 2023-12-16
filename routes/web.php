@@ -20,6 +20,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
+use App\Models\Message;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,6 +70,15 @@ Route::prefix('api')->group(function () {
                     Route::post('/read', 'toggleReadNotificationAPI');
 
                     Route::post('/dismiss', 'toggleDismissNotificationAPI');
+                });
+            });
+        });
+        Route::prefix('products')->group(function () {
+            Route::prefix('{id}')->group(function () {
+                Route::prefix('/messages')->group(function () {
+                    Route::controller(MessageController::class)->group(function () {
+                        Route::post('/', 'sendMessageAPI');
+                    });
                 });
             });
         });

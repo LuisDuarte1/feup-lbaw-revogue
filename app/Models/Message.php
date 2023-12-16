@@ -14,6 +14,7 @@ class Message extends Model
     const CREATED_AT = 'sent_date';
 
     const UPDATED_AT = null;
+    protected $dateFormat = 'Y-m-d H:i:s.u';
 
     protected $primaryKey = 'id';
 
@@ -28,6 +29,8 @@ class Message extends Model
         'image_path',
         'proposed_price',
         'bargain_status',
+        'to_user',
+        'subject_product'
     ];
 
     /**

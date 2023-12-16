@@ -33,24 +33,24 @@
             </div>
         </div>
         <div class="message-thread">
-            <div class="message-thread-content">
-                @if($product !== null)
+            @if($product !== null)
+                <div class="message-thread-content">
                     <!--TODO: add bargain logic  -->
-                    @foreach ($messages as $message)
+                    @foreach ($messages->reverse() as $message)
                         <x-message-bubble :message="$message" :current-user="$currentUser"></x-message-bubble>
                     @endforeach
-                @endif
-            </div>
-            <div class="message-thread-input">
-                <div class="text-input">
-                    <textarea class="message" rows="1" wrap="hard"></textarea>
-                    <ion-icon name="send"></ion-icon>
                 </div>
-                <div class="misc-buttons">
-                    <a href="#"><ion-icon name="images"></ion-icon></a>
-                    <a href="#"><ion-icon name="diamond"></ion-icon></a>
+                <div class="message-thread-input">
+                    <div class="text-input" data-product-id="{{$product->id}}">
+                        <textarea class="message" rows="1" wrap="hard"></textarea>
+                        <a href="#" class="send-icon"><ion-icon name="send"></ion-icon></a>
+                    </div>
+                    <div class="misc-buttons">
+                        <a href="#"><ion-icon name="images"></ion-icon></a>
+                        <a href="#"><ion-icon name="diamond"></ion-icon></a>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection

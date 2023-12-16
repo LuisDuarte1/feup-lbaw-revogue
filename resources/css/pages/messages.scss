@@ -124,12 +124,15 @@
                     max-height: 6rem;
                 }
     
-                > ion-icon{
+                > .send-icon{
                     position: absolute;
                     top: calc(50% - 1.5rem/2);
                     right: 0.5rem;
                     font-size: 1.5rem;
                     color: $primary;
+                }
+                > .send-icon:hover{
+                    color: darken($primary, 10%);
                 }
             }
             .misc-buttons{
