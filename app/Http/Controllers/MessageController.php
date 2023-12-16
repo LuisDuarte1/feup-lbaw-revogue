@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProductMessageEvent;
 use App\Models\Message;
 use App\Models\MessageThread;
 use App\Models\Product;
@@ -27,7 +28,8 @@ class MessageController extends Controller
         $messageThreads = MessageController::getMessageThreads($request->user());
         $threadId = $request->query('thread');
         $messageThread = null;
-        if(!isset($threadId)){
+
+        if(!isset($threadId) && !$messageThreads->isEmpty()){
             $messageThread = $messageThreads[0];
         } else {
             $messageThread = MessageThread::where('id', $threadId)->get()->first();
@@ -68,6 +70,9 @@ class MessageController extends Controller
             'from_user' => $request->user()->id,
             'image_path' => []
         ]);
+
+        broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
+
         $messageBubble = new MessageBubble($message, $request->user());
         return $messageBubble->render();
 

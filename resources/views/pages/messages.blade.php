@@ -35,7 +35,7 @@
         </div>
         <div class="message-thread">
             @if($currentThread !== null)
-                <div class="message-thread-content">
+                <div class="message-thread-content" data-thread-id="{{$currentThread->id}}">
                     <!--TODO: add bargain logic  -->
                     @foreach ($messages->reverse() as $message)
                         <x-message-bubble :message="$message" :current-user="$currentUser"></x-message-bubble>

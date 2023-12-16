@@ -17,6 +17,7 @@ import notification from './components/notification'
 import { notifications } from './pages/notifications'
 import productMessageThread from './components/productMessageThread'
 import sendTextMessage from './components/sendTextMessage'
+import { messages } from './pages/messages.js'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -29,7 +30,8 @@ const routes: RouteList = {
   '/products/{id}': productPage,
   '/cart': cart,
   '/checkout': checkout,
-  '/notifications': notifications
+  '/notifications': notifications,
+  '/messages': messages
 }
 
 const components: ComponentList = {

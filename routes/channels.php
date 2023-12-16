@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
-Broadcast::channel('product.{productId}.messages.{userId}', MessageChannel::class);
+Broadcast::channel('messagethreads.{messageThreadId}', MessageChannel::class);

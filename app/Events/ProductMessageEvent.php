@@ -21,7 +21,7 @@ class ProductMessageEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(private User $toUser, private Product $product, private Message $message)
+    public function __construct(private User $toUser, private Message $message)
     {
         //
     }
@@ -34,7 +34,7 @@ class ProductMessageEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('product.'.$this->product->id.'.messages.'.$this->toUser->id),
+            new PrivateChannel('messagethreads.'.$this->message->message_thread),
         ];
     }
 

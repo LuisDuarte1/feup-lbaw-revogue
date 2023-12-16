@@ -3,6 +3,7 @@
 namespace App\Broadcasting;
 
 use App\Models\Message;
+use App\Models\MessageThread;
 use App\Models\Product;
 use App\Models\User;
 
@@ -19,14 +20,17 @@ class MessageChannel
     /**
      * Authenticate the user's access to the channel.
      */
-    public function join(User $user, int $productId, int $userId): array|bool
+    public function join(User $user, int $messageThreadId): array|bool
     {
-        if($user->id !== $userId){
+        $messageThread = MessageThread::where('id', $messageThreadId)->get()->first();
+        
+        if($messageThread === null){
             return false;
         }
-        //we check if there are existing messages to listen on
-        return Message::where(function ($query) use ($user) {
-            $query->where('from_user', $user->id)->orWhere('to_user', $user->id);
-        })->where('subject_product', $productId)->count() > 0;
+
+        if($messageThread->user_1 == $user->id) return true;
+        if($messageThread->user_2 == $user->id) return true;
+
+        return false;
     }
 }
