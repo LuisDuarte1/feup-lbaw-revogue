@@ -21,7 +21,7 @@ class ProductMessageThread extends Component
     public function __construct(public Product $product, public bool $isActive)
     {
         $this->soldBy = $product->soldBy()->get()->first();
-        $this->latestMessage = MessageController::getMessages(Auth::user(), $product)->last();
+        $this->latestMessage = MessageController::getMessages(Auth::user(), $product)->first();
     }
 
     /**
