@@ -9,7 +9,9 @@ use Illuminate\View\Component;
 class PurchaseCard extends Component
 {
     public $purchase;
+
     public $orders;
+
     public function __construct($purchase, $orders)
     {
         $this->purchase = $purchase;

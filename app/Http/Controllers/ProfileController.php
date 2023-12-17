@@ -30,7 +30,7 @@ class ProfileController extends Controller
         $products = $user->products()->get();
         $list = [];
         foreach ($products as $product) {
-            if (!ProductController::isProductSold($product)) {
+            if (! ProductController::isProductSold($product)) {
                 continue;
             }
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
