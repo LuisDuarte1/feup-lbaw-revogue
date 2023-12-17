@@ -1,4 +1,4 @@
-@extends('layouts.app', ['search_bar' => true])
+@extends('layouts.app', ['search_bar' => true, 'needs_full_height' => true])
 
 @section('content')
 <div class="profile-page">

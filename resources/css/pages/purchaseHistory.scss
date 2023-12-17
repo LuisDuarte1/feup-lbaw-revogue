@@ -1,5 +1,6 @@
 .purchase-history{
     padding: 2rem 0rem;
+    flex-grow: 2;
 }
 .purchase{
     background-color: rgba($secondary-background, 0.5);
@@ -151,5 +152,6 @@
 }
 
 .empty-purchase{
-    justify-self: center;
+    flex-grow: 2;
+    justify-content: center;
 }
