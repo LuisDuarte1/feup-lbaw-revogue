@@ -137,4 +137,20 @@ class ProfileController extends Controller
 
         return view('pages.profile', ['products' => $products, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'history']);
     }
+
+    public function reviews(Request $request)
+    {
+        $user = null;
+        $ownPage = false;
+        if ($request->route('id') === 'me') {
+            $user = $request->user();
+            $ownPage = true;
+        } else {
+            $user = User::where('id', $request->route('id'))->get()->first();
+        }
+        $reviews = [];
+        $reviews = $user->reviewed;
+
+        return view('pages.reviews', ['reviews' => $reviews, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'reviews']);
+    }
 }

@@ -78,6 +78,7 @@ export function productPage (): void {
       swiper: galleryThumbs
     }
   })
+
   const productId = Number.parseInt(window.location.pathname.match(/^\/products\/(.*)$/)?.at(1) ?? '-1')
   if (productId === -1) {
     console.error("Couldn't get product id")
@@ -96,4 +97,11 @@ export function productPage (): void {
       await addToCartRequest(productId)
     }
   }
+  new Swiper('.scrollSwiper', {
+    modules: [Pagination],
+    pagination: {
+      el: '.swiper-pagination',
+      dynamicBullets: true
+    }
+  })
 }

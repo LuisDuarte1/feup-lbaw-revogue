@@ -24,7 +24,7 @@ input[type="checkbox"] {
     background-color: initial;
 }
 
-label[required]:after {
+label[required]:after, h2[required]:after {
     content: "*";
     color: $secondary;
 }
@@ -112,6 +112,10 @@ a.button.outline{
     width: 100%;
 }
 
+.h-full{
+    height: 100%;
+
+}
 .grow-2{
     flex-grow: 2;
 }
@@ -172,4 +176,21 @@ input[type="radio"]:not(:disabled):checked {
             color: $secondary;
         }
     }
+}
+
+.modal-expandable-image{
+    margin: 0;
+    border-radius: 0.5rem;
+}
+
+.modal-expandable-image-container{
+    border-radius: 0.5rem;
+}
+
+.modal-expandable-image-close-button:focus{
+    box-shadow: none !important;
+}
+
+.modal-expandable-image-close-button:hover{
+    color: $background;
 }

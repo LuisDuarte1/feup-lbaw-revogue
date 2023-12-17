@@ -11,11 +11,8 @@
                 <h2> {{'@' . $username }}</h2>
             </div>
             <div class="rating">
-                <ion-icon name="star-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
+                <x-reviewStars :rating="$rating" />                
+                <a href="/profile/{{ $id }}/reviews">({{ round($rating,1) }})</a>
             </div>
         </div>
         <div class="profile-description-bottom">

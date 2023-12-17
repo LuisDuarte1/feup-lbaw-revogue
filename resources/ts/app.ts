@@ -12,6 +12,7 @@ import { searchPage } from './pages/search'
 import 'swiper/css/bundle'
 import { checkout } from './pages/checkout'
 import errorModal from './components/errorModal'
+import expandableImage from './components/expandableImage'
 import notificationDropdown from './components/notificationDropdown'
 import notification from './components/notification'
 import { notifications } from './pages/notifications'
@@ -40,6 +41,7 @@ const components: ComponentList = {
   '.upload-photos': imageUploader,
   '#wishlist_button': wishlistButton,
   'meta[name="modal-error"]': errorModal,
+  '.expandable-image': expandableImage,
   '#notifications-icon': notificationDropdown,
   '.notification': notification,
   '.message-thread-input > .text-input': sendTextMessage,

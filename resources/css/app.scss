@@ -9,6 +9,7 @@
 @import 'searchBar';
 @import 'loader';
 @import 'productPhotos';
+@import 'reviewCard';
 @import 'notifications';
 @import 'productMessageThread';
 @import 'messageBubble';
@@ -25,6 +26,8 @@
 @import 'pages/profile';
 @import 'pages/landingPage';
 @import 'pages/editProduct';
+@import 'pages/addReview';
+@import 'pages/editReview';
 @import 'pages/notificationPage';
 @import 'pages/messages';
 
@@ -33,6 +36,7 @@
 * {
     margin: 0;
     padding: 0;
+    word-break: break-all;
 }
 
 :root {
@@ -51,6 +55,7 @@ body {
 
     .main-content {
         max-height: calc(100vh - #{$page-margin*2});
+        max-width: calc(100vw - #{$page-margin*2 + $page-navbar-width + $page-gap});
         grid-column: 2;
     }
 

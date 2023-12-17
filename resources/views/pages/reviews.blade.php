@@ -15,15 +15,9 @@
         <x-profileLayout :profilePicture="$productPicture" :name="$name" :username="$username" :bio="$bio" :rating="$rating" :id="$id" />
         <x-profileNavbar :tab="$tab" :ownPage="$ownPage" :id="$id" />
     </div>
-    <div class="profile-products">
-        @foreach ($products as $product)
-        @php
-        $price = $product['product']->price;
-        $image = $product['product']->image_paths[0];
-        $size = $product['size'];
-        $id = $product['product']->id;
-        @endphp
-        <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2" :condition="'Good'" />
+    <div class="profile-reviews column gap-3">
+        @foreach ($reviews as $review)
+        <x-reviewCard :review="$review" />
         @endforeach
     </div>
     <div id="page-end">
