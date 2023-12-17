@@ -107,8 +107,12 @@
             .product-size, .product-condition, .product-price, .product-discount{
                 font-size: 0.90rem;
             }
+            .product-price, .product-discount{
+                text-align: right;
+            }
             .product-total{
                 font-weight: 500;
+                text-align: right;
             }
             .wrapper{
                 gap: 0.3rem;
