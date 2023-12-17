@@ -53,28 +53,6 @@ class ProfileController extends Controller
         return $list;
     }
 
-    /* public static function getHistoryProducts(User $user): array
-     {
-         //TODO: maybe in the future don't remove cancelled orders when the page redesigns
-         $orders = $user->orders()->where('status', '<>', 'cancelled')->latest()->get();
-         $products = [];
-         foreach ($orders as $order) {
-             $orderProducts = $order->products()->get();
-             foreach ($orderProducts as $product) {
-                 array_push($products, $product);
-             }
-         }
-
-         $list = [];
-         foreach ($products as $product) {
-             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
-             $color = $product->attributes()->where('key', 'Color')->get()->first()->value;
-             array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
-         }
-
-         return $list;
-     }*/
-
     public function sellingProducts(Request $request)
     {
         $user = null;

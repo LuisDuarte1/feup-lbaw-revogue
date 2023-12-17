@@ -30,7 +30,7 @@ DROP TYPE IF EXISTS
 
 CREATE TYPE AccountStatus AS ENUM('needsConfirmation', 'active', 'banned');
 CREATE TYPE OrderStatus AS ENUM(
-    'pendingPayment', 'requestCancellation', 'cancelled', 'pendingShipment', 'shipped', 'received'
+    'requestCancellation', 'cancelled', 'pendingShipment', 'shipped', 'received'
 );
 CREATE TYPE MessageType AS ENUM(
   'bargain',
