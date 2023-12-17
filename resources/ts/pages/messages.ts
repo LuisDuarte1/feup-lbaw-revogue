@@ -1,5 +1,6 @@
 import { componentAJAXHandler } from '../app'
 import { echo } from '../bootstrap'
+import { addEndObserver } from '../utils/infiniteScrolling'
 
 export function messages (): void {
   const messageThreadContent = document.querySelector('.message-thread-content')
@@ -29,4 +30,17 @@ export function messages (): void {
       messageThreadContent.parentElement?.scrollTo({ top: messageThreadContent.parentElement?.scrollHeight, behavior: 'instant' })
       componentAJAXHandler([bubble])
     })
+
+  const urlParams = new URLSearchParams()
+  urlParams.set('page', '2')
+  let prevHeight = 0
+  const preFetchCallback = (): void => {
+    prevHeight = messageThreadContent.parentElement?.scrollHeight ?? 0
+  }
+
+  const callback = (): void => {
+    messageThreadContent.parentElement?.scrollTo({ top: messageThreadContent.parentElement?.scrollHeight - prevHeight, behavior: 'instant' })
+    prevHeight = 0
+  }
+  addEndObserver(urlParams, `/api/messages/${threadId}`, messageThreadContent, '.message-bubble', { editPage: false, prepend: true, reverse: true, preFetchCallback, callback })
 }

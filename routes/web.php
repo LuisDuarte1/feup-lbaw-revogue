@@ -78,6 +78,8 @@ Route::prefix('api')->group(function () {
             Route::prefix('{id}')->group(function () {
                 Route::controller(MessageController::class)->group(function () {
                     Route::post('/', 'sendMessageAPI');
+                    Route::get('/', 'getMessagesAPI');
+
                 });
             });
         });

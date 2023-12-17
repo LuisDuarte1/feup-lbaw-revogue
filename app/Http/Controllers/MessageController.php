@@ -24,6 +24,19 @@ class MessageController extends Controller
             $query->where('user_1', $user->id)->orWhere('user_2', $user->id);})->where('type', 'product')->orderBy('last_updated', 'DESC')->get();
     }
 
+    public function getMessagesAPI(Request $request){
+        $threadId = $request->route('id');
+        $messageThread = MessageThread::where('id', $threadId)->get()->first();
+        if($messageThread === null){
+            return response()->json(['error' => 'cannot find thread id'], 404);
+        }
+        //TODO (luisd): check if it can see message thread with policy
+
+        $messages = MessageController::getMessages($request->user(), $messageThread);
+
+        return view('api.messageList', ['messages' => $messages, 'currentUser'=>$request->user()]);
+    }
+
     public function getPage(Request $request){
         $messageThreads = MessageController::getMessageThreads($request->user());
         $threadId = $request->query('thread');

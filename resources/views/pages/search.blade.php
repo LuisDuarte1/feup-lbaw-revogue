@@ -11,7 +11,8 @@
     @endphp
     <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :condition="'new'" :shipping="2" />
     @endforeach
+    <div id="page-end">
+    </div>
 </div>
-<div id="page-end">
-</div>
+
 @endsection

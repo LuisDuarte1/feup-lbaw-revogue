@@ -2,7 +2,7 @@ import { echo } from '../bootstrap'
 
 export async function fetchWithSocketInformation (url: string, requestInfo?: RequestInit | undefined): Promise<Response> {
   if (requestInfo === undefined) {
-    const normalRequestInfo: RequestInit = { headers: new Headers({ 'X-Socker-ID': echo.socketId() }) }
+    const normalRequestInfo: RequestInit = { headers: new Headers({ 'X-Socket-ID': echo.socketId() }) }
     return fetch(url, normalRequestInfo)
   }
   if (requestInfo.headers === undefined) {
