@@ -126,3 +126,12 @@
 .received{
     color: $toast-green;
 }
+
+.profile-link{
+    text-decoration: none;
+    color: $text-color;
+    &:hover{
+        color: rgba($text-color, 0.7);
+        transition: ease-in-out 0.2s;
+    }
+}

@@ -49,8 +49,10 @@
                             <div class="row items-center">
                                 <img src="/defaultProfileImage.png" class="profile-picture">
                                 <div class="order-user">
-                                    <div class="display-name">{{$seller->display_name}}</div>
-                                    <div class="username">{{'@' . $seller->username}}</div>
+                                    <a href="/profile/{{$seller->id}}" class="profile-link">
+                                        <div class="display-name">{{$seller->display_name}}</div>
+                                        <div class="username">{{'@' . $seller->username}}</div>
+                                    </a>
                                 </div>
                             </div>
                             <div class="order-status row items-center">
@@ -68,12 +70,16 @@
                             </div>
                         </div>
                         <div class="row gap-1 items-center">
-                            <div class="review-button">
+                            @if ($status === 'received')
+                            <a href="/orders/{{$order->id}}/review/new" class="review-button">
                                 <button>Review</button>
-                            </div>
+                            </a>
+                            @endif
+                            @if ($status === 'pendingShipment')
                             <div class="cancel-button">
                                 <button>Cancel</button>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="order-products column gap-1">

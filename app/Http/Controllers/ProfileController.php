@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class ProfileController extends Controller
         $products = $user->products()->get();
         $list = [];
         foreach ($products as $product) {
-            if (! ProductController::isProductSold($product)) {
+            if (!ProductController::isProductSold($product)) {
                 continue;
             }
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
@@ -100,9 +101,11 @@ class ProfileController extends Controller
 
     public static function getPurchases(User $user)
     {
-        $orders = $user->orders()->get()->groupBy('purchase');
+        $purchases = $user->orders()->get()->groupBy('purchase')->sortByDesc(function ($orders, $key) {
+            return Purchase::where('id', $key)->get()->first()->creation_date;
+        });
 
-        return $orders;
+        return $purchases;
     }
 
     public function historyProducts(Request $request)
