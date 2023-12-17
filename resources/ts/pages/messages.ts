@@ -1,3 +1,4 @@
+import { componentAJAXHandler } from '../app'
 import { echo } from '../bootstrap'
 
 export function messages (): void {
@@ -26,5 +27,6 @@ export function messages (): void {
       console.log(bubble)
       messageThreadContent.append(bubble)
       messageThreadContent.parentElement?.scrollTo({ top: messageThreadContent.parentElement?.scrollHeight, behavior: 'instant' })
+      componentAJAXHandler([bubble])
     })
 }

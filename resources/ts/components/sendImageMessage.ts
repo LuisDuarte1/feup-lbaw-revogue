@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2'
 import { createFormData } from '../utils/csrf'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
+import { componentAJAXHandler } from '../app'
 
 interface SendImageFormResult {
   image: File
@@ -115,6 +116,7 @@ export default function (element: HTMLElement): void {
       }
       messageThreadContent.append(element)
       messageThreadContent.parentElement?.scrollTo({ top: messageThreadContent.parentElement?.scrollHeight, behavior: 'instant' })
+      componentAJAXHandler([element])
     }
   })
 }

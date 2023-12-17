@@ -1,3 +1,4 @@
+import { componentAJAXHandler } from '../app'
 import { createFormData } from '../utils/csrf'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
 
@@ -21,6 +22,7 @@ async function sendTextMessage (text: string, threadId: string): Promise<void> {
   }
   messageThreadContent.append(element)
   messageThreadContent.parentElement?.scrollTo({ top: messageThreadContent.parentElement?.scrollHeight, behavior: 'instant' })
+  componentAJAXHandler([element])
 }
 
 export default function (element: Element): void {
