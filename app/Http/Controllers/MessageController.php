@@ -57,6 +57,20 @@ class MessageController extends Controller
     }
 
     public function sendBargainAPI(Request $request){
+        $threadId = $request->route('id');
+        $messageThread = MessageThread::where('id', $threadId)->get()->first();
+        if($messageThread === null){
+            return response()->json(['error' => 'Message thread does not exist'], 404);
+        }
+        $otherUser = null;
+        if($messageThread->user_1 === $request->user()->id){
+            $otherUser = $messageThread->user_2;
+        } else if ($messageThread->user_2 === $request->user()->id) {
+            $otherUser = $messageThread->user_1;
+        } else {
+            return response()->json(['error' => 'This message thread does not belong to you'], 403);
+        }
+
         
     }
 

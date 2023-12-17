@@ -1,5 +1,4 @@
-@extends('layouts.app', ['search_bar' => "true"])
-
+@extends('layouts.app', ['search_bar' => true])
 
 @section('content')
 <div class="profile-page">
@@ -15,11 +14,20 @@
         <x-profileLayout :profilePicture="$productPicture" :name="$name" :username="$username" :bio="$bio" :rating="$rating" :id="$id" />
         <x-profileNavbar :tab="$tab" :ownPage="$ownPage" :id="$id" />
     </div>
-    <div class="profile-reviews column gap-3">
-        @foreach ($reviews as $review)
-        <x-reviewCard :review="$review" />
-        @endforeach
-        <div id="page-end">
+    <div class="purchase-history column gap-3">
+        @if (count($purchases) === 0)
+        <div class="empty-purchase column items-center gap-3">
+            <img src="/empty_purchase.svg" width="500">
+            <div class="column items-center gap-1">
+                <p>You still haven't made any purchases yet.</p>
+                <a href="/products" class="shop-button">Shop</a>
+            </div>
         </div>
+        @else
+        @foreach ($purchases as $purchase=>$orders)
+        <x-purchaseCard :purchase="$purchase" :orders="$orders" />
+        @endforeach
+        <div id="page-end"></div>
+        @endif
     </div>
 @endsection
