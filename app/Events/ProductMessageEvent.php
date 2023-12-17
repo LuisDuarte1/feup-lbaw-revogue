@@ -16,7 +16,7 @@ use Illuminate\Queue\SerializesModels;
 
 class ProductMessageEvent implements ShouldBroadcast
 {
-    use SerializesModels;
+    use SerializesModels, InteractsWithSockets;
 
     /**
      * Create a new event instance.
@@ -41,6 +41,7 @@ class ProductMessageEvent implements ShouldBroadcast
     public function broadcastWith(): array
     {   
         $messageBubble = new MessageBubble($this->message, $this->toUser);
-        return ['content' => $messageBubble->render()]; 
+        $content = $messageBubble->render();
+        return ['content' => $content->render()]; 
     }
 }

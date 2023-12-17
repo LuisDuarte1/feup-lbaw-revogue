@@ -13,6 +13,18 @@ export function messages (): void {
   echo
     .private(`messagethreads.${threadId}`)
     .listen('ProductMessageEvent', (e: any) => {
-      console.log(e)
+      const content: string | undefined = e.content
+      if (content === undefined) {
+        throw Error("Couldn't find event content")
+      }
+      const html = document.createElement('html')
+      html.innerHTML = content
+      const bubble = html.querySelector('.message-bubble')
+      if (bubble === null) {
+        return Error("Event didn't return a message bubble")
+      }
+      console.log(bubble)
+      messageThreadContent.append(bubble)
+      messageThreadContent.parentElement?.scrollTo({ top: messageThreadContent.parentElement?.scrollHeight, behavior: 'instant' })
     })
 }
