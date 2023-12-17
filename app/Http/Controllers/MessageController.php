@@ -71,7 +71,6 @@ class MessageController extends Controller
             return response()->json(['error' => 'This message thread does not belong to you'], 403);
         }
 
-        
     }
 
     public function sendMessageAPI(Request $request){
