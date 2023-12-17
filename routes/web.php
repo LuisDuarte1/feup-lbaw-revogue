@@ -221,7 +221,7 @@ Route::prefix('orders')->middleware(['auth:web', 'verified'])->group(function ()
     });
 });
 
-Route::prefix('messages')->group(function () {
+Route::prefix('messages')->middleware(['auth:web', 'verified'])->group(function () {
     Route::controller(MessageController::class)->group(function () {
         Route::get('/', 'getPage');
     });

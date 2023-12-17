@@ -2,6 +2,9 @@
 
 .message-bubble{
     width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     max-width: 66%;
     padding: 1rem;
     border-radius: 0.5rem;
@@ -12,11 +15,23 @@
         color: darken(#FBFBF3, 15%);
         font-size: 0.75rem;
     }
+
+    .message-image{
+        max-height: 15rem;
+        border-radius: 0.5rem;
+    }
+}
+
+.message-bubble.has-photo{
+    padding: 0.5rem;
 }
 
 .message-bubble.sent{
     align-self: flex-end;
     background-color: $secondary;
+    .message-text-content > p{
+        text-align: left;
+    }
 }
 
 .message-bubble.received{

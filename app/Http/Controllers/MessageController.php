@@ -60,15 +60,27 @@ class MessageController extends Controller
 
         //TODO: add also image
         $request->validate([
-            'text' => 'required|max:10000'
+            'text' => 'nullable|max:10000',
+            'image' => 'nullable|image'
         ]);
+
+        if($request->input('text') === null && $request->file('image') === null){
+            return response()->json(['error' => 'Image and text cannot both be null'], 400);
+        }
+
+        $imagePath = null;
+        if($request->file('image') !== null){
+            $file = $request->file('image');
+            $imagePath = '/storage/'.$file->storePublicly('message-images', ['disk' => 'public']);
+
+        }
 
         $message = $messageThread->messages()->create([
             'message_type' => 'text',
-            'text_content' => $request->text,
+            'text_content' => $request->input('text'),
             'to_user' => $otherUser,
             'from_user' => $request->user()->id,
-            'image_path' => []
+            'image_path' => $imagePath
         ]);
 
         broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
@@ -101,7 +113,7 @@ class MessageController extends Controller
             'text_content' => $request->text,
             'to_user' => $product->sold_by,
             'from_user' => $request->user()->id,
-            'image_path' => []
+            'image_path' => null
         ]);
 
         return redirect('/messages?thread='.$messageThread->id);

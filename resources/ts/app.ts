@@ -19,6 +19,7 @@ import { notifications } from './pages/notifications'
 import productMessageThread from './components/productMessageThread'
 import sendTextMessage from './components/sendTextMessage'
 import { messages } from './pages/messages.js'
+import sendImageMessage from './components/sendImageMessage.js'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -45,7 +46,8 @@ const components: ComponentList = {
   '#notifications-icon': notificationDropdown,
   '.notification': notification,
   '.message-thread-input > .text-input': sendTextMessage,
-  '.product-message-thread': productMessageThread
+  '.product-message-thread': productMessageThread,
+  '.send-image-message': sendImageMessage
 }
 
 function pageHandler (): void {

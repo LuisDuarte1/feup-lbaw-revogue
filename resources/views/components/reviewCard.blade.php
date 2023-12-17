@@ -3,7 +3,7 @@ $reviewDescription = $review->description;
 $reviewer = $review->reviewer()->get()->first();
 $reviewerRating = $review->stars;
 $reviewImagePaths = $review->image_paths;
-$reviewDate = $review->sent_date->format('d/m/Y');
+$reviewDate = $review->sent_date->diffForHumans();
 $order = $review->reviewedOrder()->get()->first();
 @endphp
 <div class="review-card">

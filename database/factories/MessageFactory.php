@@ -20,7 +20,7 @@ class MessageFactory extends Factory
         return [
             'message_type' => fake()->randomElement(['text']),
             'text_content' => fake()->text(),
-            'image_path' => [], //TODO: revise this part
+            'image_path' => null, //TODO: revise this part
         ];
     }
 

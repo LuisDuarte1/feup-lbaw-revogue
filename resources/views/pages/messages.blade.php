@@ -47,7 +47,7 @@
                         <a href="#" class="send-icon"><ion-icon name="send"></ion-icon></a>
                     </div>
                     <div class="misc-buttons">
-                        <a href="#"><ion-icon name="images"></ion-icon></a>
+                        <a href="#" class="send-image-message"><ion-icon name="images"></ion-icon></a>
                         <a href="#"><ion-icon name="diamond"></ion-icon></a>
                     </div>
                 </div>
