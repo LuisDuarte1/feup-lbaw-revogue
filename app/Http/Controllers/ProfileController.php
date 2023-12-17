@@ -135,7 +135,7 @@ class ProfileController extends Controller
         }
         $products = ProfileController::getHistoryProducts($user);
 
-        return view('pages.profile', ['products' => $products, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'history']);
+        return view('pages.productHistory', ['products' => $products, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'history']);
     }
 
     public function reviews(Request $request)

@@ -19,7 +19,7 @@
         @foreach ($reviews as $review)
         <x-reviewCard :review="$review" />
         @endforeach
+        <div id="page-end">
+        </div>
     </div>
-    <div id="page-end">
-    </div>
-    @endsection
+@endsection
