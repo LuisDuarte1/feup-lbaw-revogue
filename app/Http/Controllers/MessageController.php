@@ -56,6 +56,10 @@ class MessageController extends Controller
         return view('pages.messages', ['messageThreads' => $messageThreads, 'messages' => $messages, 'currentThread' => $messageThread, 'currentUser' => $request->user()]);
     }
 
+    public function sendBargainAPI(Request $request){
+        
+    }
+
     public function sendMessageAPI(Request $request){
         $threadId = $request->route('id');
         $messageThread = MessageThread::where('id', $threadId)->get()->first();

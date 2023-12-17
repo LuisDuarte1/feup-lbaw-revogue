@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS
     Categories,
     Jobs,
     MessageThread,
+    Bargains,
     "failed_jobs",
     Payouts CASCADE;
 
@@ -174,35 +175,44 @@ CREATE TABLE MessageThread(
     CHECK ( ("type" = 'product' AND ("product" IS NOT NULL)) OR ("type" = 'order' AND ("order" IS NOT NULL)))
 );
 
+CREATE TABLE Bargains(
+    "id" SERIAL PRIMARY KEY,
+    "created_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "created_date" <= CURRENT_TIMESTAMP ),
+    "bargain_status" BargainStatus NOT NULL,
+    "proposed_price" NUMERIC NOT NULL,
+    "product" INT NOT NULL,
+    FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE
+);
+
 CREATE TABLE Messages(
     "id" SERIAL PRIMARY KEY,
     "sent_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "sent_date" <= CURRENT_TIMESTAMP ),
     "message_type" MessageType NOT NULL,
     "text_content" TEXT,
     "image_path" TEXT,
-    "proposed_price" NUMERIC,
-    "bargain_status" BargainStatus,
+    "bargain" INT,
     "message_thread" INT NOT NULL,
     "from_user" INT NOT NULL,
     "to_user" INT NOT NULL,
     FOREIGN KEY ("message_thread") REFERENCES MessageThread("id") ON DELETE CASCADE,
+    FOREIGN KEY ("bargain") REFERENCES Bargains("id") ON DELETE CASCADE,
     FOREIGN KEY ("from_user") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("to_user") REFERENCES Users("id") ON DELETE CASCADE,
     CHECK (("message_type" = 'text' AND
             ("text_content" IS NOT NULL OR "image_path" IS NOT NULL)) OR
            ("message_type" = 'bargain' AND
-            ("bargain_status" IS NOT NULL AND "proposed_price" IS NOT NULL AND "proposed_price" >= 0))
-        )
+            ("bargain" IS NOT NULL)
+        ))
 );
 
 CREATE TABLE Vouchers(
     "code" TEXT PRIMARY KEY,
     "belongs_to" INT NOT NULL,
     "product" INT NOT NULL,
-    "bargain_message" INT NOT NULL,
+    "bargain" INT NOT NULL,
     FOREIGN KEY ("belongs_to") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE,
-    FOREIGN KEY ("bargain_message") REFERENCES Messages("id") ON DELETE CASCADE
+    FOREIGN KEY ("bargain") REFERENCES Bargains("id") ON DELETE CASCADE
 );
 
 CREATE TABLE Reviews(
@@ -401,7 +411,7 @@ CREATE INDEX product_search ON Products USING GIN(fts_search);
 
 CREATE OR REPLACE FUNCTION has_accepted_bargain() RETURNS TRIGGER AS $$
 BEGIN
-   IF (SELECT "bargain_status" FROM Messages WHERE "id"=NEW."bargain_message") <> 'accepted' THEN
+   IF (SELECT "bargain_status" FROM Bargains WHERE "id"=NEW."bargain") <> 'accepted' THEN
         RAISE EXCEPTION 'Invalid bargain message status...';
    end if;
    RETURN NEW;
@@ -501,15 +511,15 @@ CREATE TRIGGER bargain_message_order_status_validity BEFORE INSERT OR UPDATE ON 
 
 CREATE OR REPLACE FUNCTION bargain_message_price_validity() RETURNS TRIGGER AS $$
 BEGIN
-    IF (SELECT "price" FROM Products WHERE "id"=(SELECT MessageThread."product" FROM MessageThread  WHERE NEW.message_thread=id)) <= NEW."proposed_price" THEN
+    IF (SELECT "price" FROM Products WHERE "id"=NEW.product) <= NEW."proposed_price" THEN
         RAISE EXCEPTION 'You cant bargain a higher price than the current price of the product';
     END IF;
     RETURN NEW;
 END
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS bargain_message_price_valid ON Messages;
-CREATE TRIGGER bargain_message_priceV_valid BEFORE INSERT OR UPDATE ON Messages
+DROP TRIGGER IF EXISTS bargain_message_price_valid ON Bargains;
+CREATE TRIGGER bargain_message_priceV_valid BEFORE INSERT OR UPDATE ON Bargains
     FOR EACH ROW EXECUTE PROCEDURE bargain_message_price_validity();
 
 -- trigger08

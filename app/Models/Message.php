@@ -27,11 +27,10 @@ class Message extends Model
         'message_type',
         'text_content',
         'image_path',
-        'proposed_price',
-        'bargain_status',
         'to_user',
         'from_user',
-        'message_thread'
+        'message_thread',    
+        'bargain'
     ];
 
     /**
@@ -55,11 +54,6 @@ class Message extends Model
         return $this->belongsTo(User::class, 'to_user');
     }
 
-    public function voucher(): HasOne
-    {
-        return $this->hasOne(Voucher::class, 'bargain_message');
-    }
-
     public function notification(): HasOne
     {
         return $this->hasOne(Notification::class, 'message');
@@ -68,6 +62,11 @@ class Message extends Model
     public function messageReport(): BelongsTo
     {
         return $this->belongsTo(Report::class, 'message');
+    }
+
+    public function associatedBargain(): BelongsTo
+    {
+        return $this->belongsTo(Bargain::class, 'bargain');
     }
 
     /**

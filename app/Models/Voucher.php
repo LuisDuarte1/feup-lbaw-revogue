@@ -19,7 +19,10 @@ class Voucher extends Model
      */
     protected $fillable = [
         'code',
-
+        'belongs_to',
+        'product',
+        'bargain',
+        'applied_voucher',
     ];
 
     /**
@@ -43,7 +46,7 @@ class Voucher extends Model
 
     public function bargainMessage(): BelongsTo
     {
-        return $this->BelongsTo(Message::class, 'bargain_message');
+        return $this->belongsTo(Bargain::class, 'bargain');
     }
 
     public function appliedVoucher(): HasOne
