@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -43,28 +44,6 @@ class ProfileController extends Controller
     public static function getLikedProducts(User $user, $pageSize = 20): array
     {
         $products = $user->wishlist()->get();
-        $list = [];
-        foreach ($products as $product) {
-            $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
-            $color = $product->attributes()->where('key', 'Color')->get()->first()->value;
-            array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
-        }
-
-        return $list;
-    }
-
-    public static function getHistoryProducts(User $user): array
-    {
-        //TODO: maybe in the future don't remove cancelled orders when the page redesigns
-        $orders = $user->orders()->where('status', '<>', 'cancelled')->latest()->get();
-        $products = [];
-        foreach ($orders as $order) {
-            $orderProducts = $order->products()->get();
-            foreach ($orderProducts as $product) {
-                array_push($products, $product);
-            }
-        }
-
         $list = [];
         foreach ($products as $product) {
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
@@ -120,6 +99,15 @@ class ProfileController extends Controller
         return view('pages.profile', ['products' => $products, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'likes']);
     }
 
+    public static function getPurchases(User $user)
+    {
+        $purchases = $user->orders()->get()->groupBy('purchase')->sortByDesc(function ($orders, $key) {
+            return Purchase::where('id', $key)->get()->first()->creation_date;
+        });
+
+        return $purchases;
+    }
+
     public function historyProducts(Request $request)
     {
         $user = null;
@@ -133,9 +121,9 @@ class ProfileController extends Controller
         if ($user->id !== $request->user()->id) {
             return redirect('/', 403);
         }
-        $products = ProfileController::getHistoryProducts($user);
+        $purchases = ProfileController::getPurchases($user);
 
-        return view('pages.profile', ['products' => $products, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'history']);
+        return view('pages.purchaseHistory', ['purchases' => $purchases, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'history']);
     }
 
     public function reviews(Request $request)

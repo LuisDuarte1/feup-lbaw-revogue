@@ -53,8 +53,7 @@ class ReviewController extends Controller
             'reviewed' => $order->products()->get()->first()->sold_by,
         ]);
 
-        //TODO: redirect to order page
-        return redirect('/')->with('success', 'Review added successfully');
+        return redirect('/profile/me/history')->with('success', 'Review added successfully');
     }
 
     public function editReviewPage(Request $request)

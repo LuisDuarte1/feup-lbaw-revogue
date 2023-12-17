@@ -1,0 +1,155 @@
+.purchase-history{
+    padding: 2rem 0rem;
+}
+.purchase{
+    background-color: rgba($secondary-background, 0.5);
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    position: relative;
+    padding: 1rem 2rem;
+
+    .purchase-header{
+        justify-content: space-between;
+    }
+    .purchase-title{
+        color: $primary;
+    }
+    .purchase-order{
+        border-radius: 0.5rem;
+        background-color: rgba($background, 0.6);
+        padding: 1.5rem;
+        box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
+
+    }
+    .purchase-price{
+        font-weight: 500;
+    }
+    .purchase-date{
+        font-size: 0.85rem;
+        margin-top: 0.2rem;
+    }
+}
+.purchase::before{
+    content: "";
+    top: 50%;
+    left: 0;
+    width: 0.7rem;
+    height: 100%;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    background-color: $primary;
+    transform: translateY(-50%);
+    position: absolute;
+}
+
+.order-header{
+    justify-content: space-between;
+    .profile-picture{
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.5rem;
+        margin-right: 1rem;
+    }
+}
+
+.review-button, .cancel-button{
+    button{
+        height: 2rem;
+        font-size: 1rem;
+    }
+}
+.cancel-button{
+    button{
+        background-color: $button-text-color;
+        color: $background;
+    }
+    button:hover{
+        background-color: #444c63;
+    }
+}
+
+.order-user{
+    .username{
+        font-size: 0.9rem;
+    }
+
+}
+
+.order-status{
+    gap: 0.5rem;
+}
+
+.sent{
+    color: $toast-green;
+}
+
+.order-products{
+    .order-product{
+        text-decoration: none;
+        color: $text-color;
+        .product-image{
+            width: 5rem;
+            height: auto;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                aspect-ratio: 1/1;
+                border-radius: 0.5rem;
+            }
+        }
+        .product-info{
+            justify-content: space-between;
+            flex: 1;
+            .product-name{
+                font-weight: 500;
+            }
+            .product-size, .product-condition, .product-price, .product-discount{
+                font-size: 0.90rem;
+            }
+            .product-total{
+                font-weight: 500;
+            }
+            .wrapper{
+                gap: 0.3rem;
+            }
+        }
+    }
+}
+ .shipped, .pendingShipment{
+    color: $toast-yellow;
+}
+.cancelled, .requestCancellation{
+    color: $toast-red;
+}
+
+.received{
+    color: $toast-green;
+}
+
+.profile-link{
+    text-decoration: none;
+    color: $text-color;
+    &:hover{
+        color: rgba($text-color, 0.7);
+        transition: ease-in-out 0.2s;
+    }
+}
+
+.shop-button{
+    background-color: $button-text-color;
+    border-radius: 0.5rem;
+    padding: 0.5rem 2rem;
+    width: 30%;
+    text-decoration: none;
+    text-align: center;
+    color: $background;
+    &:hover{
+        background-color: #444c63;
+        transition: ease-in-out 0.2s;
+    }
+}
+
+.empty-purchase{
+    justify-self: center;
+}
