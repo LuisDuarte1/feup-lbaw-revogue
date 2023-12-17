@@ -135,3 +135,21 @@
         transition: ease-in-out 0.2s;
     }
 }
+
+.shop-button{
+    background-color: $button-text-color;
+    border-radius: 0.5rem;
+    padding: 0.5rem 2rem;
+    width: 30%;
+    text-decoration: none;
+    text-align: center;
+    color: $background;
+    &:hover{
+        background-color: #444c63;
+        transition: ease-in-out 0.2s;
+    }
+}
+
+.empty-purchase{
+    justify-self: center;
+}

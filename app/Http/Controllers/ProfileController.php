@@ -123,7 +123,7 @@ class ProfileController extends Controller
         }
         $purchases = ProfileController::getPurchases($user);
 
-        return view('pages.productHistory', ['purchases' => $purchases, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'history']);
+        return view('pages.purchaseHistory', ['purchases' => $purchases, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'history']);
     }
 
     public function reviews(Request $request)
