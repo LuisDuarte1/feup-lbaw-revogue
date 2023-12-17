@@ -85,6 +85,8 @@
 
 .order-products{
     .order-product{
+        text-decoration: none;
+        color: $text-color;
         .product-image{
             width: 5rem;
             height: auto;
@@ -113,4 +115,14 @@
             }
         }
     }
+}
+.pendingPayment, .shipped, .pendingShipment{
+    color: $toast-yellow;
+}
+.cancelled, .requestCancellation{
+    color: $toast-red;
+}
+
+.received{
+    color: $toast-green;
 }
