@@ -52,7 +52,7 @@ $total = $total + $product->price - $product->pivot->discount;
                     </div>
                 </div>
                 <div class="row gap-1 items-center">
-                    @if ($status === 'received')
+                    @if ($status === 'received' && $order->reviewedOrder === null)
                     <a href="/orders/{{$order->id}}/review/new" class="review-button">
                         <button>Review</button>
                     </a>
