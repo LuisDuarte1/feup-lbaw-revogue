@@ -56,6 +56,7 @@
 
         <a href="{{ route('cart') }}">
             <ion-icon name="cart"></ion-icon>
+            <span class="cart-badge" style="font-size:24px" value={{ $cartCount }}></span>
         </a>
     </div>
 </nav>
