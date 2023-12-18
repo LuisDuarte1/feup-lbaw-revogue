@@ -25,21 +25,15 @@
 
                         <div class="old-password">
                             <label for="oldPasswordInput" class="form-label">Old Password</label>
-                            <input name="old_password" type="password"
-                                class="form-control @error('old_password') is-invalid @enderror" id="oldPasswordInput"
+                            <input name="old_password" type="password" class="form-control" id="oldPasswordInput"
                                 placeholder="Old Password">
-                            @error('old_password')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
                         </div>
                         <div class="new-password">
                             <label for="newPasswordInput" class="form-label">New Password</label>
-                            <input name="new_password" type="password"
-                                class="form-control @error('new_password') is-invalid @enderror" id="newPasswordInput"
+                            <input name="new_password" type="password" class="form-control" id="newPasswordInput"
                                 placeholder="New Password">
-                            @error('new_password')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
                         </div>
                         <div class="confirm-new-password">
                             <label for="confirmNewPasswordInput" class="form-label">Confirm New Password</label>
@@ -60,8 +54,7 @@
                 <form method="POST" action="{{ route('settings.general.delete') }}" class="editForm">
                     @csrf
                     <label for="password" class="form-label">Password</label>
-                    <input name="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                        id="password" placeholder="Password">
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Password">
                     <button class="btn btn-xs btn-danger delete-user">
                         <i class="glyphicon glyphicon-trash"></i> Delete Account
                     </button>

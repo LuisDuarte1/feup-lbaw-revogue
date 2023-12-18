@@ -36,29 +36,17 @@
                         <label for="zip-code" required>Zip or postal code</label>
                         <input type="text" name="zip-code" id="zip-code"
                             value="{{ old('zip-code', $settings['zip-code']) }}">
-                        @if ($errors->has('zip-code'))
-                            <span class="error">
-                                {{ $errors->first('zip-code') }}
-                            </span>
-                        @endif
+
                     </div>
                     <div class="phone">
                         <label for="phone">Phone number</label>
                         <input type="text" name="phone" id="phone" value="{{ old('phone', $settings['phone']) }}">
-                        @if ($errors->has('phone'))
-                            <span class="error">
-                                {{ $errors->first('phone') }}
-                            </span>
-                        @endif
+
                     </div>
                     <div class="email">
                         <label for="email" required>Email</label>
                         <input type="text" name="email" id="email" value="{{ old('email', $settings['email']) }}">
-                        @if ($errors->has('email'))
-                            <span class="error">
-                                {{ $errors->first('email') }}
-                            </span>
-                        @endif
+
                     </div>
                     <button class="submit-button"type="submit">Save</button>
         </form>

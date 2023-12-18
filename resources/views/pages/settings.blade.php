@@ -17,53 +17,33 @@
                     <div class="bank_name">
                         <label for="bank_name" required>Bank Name</label>
                         <input type="text" name="bank_name" id="bank_name" value={{ $settings['bank_name'] }}>
-                        @if ($errors->has('bank_name'))
-                            <span class="error">
-                                {{ $errors->first('bank_name') }}
-                            </span>
-                        @endif
+
                     </div>
                     <div class="bank_account_number">
                         <label for="bank_account_number" required>Bank Account Number</label>
                         <input type="text" name="bank_account_number" id="bank_account_number"
                             value={{ $settings['bank_account_number'] }}>
-                        @if ($errors->has('bank_account_number'))
-                            <span class="error">
-                                {{ $errors->first('bank_account_number') }}
-                            </span>
-                        @endif
+
 
                     </div>
                     <div class="bank_routing_number">
                         <label for="bank_routing_number" required>Bank Routing Number</label>
                         <input type="text" name="bank_routing_number" id="bank_routing_number"
                             value={{ $settings['bank_routing_number'] }}>
-                        @if ($errors->has('bank_routing_number'))
-                            <span class="error">
-                                {{ $errors->first('bank_routing_number') }}
-                            </span>
-                        @endif
+
                     </div>
                     <div class="bank_account_type">
                         <label for="bank_account_type" required>Bank Account Type</label>
                         <input type="text" name="bank_account_type" id="bank_account_type"
                             value={{ $settings['bank_account_type'] }}>
-                        @if ($errors->has('bank_account_type'))
-                            <span class="error">
-                                {{ $errors->first('bank_account_type') }}
-                            </span>
-                        @endif
+
 
                     </div>
                     <div class="bank_account_name">
                         <label for="bank_account_name" required>Bank Account Name</label>
                         <input type="text" name="bank_account_name" id="bank_account_name"
                             value={{ $settings['bank_account_name'] }}>
-                        @if ($errors->has('bank_account_name'))
-                            <span class="error">
-                                {{ $errors->first('bank_account_name') }}
-                            </span>
-                        @endif
+
                     </div>
                     <button class="submit-button"type="submit">Save</button>
         </form>
