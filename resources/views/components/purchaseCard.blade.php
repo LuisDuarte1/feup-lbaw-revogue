@@ -23,13 +23,14 @@ $total = $total + $product->price - $product->pivot->discount;
         @foreach ($orders as $order)
         @php
         $seller = $order->products[0]->soldBy;
+        $userPicture = $seller->profile_image_path !== null ? "/storage/".$user->profile_image_path : '/defaultProfileImage.png';
         $status = $order->status;
         @endphp
         <div class="purchase-order column gap-3">
             <div class="order-header row gap-1">
                 <div class="row items-center gap-3">
                     <div class="row items-center">
-                        <img src="/defaultProfileImage.png" class="profile-picture">
+                        <img src="{{$userPicture}}" class="profile-picture">
                         <div class="order-user">
                             <a href="/profile/{{$seller->id}}" class="profile-link">
                                 <div class="display-name">{{$seller->display_name}}</div>
