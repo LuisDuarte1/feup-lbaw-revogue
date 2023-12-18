@@ -177,6 +177,7 @@ class MessageController extends Controller
             return response()->json(['error' => 'This message thread does not belong to you'], 403);
         }
 
+
         if (ProductController::isProductSold($messageThread->messageProduct()->get()->first())) {
             return response()->json(['error' => 'This product has already been sold'], 410);
         }
@@ -184,6 +185,11 @@ class MessageController extends Controller
         $validated = $request->validate([
             'proposed_price' => 'required|numeric',
         ]);
+        if($request->user()->id === $messageThread->messageProduct->sold_by){
+            return response()->json(['error' => 'The seller cannot propose a bargain offer.'], 400);
+        }
+
+
         if ($messageThread->messageProduct->price <= $validated['proposed_price']) {
             return response()->json(['error' => 'The proposed price cannot be higher than the current price'], 400);
         }

@@ -210,6 +210,7 @@ CREATE TABLE Vouchers(
     "belongs_to" INT NOT NULL,
     "product" INT NOT NULL,
     "bargain" INT NOT NULL,
+    "used" BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY ("belongs_to") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE,
     FOREIGN KEY ("bargain") REFERENCES Bargains("id") ON DELETE CASCADE

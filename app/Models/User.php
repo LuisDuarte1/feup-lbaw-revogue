@@ -78,10 +78,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Product::class, 'sold_by');
     }
 
-    public function voucher(): HasOne
+    public function voucher(): HasMany
     {
 
-        return $this->hasOne(Voucher::class, 'belongs_to');
+        return $this->hasMany(Voucher::class, 'belongs_to');
     }
 
     public function reviewing(): HasMany

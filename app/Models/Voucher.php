@@ -26,6 +26,7 @@ class Voucher extends Model
         'belongs_to',
         'product',
         'bargain',
+        'used'
     ];
 
     /**
@@ -35,6 +36,7 @@ class Voucher extends Model
      */
     protected $cast = [
         'code' => 'string',
+        'used' => 'bool'
     ];
 
     public function voucherBelongsTo(): BelongsTo
@@ -42,7 +44,7 @@ class Voucher extends Model
         return $this->belongsTo(User::class, 'belongs_to');
     }
 
-    public function product(): BelongsTo
+    public function getProduct(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product');
     }
