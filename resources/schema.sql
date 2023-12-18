@@ -78,7 +78,7 @@ CREATE TABLE Users(
     "profile_image_path" TEXT,
     "bio" TEXT,
     "password" TEXT,
-    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "creation_date" TIMESTAMP NOT NULL,
     "settings" JSON NOT NULL,
     "account_status" AccountStatus NOT NULL DEFAULT 'needsConfirmation'::AccountStatus
 );
@@ -105,7 +105,7 @@ CREATE TABLE Products(
     "name" TEXT NOT NULL,
     "description" TEXT,
     "price" NUMERIC NOT NULL CHECK ( "price" >= 0 ),
-    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "creation_date" TIMESTAMP NOT NULL,
     "image_paths" JSON NOT NULL CHECK ( json_array_length("image_paths") > 0 ),
     "sold_by" INT,
     "category" INT,
@@ -130,7 +130,7 @@ CREATE TABLE ProductAttributes(
 
 CREATE TABLE PurchaseIntents(
     "id" SERIAL PRIMARY KEY,
-    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "creation_date" TIMESTAMP NOT NULL,
     "shipping_address" JSON NOT NULL,
     "payment_intent_id" TEXT UNIQUE NOT NULL,
     "user" INT NOT NULL,
@@ -147,12 +147,12 @@ CREATE TABLE PurchaseIntentProduct(
 CREATE TABLE Purchases(
     "id" SERIAL PRIMARY KEY,
     "method" PaymentMethod NOT NULL,
-    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP )
+    "creation_date" TIMESTAMP NOT NULL
 );
 
 CREATE TABLE Orders(
     "id" SERIAL PRIMARY KEY,
-    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "creation_date" TIMESTAMP NOT NULL,
     "status" OrderStatus,
     "shipping_address" JSON NOT NULL,
     "belongs_to" INT,
@@ -163,7 +163,7 @@ CREATE TABLE Orders(
 
 CREATE TABLE MessageThread(
     "id" SERIAL PRIMARY KEY,
-    "last_updated" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "last_updated" <= CURRENT_TIMESTAMP ),
+    "last_updated" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "type" MessageThreadType NOT NULL,
     "user_1" INT NOT NULL,
     "user_2" INT NOT NULL,
@@ -177,7 +177,7 @@ CREATE TABLE MessageThread(
 
 CREATE TABLE Bargains(
     "id" SERIAL PRIMARY KEY,
-    "created_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "created_date" <= CURRENT_TIMESTAMP ),
+    "created_date" TIMESTAMP NOT NULL,
     "bargain_status" BargainStatus NOT NULL,
     "proposed_price" NUMERIC NOT NULL,
     "product" INT NOT NULL,
@@ -186,7 +186,7 @@ CREATE TABLE Bargains(
 
 CREATE TABLE Messages(
     "id" SERIAL PRIMARY KEY,
-    "sent_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "sent_date" <= CURRENT_TIMESTAMP ),
+    "sent_date" TIMESTAMP NOT NULL,
     "message_type" MessageType NOT NULL,
     "text_content" TEXT,
     "image_path" TEXT,
@@ -218,7 +218,7 @@ CREATE TABLE Vouchers(
 CREATE TABLE Reviews(
     "id" SERIAL PRIMARY KEY,
     "stars" NUMERIC NOT NULL CHECK ( "stars" >= 0 AND "stars" <= 5 ),
-    "sent_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "sent_date" <= CURRENT_TIMESTAMP ),
+    "sent_date" TIMESTAMP NOT NULL,
     "description" TEXT,
     "image_paths" JSON NOT NULL,
     "reviewed_order" INT NOT NULL,
@@ -233,14 +233,14 @@ CREATE TABLE Admins(
     "id" SERIAL PRIMARY KEY NOT NULL,
     "email" TEXT UNIQUE NOT NULL,
     "profile_image_path" TEXT,
-    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "creation_date" TIMESTAMP NOT NULL,
     "password" TEXT
 );
 
 CREATE TABLE Reports(
     "id" SERIAL PRIMARY KEY NOT NULL,
     "type" ReportType NOT NULL,
-    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
+    "creation_date" TIMESTAMP NOT NULL,
     "is_closed" BOOLEAN NOT NULL DEFAULT FALSE,
     "closed_by" INT,
     "reporter" INT,

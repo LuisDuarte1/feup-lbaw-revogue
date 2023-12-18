@@ -136,4 +136,15 @@ class ProductController extends Controller
 
         return redirect('/products/'.$product->id);
     }
+
+    public function getProductAPI(Request $request): Product{
+        $product_id = $request->route('id');
+        $product = Product::find($product_id);
+
+        if($product === null){
+            return response()->json(['error' => 'Could not find product by id', 404]);
+        }
+
+        return $product;
+    }
 }

@@ -18,8 +18,9 @@ import notification from './components/notification'
 import { notifications } from './pages/notifications'
 import productMessageThread from './components/productMessageThread'
 import sendTextMessage from './components/sendTextMessage'
-import { messages } from './pages/messages.js'
-import sendImageMessage from './components/sendImageMessage.js'
+import { messages } from './pages/messages'
+import sendImageMessage from './components/sendImageMessage'
+import sendBargainMessage from './components/sendBargainMessage'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -47,7 +48,8 @@ const components: ComponentList = {
   '.notification': notification,
   '.message-thread-input > .text-input': sendTextMessage,
   '.product-message-thread': productMessageThread,
-  '.send-image-message': sendImageMessage
+  '.send-image-message': sendImageMessage,
+  '.send-bargain-message': sendBargainMessage
 }
 
 function pageHandler (): void {

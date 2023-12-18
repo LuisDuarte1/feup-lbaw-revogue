@@ -79,8 +79,15 @@ Route::prefix('api')->group(function () {
                 Route::controller(MessageController::class)->group(function () {
                     Route::post('/', 'sendMessageAPI');
                     Route::get('/', 'getMessagesAPI');
-
+                    Route::post('/bargain', 'sendBargainAPI'); 
                 });
+            });
+        });
+    });
+    Route::prefix('products')->group(function () {
+        Route::prefix('{id}')->group(function () {
+            Route::controller(ProductController::class)->group(function () {
+                Route::get('/', 'getProductAPI');
             });
         });
     });

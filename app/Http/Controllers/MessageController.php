@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Events\ProductMessageEvent;
+use App\Models\Bargain;
 use App\Models\Message;
 use App\Models\MessageThread;
 use App\Models\Product;
 use App\Models\User;
 use App\View\Components\MessageBubble;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -71,6 +73,59 @@ class MessageController extends Controller
             return response()->json(['error' => 'This message thread does not belong to you'], 403);
         }
 
+        if(ProductController::isProductSold($messageThread->messageProduct()->get()->first())){
+            return response()->json(['error' => 'This product has already been sold'], 410);
+        }
+
+        $validated = $request->validate([
+            'proposed_price' => 'required|numeric'
+        ]);
+        if($messageThread->messageProduct->price <= $validated['proposed_price']){
+            return response()->json(['error' => 'The proposed price cannot be higher than the current price'], 400);
+        }
+
+        $threadBargains = $messageThread->messages()->select('bargain')->where('message_type','bargain')->get()->pluck('bargain')->unique()->map(function ($item, $key) {
+            return Bargain::where('id', $item)->get()->first();
+        });
+
+        $acceptedBargains = $threadBargains->filter(function ($item, $key) {
+            return $item->bargain_status === 'accepted';
+        });
+
+        if($acceptedBargains->count() > 0){
+            return response()->json(['error' => "Cannot create bargain while there's one accepted already."], 400);
+        }
+
+        $pendingBargains = $threadBargains->filter(function ($item, $key) {
+            return $item->bargain_status === 'pending';
+        });
+
+        foreach ($pendingBargains as $bargain){
+            $bargain->bargain_status = 'cancelled';
+            $bargain->save();
+            //TODO: send message that request has been cancelled
+        }
+        DB::beginTransaction();
+        $bargain = Bargain::create([
+            'bargain_status' => 'pending',
+            'proposed_price' => $validated['proposed_price'],
+            'product' => $messageThread->product
+        ]);
+
+        $message = Message::create([
+            'message_type' => 'bargain',
+            'to_user' => $otherUser,
+            'from_user' => $request->user()->id,
+            'message_thread' => $messageThread->id,
+            'bargain' => $bargain->id
+        ]);
+        DB::commit();
+
+        broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
+
+
+        $messageBubble = new MessageBubble($message, $request->user());
+        return $messageBubble->render();
     }
 
     public function sendMessageAPI(Request $request){

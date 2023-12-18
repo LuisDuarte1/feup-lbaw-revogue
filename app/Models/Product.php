@@ -39,6 +39,10 @@ class Product extends Model
         'image_paths' => 'array',
     ];
 
+    protected $hidden = [
+        'fts_search'
+    ];
+    
     public function attributes(): BelongsToMany
     {
         return $this->belongsToMany(Attribute::class, 'productattributes', 'product', 'attribute');

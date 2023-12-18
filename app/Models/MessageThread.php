@@ -11,7 +11,10 @@ class MessageThread extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    const CREATED_AT = null;
+
+    const UPDATED_AT = 'last_updated';
+
     protected $dateFormat = 'Y-m-d H:i:s.u';
     
     protected $primaryKey = 'id';
