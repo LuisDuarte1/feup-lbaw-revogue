@@ -46,6 +46,21 @@ button:hover, button:active{
     background: $secondary-hover;
 }
 
+a.button{
+    background-color: $accent;
+    color: $background;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    padding: 0.3rem 1rem;
+    font-size: 1.1rem;
+}
+
+a.button.outline{
+    border: 2px $accent solid;
+    color: $accent;
+    background-color: inherit;
+}
+
 
 .title {
     font-family: 'Abril Fatface';
@@ -82,6 +97,10 @@ button:hover, button:active{
     justify-content: center;
 }
 
+.self-center {
+    align-self: center;
+}
+
 .gap-1{
     gap: 1rem;
 }
@@ -106,6 +125,10 @@ button:hover, button:active{
 
 .items-center{
     align-items: center;
+}
+
+.items-begin{
+    align-items: flex-start;
 }
 
 .line{
@@ -133,6 +156,9 @@ input[type="radio"]:not(:disabled):checked {
 }
 #page-end {
     padding-bottom: 2rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
 
 

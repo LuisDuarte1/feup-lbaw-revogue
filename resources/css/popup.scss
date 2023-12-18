@@ -1,0 +1,43 @@
+@import "theme";
+
+#swal2-html-container {
+    padding: 1rem;
+    #text-message{
+        width: calc(100% - 2rem);
+    }
+
+    .select-image-wrapper{
+        max-width: 100%;
+    }
+
+    .popup-select-image {
+        width: fit-content;
+        display: flex;
+        height: auto;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #dcdbdb;
+        border-radius: 0.5rem;
+        > img {
+            display: none;
+            object-fit: contain;
+            border-radius: 0.5rem;
+        }
+        #image-message {
+            display: none;
+        }
+
+        > label {
+            padding: 8rem;
+        }
+    }
+
+    .popup-select-image:hover{
+        background-color: $shadow;
+    }
+
+    .popup-text-message{
+        align-self: stretch;
+    }
+}

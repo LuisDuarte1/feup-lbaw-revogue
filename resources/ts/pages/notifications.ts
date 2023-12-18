@@ -8,5 +8,5 @@ export function notifications (): void {
   if (notificationList === null) {
     throw Error('Could not find .notification-list')
   }
-  addEndObserver(urlParams, '/api/notifications', notificationList, '.notification-container', false, notificationLoadCallback)
+  addEndObserver(urlParams, '/api/notifications', notificationList, '.notification-container', { editPage: false, callback: notificationLoadCallback })
 }

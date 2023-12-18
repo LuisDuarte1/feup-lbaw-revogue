@@ -1,3 +1,5 @@
+import './bootstrap.ts'
+
 import imageUploader from './components/imageUploader'
 import submitFormOnChange from './components/submitFormOnChange'
 import wishlistButton from './components/wishlistButton'
@@ -14,6 +16,12 @@ import expandableImage from './components/expandableImage'
 import notificationDropdown from './components/notificationDropdown'
 import notification from './components/notification'
 import { notifications } from './pages/notifications'
+import productMessageThread from './components/productMessageThread'
+import sendTextMessage from './components/sendTextMessage'
+import { messages } from './pages/messages'
+import sendImageMessage from './components/sendImageMessage'
+import sendBargainMessage from './components/sendBargainMessage'
+import messageBargainContent from './components/messageBargainContent.js'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -26,7 +34,8 @@ const routes: RouteList = {
   '/products/{id}': productPage,
   '/cart': cart,
   '/checkout': checkout,
-  '/notifications': notifications
+  '/notifications': notifications,
+  '/messages': messages
 }
 
 const components: ComponentList = {
@@ -37,7 +46,12 @@ const components: ComponentList = {
   'meta[name="modal-error"]': errorModal,
   '.expandable-image': expandableImage,
   '#notifications-icon': notificationDropdown,
-  '.notification': notification
+  '.notification': notification,
+  '.message-thread-input > .text-input': sendTextMessage,
+  '.product-message-thread': productMessageThread,
+  '.send-image-message': sendImageMessage,
+  '.send-bargain-message': sendBargainMessage,
+  '.message-bargain-content': messageBargainContent
 }
 
 function pageHandler (): void {

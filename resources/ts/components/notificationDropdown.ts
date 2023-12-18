@@ -75,7 +75,7 @@ export default function (element: HTMLElement): void {
       endPage.id = 'page-end'
       notificationContent.appendChild(endPage)
 
-      addEndObserver(urlParams, '/api/notifications', notificationContent, '.notification-container', false, notificationLoadCallback)
+      addEndObserver(urlParams, '/api/notifications', notificationContent, '.notification-container', { editPage: false, callback: notificationLoadCallback })
     }
   })
 }

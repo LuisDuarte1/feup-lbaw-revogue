@@ -14,6 +14,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
@@ -72,6 +73,30 @@ Route::prefix('api')->group(function () {
                 });
             });
         });
+        Route::prefix('messages')->group(function () {
+            Route::prefix('{id}')->group(function () {
+                Route::controller(MessageController::class)->group(function () {
+                    Route::post('/', 'sendMessageAPI');
+                    Route::get('/', 'getMessagesAPI');
+                    Route::post('/bargain', 'sendBargainAPI');
+                });
+            });
+        });
+        Route::prefix('bargains')->group(function () {
+            Route::prefix('{id}')->group(function () {
+                Route::controller(MessageController::class)->group(function () {
+                    Route::post('/accept', 'acceptBargainAPI');
+                    Route::post('/reject', 'rejectBargainAPI');
+                });
+            });
+        });
+    });
+    Route::prefix('products')->group(function () {
+        Route::prefix('{id}')->group(function () {
+            Route::controller(ProductController::class)->group(function () {
+                Route::get('/', 'getProductAPI');
+            });
+        });
     });
 });
 
@@ -109,6 +134,13 @@ Route::prefix('products')->group(function () {
         Route::get('/{id}/edit', 'editProductPage');
         Route::post('/{id}/edit', 'editProduct');
         Route::get('/', 'listProductsDate');
+    });
+    Route::prefix('{id}')->group(function () {
+        Route::prefix('/messages')->group(function () {
+            Route::controller(MessageController::class)->group(function () {
+                Route::post('/', 'createMessageThread');
+            });
+        });
     });
 });
 
@@ -202,5 +234,11 @@ Route::prefix('orders')->middleware(['auth:web', 'verified'])->group(function ()
             Route::post('/review/edit', 'editReview');
             Route::post('/review/delete', 'deleteReview');
         });
+    });
+});
+
+Route::prefix('messages')->middleware(['auth:web', 'verified'])->group(function () {
+    Route::controller(MessageController::class)->group(function () {
+        Route::get('/', 'getPage');
     });
 });

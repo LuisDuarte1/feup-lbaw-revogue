@@ -7,11 +7,13 @@
 @import 'profileLayout';
 @import 'profileNavbar';
 @import 'searchBar';
-@import 'chat_card';
 @import 'loader';
 @import 'productPhotos';
 @import 'reviewCard';
 @import 'notifications';
+@import 'productMessageThread';
+@import 'messageBubble';
+@import 'popup';
 
 @import 'pages/register';
 @import 'pages/login';
@@ -28,6 +30,7 @@
 @import 'pages/addReview';
 @import 'pages/editReview';
 @import 'pages/notificationPage';
+@import 'pages/messages';
 @import 'pages/purchaseHistory';
 
 
@@ -57,6 +60,10 @@ body {
         grid-column: 2;
     }
 
+    .main-content.full-page-height{
+        min-height: calc(100vh - #{$page-margin*2});
+    }
+
     .navbar {
         position: fixed;
         top: $page-margin;
@@ -77,6 +84,7 @@ body {
         z-index: 10;
         background-color: $background;
     }
+
 
 }
 

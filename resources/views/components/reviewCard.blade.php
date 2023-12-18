@@ -3,7 +3,7 @@ $reviewDescription = $review->description;
 $reviewer = $review->reviewer()->get()->first();
 $reviewerRating = $review->stars;
 $reviewImagePaths = $review->image_paths;
-$reviewDate = $review->sent_date->format('d/m/Y');
+$reviewDate = $review->sent_date->diffForHumans();
 $order = $review->reviewedOrder()->get()->first();
 @endphp
 <div class="review-card">
@@ -22,19 +22,22 @@ $order = $review->reviewedOrder()->get()->first();
                     {{ $reviewDate }}
                 </div>
             </div>
-            @if ($reviewer->id === Auth::user()->id)
-            <div class="row">
-                <a href="/orders/{{$order->id}}/review/edit" class="review-card-edit">
-                    <ion-icon name="create-outline"></ion-icon>
-                </a>
-                <form class="review-card-delete" action="/orders/{{$order->id}}/review/delete" method="POST">
-                    @csrf
-                    <button type="submit" class="delete-review">
-                        <ion-icon name="trash-outline"></ion-icon>
-                    </button>
-                </form>
-            </div>
-            @endif
+            @auth   
+                @if ($reviewer->id === Auth::user()->id)
+                <div class="row">
+                    <a href="/orders/{{$order->id}}/review/edit" class="review-card-edit">
+                        <ion-icon name="create-outline"></ion-icon>
+                    </a>
+                    <form class="review-card-delete" action="/orders/{{$order->id}}/review/delete" method="POST">
+                        @csrf
+                        <button type="submit" class="delete-review">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </form>
+                </div>
+                @endif
+            @endauth
+
         </div>
         <div class="review-card-rating">
             <x-reviewStars :rating="$reviewerRating" />

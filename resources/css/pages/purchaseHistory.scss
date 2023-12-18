@@ -1,7 +1,18 @@
 .purchase-history{
     padding: 2rem 0rem;
+    flex-grow: 2;
 }
 .purchase{
+    .shipped, .pendingShipment{
+        color: $toast-yellow;
+    }
+    .cancelled, .requestCancellation{
+        color: $toast-red;
+    }
+    
+    .received{
+        color: $toast-green;
+    }
     background-color: rgba($secondary-background, 0.5);
     border-radius: 0.5rem;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
@@ -79,10 +90,6 @@
     gap: 0.5rem;
 }
 
-.sent{
-    color: $toast-green;
-}
-
 .order-products{
     .order-product{
         text-decoration: none;
@@ -120,16 +127,7 @@
         }
     }
 }
- .shipped, .pendingShipment{
-    color: $toast-yellow;
-}
-.cancelled, .requestCancellation{
-    color: $toast-red;
-}
 
-.received{
-    color: $toast-green;
-}
 
 .profile-link{
     text-decoration: none;
@@ -155,5 +153,6 @@
 }
 
 .empty-purchase{
-    justify-self: center;
+    flex-grow: 2;
+    justify-content: center;
 }
