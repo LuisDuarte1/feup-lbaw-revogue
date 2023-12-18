@@ -2,6 +2,7 @@
 @import '../theme.scss';
 
 .layout-wrap{
+    padding-bottom: 2rem;
     display: grid;
     grid-template-columns: auto 40%;
     align-items: center;
@@ -50,7 +51,7 @@
             font-weight: 500;
         }
         .seller-username{
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         .cart-order-remove{
             button{

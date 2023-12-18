@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
+@php
+$sum = 0;
+$numOrders = count($cart);
+$numProducts = 0;
+@endphp
 <section class="layout-wrap">
     <div class="shopping-cart column gap-2 justify-center">
         <div class="cart-header line">
@@ -9,16 +13,24 @@
         </div>
         <div class="purchase-details row items-center">
             <p>Purchase details</p>
-            <p># Orders</p>
+            <p>{{$numOrders}} Orders</p>
         </div>
         <div class="cart-orders column gap-3">
+            @foreach($cart as $id => $products)
+            @php
+            $numProducts += count($products);
+            $seller = App\Models\User::where('id', $id)->get()->first();
+            $sellerPicture = $seller->profile_image_path !== null ? "/storage/".$user->profile_image_path : '/defaultProfileImage.png';
+            @endphp
             <div class="seller-products column gap-2">
                 <div class="seller-products-header row items-center">
                     <div class="row wrapper items-center">
-                        <img src="/defaultProfileImage.png" alt="seller" class="seller-image">
+                        <img src="{{$sellerPicture}}" alt="seller" class="seller-image">
                         <div class="selller-name">
-                            <div class="seller-display-name">Display name</div>
-                            <div class="seller-username">@username</div>
+                            <a href="/profile/{{$seller->id}}" class="profile-link">
+                                <div class="seller-display-name">{{$seller->display_name}}</div>
+                                <div class="seller-username">{{'@' . $seller->username}}</div>
+                            </a>
                         </div>
                     </div>
                     <a href="#" class="cart-order-remove">
@@ -26,26 +38,35 @@
                     </a>
                 </div>
                 <div class="cart-products column gap-1">
-                    <article class="product column gap-1">
+                    @foreach($products as $product)
+                    @php
+                    $sum += $product->price;
+                    $productPicture = $product->image_paths[0];
+                    $price = $product->price;
+                    $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
+                    @endphp
+                    <article class="product column gap-1" data-id="{{$product->id}}">
                         <a href="#" class="product-remove"><ion-icon name="close-outline"></ion-icon></a>
                         <div class="cart-product row gap-1 items-center">
                             <div class="product-image column items-center">
-                                <a href="#">
-                                    <img src="https://picsum.photos/1020/720">
+                                <a href="/products/{{$product->id}}">
+                                    <img src="{{$productPicture}}">
                                 </a>
                             </div>
                             <div class="cart-product-info row gap-1">
-                                <a href="#" class="column wrapper">
-                                    <div class="product-name">Product Name</div>
-                                    <div class="product-size">Size: M</div>
+                                <a href="/products/{{$product->id}}" class="column wrapper">
+                                    <div class="product-name">{{$product->name}}</div>
+                                    <div class="product-size">Size: {{$size}}</div>
                                     <div class="product-condition">Condition: Good</div>
                                 </a>
-                                <div class="product-price">Price: 20€</div>
+                                <div class="product-price">Price: {{$price}}€</div>
                             </div>
                         </div>
                     </article>
+                    @endforeach
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
     <div class="purchase-summary column gap-2">
@@ -53,7 +74,7 @@
             <h1 class="title">Purchase Summary</h1>
         </div>
         <div class="purchase-details items-center row">
-            <p>{{count($cart)}} items</p>
+            <p>{{$numProducts}} items</p>
             <p>{{$sum}}€</p>
         </div>
         <div class="shipping column justify-center gap-1">

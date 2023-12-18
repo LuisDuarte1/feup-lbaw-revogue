@@ -26,7 +26,7 @@ function deleteProductHandler (parent: Element): (event: Event) => Promise<void>
 function deleteProduct (): void {
   const products = document.querySelectorAll('.product')
   products.forEach((value) => {
-    const a: HTMLAnchorElement | null = value.querySelector('.product-remove > a')
+    const a: HTMLAnchorElement | null = value.querySelector('.product-remove')
     if (a === null) {
       return
     }
