@@ -11,8 +11,6 @@ class CartController extends Controller
         $user = $request->user();
         $cart = $user->cart()->get()->groupBy('sold_by');
 
-
-
         /*$list = [];
         foreach ($cart as $product) {
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
