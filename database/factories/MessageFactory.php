@@ -18,12 +18,9 @@ class MessageFactory extends Factory
     public function definition(): array
     {
         return [
-            'message_type' => fake()->randomElement(['text', 'bargain']),
+            'message_type' => fake()->randomElement(['text']),
             'text_content' => fake()->text(),
-            'image_path' => '{}', //TODO: revise this part
-            'proposed_price' => fake()->randomFloat(2, 0.1, 1000),
-            'bargain_status' => fake()->randomElement(['pending', 'accepted', 'rejected']), //TODO: revise this part
-
+            'image_path' => null, //TODO: revise this part
         ];
     }
 

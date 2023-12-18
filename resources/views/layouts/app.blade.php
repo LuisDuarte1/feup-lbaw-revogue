@@ -37,7 +37,7 @@
     @endif
    
     <x-navbar />
-    <div class="main-content">@yield('content')</div>
+    <div class="main-content {{isset($needs_full_height) && $needs_full_height == true ? 'full-page-height' : ''}}">@yield('content')</div>
 </body>
 
 </html>

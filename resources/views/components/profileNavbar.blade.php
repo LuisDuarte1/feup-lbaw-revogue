@@ -6,5 +6,6 @@
         @if ($ownPage)
             <li class= "profile-navbar-item"><a @if ($tab === 'history') class="active" @endif href="/profile/{{$id}}/history" >Purchase History</a></li>
         @endif
+        <li class= "profile-navbar-item"><a @if ($tab === 'reviews') class="active" @endif href="/profile/{{$id}}/reviews">Reviews</a></li>
     </ul>
 </nav>

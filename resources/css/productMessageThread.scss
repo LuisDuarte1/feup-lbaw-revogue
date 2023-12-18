@@ -1,0 +1,51 @@
+.product-message-thread{
+    display: grid;
+    grid-template-columns: fit-content(25%) minmax(50%, 100%) fit-content(25%);
+    grid-template-rows: 100%;
+    gap: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    > .profile-image, > .product-image{
+        aspect-ratio: 1;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 0.5rem;
+    }
+
+    > .product-message-thread-details{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        > .username::before {
+            content: '@';
+        }
+
+        > .username{
+            text-decoration: none;
+            color: $text-color
+        }
+
+        > .username:hover{
+            color: rgb($text-color, 0.7);
+        }
+
+        > .content{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+    }
+
+}
+
+.product-message-thread:hover{
+    background-color: $secondary-background;
+}
+
+.product-message-thread.thread-active{
+    background-color: darken($secondary-background, 4%);
+}
