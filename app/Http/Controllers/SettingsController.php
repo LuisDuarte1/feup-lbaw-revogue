@@ -32,7 +32,7 @@ class SettingsController extends Controller
         if ($user === null) {
             return redirect('/login');
         }
-        dd($user);
+
         $settings = ($user->settings['shipping']);
 
         return $settings;
