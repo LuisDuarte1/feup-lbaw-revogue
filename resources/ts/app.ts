@@ -1,3 +1,5 @@
+import './bootstrap.ts'
+
 import imageUploader from './components/imageUploader'
 import submitFormOnChange from './components/submitFormOnChange'
 import wishlistButton from './components/wishlistButton'
@@ -10,6 +12,16 @@ import { searchPage } from './pages/search'
 import 'swiper/css/bundle'
 import { checkout } from './pages/checkout'
 import errorModal from './components/errorModal'
+import expandableImage from './components/expandableImage'
+import notificationDropdown from './components/notificationDropdown'
+import notification from './components/notification'
+import { notifications } from './pages/notifications'
+import productMessageThread from './components/productMessageThread'
+import sendTextMessage from './components/sendTextMessage'
+import { messages } from './pages/messages'
+import sendImageMessage from './components/sendImageMessage'
+import sendBargainMessage from './components/sendBargainMessage'
+import messageBargainContent from './components/messageBargainContent.js'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -21,7 +33,9 @@ const routes: RouteList = {
   '/search': searchPage,
   '/products/{id}': productPage,
   '/cart': cart,
-  '/checkout': checkout
+  '/checkout': checkout,
+  '/notifications': notifications,
+  '/messages': messages
 }
 
 const components: ComponentList = {
@@ -29,7 +43,15 @@ const components: ComponentList = {
   '#order_status': submitFormOnChange,
   '.upload-photos': imageUploader,
   '#wishlist_button': wishlistButton,
-  'meta[name="modal-error"]': errorModal
+  'meta[name="modal-error"]': errorModal,
+  '.expandable-image': expandableImage,
+  '#notifications-icon': notificationDropdown,
+  '.notification': notification,
+  '.message-thread-input > .text-input': sendTextMessage,
+  '.product-message-thread': productMessageThread,
+  '.send-image-message': sendImageMessage,
+  '.send-bargain-message': sendBargainMessage,
+  '.message-bargain-content': messageBargainContent
 }
 
 function pageHandler (): void {
@@ -39,6 +61,10 @@ function pageHandler (): void {
     const regex = new RegExp(rule)
 
     if (regex.test(window.location.pathname)) {
+      if (Object.keys(routes).includes(window.location.pathname) && value !== window.location.pathname) {
+        console.warn('found ambiguous route... skipping this one because there\'s an exact match')
+        return
+      }
       routes[value]()
       hasRan = true
     }
@@ -56,7 +82,33 @@ function componentHandler (): void {
   })
 }
 
+export function componentAJAXHandler (elements: Element[]): void {
+  elements.forEach((element) => {
+    // first we check if the element itself matches any of the componentlist
+    Object.keys(components)
+      .filter((value) => element.matches(value))
+      .forEach((value) => { components[value](element as HTMLElement) })
+
+    // then we check for the children of the element
+    Object.keys(components).forEach((value, _) => {
+      element.querySelectorAll<HTMLElement>(value).forEach((el, _) => {
+        components[value](el)
+      })
+    })
+  })
+}
+
 document.addEventListener('DOMContentLoaded', (_) => {
+  // idk why but sometimes DOMContentLoaded is called twice (probably because somehow this is being imported twice),
+  // so to avoid that we create the meta so that the js runs like a singleton
+  if (document.querySelector('meta[name=app-singleton]') !== null) {
+    return
+  }
+  const meta = document.createElement('meta')
+  meta.content = 'true'
+  meta.name = 'app-singleton'
+  document.getElementsByTagName('head')[0]?.append(meta)
+
   componentHandler()
   pageHandler()
-})
+}, { once: true })

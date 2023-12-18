@@ -8,9 +8,13 @@
 @import 'profileNavbar';
 @import 'settingsNavbar';
 @import 'searchBar';
-@import 'chat_card';
 @import 'loader';
 @import 'productPhotos';
+@import 'reviewCard';
+@import 'notifications';
+@import 'productMessageThread';
+@import 'messageBubble';
+@import 'popup';
 
 @import 'pages/register';
 @import 'pages/login';
@@ -24,6 +28,11 @@
 @import 'pages/profile';
 @import 'pages/landingPage';
 @import 'pages/editProduct';
+@import 'pages/addReview';
+@import 'pages/editReview';
+@import 'pages/notificationPage';
+@import 'pages/messages';
+@import 'pages/purchaseHistory';
 @import 'pages/settings';
 
 
@@ -31,6 +40,7 @@
 * {
     margin: 0;
     padding: 0;
+    word-break: break-all;
 }
 
 :root {
@@ -49,7 +59,12 @@ body {
 
     .main-content {
         max-height: calc(100vh - #{$page-margin*2});
+        max-width: calc(100vw - #{$page-margin*2 + $page-navbar-width + $page-gap});
         grid-column: 2;
+    }
+
+    .main-content.full-page-height {
+        min-height: calc(100vh - #{$page-margin*2});
     }
 
     .navbar {
@@ -64,15 +79,15 @@ body {
         width: calc(100% - #{$page-margin*2 + $page-navbar-width + $page-gap});
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         position: fixed;
         top: 0;
         left: calc($page-margin + $page-navbar-width + $page-gap);
-        gap: 3rem;
+        gap: 1.5rem;
         z-index: 10;
-        overflow: hidden;
         background-color: $background;
     }
+
 
 }
 

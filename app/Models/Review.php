@@ -11,7 +11,9 @@ class Review extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    const CREATED_AT = 'sent_date';
+
+    const UPDATED_AT = null;
 
     protected $primaryKey = 'id';
 
@@ -19,10 +21,14 @@ class Review extends Model
         'stars',
         'image_paths',
         'description',
+        'reviewer',
+        'reviewed',
     ];
 
     protected $casts = [
-        'stars' => 'integer',
+        'stars' => 'float',
+        'sent_date' => 'datetime',
+        'image_paths' => 'array',
     ];
 
     public function reviewedOrder(): BelongsTo

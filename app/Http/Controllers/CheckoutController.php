@@ -4,13 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Jobs\PurchaseIntentTimeoutJob;
 use App\Models\Purchase;
+use App\Notifications\ProductCartGoneNotification;
+use App\Notifications\ProductSoldNotification;
+use App\Notifications\WishlistProductGoneNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
+    public static function removePurchaseFromOtherUsers($user, $cart): void
+    {
+        // TODO(luisd): send notification
+        foreach ($cart as $product) {
+            Notification::send(
+                $product->inCart()
+                    ->whereNot(
+                        function ($query) use ($user) {
+                            $query->where('id', $user->id);
+                        })
+                    ->get(), new ProductCartGoneNotification($product));
+            $product->inCart()->detach();
+            Notification::send(
+                $product->wishlist()
+                    ->whereNot(
+                        function ($query) use ($user) {
+                            $query->where('id', $user->id);
+                        })
+                    ->get(), new WishlistProductGoneNotification($product));
+            $product->wishlist()->detach();
+            Notification::send(
+                $product->soldBy()->get(),
+                new ProductSoldNotification($product)
+            );
+        }
+
+    }
+
     public static function canEnterCheckout(Request $request): bool
     {
         $cart = $request->user()->cart()->withCount('purchaseIntents')->get();
@@ -119,8 +151,12 @@ class CheckoutController extends Controller
         $user = $request->user();
 
         if (! CheckoutController::canEnterCheckout($request)) {
-            //TODO(luisd): redirect to cart with an error
-            return redirect('/cart');
+            return redirect('/cart')->with('modal-error',
+                [
+                    'title' => 'Item reserved',
+                    'content' => 'Looks like someone is trying to buy the same item as you at the same time. Please wait and try again.',
+                    'confirm-button' => 'Close',
+                ]);
         }
 
         $settings = $user->settings['shipping'];
@@ -168,11 +204,7 @@ class CheckoutController extends Controller
             }
         }
         // remove the cart of all users because it has been bought
-        // TODO(luisd): send notification
-        foreach ($cart as $product) {
-            $product->inCart()->detach();
-            $product->wishlist()->detach();
-        }
+        CheckoutController::removePurchaseFromOtherUsers($request->user(), $cart);
         DB::commit();
 
         return redirect('/');

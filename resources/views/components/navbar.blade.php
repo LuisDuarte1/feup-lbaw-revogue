@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="menu-item">
+                    <a href="/messages" class="menu-item">
                         <ion-icon name="chatbubble-ellipses-sharp"></ion-icon>
                         Messages
                     </a>

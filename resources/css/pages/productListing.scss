@@ -14,7 +14,7 @@
     .tags,.price{
         width: 100%;
         input {
-            width: 100%;
+            width: calc(100% - 1rem);
         }
     }
 
@@ -57,7 +57,10 @@
         display: flex;
         gap: 4rem;
         align-content: center;
-
+        
+        #search_tag{
+            overflow: hidden;
+        }
     }
 
     .info,.input-list {
