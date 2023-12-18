@@ -14,6 +14,7 @@ class Message extends Model
     const CREATED_AT = 'sent_date';
 
     const UPDATED_AT = null;
+
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
     protected $primaryKey = 'id';
@@ -29,8 +30,8 @@ class Message extends Model
         'image_path',
         'to_user',
         'from_user',
-        'message_thread',    
-        'bargain'
+        'message_thread',
+        'bargain',
     ];
 
     /**
@@ -41,8 +42,13 @@ class Message extends Model
     protected $casts = [
         'sent_date' => 'datetime',
         'proposed_price' => 'float',
-        'image_path' => 'array'
+        'image_path' => 'array',
     ];
+
+    public function messageThread(): BelongsTo
+    {
+        return $this->belongsTo(MessageThread::class, 'message_thread');
+    }
 
     public function fromUser(): BelongsTo
     {

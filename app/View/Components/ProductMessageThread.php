@@ -15,8 +15,11 @@ use Illuminate\View\Component;
 class ProductMessageThread extends Component
 {
     public User $soldBy;
+
     public Message $latestMessage;
+
     public Product $product;
+
     /**
      * Create a new component instance.
      */
@@ -32,6 +35,6 @@ class ProductMessageThread extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.product-message-thread', ['soldBy' => $this->soldBy, 'latestMessage' => $this-> latestMessage, 'messageThread' => $this->messageThread, 'isActive' => $this->isActive, 'product' => $this->product]);
+        return view('components.product-message-thread', ['soldBy' => $this->soldBy, 'latestMessage' => $this->latestMessage, 'messageThread' => $this->messageThread, 'isActive' => $this->isActive, 'product' => $this->product]);
     }
 }

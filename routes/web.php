@@ -21,7 +21,6 @@ use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
-use App\Models\Message;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,7 +78,15 @@ Route::prefix('api')->group(function () {
                 Route::controller(MessageController::class)->group(function () {
                     Route::post('/', 'sendMessageAPI');
                     Route::get('/', 'getMessagesAPI');
-                    Route::post('/bargain', 'sendBargainAPI'); 
+                    Route::post('/bargain', 'sendBargainAPI');
+                });
+            });
+        });
+        Route::prefix('bargains')->group(function () {
+            Route::prefix('{id}')->group(function () {
+                Route::controller(MessageController::class)->group(function () {
+                    Route::post('/accept', 'acceptBargainAPI');
+                    Route::post('/reject', 'rejectBargainAPI');
                 });
             });
         });

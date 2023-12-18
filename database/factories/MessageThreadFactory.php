@@ -18,7 +18,7 @@ class MessageThreadFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => 'product'
+            'type' => 'product',
         ];
     }
 

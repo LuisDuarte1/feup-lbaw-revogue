@@ -40,9 +40,9 @@ class Product extends Model
     ];
 
     protected $hidden = [
-        'fts_search'
+        'fts_search',
     ];
-    
+
     public function attributes(): BelongsToMany
     {
         return $this->belongsToMany(Attribute::class, 'productattributes', 'product', 'attribute');

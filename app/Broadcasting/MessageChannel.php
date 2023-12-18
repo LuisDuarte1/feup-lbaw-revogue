@@ -2,9 +2,7 @@
 
 namespace App\Broadcasting;
 
-use App\Models\Message;
 use App\Models\MessageThread;
-use App\Models\Product;
 use App\Models\User;
 
 class MessageChannel
@@ -23,13 +21,17 @@ class MessageChannel
     public function join(User $user, int $messageThreadId): array|bool
     {
         $messageThread = MessageThread::where('id', $messageThreadId)->get()->first();
-        
-        if($messageThread === null){
+
+        if ($messageThread === null) {
             return false;
         }
 
-        if($messageThread->user_1 == $user->id) return true;
-        if($messageThread->user_2 == $user->id) return true;
+        if ($messageThread->user_1 == $user->id) {
+            return true;
+        }
+        if ($messageThread->user_2 == $user->id) {
+            return true;
+        }
 
         return false;
     }

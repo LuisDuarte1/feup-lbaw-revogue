@@ -21,23 +21,26 @@ class Bargain extends Model
     protected $fillable = [
         'bargain_status',
         'proposed_price',
-        'product'
+        'product',
     ];
 
     protected $casts = [
         'created_date' => 'datetime',
-        'proposed_price' => 'float'
+        'proposed_price' => 'float',
     ];
 
-    public function messages(): HasMany{
-        return $this->hasMany(Message::class, "bargain");
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'bargain');
     }
 
-    public function voucher(): HasOne{
+    public function voucher(): HasOne
+    {
         return $this->hasOne(Voucher::class, 'bargain');
     }
 
-    public function getProduct(): BelongsTo{
+    public function getProduct(): BelongsTo
+    {
         return $this->belongsTo(Product::class, 'product');
     }
 

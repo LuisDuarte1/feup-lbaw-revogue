@@ -2,7 +2,13 @@
     <img class="profile-image" src="{{$soldBy->profile_image_path !== null ? '/storage/'.$soldBy->profile_image_path :  '/defaultProfileImage.png'}}">
     <div class="product-message-thread-details">
         <div  class="username">{{$soldBy->username}}</div>
-        <p class="content">{{$latestMessage->sent_date->diffForHumans(null,true)}} <span>&#183;</span> {{$latestMessage->text_content}}</p>
+        <p class="content">{{$latestMessage->sent_date->diffForHumans(null,true)}} <span>&#183;</span>
+        @if($latestMessage->message_type === 'text')
+        {{$latestMessage->text_content}}
+        @else
+        Bargain message
+        @endif
+        </p>
     </div>
     <img class="product-image" src="{{$product->image_paths[0]}}">
 </div>
