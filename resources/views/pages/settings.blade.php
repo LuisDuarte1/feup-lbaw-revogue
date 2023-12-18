@@ -65,17 +65,7 @@
                             </span>
                         @endif
                     </div>
-                    <div class="paypal_email">
-                        <label for="paypal_email" required>Paypal Email</label>
-                        <input type="text" name="paypal_email" id="paypal_email" value={{ $settings['paypal_email'] }}>
-                        @if ($errors->has('paypal_email'))
-                            <span class="error">
-                                {{ $errors->first('paypal_email') }}
-                            </span>
-                        @endif
-
-
-                    </div><button class="submit-button"type="submit">Save</button>
+                    <button class="submit-button"type="submit">Save</button>
         </form>
 
         <form action="{{ route('settings.payment.reset') }}" method="POST" class="editForm">

@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/settings/payment" class="menu-item">
+                    <a href="/settings/general" class="menu-item">
                         <ion-icon name="settings"></ion-icon>
                         Settings
                     </a>

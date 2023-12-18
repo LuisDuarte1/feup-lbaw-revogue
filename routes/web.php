@@ -105,14 +105,14 @@ Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function 
         Route::get('/shipping', 'ShippingSettings')->name('shipping-settings');
         Route::get('/general', 'GeneralSettings')->name('general-settings');
         Route::get('/profile', 'ProfileSettings')->name('profile-settings');
-        Route::post('/settings/payment/save', 'updatePaymentSettings')->name('settings.payment.save');
-        Route::post('/settings/payment/reset', 'resetPaymentSettings')->name('settings.payment.reset');
+        Route::post('/payment/save', 'updatePaymentSettings')->name('settings.payment.save');
+        Route::post('/payment/reset', 'resetPaymentSettings')->name('settings.payment.reset');
         Route::post('/general/delete', 'deleteAccount')->name('settings.general.delete');
-        Route::post('/settings/general/reset', 'changePassword')->name('settings.general.reset');
-        Route::post('/settings/shipping/save', 'updateShippingSettings')->name('settings.shipping.save');
-        Route::post('/settings/shipping/reset', 'resetShippingSettings')->name('settings.shipping.reset');
-        Route::post('/settings/profile/save', 'updateProfileSettings')->name('settings.profile.save');
-        Route::post('/settings/profile/reset', 'resetProfileSettings')->name('settings.profile.reset');
+        Route::post('/general/reset', 'changePassword')->name('settings.general.reset');
+        Route::post('/shipping/save', 'updateShippingSettings')->name('settings.shipping.save');
+        Route::post('/shipping/reset', 'resetShippingSettings')->name('settings.shipping.reset');
+        Route::post('/profile/save', 'updateProfileSettings')->name('settings.profile.save');
+        Route::post('/profile/reset', 'resetProfileSettings')->name('settings.profile.reset');
 
     });
 });

@@ -26,23 +26,13 @@ class SettingsController extends Controller
         return $settings;
     }
 
-    public function getGeneralSettings()
-    {
-        $user = Auth::user();
-        if ($user === null) {
-            return redirect('/login');
-        }
-        $settings = ($user->settings['general']);
-
-        return $settings;
-    }
-
     public function getShippingSettings()
     {
         $user = Auth::user();
         if ($user === null) {
             return redirect('/login');
         }
+        dd($user);
         $settings = ($user->settings['shipping']);
 
         return $settings;
@@ -120,7 +110,6 @@ class SettingsController extends Controller
             'bank_account_number' => 'required|regex:/^[0-9]+$/',
             'bank_account_name' => 'required|regex:/^[a-zA-Z0-9\s]+$/',
             'bank_routing_number' => 'required|regex:/^[0-9]+$/',
-            'paypal_email' => 'required|email',
         ]);
 
         if ($validator->fails()) {
@@ -202,28 +191,6 @@ class SettingsController extends Controller
         return redirect('/settings/payment');
     }
 
-    public function resetGeneralSettings()
-    {
-        $user = User::find(Auth::id());
-        if ($user === null) {
-            return redirect('/login');
-        }
-        $general_settings = SettingsController::getGeneralSettings();
-        $settings = $user->settings;
-
-        foreach ($general_settings as $key => $value) {
-            $general_settings[$key] = null;
-        }
-
-        $settings['general'] = $general_settings;
-
-        $user->settings = $settings;
-
-        $user->save(); // Save the updated user object
-
-        return redirect('/settings/general');
-    }
-
     public function resetShippingSettings()
     {
         $user = User::find(Auth::id());
@@ -278,9 +245,8 @@ class SettingsController extends Controller
     public function GeneralSettings()
     {
         $user = Auth::user();
-        $settings = SettingsController::getGeneralSettings();
 
-        return view('pages.generalSettings', ['settings' => $settings, 'user' => $user, 'tab' => 'general']);
+        return view('pages.generalSettings', ['user' => $user, 'tab' => 'general']);
     }
 
     public function PaymentsSettings()
@@ -294,9 +260,6 @@ class SettingsController extends Controller
 
     public function ProfileSettings()
     {
-        $user = Auth::user();
-        // if profile is not complete redirect to profile/complete
-        //$settings = SettingsController::getProfileSettings();
 
         return redirect()->route('complete-profile');
 

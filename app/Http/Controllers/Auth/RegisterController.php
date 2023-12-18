@@ -32,32 +32,7 @@ class RegisterController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
-        $settings = [
-            'payment' => [
-                'bank_name' => '',
-                'bank_account_number' => '',
-                'bank_routing_number' => '',
-                'bank_account_type' => '',
-                'bank_account_name' => '',
-                'paypal_email' => '',
-
-            ],
-            'general' => [
-                'currency' => 'USD',
-                'currency_symbol' => '$',
-
-            ],
-            'shipping' => [
-                'name' => '',
-                'address' => '',
-                'country' => '',
-                'city' => '',
-                'zip-code' => '',
-                'phone' => '',
-                'email' => '',
-            ],
-
-        ];
+        $settings = User::getDefaultSettings();
 
         $user = User::create([
             'username' => $request->username,
