@@ -26,7 +26,7 @@ class Voucher extends Model
         'belongs_to',
         'product',
         'bargain',
-        'used'
+        'used',
     ];
 
     /**
@@ -36,7 +36,7 @@ class Voucher extends Model
      */
     protected $cast = [
         'code' => 'string',
-        'used' => 'bool'
+        'used' => 'bool',
     ];
 
     public function voucherBelongsTo(): BelongsTo

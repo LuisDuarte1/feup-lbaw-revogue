@@ -9,14 +9,16 @@ use Illuminate\Support\Collection;
 
 class VoucherController extends Controller
 {
-    static function getAvailableVouchers(User $user){
+    public static function getAvailableVouchers(User $user)
+    {
         return $user->voucher()->get();
     }
 
-    static function getAppliedVouchers(Request $request){
+    public static function getAppliedVouchers(Request $request)
+    {
         $currentVouchers = collect(array_map(function ($code) {
             return Voucher::where('code', $code)->get()->first();
-        } , $request->session()->get("cartVouchers", [])))->filter();
+        }, $request->session()->get('cartVouchers', [])))->filter();
 
         $expiredVouchers = $currentVouchers->filter(function ($value, $key) {
             return ProductController::isProductSold($value->getProduct);
@@ -25,38 +27,41 @@ class VoucherController extends Controller
         $validVouchers = $currentVouchers->diff($expiredVouchers);
 
         VoucherController::setAppliedVouchers($request, $validVouchers);
+
         return $validVouchers;
     }
 
-    static function setAppliedVouchers(Request $request, Collection $vouchers){
+    public static function setAppliedVouchers(Request $request, Collection $vouchers)
+    {
         $request->session()->put('cartVouchers', $vouchers->unique('code')->map(function ($value, $key) {
             return $value->code;
         })->toArray());
     }
 
-    function applyVoucherAPI(Request $request){
+    public function applyVoucherAPI(Request $request)
+    {
         $voucherCode = $request->input('code');
 
         $voucher = Voucher::where('code', $voucherCode)->get()->first();
 
-        if($voucher === null){
-            return response()->json(["error" => "Voucher code does not exist."], 404);
+        if ($voucher === null) {
+            return response()->json(['error' => 'Voucher code does not exist.'], 404);
         }
 
-        if($voucher->belongs_to !== $request->user()->id){
-            return response()->json(["error" => "This voucher does not belong to you."], 404);
+        if ($voucher->belongs_to !== $request->user()->id) {
+            return response()->json(['error' => 'This voucher does not belong to you.'], 404);
         }
 
-        if($voucher->used){
-            return response()->json(["error" => "This voucher has already been used."], 400);
+        if ($voucher->used) {
+            return response()->json(['error' => 'This voucher has already been used.'], 400);
         }
 
         $cart = $request->user()->cart()->get();
 
-        if($cart->filter(function ($value, $key) use ($voucher){
+        if ($cart->filter(function ($value, $key) use ($voucher) {
             return $value->id == $voucher->product;
-        })->isEmpty()){
-            return response()->json(["error" => "You must first add the product to the cart before applying the voucher", 400]);
+        })->isEmpty()) {
+            return response()->json(['error' => 'You must first add the product to the cart before applying the voucher', 400]);
         }
 
         $appliedVouchers = VoucherController::getAppliedVouchers($request);

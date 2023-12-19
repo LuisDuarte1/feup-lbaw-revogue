@@ -7,17 +7,17 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-
-    public static function getCartPrice(Request $request): float{
+    public static function getCartPrice(Request $request): float
+    {
         $user = $request->user();
         $appliedVouchers = VoucherController::getAppliedVouchers($request);
         $price = 0.0;
 
-        foreach($user->cart()->get() as $product){
+        foreach ($user->cart()->get() as $product) {
             $voucher = $appliedVouchers->filter(function ($value, $key) use ($product) {
                 return $value->product === $product->id;
             })->first();
-            if($voucher !== null){
+            if ($voucher !== null) {
                 $price += $voucher->bargainMessage->proposed_price;
             } else {
                 $price += $product->price;
@@ -38,25 +38,25 @@ class CartController extends Controller
 
         $errors = collect([]);
 
-        if($applyVoucher !== null){
-            
+        if ($applyVoucher !== null) {
+
             $voucher = Voucher::where('code', $applyVoucher)->get()->first();
 
-            if($voucher === null){
-                $errors->put("voucher_does_not_exist" , "Voucher code does not exist.");
+            if ($voucher === null) {
+                $errors->put('voucher_does_not_exist', 'Voucher code does not exist.');
             }
 
-            if($voucher->belongs_to !== $request->user()->id){
-                $errors->put("voucher_not_owned" , "This voucher does not belong to you.");
+            if ($voucher->belongs_to !== $request->user()->id) {
+                $errors->put('voucher_not_owned', 'This voucher does not belong to you.');
             }
 
-            if($voucher->used){
-                $errors->put("voucher_used" , "This voucher has already been used.");
+            if ($voucher->used) {
+                $errors->put('voucher_used', 'This voucher has already been used.');
             }
-            if($errors->isEmpty()){
-                if($user->cart()->get()->filter(function ($value, $key) use ($voucher){
+            if ($errors->isEmpty()) {
+                if ($user->cart()->get()->filter(function ($value, $key) use ($voucher) {
                     return $value->id == $voucher->product;
-                })->isEmpty()){
+                })->isEmpty()) {
                     $user->cart()->attach($voucher->product);
                 }
 

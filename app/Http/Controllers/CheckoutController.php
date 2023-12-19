@@ -88,7 +88,7 @@ class CheckoutController extends Controller
             'automatic_payment_methods' => [
                 'enabled' => true,
             ],
-            'metadata' => ['vouchers' => json_encode($appliedVouchers)]
+            'metadata' => ['vouchers' => json_encode($appliedVouchers)],
         ]);
 
         $purchaseIntent = $request->user()->purchaseIntents()->create([
@@ -199,7 +199,7 @@ class CheckoutController extends Controller
                     $voucher = $appliedVouchers->filter(function ($value, $key) use ($product) {
                         return $product->id === $value->product;
                     })->first();
-                    if($voucher === null){
+                    if ($voucher === null) {
                         $order->products()->attach($product->id);
                     } else {
                         $voucher->used = true;

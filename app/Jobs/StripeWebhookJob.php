@@ -12,7 +12,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use Stripe\StripeClient;
 
 class StripeWebhookJob implements ShouldQueue
 {
@@ -30,10 +29,10 @@ class StripeWebhookJob implements ShouldQueue
 
             return;
         }
-        
+
         $appliedVouchers = collect(array_map(function ($value) {
             return Voucher::where('code', $value)->get()->first();
-        },json_decode($paymentIntent['metadata']['vouchers'])));
+        }, json_decode($paymentIntent['metadata']['vouchers'])));
 
         $user = $purchaseIntent->user()->get()->first();
         $cart = $purchaseIntent->products()->get();
@@ -51,7 +50,7 @@ class StripeWebhookJob implements ShouldQueue
                 $voucher = $appliedVouchers->filter(function ($value, $key) use ($product) {
                     return $product->id === $value->product;
                 })->first();
-                if($voucher === null){
+                if ($voucher === null) {
                     $order->products()->attach($product->id);
                 } else {
                     $voucher->used = true;
