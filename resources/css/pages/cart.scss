@@ -138,6 +138,22 @@
         align-items: center;
         font-size: 1.1rem;
     }
+
+    .voucher{
+        > .voucher-code{
+            color: $accent;
+            font-weight: bold;
+            > span{
+                color: $text-color;
+                font-weight: normal;
+                font-size: 0.9rem;
+            }
+        }
+
+        > .difference {
+            color: $toast-red;
+        }
+    }
 }
 
 

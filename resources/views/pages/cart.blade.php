@@ -98,7 +98,7 @@ $numProducts = 0;
                 $difference = $voucher->getProduct->price - $voucher->bargainMessage->proposed_price;
             @endphp
             <div class="voucher row justify-between">
-                <p>Voucher: <span>{{$voucher->code}}</span></p>
+                <p class="voucher-code">Voucher: <span>{{$voucher->code}}</span></p>
                 <p class="difference">-{{$difference}}€</p>
             </div>
         @endforeach

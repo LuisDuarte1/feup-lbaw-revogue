@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -33,6 +34,40 @@ class CartController extends Controller
         $cart = $user->cart()->get()->groupBy('sold_by');
         $appliedVouchers = VoucherController::getAppliedVouchers($request);
 
-        return view('pages.cart', ['cart' => $cart, 'appliedVouchers' => $appliedVouchers, 'cartPrice' => CartController::getCartPrice($request)]);
+        $applyVoucher = $request->query('voucher');
+
+        $errors = collect([]);
+
+        if($applyVoucher !== null){
+            
+            $voucher = Voucher::where('code', $applyVoucher)->get()->first();
+
+            if($voucher === null){
+                $errors->put("voucher_does_not_exist" , "Voucher code does not exist.");
+            }
+
+            if($voucher->belongs_to !== $request->user()->id){
+                $errors->put("voucher_not_owned" , "This voucher does not belong to you.");
+            }
+
+            if($voucher->used){
+                $errors->put("voucher_used" , "This voucher has already been used.");
+            }
+            if($errors->isEmpty()){
+                if($user->cart()->get()->filter(function ($value, $key) use ($voucher){
+                    return $value->id == $voucher->product;
+                })->isEmpty()){
+                    $user->cart()->attach($voucher->product);
+                }
+
+                $appliedVouchers->push($voucher);
+                $appliedVouchers = $appliedVouchers->unique('code');
+                $cart = $user->cart()->get()->groupBy('sold_by');
+
+                VoucherController::setAppliedVouchers($request, $appliedVouchers);
+            }
+        }
+
+        return view('pages.cart', ['cart' => $cart, 'appliedVouchers' => $appliedVouchers, 'cartPrice' => CartController::getCartPrice($request)])->with('errors', $errors);
     }
 }

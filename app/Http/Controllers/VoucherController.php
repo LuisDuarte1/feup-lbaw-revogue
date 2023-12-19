@@ -14,13 +14,22 @@ class VoucherController extends Controller
     }
 
     static function getAppliedVouchers(Request $request){
-        return collect(array_map(function ($code) {
+        $currentVouchers = collect(array_map(function ($code) {
             return Voucher::where('code', $code)->get()->first();
-        } , $request->session()->get("cartVouchers", [])));
+        } , $request->session()->get("cartVouchers", [])))->filter();
+
+        $expiredVouchers = $currentVouchers->filter(function ($value, $key) {
+            return ProductController::isProductSold($value->getProduct);
+        });
+
+        $validVouchers = $currentVouchers->diff($expiredVouchers);
+
+        VoucherController::setAppliedVouchers($request, $validVouchers);
+        return $validVouchers;
     }
 
     static function setAppliedVouchers(Request $request, Collection $vouchers){
-        $request->session()->put('cartVouchers', $vouchers->map(function ($value, $key) {
+        $request->session()->put('cartVouchers', $vouchers->unique('code')->map(function ($value, $key) {
             return $value->code;
         })->toArray());
     }

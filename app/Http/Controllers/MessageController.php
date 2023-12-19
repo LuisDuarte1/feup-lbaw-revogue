@@ -194,6 +194,11 @@ class MessageController extends Controller
             return response()->json(['error' => 'The proposed price cannot be higher than the current price'], 400);
         }
 
+        if($validated['proposed_price'] <= 0){
+            return response()->json(['error' => 'The proposed price must be higher than 0.'], 400);
+
+        }        
+
         $threadBargains = $messageThread->messages()->select('bargain')->where('message_type', 'bargain')->get()->pluck('bargain')->unique()->map(function ($item, $key) {
             return Bargain::where('id', $item)->get()->first();
         });

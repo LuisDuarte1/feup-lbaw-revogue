@@ -5,12 +5,14 @@ namespace App\Jobs;
 use App\Http\Controllers\CheckoutController;
 use App\Models\Purchase;
 use App\Models\PurchaseIntent;
+use App\Models\Voucher;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Stripe\StripeClient;
 
 class StripeWebhookJob implements ShouldQueue
 {
@@ -28,6 +30,11 @@ class StripeWebhookJob implements ShouldQueue
 
             return;
         }
+        
+        $appliedVouchers = collect(array_map(function ($value) {
+            return Voucher::where('code', $value)->get()->first();
+        },json_decode($paymentIntent['metadata']['vouchers'])));
+
         $user = $purchaseIntent->user()->get()->first();
         $cart = $purchaseIntent->products()->get();
         $cartGrouped = $purchaseIntent->products()->get()->groupBy('sold_by');
@@ -40,11 +47,18 @@ class StripeWebhookJob implements ShouldQueue
                 'purchase' => $purchase->id,
             ]);
 
-            $ids = [];
             foreach ($products as $product) {
-                array_push($ids, $product->id);
+                $voucher = $appliedVouchers->filter(function ($value, $key) use ($product) {
+                    return $product->id === $value->product;
+                })->first();
+                if($voucher === null){
+                    $order->products()->attach($product->id);
+                } else {
+                    $voucher->used = true;
+                    $voucher->save();
+                    $order->products()->attach($product->id, ['discount' => $product->price - $voucher->bargainMessage->proposed_price]);
+                }
             }
-            $order->products()->attach($ids);
         }
         CheckoutController::removePurchaseFromOtherUsers($user, $cart);
         $purchaseIntent->delete();
