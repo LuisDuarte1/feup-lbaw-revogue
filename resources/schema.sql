@@ -23,11 +23,13 @@ DROP TABLE IF EXISTS
     Jobs,
     MessageThread,
     Bargains,
+    OrderCancellations,
     "failed_jobs",
     Payouts CASCADE;
 
 DROP TYPE IF EXISTS
-    AccountStatus, OrderStatus, MessageType, BargainStatus, ReportType, NotificationType, PaymentMethod, MessageThreadType;
+    AccountStatus, OrderStatus, MessageType, BargainStatus, ReportType, NotificationType, PaymentMethod,
+    MessageThreadType, OrderCancellationStatus;
 
 
 CREATE TYPE AccountStatus AS ENUM('needsConfirmation', 'active', 'banned');
@@ -35,13 +37,15 @@ CREATE TYPE OrderStatus AS ENUM(
     'requestCancellation', 'cancelled', 'pendingShipment', 'shipped', 'received'
 );
 CREATE TYPE MessageType AS ENUM(
-  'bargain',
-  'text'
+    'bargain',
+    'text',
+    'system',
+    'cancellation'
 );
 CREATE TYPE BargainStatus AS ENUM(
-  'pending',
-  'rejected',
-  'accepted'
+    'pending',
+    'rejected',
+    'accepted'
 );
 
 CREATE TYPE ReportType AS ENUM (
@@ -68,6 +72,12 @@ CREATE TYPE NotificationType AS ENUM (
 CREATE TYPE MessageThreadType AS ENUM(
     'product',
     'order'
+);
+
+CREATE TYPE OrderCancellationStatus AS ENUM(
+    'pending',
+    'accepted',
+    'cancelled'
 );
 
 CREATE TABLE Users(
@@ -185,6 +195,14 @@ CREATE TABLE Bargains(
     FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE
 );
 
+CREATE TABLE OrderCancellations(
+    "id" SERIAL PRIMARY KEY ,
+    "created_date" TIMESTAMP NOT NULL,
+    "order_cancellation_status" OrderCancellationStatus NOT NULL,
+    "order" INT NOT NULL,
+    FOREIGN KEY ("order") REFERENCES Orders("id") ON DELETE CASCADE
+);
+
 CREATE TABLE Messages(
     "id" SERIAL PRIMARY KEY,
     "sent_date" TIMESTAMP NOT NULL,
@@ -192,18 +210,27 @@ CREATE TABLE Messages(
     "text_content" TEXT,
     "image_path" TEXT,
     "bargain" INT,
+    "order_cancellation" INT,
+    "system_message" TEXT,
     "message_thread" INT NOT NULL,
-    "from_user" INT NOT NULL,
-    "to_user" INT NOT NULL,
+    "from_user" INT,
+    "to_user" INT,
     FOREIGN KEY ("message_thread") REFERENCES MessageThread("id") ON DELETE CASCADE,
     FOREIGN KEY ("bargain") REFERENCES Bargains("id") ON DELETE CASCADE,
     FOREIGN KEY ("from_user") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("to_user") REFERENCES Users("id") ON DELETE CASCADE,
+    FOREIGN KEY ("order_cancellation") REFERENCES OrderCancellations("id") ON DELETE CASCADE,
     CHECK (("message_type" = 'text' AND
             ("text_content" IS NOT NULL OR "image_path" IS NOT NULL)) OR
            ("message_type" = 'bargain' AND
-            ("bargain" IS NOT NULL)
-        ))
+            ("bargain" IS NOT NULL) OR
+            ("message_type" = 'system' AND
+                "system_message" IS NOT NULL) OR
+            ("message_type" = 'cancellation' AND
+                "order_cancellation" IS NOT NULL)
+        )),
+    CHECK (("message_type" <> 'system' AND "from_user" IS NOT NULL AND "to_user" IS NOT NULL)
+               OR ("message_type" = 'system' AND from_user IS NULL))
 );
 
 CREATE TABLE Vouchers(
@@ -543,8 +570,12 @@ CREATE TRIGGER product_attribute_unique_validity BEFORE INSERT OR UPDATE ON Prod
 
 CREATE OR REPLACE FUNCTION message_has_correct_message_thread_type() RETURNS TRIGGER AS $$
 BEGIN
-    IF ((SELECT "type" FROM MessageThread WHERE "id"=NEW."message_thread") <> 'product') THEN
-        RAISE EXCEPTION 'tried to add a product message to a non-product message thread type';
+    IF ((SELECT "type" FROM MessageThread WHERE "id"=NEW."message_thread") = 'product' AND NOT (NEW.message_type = 'text' OR NEW.message_type = 'bargain')) THEN
+        RAISE EXCEPTION 'tried to add a system or cancellation message to a product message thread';
+    END IF;
+    IF ((SELECT "type" FROM MessageThread WHERE "id"=NEW."message_thread") = 'product' AND NOT
+        (NEW.message_type = 'text' OR NEW.message_type = 'system' OR NEW.message_type = 'cancellation')) THEN
+            RAISE EXCEPTION 'tried to add a bargain message to a order message thread';
     END IF;
     RETURN NEW;
 END;
