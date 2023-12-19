@@ -1,12 +1,17 @@
 @php
-    $fromSelf = $message->from_user == $currentUser->id
+    $systemMessage = !isset($currentUser);
+    $fromSelf = null;
+    if(!$systemMessage) {
+        $fromSelf = $message->from_user == $currentUser->id;
+    }
 @endphp
 
 <div @class([
     'message-bubble',
-    'sent' => $fromSelf,
-    'received' => !$fromSelf,
-    'has-element' => $message->image_path !== null || $message->message_Type == 'bargain'
+    'sent' => isset($fromSelf) && $fromSelf,
+    'received' => isset($fromSelf) &&  !$fromSelf,
+    'systemMessage' => $systemMessage,
+    'has-element' => $message->image_path !== null || $message->message_type == 'bargain'
     ])>
     @if($message->image_path !== null)
         <img class="message-image expandable-image" src="{{$message->image_path}}">

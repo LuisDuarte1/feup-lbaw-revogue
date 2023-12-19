@@ -47,7 +47,7 @@
         </div>
         <div class="message-thread">
             @if($currentThread !== null)
-                <div class="message-thread-content" data-thread-id="{{$currentThread->id}}">
+                <div class="message-thread-content" data-thread-id="{{$currentThread->id}}" data-current-user-id="{{Auth::user()->id}}">
                     <!--TODO: add bargain logic  -->
                     <div id="page-end"></div>
                     @foreach ($messages->reverse() as $message)
