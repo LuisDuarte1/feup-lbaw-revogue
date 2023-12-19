@@ -24,7 +24,7 @@ input[type="checkbox"] {
     background-color: initial;
 }
 
-label[required]:after {
+label[required]:after, h2[required]:after {
     content: "*";
     color: $secondary;
 }
@@ -36,7 +36,6 @@ button {
     padding: 0rem 0.5rem;
     border-radius: 0.5rem;
     color: $button-text-color;
-    font-family: 'Montserrat';
     font-size: 1.25rem;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
@@ -45,6 +44,21 @@ button {
 
 button:hover, button:active{
     background: $secondary-hover;
+}
+
+a.button{
+    background-color: $accent;
+    color: $background;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    padding: 0.3rem 1rem;
+    font-size: 1.1rem;
+}
+
+a.button.outline{
+    border: 2px $accent solid;
+    color: $accent;
+    background-color: inherit;
 }
 
 
@@ -83,6 +97,10 @@ button:hover, button:active{
     justify-content: center;
 }
 
+.self-center {
+    align-self: center;
+}
+
 .gap-1{
     gap: 1rem;
 }
@@ -97,6 +115,10 @@ button:hover, button:active{
     width: 100%;
 }
 
+.h-full{
+    height: 100%;
+
+}
 .grow-2{
     flex-grow: 2;
 }
@@ -105,9 +127,13 @@ button:hover, button:active{
     align-items: center;
 }
 
+.items-begin{
+    align-items: flex-start;
+}
+
 .line{
     border-bottom: 1px solid #a9a8a8;
-    box-shadow: 0 1px 1px rgba(155, 155, 155, 0.2);
+    box-shadow: 0px 1px 0px 0px rgba(155, 155, 155, 0.2);
 }
 
 input[type="radio"] {
@@ -130,6 +156,9 @@ input[type="radio"]:not(:disabled):checked {
 }
 #page-end {
     padding-bottom: 2rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
 
 
@@ -157,4 +186,21 @@ input[type="radio"]:not(:disabled):checked {
             color: $secondary;
         }
     }
+}
+
+.modal-expandable-image{
+    margin: 0;
+    border-radius: 0.5rem;
+}
+
+.modal-expandable-image-container{
+    border-radius: 0.5rem;
+}
+
+.modal-expandable-image-close-button:focus{
+    box-shadow: none !important;
+}
+
+.modal-expandable-image-close-button:hover{
+    color: $background;
 }

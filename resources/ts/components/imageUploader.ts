@@ -1,5 +1,3 @@
-// TODO: não fazer código todo cansado de se ler - peras
-
 async function getImageFile (url: string, name: string): Promise<File> {
   const response = await fetch(url)
 

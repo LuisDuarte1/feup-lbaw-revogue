@@ -18,13 +18,16 @@ class ProfileLayout extends Component
 
     public $rating;
 
-    public function __construct($profilePicture, $name, $username, $bio, $rating)
+    public $id;
+
+    public function __construct($profilePicture, $name, $username, $bio, $rating, $id)
     {
         $this->profilePicture = $profilePicture;
         $this->name = $name;
         $this->username = $username;
         $this->bio = $bio;
         $this->rating = $rating;
+        $this->id = $id;
     }
 
     /**
@@ -38,6 +41,7 @@ class ProfileLayout extends Component
             'username' => $this->username,
             'bio' => $this->bio,
             'rating' => $this->rating,
+            'id' => $this->id,
         ]);
     }
 }

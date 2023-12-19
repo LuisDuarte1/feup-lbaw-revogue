@@ -1,0 +1,31 @@
+.add-review-page{
+    align-items: center;
+
+    .title{
+        font-size: 2.5rem;
+    }
+    .rating-stars{
+        rotate: 180deg;
+        input{
+            display: none;
+        }
+        label{
+            font-size: 1.4rem;
+            color: rgba($text-color, 0.2);
+            cursor: pointer;
+            ion-icon{
+                rotate: 180deg;
+            }
+        }
+        input:not(:checked) ~ label:hover, input:not(:checked) ~ label:hover ~ label {
+            color: $secondary;
+        }
+        input:checked ~ label {
+            color: $secondary;
+        }
+    }
+}
+
+.add-review-form{
+    padding-bottom: 1.5rem;
+}
