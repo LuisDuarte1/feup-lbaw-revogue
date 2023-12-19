@@ -38,10 +38,10 @@ class RegisterController extends Controller
             'username' => 'required|string|max:250|unique:users',
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed',
-            'dateBirth' => 'required|date|olderThan:13|before:today',
+            'date_birth' => 'required|date|olderThan:13|before:today',
         ], [
-            'dateBirth' => 'You must be at least 13 years old to register.',
-            'dateBirth' => 'Your birth date must be before today.',
+            'date_birth' => 'You must be at least 13 years old to register.',
+            'date_birth' => 'Your birth date must be before today.',
         ]);
 
         if ($validator->fails()) {
