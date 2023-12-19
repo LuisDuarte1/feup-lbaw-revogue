@@ -4,19 +4,19 @@
 
 namespace App\Filters;
 
-use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class SizeFilter
 {
-    public function index_product(Request $request)
+    public function index_product(Request $request, Builder $query)
     {
-        $query = Product::orderBy('created_at', 'desc');
-        if ($request->size) {
-            $query = $query->where('size', $request->size);
-        }
-        $products = $query->paginate(5);
 
-        return view('frontend.shop', compact('products'));
+        if ($request->size) {
+            $query->where('size', $request->size);
+        }
+
+        return $query;
+
     }
 }

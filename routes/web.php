@@ -101,14 +101,17 @@ Route::prefix('products')->group(function () {
     Route::controller(ProductListingController::class)->middleware(['auth:web', 'verified'])->group(function () {
         Route::get('/new', 'getPage')->name('productListing');
         Route::post('/new', 'addProduct');
+
     });
-    Route::controller(ProductController::class)->group(function () {
-        Route::get('/{id}', 'getPage')->name('product');
-        Route::post('/{id}/delete', 'deleteProduct');
-        Route::get('/{id}/edit', 'editProductPage');
-        Route::post('/{id}/edit', 'editProduct');
-        Route::get('/', 'listProductsDate');
-    });
+});
+Route::controller(ProductController::class)->group(function () {
+    Route::get('/{id}', 'getPage')->name('product');
+    Route::post('/{id}/delete', 'deleteProduct');
+    Route::get('/{id}/edit', 'editProductPage');
+    Route::post('/{id}/edit', 'editProduct');
+    Route::get('/', 'listProductsDate');
+    //Route::get('/', 'index')->name('products');
+
 });
 
 Route::prefix('profile')->middleware(['auth:web', 'verified'])->group(function () {
