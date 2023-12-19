@@ -21,18 +21,16 @@ DROP TABLE IF EXISTS
     OrderProduct,
     Categories,
     Jobs,
-    MessageThread,
-    Bargains,
     "failed_jobs",
     Payouts CASCADE;
 
 DROP TYPE IF EXISTS
-    AccountStatus, OrderStatus, MessageType, BargainStatus, ReportType, NotificationType, PaymentMethod, MessageThreadType;
+    AccountStatus, OrderStatus, MessageType, BargainStatus, ReportType, NotificationType, PaymentMethod;
 
 
 CREATE TYPE AccountStatus AS ENUM('needsConfirmation', 'active', 'banned');
 CREATE TYPE OrderStatus AS ENUM(
-    'requestCancellation', 'cancelled', 'pendingShipment', 'shipped', 'received'
+    'pendingPayment', 'requestCancellation', 'cancelled', 'pendingShipment', 'shipped', 'received'
 );
 CREATE TYPE MessageType AS ENUM(
   'bargain',
@@ -64,23 +62,16 @@ CREATE TYPE NotificationType AS ENUM (
     'sold'
 );
 
-
-CREATE TYPE MessageThreadType AS ENUM(
-    'product',
-    'order'
-);
-
 CREATE TABLE Users(
     "id" SERIAL PRIMARY KEY NOT NULL,
     "username" TEXT UNIQUE NOT NULL,
-   
+    "date_birth" DATE NOT NULL,
     "display_name" TEXT NOT NULL,
     "email" TEXT UNIQUE NOT NULL,
     "profile_image_path" TEXT,
     "bio" TEXT,
     "password" TEXT,
-    "creation_date" TIMESTAMP NOT NULL,
-    "remember_token" TEXT,
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
     "settings" JSON NOT NULL,
     "account_status" AccountStatus NOT NULL DEFAULT 'needsConfirmation'::AccountStatus
 );
@@ -107,7 +98,7 @@ CREATE TABLE Products(
     "name" TEXT NOT NULL,
     "description" TEXT,
     "price" NUMERIC NOT NULL CHECK ( "price" >= 0 ),
-    "creation_date" TIMESTAMP NOT NULL,
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
     "image_paths" JSON NOT NULL CHECK ( json_array_length("image_paths") > 0 ),
     "sold_by" INT,
     "category" INT,
@@ -132,7 +123,7 @@ CREATE TABLE ProductAttributes(
 
 CREATE TABLE PurchaseIntents(
     "id" SERIAL PRIMARY KEY,
-    "creation_date" TIMESTAMP NOT NULL,
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
     "shipping_address" JSON NOT NULL,
     "payment_intent_id" TEXT UNIQUE NOT NULL,
     "user" INT NOT NULL,
@@ -149,12 +140,12 @@ CREATE TABLE PurchaseIntentProduct(
 CREATE TABLE Purchases(
     "id" SERIAL PRIMARY KEY,
     "method" PaymentMethod NOT NULL,
-    "creation_date" TIMESTAMP NOT NULL
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP )
 );
 
 CREATE TABLE Orders(
     "id" SERIAL PRIMARY KEY,
-    "creation_date" TIMESTAMP NOT NULL,
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
     "status" OrderStatus,
     "shipping_address" JSON NOT NULL,
     "belongs_to" INT,
@@ -163,66 +154,42 @@ CREATE TABLE Orders(
     FOREIGN KEY ("purchase") REFERENCES Purchases("id")
 );
 
-CREATE TABLE MessageThread(
-    "id" SERIAL PRIMARY KEY,
-    "last_updated" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "type" MessageThreadType NOT NULL,
-    "user_1" INT NOT NULL,
-    "user_2" INT NOT NULL,
-    "product" INT,
-    "order" INT,
-    FOREIGN KEY ("user_1") REFERENCES Users("id") ON DELETE CASCADE,
-    FOREIGN KEY ("user_2") REFERENCES Users("id") ON DELETE CASCADE,
-    CHECK ( "user_1" <> "user_2"),
-    CHECK ( ("type" = 'product' AND ("product" IS NOT NULL)) OR ("type" = 'order' AND ("order" IS NOT NULL)))
-);
-
-CREATE TABLE Bargains(
-    "id" SERIAL PRIMARY KEY,
-    "created_date" TIMESTAMP NOT NULL,
-    "bargain_status" BargainStatus NOT NULL,
-    "proposed_price" NUMERIC NOT NULL,
-    "product" INT NOT NULL,
-    FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE
-);
-
 CREATE TABLE Messages(
     "id" SERIAL PRIMARY KEY,
-    "sent_date" TIMESTAMP NOT NULL,
+    "sent_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "sent_date" <= CURRENT_TIMESTAMP ),
     "message_type" MessageType NOT NULL,
     "text_content" TEXT,
     "image_path" TEXT,
-    "bargain" INT,
-    "message_thread" INT NOT NULL,
-    "from_user" INT NOT NULL,
-    "to_user" INT NOT NULL,
-    FOREIGN KEY ("message_thread") REFERENCES MessageThread("id") ON DELETE CASCADE,
-    FOREIGN KEY ("bargain") REFERENCES Bargains("id") ON DELETE CASCADE,
-    FOREIGN KEY ("from_user") REFERENCES Users("id") ON DELETE CASCADE,
-    FOREIGN KEY ("to_user") REFERENCES Users("id") ON DELETE CASCADE,
+    "proposed_price" NUMERIC,
+    "bargain_status" BargainStatus,
+    "from_user" INT,
+    "to_user" INT,
+    "subject_product" INT,
+    FOREIGN KEY ("from_user") REFERENCES Users("id") ON DELETE SET NULL,
+    FOREIGN KEY ("to_user") REFERENCES Users("id") ON DELETE SET NULL,
+    FOREIGN KEY ("subject_product") REFERENCES Products("id") ON DELETE SET NULL,
     CHECK (("message_type" = 'text' AND
             ("text_content" IS NOT NULL OR "image_path" IS NOT NULL)) OR
            ("message_type" = 'bargain' AND
-            ("bargain" IS NOT NULL)
-        ))
+            ("bargain_status" IS NOT NULL AND "proposed_price" IS NOT NULL AND "proposed_price" >= 0))
+        )
 );
 
 CREATE TABLE Vouchers(
     "code" TEXT PRIMARY KEY,
     "belongs_to" INT NOT NULL,
     "product" INT NOT NULL,
-    "bargain" INT NOT NULL,
+    "bargain_message" INT NOT NULL,
     FOREIGN KEY ("belongs_to") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE,
-    FOREIGN KEY ("bargain") REFERENCES Bargains("id") ON DELETE CASCADE
+    FOREIGN KEY ("bargain_message") REFERENCES Messages("id") ON DELETE CASCADE
 );
 
 CREATE TABLE Reviews(
     "id" SERIAL PRIMARY KEY,
     "stars" NUMERIC NOT NULL CHECK ( "stars" >= 0 AND "stars" <= 5 ),
-    "sent_date" TIMESTAMP NOT NULL,
     "description" TEXT,
-    "image_paths" JSON NOT NULL,
+    "image_paths" TEXT[] NOT NULL CHECK (array_length("image_paths", 1) >= 1),
     "reviewed_order" INT NOT NULL,
     "reviewer" INT NOT NULL,
     "reviewed" INT NOT NULL,
@@ -235,14 +202,14 @@ CREATE TABLE Admins(
     "id" SERIAL PRIMARY KEY NOT NULL,
     "email" TEXT UNIQUE NOT NULL,
     "profile_image_path" TEXT,
-    "creation_date" TIMESTAMP NOT NULL,
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
     "password" TEXT
 );
 
 CREATE TABLE Reports(
     "id" SERIAL PRIMARY KEY NOT NULL,
     "type" ReportType NOT NULL,
-    "creation_date" TIMESTAMP NOT NULL,
+    "creation_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP CHECK ( "creation_date" <= CURRENT_TIMESTAMP ),
     "is_closed" BOOLEAN NOT NULL DEFAULT FALSE,
     "closed_by" INT,
     "reporter" INT,
@@ -352,9 +319,8 @@ CREATE INDEX notification_search_index ON Notifications USING hash(belongs_to);
 
 CREATE INDEX product_wishlist_user_search_index ON ProductWishlist USING hash(belongs_to);
 
-CREATE INDEX message_search_index ON Messages USING btree(from_user, to_user);
+CREATE INDEX message_thread_search_index ON Messages USING btree(from_user, to_user, subject_product);
 
-CREATE INDEX message_thread_search_index ON MessageThread USING btree(user_1, user_2);
 -- FTS
 
 ALTER TABLE Products ADD COLUMN fts_search TSVECTOR;
@@ -413,7 +379,7 @@ CREATE INDEX product_search ON Products USING GIN(fts_search);
 
 CREATE OR REPLACE FUNCTION has_accepted_bargain() RETURNS TRIGGER AS $$
 BEGIN
-   IF (SELECT "bargain_status" FROM Bargains WHERE "id"=NEW."bargain") <> 'accepted' THEN
+   IF (SELECT "bargain_status" FROM Messages WHERE "id"=NEW."bargain_message") <> 'accepted' THEN
         RAISE EXCEPTION 'Invalid bargain message status...';
    end if;
    RETURN NEW;
@@ -491,14 +457,10 @@ CREATE TRIGGER review_check_order_validity BEFORE INSERT OR UPDATE ON Reviews
 
 CREATE OR REPLACE FUNCTION bargain_message_order_validity() RETURNS TRIGGER AS $$
 BEGIN
-    IF NEW."message_type" = 'text' THEN
+    IF (SELECT COUNT(*) FROM OrderProduct WHERE "product"=NEW."subject_product") = 0 THEN
         RETURN NEW;
     END IF;
-
-    IF (SELECT COUNT(*) FROM OrderProduct WHERE "product"=(SELECT MessageThread."product" FROM MessageThread  WHERE NEW.message_thread=id)) = 0 THEN
-        RETURN NEW;
-    END IF;
-    IF (SELECT COUNT(*) FROM OrderProduct op JOIN Orders O on O."id" = op."order_id" WHERE op."product"=(SELECT MessageThread."product" FROM MessageThread  WHERE NEW.message_thread=id) AND O."status" <> 'cancelled') = 0 THEN
+    IF (SELECT COUNT(*) FROM OrderProduct op JOIN Orders O on O."id" = op."order_id" WHERE op."product"=NEW."subject_product" AND O."status" <> 'cancelled') = 0 THEN
         RETURN NEW;
     END IF;
     RAISE EXCEPTION 'Product has pending or delivered order, so we cant create/edit a bargain';
@@ -513,15 +475,15 @@ CREATE TRIGGER bargain_message_order_status_validity BEFORE INSERT OR UPDATE ON 
 
 CREATE OR REPLACE FUNCTION bargain_message_price_validity() RETURNS TRIGGER AS $$
 BEGIN
-    IF (SELECT "price" FROM Products WHERE "id"=NEW.product) <= NEW."proposed_price" THEN
+    IF (SELECT "price" FROM Products WHERE "id"=NEW."subject_product") <= NEW."proposed_price" THEN
         RAISE EXCEPTION 'You cant bargain a higher price than the current price of the product';
     END IF;
     RETURN NEW;
 END
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS bargain_message_price_valid ON Bargains;
-CREATE TRIGGER bargain_message_priceV_valid BEFORE INSERT OR UPDATE ON Bargains
+DROP TRIGGER IF EXISTS bargain_message_price_valid ON Messages;
+CREATE TRIGGER bargain_message_priceV_valid BEFORE INSERT OR UPDATE ON Messages
     FOR EACH ROW EXECUTE PROCEDURE bargain_message_price_validity();
 
 -- trigger08
@@ -539,29 +501,3 @@ $$ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS product_attribute_unique_validity ON ProductAttributes;
 CREATE TRIGGER product_attribute_unique_validity BEFORE INSERT OR UPDATE ON ProductAttributes
     FOR EACH ROW EXECUTE PROCEDURE product_attribute_unique_key();
-
--- trigger 09
-
-CREATE OR REPLACE FUNCTION message_has_correct_message_thread_type() RETURNS TRIGGER AS $$
-BEGIN
-    IF ((SELECT "type" FROM MessageThread WHERE "id"=NEW."message_thread") <> 'product') THEN
-        RAISE EXCEPTION 'tried to add a product message to a non-product message thread type';
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS message_correct_message_thread ON Messages;
-CREATE TRIGGER message_correct_message_thread BEFORE INSERT OR UPDATE ON Messages
-    FOR EACH ROW EXECUTE PROCEDURE message_has_correct_message_thread_type();
-
--- trigger 10
-CREATE OR REPLACE FUNCTION message_update_message_thread() RETURNS TRIGGER AS $$
-BEGIN
-    UPDATE MessageThread SET "last_updated"=NEW."sent_date" WHERE "id"=NEW."message_thread";
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER message_update_updated_message_thread AFTER INSERT OR UPDATE ON Messages
-    FOR EACH ROW EXECUTE PROCEDURE message_update_message_thread();
