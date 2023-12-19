@@ -49,7 +49,9 @@
                     </div>
                     <div class="misc-buttons">
                         <a href="#" class="send-image-message"><ion-icon name="images"></ion-icon></a>
-                        <a href="#" class="send-bargain-message" data-product-id="{{$currentThread->product}}"><ion-icon name="diamond"></ion-icon></a>
+                        @if ($messageThreadType == 'product')
+                            <a href="#" class="send-bargain-message" data-product-id="{{$currentThread->product}}"><ion-icon name="diamond"></ion-icon></a>
+                        @endif
                     </div>
                 </div>
             @endif

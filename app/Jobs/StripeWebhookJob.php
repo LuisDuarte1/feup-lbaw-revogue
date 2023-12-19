@@ -45,6 +45,7 @@ class StripeWebhookJob implements ShouldQueue
                 array_push($ids, $product->id);
             }
             $order->products()->attach($ids);
+            CheckoutController::createOrderMessageThread($order);
         }
         CheckoutController::removePurchaseFromOtherUsers($user, $cart);
         $purchaseIntent->delete();

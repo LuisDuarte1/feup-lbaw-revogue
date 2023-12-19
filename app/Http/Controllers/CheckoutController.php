@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\PurchaseIntentTimeoutJob;
+use App\Models\MessageThread;
+use App\Models\Order;
 use App\Models\Purchase;
 use App\Notifications\ProductCartGoneNotification;
 use App\Notifications\ProductSoldNotification;
@@ -15,6 +17,22 @@ use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
+
+    public static function createOrderMessageThread(Order $order){
+        $boughtBy = $order->user;
+        $soldBy = $order->products[0]->sold_by;
+
+        $messageThread = MessageThread::create([
+            'type' => 'order',
+            'user_1' => $boughtBy->id,
+            'user_2' => $soldBy,
+            'order' => $order->id,
+        ]);
+
+        //TODO: create message 
+        return $messageThread;
+    }
+
     public static function removePurchaseFromOtherUsers($user, $cart): void
     {
         // TODO(luisd): send notification
@@ -198,6 +216,8 @@ class CheckoutController extends Controller
                     array_push($ids, $product->id);
                 }
                 $order->products()->attach($ids);
+                
+                CheckoutController::createOrderMessageThread($order);
             }
         }
         // remove the cart of all users because it has been bought
