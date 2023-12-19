@@ -17,6 +17,6 @@ class PriceFilter
         }
         $products = $query->paginate(20);
 
-        return view('products.index', compact('products'));
+        return view('products.index', compact('products'))->render();
     }
 }

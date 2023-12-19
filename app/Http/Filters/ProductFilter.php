@@ -7,7 +7,7 @@ namespace App\Filters;
 class ProductFilter extends AbstractFilter
 {
     protected $filters = [
-        'type' => TypeFilter::class,
+        'size' => SizeFilter::class,
         'price' => PriceFilter::class,
     ];
 }
