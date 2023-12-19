@@ -6,7 +6,7 @@
     <div class="messages-page">
         <h1 class="title">Messages</h1>
         <div class="message-thread-details row justify-between">
-            @if($currentThread !== null)
+            @if($currentThread !== null && $messageThreadType === 'product')
                 @php
                     $product = $currentThread->messageProduct()->get()->first();
                     $soldBy = $product->soldBy()->get()->first();
@@ -14,6 +14,14 @@
                 <a class="username" href="#">{{'@'.$soldBy->username}}</a>
                 <div class="message-thread-details-buttons">
                     <a href="/products/{{$product->id}}" class="button">View Item</a>
+                    <a href="/profile/{{$soldBy->id}}" class="button outline">Visit Shop</a>
+                </div>
+            @elseif ($currentThread !== null && $messageThreadType === 'order')
+                @php
+                    $soldBy = $currentThread->messageOrder->products[0]->soldBy;
+                @endphp
+                <a class="username" href="#">{{'@'.$soldBy->username}}</a>
+                <div class="message-thread-details-buttons">
                     <a href="/profile/{{$soldBy->id}}" class="button outline">Visit Shop</a>
                 </div>
             @endif
@@ -29,7 +37,11 @@
                     @php
                         $isActive = $currentThread->id == $messageThread->id
                     @endphp
-                    <x-product-message-thread :messageThread="$messageThread" :isActive="$isActive"></x-product-message-thread>
+                    @if($messageThreadType === 'product')
+                        <x-product-message-thread :messageThread="$messageThread" :isActive="$isActive"></x-product-message-thread>
+                    @else
+                        <x-order-message-thread :messageThread="$messageThread" :isActive="$isActive"></x-order-message-thread>
+                    @endif
                 @endforeach
             </div>
         </div>
