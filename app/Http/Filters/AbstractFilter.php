@@ -2,7 +2,7 @@
 
 // AbstractFilter.php
 
-namespace App\Filters;
+namespace App\Http\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -20,15 +20,21 @@ abstract class AbstractFilter
 
     public function filter(Builder $builder)
     {
+        dd($this->getFilters());
         foreach ($this->getFilters() as $filter => $value) {
+
             $this->resolveFilter($filter)->filter($builder, $value);
         }
+
+        dd($builder->toSql(), $builder->getBindings());
 
         return $builder;
     }
 
     protected function getFilters()
     {
+        dd($this->request->all());
+
         return array_filter($this->request->only(array_keys($this->filters)));
     }
 

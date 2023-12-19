@@ -2,21 +2,18 @@
 
 // SizeFilter.php
 
-namespace App\Filters;
+namespace App\Http\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class SizeFilter
 {
-    public function index_product(Request $request, Builder $query)
+    public function filter(Builder $query, $value)
     {
 
-        if ($request->size) {
-            $query->where('size', $request->size);
-        }
+        $query->join('ProductAttributes', 'Products.id', '=', 'ProductAttributes.product')
+            ->where('ProductAttributes.attribute', $value);
 
         return $query;
-
     }
 }

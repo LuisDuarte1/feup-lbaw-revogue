@@ -139,6 +139,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+        //return Product::get();
         return Product::filter($request)->get();
     }
 

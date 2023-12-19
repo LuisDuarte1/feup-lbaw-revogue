@@ -2,7 +2,7 @@
 
 // ProductFilter.php
 
-namespace App\Filters;
+namespace App\Http\Filters;
 
 class ProductFilter extends AbstractFilter
 {
