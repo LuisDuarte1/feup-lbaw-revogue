@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'display_name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'date_birth' => $request->date_birth,
             'account_status' => 'needsConfirmation',
             'settings' => json_encode([]),
         ]);

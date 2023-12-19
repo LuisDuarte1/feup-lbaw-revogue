@@ -9,6 +9,8 @@ class CompleteProfileController extends Controller
 {
     public function getPage(Request $request)
     {
+        dd($request->user());
+
         return view('pages.completeProfile', ['imagePath' => $request->user()->profile_image_path, 'bio' => $request->user()->bio, 'displayName' => $request->user()->display_name]);
     }
 

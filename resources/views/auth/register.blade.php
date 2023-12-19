@@ -24,12 +24,12 @@
                         </span>
                     @endif
                     <div>
-                        <label for="dateBirth" required>Date of Birth</label>
-                        <input id="dateBirth" type="date" name="dateBirth" value="{{ old('dateBirth') }}" required
+                        <label for="date_birth" required>Date of Birth</label>
+                        <input id="date_birth" type="date" name="date_birth" value="{{ old('date_birth') }}" required
                             autofocus>
-                        @if ($errors->has('dateBirth'))
+                        @if ($errors->has('date_birth'))
                             <span class="error">
-                                {{ $errors->first('dateBirth') }}
+                                {{ $errors->first('date_birth') }}
                             </span>
                         @endif
                     </div>
