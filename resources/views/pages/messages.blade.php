@@ -11,9 +11,9 @@
                     $product = $currentThread->messageProduct()->get()->first();
                     $soldBy = $product->soldBy()->get()->first();
                 @endphp
-                <a class="username" href="#">{{'@'.$soldBy->username}}</a>
+                <a class="username" href="/profile/{{$soldBy->id}}">{{'@'.$soldBy->username}}</a>
                 <div class="message-thread-details-buttons">
-                    <a href="/products/{{$product->id}}" class="button">View Item</a>
+                    <a href="/products/{{$product->id}}" class="row button items-center">View Item</a>
                     <a href="/profile/{{$soldBy->id}}" class="button outline">Visit Shop</a>
                 </div>
             @endif

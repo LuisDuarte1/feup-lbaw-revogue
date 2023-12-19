@@ -47,7 +47,13 @@ export default function (element: HTMLElement): void {
       if (req.status === 204) {
         const emptyDiv = document.createElement('div')
         emptyDiv.classList.add('column', 'items-center', 'justify-center', 'grow-2')
-        emptyDiv.textContent = 'It seems that your notification section is empty.'
+        const elem = document.createElement('img')
+        emptyDiv.appendChild(elem)
+        elem.src = '/empty_notifications.svg'
+        elem.width = 300
+        const text = document.createElement('p')
+        text.textContent = 'It seems that your notification section is empty.'
+        emptyDiv.appendChild(text)
 
         notificationContent.appendChild(emptyDiv)
         return
