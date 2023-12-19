@@ -2,6 +2,7 @@
 
 @section('content')
     <x-settingsNavbar :tab="$tab" />
+
     <div class="page-center">
         <div class="complete-profile-page">
             <h1 class="title">Profile Settings</h1>
