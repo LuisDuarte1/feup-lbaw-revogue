@@ -18,15 +18,15 @@ function deleteProductHandler (parent: Element): (event: Event) => Promise<void>
       return
     }
     parent.remove()
-    // TODO(luisd): insert empty message when removing
-    // TODO(luisd): update count and total price
+    // TODO(luisd): insert empty message when removing🚬
+    // TODO(luisd): update count and total price🚬
   }
 }
 
 function deleteProduct (): void {
   const products = document.querySelectorAll('.product')
   products.forEach((value) => {
-    const a: HTMLAnchorElement | null = value.querySelector('.product-remove > a')
+    const a: HTMLAnchorElement | null = value.querySelector('.product-remove')
     if (a === null) {
       return
     }
