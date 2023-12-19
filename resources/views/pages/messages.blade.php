@@ -21,8 +21,8 @@
         <div class="message-list column gap-2 items-center">
 
             <div class="messages-tab">
-                <a href="#" class="active">Products</a>
-                <a href="#">Orders</a>
+                <a href="/messages?type=product" @class(['active' => $messageThreadType == 'product'])>Products</a>
+                <a href="/messages?type=order" @class(['active' => $messageThreadType == 'order'])>Orders</a>
             </div>
             <div class="message-thread-list column gap-1">
                 @foreach ($messageThreads as $messageThread)

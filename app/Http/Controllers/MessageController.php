@@ -22,12 +22,12 @@ class MessageController extends Controller
         })->where('message_thread', $messageThread->id)->orderBy('sent_date', 'DESC')->paginate($perPage);
     }
 
-    public static function getMessageThreads(User $user): \Illuminate\Support\Collection
+    public static function getMessageThreads(User $user, $type): \Illuminate\Support\Collection
     {
         //TODO: make this accept product and order threads
         return MessageThread::where(function ($query) use ($user) {
             $query->where('user_1', $user->id)->orWhere('user_2', $user->id);
-        })->where('type', 'product')->orderBy('last_updated', 'DESC')->get();
+        })->where('type', $type)->orderBy('last_updated', 'DESC')->get();
     }
 
     public function getMessagesAPI(Request $request)
@@ -46,21 +46,25 @@ class MessageController extends Controller
 
     public function getPage(Request $request)
     {
-        $messageThreads = MessageController::getMessageThreads($request->user());
+        $messageThreadType = $request->query('type', 'product');
+        $messageThreads = MessageController::getMessageThreads($request->user(), $messageThreadType);
         $threadId = $request->query('thread');
         $messageThread = null;
 
-        if (! isset($threadId) && ! $messageThreads->isEmpty()) {
+        if (! isset($threadId) && !$messageThreads->isEmpty()) {
             $messageThread = $messageThreads[0];
         } else {
             $messageThread = MessageThread::where('id', $threadId)->get()->first();
+            if(isset($messageThread) && $messageThread->type !== $messageThreadType){
+                $messageThreads = MessageController::getMessageThreads($request->user(), $messageThread->type);
+            }
         }
         $messages = [];
         if ($messageThread !== null) {
             $messages = MessageController::getMessages($request->user(), $messageThread);
         }
 
-        return view('pages.messages', ['messageThreads' => $messageThreads, 'messages' => $messages, 'currentThread' => $messageThread, 'currentUser' => $request->user()]);
+        return view('pages.messages', ['messageThreads' => $messageThreads, 'messages' => $messages, 'currentThread' => $messageThread, 'currentUser' => $request->user(), 'messageThreadType' => $messageThreadType]);
     }
 
     public function acceptBargainAPI(Request $request)
