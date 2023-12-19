@@ -15,11 +15,23 @@ use Illuminate\Support\Str;
 
 class MessageController extends Controller
 {
+
+    public static function sendSystemMessage(MessageThread $messageThread, string $content, ?User $to_user): Message{
+        return $messageThread->messages()->create([
+            'message_type' => 'system',
+            'system_message' => $content,
+            'from_user' => null,
+            'to_user' => isset($to_user) ? $to_user->id : null,
+        ]);
+    }
+
     public static function getMessages(User $user, MessageThread $messageThread, $perPage = 10)
     {
-        return Message::where(function ($query) use ($user) {
+        return Message::where('message_thread', $messageThread->id)->where(function ($query) use ($user) {
             $query->where('from_user', $user->id)->orWhere('to_user', $user->id);
-        })->where('message_thread', $messageThread->id)->orderBy('sent_date', 'DESC')->paginate($perPage);
+        })->orWhere(function ($query){
+            $query->where('from_user', null)->where('to_user', null);
+        })->orderBy('sent_date', 'DESC')->paginate($perPage);
     }
 
     public static function getMessageThreads(User $user, $type): \Illuminate\Support\Collection

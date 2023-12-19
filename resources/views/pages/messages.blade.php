@@ -51,7 +51,11 @@
                     <!--TODO: add bargain logic  -->
                     <div id="page-end"></div>
                     @foreach ($messages->reverse() as $message)
-                        <x-message-bubble :message="$message" :current-user="$currentUser"></x-message-bubble>
+                        @if($message->message_type !== 'system')
+                            <x-message-bubble :message="$message" :current-user="$currentUser"></x-message-bubble>
+                        @else
+                            <x-message-bubble :message="$message" :current-user="null"></x-message-bubble>
+                        @endif
                     @endforeach
                 </div>
                 <div class="message-thread-input">

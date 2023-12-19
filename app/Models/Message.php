@@ -32,6 +32,7 @@ class Message extends Model
         'from_user',
         'message_thread',
         'bargain',
+        'system_message'
     ];
 
     /**

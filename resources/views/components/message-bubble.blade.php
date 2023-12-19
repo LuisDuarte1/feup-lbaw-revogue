@@ -51,5 +51,10 @@
         </div>
     </div>
     @endif
+    @if($message->message_type === 'system')
+    <div class="message-system-content">
+        {!! $message->system_message !!}
+    </div>
+    @endif
     <div class="message-date">{{$message->sent_date->diffForHumans(['parts' => 2])}}</div>
 </div>
