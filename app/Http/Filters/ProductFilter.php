@@ -7,7 +7,8 @@ namespace App\Http\Filters;
 class ProductFilter extends AbstractFilter
 {
     protected $filters = [
-        'size' => SizeFilter::class,
+        'attribute' => AttributeFilter::class,
         'price' => PriceFilter::class,
+        'category' => CategoryFilter::class,
     ];
 }
