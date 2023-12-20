@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
+use Monarobase\CountryList\CountryListFacade as Countries;
 use Stripe\StripeClient;
 
 class CheckoutController extends Controller
@@ -159,7 +160,7 @@ class CheckoutController extends Controller
                 ]);
         }
 
-        return view('pages.checkout', ['cart' => $user->cart()->get()]);
+        return view('pages.checkout', ['cart' => $user->cart()->get(), 'countries' => Countries::getList('en')]);
     }
 
     public function postPage(Request $request)
