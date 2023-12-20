@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="search-page">
-        <ion-icon name="filter-outline" id="filter-icon"></ion-icon>
+        <ion-icon name="search-outline" class="search-icon"></ion-icon>
         @foreach ($products as $product)
             @php
                 $price = $product['product']->price;

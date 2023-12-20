@@ -1,5 +1,5 @@
 <div class="filter-wrapper">
-    <form action="{{ url('/') }}" method="GET">
+    <ion <form action="{{ url('/') }}" method="GET">
         <div class="filter-box">
             <label for="min_price">Min Price</label>
             <input type="text" name="price[min_price]">
@@ -15,5 +15,5 @@
         </div>
 
         <input type="submit" value="Filter">
-    </form>
+        </form>
 </div>
