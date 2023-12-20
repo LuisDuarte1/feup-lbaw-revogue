@@ -6,6 +6,7 @@ use App\Events\ProductMessageEvent;
 use App\Models\Bargain;
 use App\Models\Message;
 use App\Models\MessageThread;
+use App\Models\OrderCancellation;
 use App\Models\Product;
 use App\Models\User;
 use App\View\Components\MessageBubble;
@@ -239,6 +240,56 @@ class MessageController extends Controller
             'message_thread' => $messageThread->id,
             'bargain' => $bargain->id,
         ]);
+        DB::commit();
+
+        broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
+
+        $messageBubble = new MessageBubble($message, $request->user());
+
+        return $messageBubble->render();
+    }
+
+    public function sendCancellationRequestAPI(Request $request){
+        $threadId = $request->route('id');
+        $messageThread = MessageThread::where('id', $threadId)->get()->first();
+        if ($messageThread === null) {
+            return response()->json(['error' => 'Message thread does not exist'], 404);
+        }
+        if($messageThread->type !== 'order'){
+            return response()->json(['error' => 'Message thread is not of order type'], 400);
+        }
+        $otherUser = null;
+        if ($messageThread->user_1 === $request->user()->id) {
+            $otherUser = $messageThread->user_2;
+        } elseif ($messageThread->user_2 === $request->user()->id) {
+            $otherUser = $messageThread->user_1;
+        } else {
+            return response()->json(['error' => 'This message thread does not belong to you'], 403);
+        }
+
+        $order = $messageThread->messageOrder;
+
+        if($order->status !== 'pendingShipment'){
+            return response()->json(['error' => 'You cannot request a cancellation after the product has been shipped'], 400);
+        }
+
+        if(OrderController::getActiveOrderCancellations($order)->count() > 0){
+            return response()->json(['error' => "There's already a active cancellation request on this order."], 400);
+        }
+
+        DB::beginTransaction();
+        
+        $orderCancellation = $order->orderCancellations()->create([
+            'order_cancellation_status' => 'pending'
+        ]);
+
+        $message = $messageThread->messages()->create([
+            'message_type' => 'cancellation',
+            'to_user' => $otherUser,
+            'from_user' => $request->user()->id,
+            'order_cancellation' => $orderCancellation->id
+        ]);
+
         DB::commit();
 
         broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();

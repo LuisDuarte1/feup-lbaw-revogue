@@ -80,6 +80,7 @@ Route::prefix('api')->group(function () {
                     Route::post('/', 'sendMessageAPI');
                     Route::get('/', 'getMessagesAPI');
                     Route::post('/bargain', 'sendBargainAPI');
+                    Route::post('/cancellation', 'sendCancellationRequestAPI');
                 });
             });
         });
@@ -97,6 +98,14 @@ Route::prefix('api')->group(function () {
                     Route::get('/status', 'getOrderStatusAPI');
                     Route::post('/status', 'changeOrderStatus');
                     Route::get('/possibleStatus', 'getPossibleStatusChangeAPI');
+                });
+            });
+        });
+        Route::prefix('orderCancellations')->group(function (){
+            Route::prefix('{id}')->group(function () {
+                Route::controller(OrderController::class)->group(function () {
+                    Route::post('/accept', 'acceptOrderCancellation');
+                    Route::post('/reject', 'rejectOrderCancellation');
                 });
             });
         });

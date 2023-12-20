@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProductMessageEvent;
+use App\Models\Message;
 use App\Models\Order;
+use App\Models\OrderCancellation;
+use App\Models\User;
+use App\View\Components\MessageBubble;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+
+    static function getActiveOrderCancellations(Order $order){
+        return $order->orderCancellations()->where('order_cancellation_status', 'pending')->get();
+    }
+
     function getOrderStatusAPI(Request $request){
         $orderId = $request->route('id');
 
@@ -27,7 +38,7 @@ class OrderController extends Controller
         }
 
         if(!$found){
-            return request()->json(["error" => "This order doesn't belong to you."], 403);
+            return response()->json(["error" => "This order doesn't belong to you."], 403);
         }
 
         return response()->json(['status' => $order->status]);
@@ -55,7 +66,11 @@ class OrderController extends Controller
         }
 
         if(!$found){
-            return request()->json(["error" => "This order doesn't belong to you."], 403);
+            return response()->json(["error" => "This order doesn't belong to you."], 403);
+        }
+
+        if(OrderController::getActiveOrderCancellations($order)->count() > 0){
+            return response()->json(['error' => "This order has a pending cancellation request."], 400);
         }
 
         $request->validate([
@@ -110,5 +125,76 @@ class OrderController extends Controller
             $possibleStatus = 'received';
         }
         return response()->json(["statusChange" => $possibleStatus], 200);
+    }
+
+
+    static function updateOrderCancellationStatus(Request $request, OrderCancellation $orderCancellation, $newStatus){
+        $messageThread = $orderCancellation->messages[0]->messageThread;
+        $otherUser = null;
+        if ($messageThread->user_1 === $request->user()->id) {
+            $otherUser = $messageThread->user_2;
+        } elseif ($messageThread->user_2 === $request->user()->id) {
+            $otherUser = $messageThread->user_1;
+        } else {
+            return response()->json(['error' => 'This message thread does not belong to you'], 403);
+        }
+
+        if (! ($request->user()->id === $messageThread->user_1 || $request->user()->id === $messageThread->user_2)) {
+            return response()->json(['error' => 'Only the seller or the recipient can reject a bargain'], 403);
+        }
+
+        if ($orderCancellation->order_cancellation_status !== 'pending') {
+            return response()->json(['error' => 'You can only make one action to a cancellation'], 400);
+        }
+
+        DB::beginTransaction();
+        if($newStatus === 'accepted'){
+            $order = $orderCancellation->getOrder;
+            $order->status = 'cancelled';
+            $order->save();
+        }
+        $orderCancellation->order_cancellation_status  = $newStatus;
+        $orderCancellation->update();
+
+        $message = Message::create([
+            'message_type' => 'cancellation',
+            'to_user' => $otherUser,
+            'from_user' => $request->user()->id,
+            'message_thread' => $messageThread->id,
+            'order_cancellation' => $orderCancellation->id,
+        ]);
+        DB::commit();
+
+        broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
+
+        $messageBubble = new MessageBubble($message, $request->user());
+
+        return $messageBubble->render();
+    }
+
+    function acceptOrderCancellation(Request $request){
+        $orderCancellationId = $request->route('id');
+
+        $orderCancellation = OrderCancellation::find($orderCancellationId);
+
+        if($orderCancellation === null){
+            return response()->json(["error" => "Couldn't find cancellation order"],404);
+        }
+
+        return OrderController::updateOrderCancellationStatus($request, $orderCancellation, "accepted");
+
+    }
+
+    function rejectOrderCancellation(Request $request){
+        $orderCancellationId = $request->route('id');
+
+        $orderCancellation = OrderCancellation::find($orderCancellationId);
+
+        if($orderCancellation === null){
+            return response()->json(["error" => "Couldn't find cancellation order"],404);
+        }
+
+        return OrderController::updateOrderCancellationStatus($request, $orderCancellation, "cancelled");
+
     }
 }

@@ -59,5 +59,10 @@ class Order extends Model
         return $this->belongsTo(Purchase::class, 'purchase');
     }
 
+    public function orderCancellations(): HasMany
+    {
+        return $this->hasMany(OrderCancellation::class, 'order');
+    }
+
     protected $table = 'orders';
 }

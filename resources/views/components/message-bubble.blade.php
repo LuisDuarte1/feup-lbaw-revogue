@@ -56,5 +56,29 @@
         {!! $message->system_message !!}
     </div>
     @endif
+    @if($message->message_type === 'cancellation')
+    @php
+        $cancellation = $message->orderCancellation;
+    @endphp
+    <div class="message-cancellation-content" data-cancellation-id="{{$cancellation->id}}">
+        <div class="column items-center w-full">
+            <p class="cancellation-text">Cancellation</p>
+            <div class="row gap-1">
+                @if($cancellation->order_cancellation_status === 'pending')
+                    @if(!$fromSelf)
+                        <button class="accept-cancellation"><ion-icon name="checkmark-outline"></ion-icon>Accept</button>
+                        <button class="reject-cancellation"><ion-icon name="close-outline"></ion-icon>Reject</button>
+                    @else
+                        <button class="cancel-cancellation"><ion-icon name="close-outline"></ion-icon>Cancel</button>
+                    @endif
+                @elseif($cancellation->order_cancellation_status  === 'cancelled')
+                    <button class="cancel-cancellation rejected" disabled><ion-icon name="close-outline"></ion-icon>Rejected</button>
+                @elseif($cancellation->order_cancellation_status  === 'accepted')
+                    <p class="order-cancelled">Order cancelled</p>
+                @endif
+            </div>
+        </div>
+    </div>
+    @endif
     <div class="message-date">{{$message->sent_date->diffForHumans(['parts' => 2])}}</div>
 </div>

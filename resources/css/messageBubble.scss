@@ -89,6 +89,58 @@
             }
         }
     }
+
+    .message-cancellation-content{
+        background-color: rgba($background, 0.8);
+        padding: 0.7rem 1rem;
+        border-radius: 0.5rem;
+        color: $text-color;
+
+        .cancellation-text{
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .accept-cancellation, .reject-cancellation, .cancel-cancellation{
+            background-color: $button-text-color;
+            color: $background;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 2rem;
+            padding: 0 0.5rem;
+            font-size: 1rem;
+
+
+            &:hover{
+                background-color: #444c63;
+
+            }
+
+            > ion-icon{
+                font-size: 1.5rem;
+            }
+        }
+
+        .reject-cancellation{
+            border: 1px $button-text-color solid;
+            background-color: inherit;
+            color: $button-text-color;
+
+            &:hover {
+                background-color: darken(rgba($background, 0.8), 0.01%)
+            }
+        }
+
+        .cancel-cancellation.rejected{
+            cursor: not-allowed;
+            opacity: 0.8;
+            &:hover{
+                background-color: $button-text-color;
+            }
+        }
+    }
 }
 
 .message-bubble.has-element{
