@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Monarobase\CountryList\CountryListFacade as Countries;
 
 class SettingsController extends Controller
 {
@@ -204,33 +205,12 @@ class SettingsController extends Controller
         return redirect('/settings/shipping');
     }
 
-    public function resetProfileSettings()
-    {
-        $user = User::find(Auth::id());
-        if ($user === null) {
-            return redirect('/login');
-        }
-        $settings = json_decode($user->settings, true);
-        $settings['name'] = null;
-        $settings['email'] = null;
-        $settings['phone'] = null;
-        $settings['address'] = null;
-        $settings['city'] = null;
-        $settings['state'] = null;
-        $settings['zip'] = null;
-        $settings['country'] = null;
-        $user->settings = json_encode($settings);
-        $user->save();
-
-        return redirect('/profile/complete');
-    }
-
     public function ShippingSettings()
     {
         $user = Auth::user();
         $settings = SettingsController::getShippingSettings();
 
-        return view('pages.shippingSettings', ['settings' => $settings, 'user' => $user, 'tab' => 'shipping']);
+        return view('pages.shippingSettings', ['settings' => $settings, 'user' => $user, 'tab' => 'shipping', 'countries' => Countries::getList('en')]);
     }
 
     public function GeneralSettings()
