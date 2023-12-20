@@ -65,7 +65,6 @@ class Message extends Model
         return $this->hasOne(Notification::class, 'message');
     }
 
-
     public function associatedBargain(): BelongsTo
     {
         return $this->belongsTo(Bargain::class, 'bargain');

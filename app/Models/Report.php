@@ -25,7 +25,7 @@ class Report extends Model
         'reported',
         'product',
         'message_thread',
-        'user'
+        'user',
     ];
 
     protected $casts = [
