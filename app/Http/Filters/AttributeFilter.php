@@ -10,13 +10,11 @@ class AttributeFilter
 {
     public function filter(Builder $builder, $value)
     {
-        $builder->join('productattributes', 'products.id', '=', 'productattributes.product')
-            ->join('attributes', 'productattributes.attribute', '=', 'attributes.id');
-
         foreach ($value as $attribute => $valor) {
-
-            $builder->where('attributes.key', $attribute)
-                ->where('attributes.value', $valor);
+            $builder->whereHas('attributes', function ($query) use ($attribute, $valor) {
+                $query->where('key', $attribute)
+                    ->where('value', $valor);
+            });
         }
 
         //dd($builder->toSql(), $builder->getBindings());

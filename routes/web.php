@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::controller(LandingPageController::class)->group(function () {
     Route::get('/', 'getTrendingProducts')->name('landing');
+
 });
 
 // API
@@ -134,7 +135,7 @@ Route::prefix('products')->group(function () {
         Route::get('/{id}/edit', 'editProductPage');
         Route::post('/{id}/edit', 'editProduct');
         Route::get('/', 'listProductsDate');
-        Route::get('/', 'index')->name('products');
+        //Route::get('/', 'index')->name('products');
 
     });
     Route::prefix('{id}')->group(function () {

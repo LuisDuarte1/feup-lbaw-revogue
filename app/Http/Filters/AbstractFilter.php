@@ -41,5 +41,6 @@ abstract class AbstractFilter
     protected function resolveFilter($filter)
     {
         return new $this->filters[$filter];
+
     }
 }

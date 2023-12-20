@@ -10,5 +10,7 @@
         @endif
         </p>
     </div>
+    <a href="/products/{{$product->id}}" class="product-image-link column">
     <img class="product-image" src="{{$product->image_paths[0]}}">
+    </a>
 </div>
