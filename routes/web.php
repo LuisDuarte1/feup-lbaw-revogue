@@ -134,6 +134,7 @@ Route::prefix('products')->group(function () {
         Route::get('/{id}/edit', 'editProductPage');
         Route::post('/{id}/edit', 'editProduct');
         Route::get('/', 'listProductsDate');
+        Route::post('/{id}/report', 'reportProduct');
     });
     Route::prefix('{id}')->group(function () {
         Route::prefix('/messages')->group(function () {

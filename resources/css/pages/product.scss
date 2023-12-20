@@ -238,7 +238,7 @@
     }
 }
 
-.product-price-shipping{
+.product-price-shipping-report{
     display: flex;
     gap: 2rem;
     .product-shipping{
@@ -247,6 +247,18 @@
         h3{
             color: $primary;
             font-size: 0.9rem;
+        }
+    }
+    .product-report{
+        color: $text-color;
+        text-decoration: none;
+        gap: 0.2rem;
+        font-weight: 500;
+        cursor: pointer;
+
+        &:hover{
+            color: $toast-red;
+            transition: ease-in-out 0.2s;
         }
     }
     

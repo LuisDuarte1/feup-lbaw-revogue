@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Report;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -147,5 +148,31 @@ class ProductController extends Controller
         }
 
         return $product;
+    }
+
+    public function reportProduct(Request $request)
+    {
+        $productId = $request->route('id');
+        $product = Product::where('id', $productId)->get()->first();
+        if ($product === null) {
+            return back()->withErrors(['create-error' => 'Product does not exist']);
+        }
+        $request->validate([
+            'reason' => 'required|max:500',
+        ]);
+        $reporter = $request->user();
+        $reported = $product->soldBy;
+        $report = Report::create([
+            'type' => 'product',
+            'is_closed' => false,
+            'message_thread' => null,
+            'reason' => $request->reason,
+            'reported' => $reported->id,
+            'reporter' => $reporter->id,
+            'product' => $product->id,
+            'closed_by' => null,
+        ]);
+
+        return redirect('/')->with('success', 'Report sent successfully');
     }
 }

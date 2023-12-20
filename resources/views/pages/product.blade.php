@@ -49,12 +49,16 @@
                 <div class="product-title">
                     <h1 class="title">{{$product->name}}</h1>
                 </div>
-                <div class="product-price-shipping">
+                <div class="product-price-shipping-report items-center">
                     <div class="product-price">
                         <h3> {{$product->price}}€</h3>
                     </div>
                     <div class="product-shipping">
                         <h3>Shipping: 2€</h3>
+                    </div>
+                    <div class="product-report row items-center">
+                        <ion-icon name="flag-outline"></ion-icon>
+                        Report
                     </div>
                 </div>
                 <div class="product-info">

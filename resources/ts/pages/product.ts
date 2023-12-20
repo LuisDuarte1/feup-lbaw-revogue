@@ -15,7 +15,35 @@ async function addToCartRequest (productId: Number): Promise<void> {
     console.error(`Add to cart failed with status ${req.status}`)
   }
 }
+function sendReport (productId: number): void {
+  const button = document.querySelector('.product-report')
+  if (button === null) {
+    throw Error("Couldn't find report button")
+  }
+  button.addEventListener('click', async () => {
+    const text = await Swal.fire<string>({
+      title: 'Report product',
+      input: 'textarea',
+      confirmButtonText: 'Send',
+      showCloseButton: true,
+      confirmButtonColor: '#B794B8'
+    })
 
+    if (!text.isConfirmed || text.value === undefined) {
+      console.log('User did not confirm send or input is null so we skip it')
+      return
+    }
+    if (text.value === '') {
+      return
+    }
+    console.log(text.value)
+    const form = createFormData()
+    form.set('reason', text.value)
+
+    const req = await fetch(`/products/${productId}/report`, { method: 'POST', body: form })
+    window.location.href = req.url
+  })
+}
 function makeSendMesssageDialog (productId: number): void {
   const button = document.querySelector('.ask-question')
   if (button === null) {
@@ -26,7 +54,8 @@ function makeSendMesssageDialog (productId: number): void {
       title: 'Ask a question',
       input: 'textarea',
       confirmButtonText: 'Send',
-      showCloseButton: true
+      showCloseButton: true,
+      confirmButtonColor: '#B794B8'
     })
 
     if (!text.isConfirmed || text.value === undefined) {
@@ -85,6 +114,7 @@ export function productPage (): void {
     return
   }
   makeSendMesssageDialog(productId)
+  sendReport(productId)
   const buyNow: HTMLButtonElement | null = document.querySelector('.buy-now')
   const addToCart: HTMLButtonElement | null = document.querySelector('.add-to-cart')
   if (buyNow !== null && addToCart !== null) {
