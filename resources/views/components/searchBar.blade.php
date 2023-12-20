@@ -38,9 +38,11 @@
                 <ion-icon name="notifications-outline"></ion-icon>
             </a>
         @endguest
-        <x-filters>
-            <ion-icon name="filter-outline"></ion-icon>
-        </x-filters>
+
+
+        <ion-icon name="filter-outline" id="filter-icon"></ion-icon>
+
+
 
         <a href="/products/new">
             <ion-icon name="add"></ion-icon>
@@ -53,4 +55,5 @@
             <ion-icon name="cart"></ion-icon>
         </a>
     </div>
+    <x-filters id="filters" style="display: none;"></x-filters>
 </nav>

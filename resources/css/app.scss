@@ -14,6 +14,7 @@
 @import 'productMessageThread';
 @import 'messageBubble';
 @import 'popup';
+@import 'filters';
 
 @import 'pages/register';
 @import 'pages/login';
@@ -60,7 +61,7 @@ body {
         grid-column: 2;
     }
 
-    .main-content.full-page-height{
+    .main-content.full-page-height {
         min-height: calc(100vh - #{$page-margin*2});
     }
 
