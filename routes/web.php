@@ -22,6 +22,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -142,12 +143,46 @@ Route::prefix('products')->group(function () {
         Route::post('/{id}/edit', 'editProduct');
         Route::get('/', 'listProductsDate');
     });
-    Route::prefix('{id}')->group(function () {
-        Route::prefix('/messages')->group(function () {
-            Route::controller(MessageController::class)->group(function () {
-                Route::post('/', 'createMessageThread');
-            });
+});
+Route::prefix('{id}')->group(function () {
+    Route::prefix('/messages')->group(function () {
+        Route::controller(MessageController::class)->group(function () {
+            Route::post('/', 'createMessageThread');
         });
+    });
+});
+
+Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function () {
+    Route::controller(SettingsController::class)->group(function () {
+        Route::get('/payment', 'PaymentsSettings')->name('payment-settings');
+        Route::get('/shipping', 'ShippingSettings')->name('shipping-settings');
+        Route::get('/general', 'GeneralSettings')->name('general-settings');
+        Route::get('/profile', 'ProfileSettings')->name('profile-settings');
+        Route::post('/payment/save', 'updatePaymentSettings')->name('settings.payment.save');
+        Route::post('/payment/reset', 'resetPaymentSettings')->name('settings.payment.reset');
+        Route::post('/general/delete', 'deleteAccount')->name('settings.general.delete');
+        Route::post('/general/reset', 'changePassword')->name('settings.general.reset');
+        Route::post('/shipping/save', 'updateShippingSettings')->name('settings.shipping.save');
+        Route::post('/shipping/reset', 'resetShippingSettings')->name('settings.shipping.reset');
+        Route::post('/profile/save', 'updateProfileSettings')->name('settings.profile.save');
+        Route::post('/profile/reset', 'resetProfileSettings')->name('settings.profile.reset');
+    });
+});
+
+Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function () {
+    Route::controller(SettingsController::class)->group(function () {
+        Route::get('/payment', 'PaymentsSettings')->name('payment-settings');
+        Route::get('/shipping', 'ShippingSettings')->name('shipping-settings');
+        Route::get('/general', 'GeneralSettings')->name('general-settings');
+        Route::get('/profile', 'ProfileSettings')->name('profile-settings');
+        Route::post('/payment/save', 'updatePaymentSettings')->name('settings.payment.save');
+        Route::post('/payment/reset', 'resetPaymentSettings')->name('settings.payment.reset');
+        Route::post('/general/delete', 'deleteAccount')->name('settings.general.delete');
+        Route::post('/general/reset', 'changePassword')->name('settings.general.reset');
+        Route::post('/shipping/save', 'updateShippingSettings')->name('settings.shipping.save');
+        Route::post('/shipping/reset', 'resetShippingSettings')->name('settings.shipping.reset');
+        Route::post('/profile/save', 'updateProfileSettings')->name('settings.profile.save');
+        Route::post('/profile/reset', 'resetProfileSettings')->name('settings.profile.reset');
     });
 });
 
@@ -213,7 +248,6 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
 Route::controller(NotificationController::class)->middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/notifications', 'getPage')->name('notifications');
     Route::post('/notifications', 'actionPost');
-
 });
 
 Route::prefix('admin')->group(function () {

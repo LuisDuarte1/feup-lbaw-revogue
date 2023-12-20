@@ -49,6 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'settings',
+        'remember_token',
     ];
 
     /**
@@ -149,5 +150,27 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getEmailForVerification()
     {
         return $this->email;
+    }
+
+    public static function getDefaultSettings()
+    {
+        return [
+            'payment' => [
+                'bank_name' => '',
+                'bank_account_number' => '',
+                'bank_routing_number' => '',
+                'bank_account_type' => '',
+                'bank_account_name' => '',
+            ],
+            'shipping' => [
+                'name' => '',
+                'address' => '',
+                'country' => '',
+                'city' => '',
+                'zip-code' => '',
+                'phone' => '',
+                'email' => '',
+            ],
+        ];
     }
 }

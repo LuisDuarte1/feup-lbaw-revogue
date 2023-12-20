@@ -32,6 +32,8 @@ class RegisterController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
+        $settings = User::getDefaultSettings();
+
         $user = User::create([
             'username' => $request->username,
             'display_name' => $request->name,
@@ -39,7 +41,7 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'account_status' => 'needsConfirmation',
             //TODO: add settings schema default
-            'settings' => json_encode([]),
+            'settings' => $settings,
         ]);
 
         $credentials = $request->only('email', 'password');

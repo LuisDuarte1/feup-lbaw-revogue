@@ -79,6 +79,7 @@ CREATE TABLE Users(
     "bio" TEXT,
     "password" TEXT,
     "creation_date" TIMESTAMP NOT NULL,
+    "remember_token" TEXT,
     "settings" JSON NOT NULL,
     "account_status" AccountStatus NOT NULL DEFAULT 'needsConfirmation'::AccountStatus
 );
@@ -248,11 +249,11 @@ CREATE TABLE Reports(
     "reported" INT,
     "product" INT,
     "message" INT,
-    FOREIGN KEY ("closed_by") REFERENCES Admins("id") ON DELETE SET NULL,
-    FOREIGN KEY ("reporter") REFERENCES Users("id") ON DELETE SET NULL,
-    FOREIGN KEY ("reported") REFERENCES Users("id") ON DELETE SET NULL,
-    FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE SET NULL,
-    FOREIGN KEY ("message") REFERENCES Messages("id") ON DELETE SET NULL,
+    FOREIGN KEY ("closed_by") REFERENCES Admins("id") ON DELETE CASCADE,
+    FOREIGN KEY ("reporter") REFERENCES Users("id") ON DELETE CASCADE,
+    FOREIGN KEY ("reported") REFERENCES Users("id") ON DELETE CASCADE,
+    FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE,
+    FOREIGN KEY ("message") REFERENCES Messages("id") ON DELETE CASCADE,
     CHECK ( ("type" = 'message' AND "message" IS NOT NULL) OR
             ("type" = 'user' AND "reported" IS NOT NULL) OR
             ("type" = 'product' AND "product" IS NOT NULL) )

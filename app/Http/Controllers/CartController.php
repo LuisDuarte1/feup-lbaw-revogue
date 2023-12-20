@@ -70,4 +70,12 @@ class CartController extends Controller
 
         return view('pages.cart', ['cart' => $cart, 'appliedVouchers' => $appliedVouchers, 'cartPrice' => CartController::getCartPrice($request)])->with('errors', $errors);
     }
+
+    public function count(Request $request)
+    {
+        $user = $request->user();
+        $cart = $user->cart()->get();
+
+        return response()->json(['count' => count($cart)]);
+    }
 }
