@@ -67,7 +67,7 @@ class CheckoutController extends Controller
     public static function validateCheckoutRequest(Request $request)
     {
         $request->validate([
-            'full_name' => 'required|max:250',
+            'name' => 'required|max:250',
             'email' => 'required|email:rfc',
             'address' => 'required|max:500',
             'country' => 'required',
@@ -93,7 +93,7 @@ class CheckoutController extends Controller
 
         $purchaseIntent = $request->user()->purchaseIntents()->create([
             'shipping_address' => [
-                'name' => $request->full_name,
+                'name' => $request->name,
                 'email' => $request->email,
                 'country' => $request->country,
                 'address' => $request->address,
@@ -160,7 +160,10 @@ class CheckoutController extends Controller
                 ]);
         }
 
-        return view('pages.checkout', ['cart' => $user->cart()->get(), 'countries' => Countries::getList('en')]);
+        $settings = $user->settings['shipping'];
+
+        return view('pages.checkout', ['cart' => $user->cart()->get(), 'settings' => $settings,
+        , 'countries' => Countries::getList('en')]);
     }
 
     public function postPage(Request $request)
@@ -181,7 +184,7 @@ class CheckoutController extends Controller
                 $order = $request->user()->orders()->create([
                     'status' => 'pendingShipment', //payment at delivery goes straight to pendingShipment
                     'shipping_address' => [
-                        'name' => $request->full_name,
+                        'name' => $request->name,
                         'email' => $request->email,
                         'country' => $request->country,
                         'address' => $request->address,
