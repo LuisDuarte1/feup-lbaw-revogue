@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Purchase;
 use App\Models\User;
-use App\Models\Report;
 use Illuminate\Http\Request;
 
 //TODO (luisd): use pagination
@@ -141,37 +140,5 @@ class ProfileController extends Controller
         $reviews = $user->reviewed;
 
         return view('pages.reviews', ['reviews' => $reviews, 'user' => $user, 'ownPage' => $ownPage, 'tab' => 'reviews']);
-    }
-
-    public function reportUser(Request $request)
-    {
-
-        $request->validate([
-            'reason' => 'required|max:500',
-        ]);
-
-        $reported = User::where('id', $request->route('id'))->get()->first();
-        if ($reported === null) {
-            return back()->withErrors(['create-error' => 'User not found']);
-        }
-        $reporter = $request->user();
-
-        $report = Report::where('reporter', $reporter->id)->where('reported', $reported->id)->get()->first();
-        if ($report !== null) {
-            return back()->withErrors(['create-error' => 'You have already reported this user']);
-        }
-
-        $report = Report::create([
-            'type' => 'user',
-            'is_closed' => false,
-            'message_thread' => null,
-            'reason' => $request->reason,
-            'reported' => $reported->id,
-            'reporter' => $reporter->id,
-            'product' => null,
-            'closed_by' => null,
-        ]);
-
-        return redirect('/profile/'.$reported->id)->with('success', 'User reported successfully');
     }
 }

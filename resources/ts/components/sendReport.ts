@@ -3,10 +3,12 @@ import { createFormData } from '../utils/csrf'
 
 export default function sendReport (element: HTMLElement): void {
   const elem = element
-  const type = elem.dataset.type
+  let type = elem.dataset.type
   const id = elem.dataset.id
   if (type === undefined || id === undefined) {
     throw Error("Couldn't find report button")
+  } else if (type === 'message_thread') {
+    type = 'message thread'
   }
   elem.addEventListener('click', async () => {
     const reason = await Swal.fire<string>({
@@ -29,20 +31,18 @@ export default function sendReport (element: HTMLElement): void {
     form.set('reason', reason.value)
 
     if (type === 'product') {
-      const req = await fetch(`/products/${id}/report`, { method: 'POST', body: form })
-      window.location.href = req.url
+      const req = await fetch(`/api/products/${id}/report`, { method: 'POST', body: form })
       if (req.status !== 200) {
         console.error(`Report failed with status ${req.status}`)
       }
     } else if (type === 'user') {
-      const req = await fetch(`/profile/${id}/report`, { method: 'POST', body: form })
-      window.location.href = req.url
+      const req = await fetch(`/api/profile/${id}/report`, { method: 'POST', body: form })
+
       if (req.status !== 200) {
         console.error(`Report failed with status ${req.status}`)
       }
-    } else if (type === 'message_thread') {
-      const req = await fetch('/messages/report', { method: 'POST', body: form })
-      window.location.href = req.url
+    } else if (type === 'message thread') {
+      const req = await fetch(`/api/messages/${id}/report`, { method: 'POST', body: form })
       if (req.status !== 200) {
         console.error(`Report failed with status ${req.status}`)
       }
