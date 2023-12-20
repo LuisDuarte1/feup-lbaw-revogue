@@ -56,7 +56,7 @@
                     <div class="product-shipping">
                         <h3>Shipping: 2€</h3>
                     </div>
-                    <div class="product-report row items-center">
+                    <div class="report row items-center" data-type="product" data-id="{{$product->id}}">
                         <ion-icon name="flag-outline"></ion-icon>
                         Report
                     </div>

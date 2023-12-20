@@ -157,6 +157,7 @@ Route::prefix('profile')->middleware(['auth:web', 'verified'])->group(function (
             Route::get('/likes', 'likedProducts');
             Route::get('/history', 'historyProducts');
             Route::get('/reviews', 'reviews');
+            Route::post('/report', 'reportUser');
         });
     });
 });
@@ -241,5 +242,6 @@ Route::prefix('orders')->middleware(['auth:web', 'verified'])->group(function ()
 Route::prefix('messages')->middleware(['auth:web', 'verified'])->group(function () {
     Route::controller(MessageController::class)->group(function () {
         Route::get('/', 'getPage');
+        Route::post('/report', 'reportMessages');
     });
 });
