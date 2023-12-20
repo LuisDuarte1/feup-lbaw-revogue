@@ -47,6 +47,7 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             return redirect('/register')->withErrors($validator)->withInput();
         }
+        $settings = User::getDefaultSettings();
 
         $user = User::create([
             'username' => $request->username,
@@ -55,7 +56,8 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'date_birth' => $request->date_birth,
             'account_status' => 'needsConfirmation',
-            'settings' => json_encode([]),
+            //TODO: add settings schema default
+            'settings' => $settings,
         ]);
 
         $credentials = $request->only('email', 'password');

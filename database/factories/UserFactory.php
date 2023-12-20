@@ -17,15 +17,17 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $settings = User::getDefaultSettings();
+
         return [
             'username' => fake()->unique()->userName(),
             'display_name' => fake()->name(),
             'email' => fake()->unique()->email(),
             'date_birth' => fake()->dateTimeBetween('-80 years', '-13 years')->format('Y-m-d'),
             'password' => password_hash('bloat123', PASSWORD_DEFAULT),
-            'settings' => [],
-            'bio' => fake()->paragraph(),
-            'account_status' => fake()->randomElement(['active', 'needsConfirmation', 'banned']),
+            'settings' => $settings,
+            'bio' => $this->faker->paragraph(),
+            'account_status' => $this->faker->randomElement(['active', 'needsConfirmation', 'banned']),
         ];
     }
 

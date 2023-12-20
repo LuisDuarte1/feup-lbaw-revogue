@@ -6,14 +6,18 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class SearchBar extends Component
+class SettingsNavbar extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
+    public string $tab;
 
+    public function __construct($tab)
+    {
+        $this->tab = $tab;
+
+        //
     }
 
     /**
@@ -21,10 +25,6 @@ class SearchBar extends Component
      */
     public function render(): View|Closure|string
     {
-        /*        if ($user != null) {
-                    $cartCount = $user->cart()->count();
-                }
-        */
-        return view('components.searchBar');
+        return view('components.settingsNavbar', ['tab' => $this->tab]);
     }
 }
