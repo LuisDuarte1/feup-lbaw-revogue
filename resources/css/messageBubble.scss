@@ -108,3 +108,42 @@
     background-color: $primary;
 
 }
+
+.message-bubble.systemMessage{
+    word-break: normal;
+    align-self: center;
+    color: $text-color;
+    max-width: 100%;
+    border-radius: 0;
+    margin: 0rem 1rem;
+    border-top: 1px rgba($text-color, 0.2) solid;
+    border-bottom: 1px rgba($text-color, 0.2) solid;
+
+
+    .message-date{
+        color: $text-color;
+    }
+
+
+    .shipping-details{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+
+        .shipping-paragraph{
+            margin-bottom: 1rem;
+        }
+
+        .name,.country,.address,.zip-code{
+            color: $accent;
+            font-weight: bold;
+
+            > .value{
+                color: $text-color;
+                font-weight: normal;
+                font-size: 0.9rem;
+            }
+        }
+    }
+}

@@ -3,8 +3,11 @@
 namespace App\Jobs;
 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\MessageController;
 use App\Models\Purchase;
 use App\Models\PurchaseIntent;
+use App\Models\User;
+use App\View\Components\SystemMessages\ShippingDetails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -45,7 +48,11 @@ class StripeWebhookJob implements ShouldQueue
                 array_push($ids, $product->id);
             }
             $order->products()->attach($ids);
-            CheckoutController::createOrderMessageThread($order);
+            $messageThread = CheckoutController::createOrderMessageThread($order);
+            $shippingDetailsMessage = new ShippingDetails($order->shipping_address);
+            MessageController::sendSystemMessage($messageThread, $shippingDetailsMessage->render()->render(), 
+                User::where('id', $soldBy)->get()->first());
+            
         }
         CheckoutController::removePurchaseFromOtherUsers($user, $cart);
         $purchaseIntent->delete();

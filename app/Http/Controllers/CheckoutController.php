@@ -6,9 +6,11 @@ use App\Jobs\PurchaseIntentTimeoutJob;
 use App\Models\MessageThread;
 use App\Models\Order;
 use App\Models\Purchase;
+use App\Models\User;
 use App\Notifications\ProductCartGoneNotification;
 use App\Notifications\ProductSoldNotification;
 use App\Notifications\WishlistProductGoneNotification;
+use App\View\Components\SystemMessages\ShippingDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -18,7 +20,7 @@ use Stripe\StripeClient;
 class CheckoutController extends Controller
 {
 
-    public static function createOrderMessageThread(Order $order){
+    public static function createOrderMessageThread(Order $order): MessageThread{
         $boughtBy = $order->user;
         $soldBy = $order->products[0]->sold_by;
 
@@ -217,7 +219,11 @@ class CheckoutController extends Controller
                 }
                 $order->products()->attach($ids);
                 
-                CheckoutController::createOrderMessageThread($order);
+                $messageThread = CheckoutController::createOrderMessageThread($order);
+                $shippingDetailsMessage = new ShippingDetails($order->shipping_address);
+                MessageController::sendSystemMessage($messageThread, $shippingDetailsMessage->render()->render(), 
+                    User::where('id', $soldBy)->get()->first());
+                
             }
         }
         // remove the cart of all users because it has been bought
