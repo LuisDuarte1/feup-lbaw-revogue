@@ -15,19 +15,36 @@ use Illuminate\Support\Str;
 
 class MessageController extends Controller
 {
-    public static function getMessages(User $user, MessageThread $messageThread, $perPage = 10)
+    public static function sendSystemMessage(MessageThread $messageThread, string $content, ?User $to_user): Message
     {
-        return Message::where(function ($query) use ($user) {
-            $query->where('from_user', $user->id)->orWhere('to_user', $user->id);
-        })->where('message_thread', $messageThread->id)->orderBy('sent_date', 'DESC')->paginate($perPage);
+        $message = $messageThread->messages()->create([
+            'message_type' => 'system',
+            'system_message' => $content,
+            'from_user' => null,
+            'to_user' => isset($to_user) ? $to_user->id : null,
+        ]);
+        if ($to_user === null) {
+            broadcast(new ProductMessageEvent(null, $message, true));
+        }
+
+        return $message;
     }
 
-    public static function getMessageThreads(User $user): \Illuminate\Support\Collection
+    public static function getMessages(User $user, MessageThread $messageThread, $perPage = 10)
+    {
+        return Message::where('message_thread', $messageThread->id)->where(function ($query) use ($user) {
+            $query->where('from_user', $user->id)->orWhere('to_user', $user->id)->orWhere(function ($query) {
+                $query->where('from_user', null)->where('to_user', null);
+            });
+        })->orderBy('sent_date', 'DESC')->paginate($perPage);
+    }
+
+    public static function getMessageThreads(User $user, $type): \Illuminate\Support\Collection
     {
         //TODO: make this accept product and order threads
         return MessageThread::where(function ($query) use ($user) {
             $query->where('user_1', $user->id)->orWhere('user_2', $user->id);
-        })->where('type', 'product')->orderBy('last_updated', 'DESC')->get();
+        })->where('type', $type)->orderBy('last_updated', 'DESC')->get();
     }
 
     public function getMessagesAPI(Request $request)
@@ -46,21 +63,27 @@ class MessageController extends Controller
 
     public function getPage(Request $request)
     {
-        $messageThreads = MessageController::getMessageThreads($request->user());
+        $messageThreadType = $request->query('type', 'product');
+        $messageThreads = MessageController::getMessageThreads($request->user(), $messageThreadType);
         $threadId = $request->query('thread');
         $messageThread = null;
 
         if (! isset($threadId) && ! $messageThreads->isEmpty()) {
             $messageThread = $messageThreads[0];
         } else {
-            $messageThread = MessageThread::where('id', $threadId)->get()->first();
+            $messageThread = MessageThread::find($threadId);
+            if (isset($messageThread) && $messageThread->type !== $messageThreadType) {
+                $messageThreads = MessageController::getMessageThreads($request->user(), $messageThread->type);
+                $messageThreadType = $messageThread->type;
+            }
         }
+
         $messages = [];
         if ($messageThread !== null) {
             $messages = MessageController::getMessages($request->user(), $messageThread);
         }
 
-        return view('pages.messages', ['messageThreads' => $messageThreads, 'messages' => $messages, 'currentThread' => $messageThread, 'currentUser' => $request->user()]);
+        return view('pages.messages', ['messageThreads' => $messageThreads, 'messages' => $messages, 'currentThread' => $messageThread, 'currentUser' => $request->user(), 'messageThreadType' => $messageThreadType]);
     }
 
     public function acceptBargainAPI(Request $request)
@@ -232,6 +255,57 @@ class MessageController extends Controller
             'message_thread' => $messageThread->id,
             'bargain' => $bargain->id,
         ]);
+        DB::commit();
+
+        broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
+
+        $messageBubble = new MessageBubble($message, $request->user());
+
+        return $messageBubble->render();
+    }
+
+    public function sendCancellationRequestAPI(Request $request)
+    {
+        $threadId = $request->route('id');
+        $messageThread = MessageThread::where('id', $threadId)->get()->first();
+        if ($messageThread === null) {
+            return response()->json(['error' => 'Message thread does not exist'], 404);
+        }
+        if ($messageThread->type !== 'order') {
+            return response()->json(['error' => 'Message thread is not of order type'], 400);
+        }
+        $otherUser = null;
+        if ($messageThread->user_1 === $request->user()->id) {
+            $otherUser = $messageThread->user_2;
+        } elseif ($messageThread->user_2 === $request->user()->id) {
+            $otherUser = $messageThread->user_1;
+        } else {
+            return response()->json(['error' => 'This message thread does not belong to you'], 403);
+        }
+
+        $order = $messageThread->messageOrder;
+
+        if ($order->status !== 'pendingShipment') {
+            return response()->json(['error' => 'You cannot request a cancellation after the product has been shipped'], 400);
+        }
+
+        if (OrderController::getActiveOrderCancellations($order)->count() > 0) {
+            return response()->json(['error' => "There's already a active cancellation request on this order."], 400);
+        }
+
+        DB::beginTransaction();
+
+        $orderCancellation = $order->orderCancellations()->create([
+            'order_cancellation_status' => 'pending',
+        ]);
+
+        $message = $messageThread->messages()->create([
+            'message_type' => 'cancellation',
+            'to_user' => $otherUser,
+            'from_user' => $request->user()->id,
+            'order_cancellation' => $orderCancellation->id,
+        ]);
+
         DB::commit();
 
         broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();

@@ -1,4 +1,4 @@
-.product-message-thread{
+.product-message-thread,.order-message-thread{
     display: grid;
     grid-template-columns: fit-content(25%) minmax(50%, 100%) fit-content(25%);
     grid-template-rows: 100%;
@@ -56,10 +56,15 @@
 
 }
 
-.product-message-thread:hover{
+.product-message-thread:hover,.order-message-thread:hover{
     background-color: $secondary-background;
 }
 
-.product-message-thread.thread-active{
+.product-message-thread.thread-active,.order-message-thread.thread-active{
     background-color: rgba($button-text-color, 0.1);
+}
+
+.order-message-thread{
+    grid-template-columns: fit-content(25%) minmax(50%, 100%);
+    padding-right: 1rem;
 }

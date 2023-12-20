@@ -22,8 +22,11 @@ import { messages } from './pages/messages'
 import sendImageMessage from './components/sendImageMessage'
 import sendBargainMessage from './components/sendBargainMessage'
 import messageBargainContent from './components/messageBargainContent'
+import changeOrderStatus from './components/changeOrderStatus'
+import requestOrderCancellation from './components/requestOrderCancellation'
+import messageCancellationContent from './components/messageCancellationContent'
 import applyVoucherButton from './components/applyVoucherButton'
-import voucherRemove from './components/voucherRemove.js'
+import voucherRemove from './components/voucherRemove'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -54,6 +57,10 @@ const components: ComponentList = {
   '.send-image-message': sendImageMessage,
   '.send-bargain-message': sendBargainMessage,
   '.message-bargain-content': messageBargainContent,
+  '.change-order-status': changeOrderStatus,
+  '.cancel-order': requestOrderCancellation,
+  '.message-cancellation-content': messageCancellationContent,
+  '.order-message-thread': productMessageThread,
   '.apply-button > button': applyVoucherButton,
   '.voucher-remove': voucherRemove
 }
