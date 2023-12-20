@@ -1,43 +1,10 @@
 @import "../theme";
 
-.edit-settings-page {
-    display: flex;
-    justify-content: center;
-    padding: 1.5rem 0;
-
-}
-
-.settings-title {
-    font-size: 2.4rem;
-}
-
-.settings-wrapper {
-    width: 45rem;
-    align-items: center;
-}
-
-
-.settings-details {
+.settings-wrapper{
+    width: 40rem;
     display: flex;
     flex-direction: column;
-    width: 100%;
     justify-content: center;
-
-    input {
-        width: 100%;
-    }
-
-    select {
-        width: calc(100% + 1rem);
-    }
-}
-
-.reset {
-    background-color: $primary;
-
-    &:hover {
-        background-color: darken($primary, 10%);
-    }
-
-    color: $background;
+    gap: 3rem;
+    margin-bottom: 2rem;
 }

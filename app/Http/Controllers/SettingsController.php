@@ -49,9 +49,6 @@ class SettingsController extends Controller
         return $settings;
     }
 
-    // ...
-
-    // GENERAL SETTINGS
 
     public function deleteAccount(Request $request)
     {
@@ -75,7 +72,6 @@ class SettingsController extends Controller
     public function changePassword(Request $request)
     {
         $user = User::find(Auth::id());
-        dd(Hash::check($request->old_password, $user->password));
 
         $request->validate([
             'old_password' => 'required',
@@ -92,7 +88,7 @@ class SettingsController extends Controller
 
     }
 
-    // END OF GENERAL SETTINGS
+
 
     public function updatePaymentSettings(Request $request)
     {
@@ -255,7 +251,7 @@ class SettingsController extends Controller
 
         $settings = SettingsController::getPaymentSettings();
 
-        return view('pages.settings', ['settings' => $settings, 'user' => $user, 'tab' => 'payment']);
+        return view('pages.paymentSettings', ['settings' => $settings, 'user' => $user, 'tab' => 'payment']);
     }
 
     public function ProfileSettings()

@@ -1,11 +1,8 @@
 .settings-navbar {
     display: flex;
-    width: 55rem;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-
-
 
     .settings-navbar-items {
         display: flex;
@@ -33,7 +30,7 @@
     }
 
     .settings-navbar-item a:hover {
-        background-color: #F3F3EB;
+        background-color: $secondary-background;
     }
 
     .settings-navbar-item a.active {
