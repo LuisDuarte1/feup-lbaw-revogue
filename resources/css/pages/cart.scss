@@ -143,15 +143,24 @@
         > .voucher-code{
             color: $accent;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             > span{
                 color: $text-color;
                 font-weight: normal;
                 font-size: 0.9rem;
             }
+
+            > .voucher-remove{
+                line-height: 0;
+                color: $toast-red;
+            }
         }
 
         > .difference {
             color: $toast-red;
+            text-decoration: none;
         }
     }
 }

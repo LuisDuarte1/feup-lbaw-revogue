@@ -72,4 +72,29 @@ class VoucherController extends Controller
         return response()->json([], 200);
 
     }
+
+    public function removeVoucherAPI(Request $request){
+        $voucherCode = $request->input('code');
+        $voucher = Voucher::where('code', $voucherCode)->get()->first();
+        if ($voucher === null) {
+            return response()->json(['error' => 'Voucher code does not exist.'], 404);
+        }
+
+        if ($voucher->belongs_to !== $request->user()->id) {
+            return response()->json(['error' => 'This voucher does not belong to you.'], 404);
+        }
+
+        if ($voucher->used) {
+            return response()->json(['error' => 'This voucher has already been used.'], 400);
+        }
+
+        $appliedVouchers = VoucherController::getAppliedVouchers($request);
+        $filteredVouchers = $appliedVouchers->filter(function ($value, $key) use ($voucher) {
+            return $value->code !== $voucher->code;
+        });
+        VoucherController::setAppliedVouchers($request, $filteredVouchers);
+
+        return response()->json([], 200);
+
+    }
 }

@@ -94,6 +94,7 @@ Route::prefix('api')->group(function () {
         Route::prefix('vouchers')->group(function () {
             Route::controller(VoucherController::class)->group(function () {
                 Route::post('/', 'applyVoucherAPI');
+                Route::post('/delete', 'removeVoucherAPI');
             });
         });
     });
