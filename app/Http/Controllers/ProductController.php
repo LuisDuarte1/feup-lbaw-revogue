@@ -52,7 +52,8 @@ class ProductController extends Controller
 
     public function listProductsDate(Request $request)
     {
-        $products = Product::latest()->paginate(40);
+
+        $products = Product::filter($request)->latest()->paginate(40); // se n funcionar trocar para filter
         $list = [];
         foreach ($products as $product) {
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
@@ -137,11 +138,13 @@ class ProductController extends Controller
         return redirect('/products/'.$product->id);
     }
 
-    public function index(Request $request)
+    /*public function index(Request $request)
     {
         //return Product::get();
+        dd($request->all());
+
         return Product::filter($request)->get();
-    }
+    }*/
 
     public function getProductAPI(Request $request): Product
     {

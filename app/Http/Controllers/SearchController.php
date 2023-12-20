@@ -12,8 +12,8 @@ class SearchController extends Controller
         return Product::whereHas('orders', function ($q) {
             $q->where('status', 'cancelled');
         })->doesntHave('orders', 'or')->whereRaw('(fts_search @@ plainto_tsquery(\'english\', ?) OR name = ?)', [$searchTerm, $searchTerm])
-            ->orderByRaw('ts_rank(fts_search, plainto_tsquery(\'english\', ?)) DESC', [$searchTerm])->paginate($perPage);
-
+            ->orderByRaw('ts_rank(fts_search, plainto_tsquery(\'english\', ?)) DESC', [$searchTerm])->filter(request())->paginate($perPage);
+        // n sei se aqui o request() ta certo
     }
 
     public function searchGet(Request $request)
