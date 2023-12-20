@@ -8,12 +8,16 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SizeFilter
 {
-    public function filter(Builder $query, $value)
+    public function filter(Builder $builder, $value)
     {
 
-        $query->join('ProductAttributes', 'Products.id', '=', 'ProductAttributes.product')
-            ->where('ProductAttributes.attribute', $value);
+        $builder->join('productattributes', 'products.id', '=', 'productattributes.product')
+            ->join('attributes', 'productattributes.attribute', '=', 'attributes.id')
+            ->where('attributes.key', 'Size')
+            ->where('attributes.value', $value);
 
-        return $query;
+        //dd($builder->toSql(), $builder->getBindings());
+
+        return $builder;
     }
 }

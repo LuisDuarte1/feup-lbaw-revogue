@@ -20,20 +20,20 @@ abstract class AbstractFilter
 
     public function filter(Builder $builder)
     {
-        dd($this->getFilters());
+        //dd($this->getFilters());
         foreach ($this->getFilters() as $filter => $value) {
 
             $this->resolveFilter($filter)->filter($builder, $value);
         }
 
-        dd($builder->toSql(), $builder->getBindings());
+        //dd($builder->toSql(), $builder->getBindings());
 
         return $builder;
     }
 
     protected function getFilters()
     {
-        dd($this->request->all());
+        //dd($this->request->all());
 
         return array_filter($this->request->only(array_keys($this->filters)));
     }
