@@ -1,4 +1,3 @@
-
 docker compose up -d
 composer install
 npm install
