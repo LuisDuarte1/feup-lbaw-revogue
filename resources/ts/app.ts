@@ -25,6 +25,8 @@ import messageBargainContent from './components/messageBargainContent'
 import changeOrderStatus from './components/changeOrderStatus'
 import requestOrderCancellation from './components/requestOrderCancellation'
 import messageCancellationContent from './components/messageCancellationContent'
+import applyVoucherButton from './components/applyVoucherButton'
+import voucherRemove from './components/voucherRemove'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -58,7 +60,9 @@ const components: ComponentList = {
   '.change-order-status': changeOrderStatus,
   '.cancel-order': requestOrderCancellation,
   '.message-cancellation-content': messageCancellationContent,
-  '.order-message-thread': productMessageThread
+  '.order-message-thread': productMessageThread,
+  '.apply-button > button': applyVoucherButton,
+  '.voucher-remove': voucherRemove
 }
 
 function pageHandler (): void {

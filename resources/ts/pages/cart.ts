@@ -35,5 +35,6 @@ function deleteProduct (): void {
 }
 
 export function cart (): void {
+  window.history.replaceState(null, '', window.location.pathname)
   deleteProduct()
 }

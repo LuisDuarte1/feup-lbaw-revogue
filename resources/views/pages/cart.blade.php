@@ -83,22 +83,29 @@ $numProducts = 0;
                 <p>Standard Delivery - Free</p>
             </div>
         </div>
-        <form action="">
-            <div class="promo column justify-center gap-1">
-                <h3><label for="promo-code">
-                        Promo code:
-                    </label></h3>
-                <div class="apply-button">
-                    <input type="text" id="promo-code" name="promo-code">
-                    <button>Apply</button>
-                </div>
+        <div class="promo column justify-center gap-1">
+            <h3><label for="promo-code">
+                    Promo code:
+                </label></h3>
+            <div class="apply-button">
+                <input type="text" id="promo-code" name="promo-code">
+                <button>Apply</button>
             </div>
-        </form>
+        </div>
         <span class="line"></span>
+        @foreach ($appliedVouchers as $voucher)
+            @php
+                $difference = $voucher->getProduct->price - $voucher->bargainMessage->proposed_price;
+            @endphp
+            <div class="voucher row justify-between">
+                <p class="voucher-code">Voucher: <span>{{$voucher->code}}</span><a href="#" class="voucher-remove" data-voucher-code="{{$voucher->code}}"><ion-icon name="close-circle-outline"></ion-icon></a></p>
+                <p class="difference">-{{$difference}}€</p>
+            </div>
+        @endforeach
         <div class="total">
             <h3>Total: </h3>
             <div class="total-price">
-                <p>{{$sum}}€</p>
+                <p>{{$cartPrice}}€</p>
             </div>
         </div>
         <div class="checkout-button column">

@@ -83,6 +83,7 @@ CREATE TYPE OrderCancellationStatus AS ENUM(
 CREATE TABLE Users(
     "id" SERIAL PRIMARY KEY NOT NULL,
     "username" TEXT UNIQUE NOT NULL,
+    "date_birth" DATE NOT NULL,
     "display_name" TEXT NOT NULL,
     "email" TEXT UNIQUE NOT NULL,
     "profile_image_path" TEXT,
@@ -238,6 +239,7 @@ CREATE TABLE Vouchers(
     "belongs_to" INT NOT NULL,
     "product" INT NOT NULL,
     "bargain" INT NOT NULL,
+    "used" BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY ("belongs_to") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE,
     FOREIGN KEY ("bargain") REFERENCES Bargains("id") ON DELETE CASCADE
@@ -275,11 +277,11 @@ CREATE TABLE Reports(
     "reported" INT,
     "product" INT,
     "message" INT,
-    FOREIGN KEY ("closed_by") REFERENCES Admins("id") ON DELETE SET NULL,
-    FOREIGN KEY ("reporter") REFERENCES Users("id") ON DELETE SET NULL,
-    FOREIGN KEY ("reported") REFERENCES Users("id") ON DELETE SET NULL,
-    FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE SET NULL,
-    FOREIGN KEY ("message") REFERENCES Messages("id") ON DELETE SET NULL,
+    FOREIGN KEY ("closed_by") REFERENCES Admins("id") ON DELETE CASCADE,
+    FOREIGN KEY ("reporter") REFERENCES Users("id") ON DELETE CASCADE,
+    FOREIGN KEY ("reported") REFERENCES Users("id") ON DELETE CASCADE,
+    FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE,
+    FOREIGN KEY ("message") REFERENCES Messages("id") ON DELETE CASCADE,
     CHECK ( ("type" = 'message' AND "message" IS NOT NULL) OR
             ("type" = 'user' AND "reported" IS NOT NULL) OR
             ("type" = 'product' AND "product" IS NOT NULL) )

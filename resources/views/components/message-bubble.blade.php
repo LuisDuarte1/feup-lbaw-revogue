@@ -44,7 +44,11 @@
                     @php
                         $voucher = $bargain->voucher;    
                     @endphp
-                        <p>Voucher: {{$voucher->code}}</p>
+                    @if($voucher->belongs_to == Auth::user()->id)
+                        <p>Voucher: <a href="/cart?voucher={{$voucher->code}}">{{$voucher->code}}</a></p>
+                    @else
+                        <p>Voucher was given to the other user.</p>
+                    @endif
                 @endif
             </div>
 
