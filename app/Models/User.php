@@ -6,7 +6,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // Added to define Eloquent relationships.
@@ -79,10 +78,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Product::class, 'sold_by');
     }
 
-    public function voucher(): HasOne
+    public function voucher(): HasMany
     {
 
-        return $this->hasOne(Voucher::class, 'belongs_to');
+        return $this->hasMany(Voucher::class, 'belongs_to');
     }
 
     public function reviewing(): HasMany

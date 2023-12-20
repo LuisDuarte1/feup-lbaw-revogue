@@ -1,3 +1,6 @@
 Dockerfile
 upload_image.sh
 README.md
+public/hot
+node_modules
+vendor

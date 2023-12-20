@@ -21,7 +21,9 @@ import sendTextMessage from './components/sendTextMessage'
 import { messages } from './pages/messages'
 import sendImageMessage from './components/sendImageMessage'
 import sendBargainMessage from './components/sendBargainMessage'
-import messageBargainContent from './components/messageBargainContent.js'
+import messageBargainContent from './components/messageBargainContent'
+import applyVoucherButton from './components/applyVoucherButton'
+import voucherRemove from './components/voucherRemove.js'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -51,7 +53,9 @@ const components: ComponentList = {
   '.product-message-thread': productMessageThread,
   '.send-image-message': sendImageMessage,
   '.send-bargain-message': sendBargainMessage,
-  '.message-bargain-content': messageBargainContent
+  '.message-bargain-content': messageBargainContent,
+  '.apply-button > button': applyVoucherButton,
+  '.voucher-remove': voucherRemove
 }
 
 function pageHandler (): void {
