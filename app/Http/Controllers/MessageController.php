@@ -17,20 +17,25 @@ class MessageController extends Controller
 {
     public static function sendSystemMessage(MessageThread $messageThread, string $content, ?User $to_user): Message
     {
-        return $messageThread->messages()->create([
+        $message = $messageThread->messages()->create([
             'message_type' => 'system',
             'system_message' => $content,
             'from_user' => null,
             'to_user' => isset($to_user) ? $to_user->id : null,
         ]);
+        if($to_user === null){
+            broadcast(new ProductMessageEvent(null, $message, true));
+        }
+
+        return $message;
     }
 
     public static function getMessages(User $user, MessageThread $messageThread, $perPage = 10)
     {
         return Message::where('message_thread', $messageThread->id)->where(function ($query) use ($user) {
-            $query->where('from_user', $user->id)->orWhere('to_user', $user->id);
-        })->orWhere(function ($query) {
-            $query->where('from_user', null)->where('to_user', null);
+            $query->where('from_user', $user->id)->orWhere('to_user', $user->id)->orWhere(function ($query) {
+                $query->where('from_user', null)->where('to_user', null);
+            });
         })->orderBy('sent_date', 'DESC')->paginate($perPage);
     }
 
@@ -63,14 +68,16 @@ class MessageController extends Controller
         $threadId = $request->query('thread');
         $messageThread = null;
 
-        if (! isset($threadId) && ! $messageThreads->isEmpty()) {
+        if (!isset($threadId) && ! $messageThreads->isEmpty()) {
             $messageThread = $messageThreads[0];
         } else {
-            $messageThread = MessageThread::where('id', $threadId)->get()->first();
+            $messageThread = MessageThread::find($threadId);
             if (isset($messageThread) && $messageThread->type !== $messageThreadType) {
                 $messageThreads = MessageController::getMessageThreads($request->user(), $messageThread->type);
+                $messageThreadType = $messageThread->type;
             }
         }
+
         $messages = [];
         if ($messageThread !== null) {
             $messages = MessageController::getMessages($request->user(), $messageThread);

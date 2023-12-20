@@ -64,5 +64,10 @@ class Order extends Model
         return $this->hasMany(OrderCancellation::class, 'order');
     }
 
+    public function messageThread(): HasOne
+    {
+        return $this->hasOne(MessageThread::class, 'order');
+    }
+
     protected $table = 'orders';
 }

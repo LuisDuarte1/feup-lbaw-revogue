@@ -17,7 +17,7 @@ class ProductMessageEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(private User $toUser, private Message $message, private bool $systemMessage = false)
+    public function __construct(private ?User $toUser, private Message $message, private bool $systemMessage = false)
     {
         //
     }
@@ -44,6 +44,6 @@ class ProductMessageEvent implements ShouldBroadcast
         }
         $content = $messageBubble->render();
 
-        return ['content' => $content->render(), 'id' => $this->toUser->id];
+        return ['content' => $content->render(), 'id' => isset($this->toUser) ? $this->toUser->id : null];
     }
 }

@@ -18,7 +18,7 @@ export function messages (): void {
     .private(`messagethreads.${threadId}`)
     .listen('ProductMessageEvent', (e: any) => {
       console.log(e)
-      if (e.id !== Number.parseInt(currentUserId)) {
+      if (e.id !== null && e.id !== Number.parseInt(currentUserId)) {
         console.log('message not destined to me... ignoring')
         return
       }

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderCancellation;
 use App\Models\User;
 use App\View\Components\MessageBubble;
+use App\View\Components\SystemMessages\OrderChangedState;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -80,16 +81,20 @@ class OrderController extends Controller
 
         //TODO: send notification and send message to order channel
         if ($order->status === 'pendingShipment' && $request->new_status === 'shipped' && $isSeller) {
+            $oldState = $order->status;
             $order->status = $request->new_status;
             $order->save();
-
+            $component = (new OrderChangedState($request->user(), $oldState, $order->status))->render();
+            MessageController::sendSystemMessage($order->messageThread, $component->render(), null);
             return response()->json([]);
         }
 
         if ($order->status === 'shipped' && $request->new_status === 'received' && ! $isSeller) {
+            $oldState = $order->status;
             $order->status = $request->new_status;
             $order->save();
-
+            $component = (new OrderChangedState($request->user(), $oldState, $order->status))->render();
+            MessageController::sendSystemMessage($order->messageThread, $component->render(), null);
             return response()->json([]);
         }
 

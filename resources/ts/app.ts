@@ -57,7 +57,8 @@ const components: ComponentList = {
   '.message-bargain-content': messageBargainContent,
   '.change-order-status': changeOrderStatus,
   '.cancel-order': requestOrderCancellation,
-  '.message-cancellation-content': messageCancellationContent
+  '.message-cancellation-content': messageCancellationContent,
+  '.order-message-thread': productMessageThread
 }
 
 function pageHandler (): void {
