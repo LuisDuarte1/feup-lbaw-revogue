@@ -3,12 +3,6 @@
     flex-grow: 2;
 }
 .purchase{
-    .shipped, .pendingShipment{
-        color: $toast-yellow;
-    }
-    .cancelled, .requestCancellation{
-        color: $toast-red;
-    }
     
     .received{
         color: $toast-green;

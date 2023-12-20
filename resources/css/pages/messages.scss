@@ -137,13 +137,22 @@
             }
             .misc-buttons{
                 display: flex;
+                align-items: center;
                 gap: 1.5rem;
                 > a {
+                    line-height: 0;
                     display: block;
                     text-decoration: none;
                     color: $primary;
                     font-size: 1.5rem;
-                    height: 1.5rem;
+                }
+
+                > a:hover {
+                    color: darken($primary, 10%);
+                }
+
+                .change-order-status,.cancel-order{
+                    font-size: 1.85rem;
                 }
             }
         }

@@ -21,6 +21,17 @@
                     $soldBy = $currentThread->messageOrder->products[0]->soldBy;
                 @endphp
                 <a class="username" href="#">{{'@'.$soldBy->username}}</a>
+                <div class="order-status row items-center">
+                    @php
+                    $status = $currentThread->messageOrder->status;
+                    $stat = ucfirst($status);
+                    $stat = preg_split('/(?=[A-Z])/', $stat);
+                    $stat = implode(" ", $stat);
+                    @endphp
+
+                    <ion-icon name="ellipse" class="{{$status}}"></ion-icon>
+                    Status: {{$stat}}
+                </div>
                 <div class="message-thread-details-buttons">
                     <a href="/profile/{{$soldBy->id}}" class="button outline">Visit Shop</a>
                 </div>
@@ -67,6 +78,10 @@
                         <a href="#" class="send-image-message"><ion-icon name="images"></ion-icon></a>
                         @if ($messageThreadType == 'product')
                             <a href="#" class="send-bargain-message" data-product-id="{{$currentThread->product}}"><ion-icon name="diamond"></ion-icon></a>
+                        @endif
+                        @if ($messageThreadType == 'order')
+                            <a href="#" class="change-order-status" data-order-id="{{$currentThread->order}}"><ion-icon src="/truck-line.svg"></ion-icon></a>
+                            <a href="#" class="cancel-order" data-order-id="{{$currentThread->order}}"><ion-icon name="close"></ion-icon></a>
                         @endif
                     </div>
                 </div>
