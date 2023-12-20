@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MessageThread;
 use App\Models\Product;
 use App\Models\Report;
 use App\Models\User;
-use App\Models\MessageThread;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -73,6 +73,7 @@ class ReportController extends Controller
 
         return redirect('/profile/'.$reported->id)->with('success', 'User reported successfully');
     }
+
     public function reportMessageThreadAPI(Request $request)
     {
         $request->validate([
@@ -102,7 +103,7 @@ class ReportController extends Controller
             'product' => $messageThread->product,
             'closed_by' => null,
         ]);
-    
+
         return redirect('/messages?thread='.$messageThread->id)->with('success', 'Message thread reported successfully');
     }
 }
