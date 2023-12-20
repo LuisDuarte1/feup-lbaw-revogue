@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::controller(LandingPageController::class)->group(function () {
     Route::get('/', 'getTrendingProducts')->name('landing');
+
 });
 
 // API

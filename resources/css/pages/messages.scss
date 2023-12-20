@@ -26,9 +26,7 @@
         grid-column: 1/1;
         overflow-y: scroll;
         overflow-x: hidden;
-
-
-
+        
         .messages-tab{
             display:  flex;
             justify-content: space-between;
@@ -71,7 +69,7 @@
         align-items: center;
         .username {
             color: $text-color;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-decoration: none;
         }
 
