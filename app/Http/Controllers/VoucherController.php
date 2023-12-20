@@ -73,7 +73,8 @@ class VoucherController extends Controller
 
     }
 
-    public function removeVoucherAPI(Request $request){
+    public function removeVoucherAPI(Request $request)
+    {
         $voucherCode = $request->input('code');
         $voucher = Voucher::where('code', $voucherCode)->get()->first();
         if ($voucher === null) {
