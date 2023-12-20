@@ -50,9 +50,9 @@ class StripeWebhookJob implements ShouldQueue
             $order->products()->attach($ids);
             $messageThread = CheckoutController::createOrderMessageThread($order);
             $shippingDetailsMessage = new ShippingDetails($order->shipping_address);
-            MessageController::sendSystemMessage($messageThread, $shippingDetailsMessage->render()->render(), 
+            MessageController::sendSystemMessage($messageThread, $shippingDetailsMessage->render()->render(),
                 User::where('id', $soldBy)->get()->first());
-            
+
         }
         CheckoutController::removePurchaseFromOtherUsers($user, $cart);
         $purchaseIntent->delete();

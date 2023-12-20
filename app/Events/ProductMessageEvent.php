@@ -37,7 +37,7 @@ class ProductMessageEvent implements ShouldBroadcast
     public function broadcastWith(): array
     {
         $messageBubble = null;
-        if($this->systemMessage){
+        if ($this->systemMessage) {
             $messageBubble = new MessageBubble($this->message, null);
         } else {
             $messageBubble = new MessageBubble($this->message, $this->toUser);

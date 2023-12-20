@@ -33,7 +33,7 @@ class Message extends Model
         'message_thread',
         'bargain',
         'system_message',
-        'order_cancellation'
+        'order_cancellation',
     ];
 
     /**

@@ -101,7 +101,7 @@ Route::prefix('api')->group(function () {
                 });
             });
         });
-        Route::prefix('orderCancellations')->group(function (){
+        Route::prefix('orderCancellations')->group(function () {
             Route::prefix('{id}')->group(function () {
                 Route::controller(OrderController::class)->group(function () {
                     Route::post('/accept', 'acceptOrderCancellation');

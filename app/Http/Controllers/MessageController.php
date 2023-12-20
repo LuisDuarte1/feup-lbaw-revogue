@@ -6,7 +6,6 @@ use App\Events\ProductMessageEvent;
 use App\Models\Bargain;
 use App\Models\Message;
 use App\Models\MessageThread;
-use App\Models\OrderCancellation;
 use App\Models\Product;
 use App\Models\User;
 use App\View\Components\MessageBubble;
@@ -16,8 +15,8 @@ use Illuminate\Support\Str;
 
 class MessageController extends Controller
 {
-
-    public static function sendSystemMessage(MessageThread $messageThread, string $content, ?User $to_user): Message{
+    public static function sendSystemMessage(MessageThread $messageThread, string $content, ?User $to_user): Message
+    {
         return $messageThread->messages()->create([
             'message_type' => 'system',
             'system_message' => $content,
@@ -30,7 +29,7 @@ class MessageController extends Controller
     {
         return Message::where('message_thread', $messageThread->id)->where(function ($query) use ($user) {
             $query->where('from_user', $user->id)->orWhere('to_user', $user->id);
-        })->orWhere(function ($query){
+        })->orWhere(function ($query) {
             $query->where('from_user', null)->where('to_user', null);
         })->orderBy('sent_date', 'DESC')->paginate($perPage);
     }
@@ -64,11 +63,11 @@ class MessageController extends Controller
         $threadId = $request->query('thread');
         $messageThread = null;
 
-        if (! isset($threadId) && !$messageThreads->isEmpty()) {
+        if (! isset($threadId) && ! $messageThreads->isEmpty()) {
             $messageThread = $messageThreads[0];
         } else {
             $messageThread = MessageThread::where('id', $threadId)->get()->first();
-            if(isset($messageThread) && $messageThread->type !== $messageThreadType){
+            if (isset($messageThread) && $messageThread->type !== $messageThreadType) {
                 $messageThreads = MessageController::getMessageThreads($request->user(), $messageThread->type);
             }
         }
@@ -249,13 +248,14 @@ class MessageController extends Controller
         return $messageBubble->render();
     }
 
-    public function sendCancellationRequestAPI(Request $request){
+    public function sendCancellationRequestAPI(Request $request)
+    {
         $threadId = $request->route('id');
         $messageThread = MessageThread::where('id', $threadId)->get()->first();
         if ($messageThread === null) {
             return response()->json(['error' => 'Message thread does not exist'], 404);
         }
-        if($messageThread->type !== 'order'){
+        if ($messageThread->type !== 'order') {
             return response()->json(['error' => 'Message thread is not of order type'], 400);
         }
         $otherUser = null;
@@ -269,25 +269,25 @@ class MessageController extends Controller
 
         $order = $messageThread->messageOrder;
 
-        if($order->status !== 'pendingShipment'){
+        if ($order->status !== 'pendingShipment') {
             return response()->json(['error' => 'You cannot request a cancellation after the product has been shipped'], 400);
         }
 
-        if(OrderController::getActiveOrderCancellations($order)->count() > 0){
+        if (OrderController::getActiveOrderCancellations($order)->count() > 0) {
             return response()->json(['error' => "There's already a active cancellation request on this order."], 400);
         }
 
         DB::beginTransaction();
-        
+
         $orderCancellation = $order->orderCancellations()->create([
-            'order_cancellation_status' => 'pending'
+            'order_cancellation_status' => 'pending',
         ]);
 
         $message = $messageThread->messages()->create([
             'message_type' => 'cancellation',
             'to_user' => $otherUser,
             'from_user' => $request->user()->id,
-            'order_cancellation' => $orderCancellation->id
+            'order_cancellation' => $orderCancellation->id,
         ]);
 
         DB::commit();

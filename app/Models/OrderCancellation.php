@@ -19,19 +19,20 @@ class OrderCancellation extends Model
 
     protected $fillable = [
         'order_cancellation_status',
-        'order'
+        'order',
     ];
 
     protected $casts = [
-        'created_date' => 'datetime'
+        'created_date' => 'datetime',
     ];
 
-
-    public function getOrder(): BelongsTo{
+    public function getOrder(): BelongsTo
+    {
         return $this->belongsTo(Order::class, 'order');
     }
 
-    public function messages(): HasMany{
+    public function messages(): HasMany
+    {
         return $this->hasMany(Message::class, 'order_cancellation');
     }
 

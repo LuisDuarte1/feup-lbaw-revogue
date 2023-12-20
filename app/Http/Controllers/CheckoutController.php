@@ -19,8 +19,8 @@ use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
-
-    public static function createOrderMessageThread(Order $order): MessageThread{
+    public static function createOrderMessageThread(Order $order): MessageThread
+    {
         $boughtBy = $order->user;
         $soldBy = $order->products[0]->sold_by;
 
@@ -31,7 +31,7 @@ class CheckoutController extends Controller
             'order' => $order->id,
         ]);
 
-        //TODO: create message 
+        //TODO: create message
         return $messageThread;
     }
 
@@ -218,12 +218,12 @@ class CheckoutController extends Controller
                     array_push($ids, $product->id);
                 }
                 $order->products()->attach($ids);
-                
+
                 $messageThread = CheckoutController::createOrderMessageThread($order);
                 $shippingDetailsMessage = new ShippingDetails($order->shipping_address);
-                MessageController::sendSystemMessage($messageThread, $shippingDetailsMessage->render()->render(), 
+                MessageController::sendSystemMessage($messageThread, $shippingDetailsMessage->render()->render(),
                     User::where('id', $soldBy)->get()->first());
-                
+
             }
         }
         // remove the cart of all users because it has been bought
