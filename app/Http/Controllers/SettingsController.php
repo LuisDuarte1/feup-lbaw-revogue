@@ -205,27 +205,6 @@ class SettingsController extends Controller
         return redirect('/settings/shipping');
     }
 
-    public function resetProfileSettings()
-    {
-        $user = User::find(Auth::id());
-        if ($user === null) {
-            return redirect('/login');
-        }
-        $settings = json_decode($user->settings, true);
-        $settings['name'] = null;
-        $settings['email'] = null;
-        $settings['phone'] = null;
-        $settings['address'] = null;
-        $settings['city'] = null;
-        $settings['state'] = null;
-        $settings['zip'] = null;
-        $settings['country'] = null;
-        $user->settings = json_encode($settings);
-        $user->save();
-
-        return redirect('/profile/complete');
-    }
-
     public function ShippingSettings()
     {
         $user = Auth::user();
