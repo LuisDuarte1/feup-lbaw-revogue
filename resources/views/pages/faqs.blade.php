@@ -7,15 +7,7 @@
         <div class="questions-wrapper">     
             <div class="question-category">
                 <h2>Orders</h2>
-                    <div class="question-box">
-                        <div class="question">
-                            <p>How can I contact you?</p>
-                            <ion-icon name="chevron-down-outline"></ion-icon>
-                        </div>
-                        <div class="answer">
-                            <p>You can contact us by sending an <a href="mailto:revogue021@gmail.com">email</a></p>
-                        </div>
-                    </div>
+                <x-expandableCard question="How do I place an order?" answer="You can place an order by clicking on the 'Add to Cart' button on the product page. You can then proceed to checkout and pay for your order." />
             </div>
         </div>
     </div>

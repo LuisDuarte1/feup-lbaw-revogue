@@ -22,37 +22,6 @@
                 font-weight: 600;
                 margin-bottom: 1rem;}
 
-            .question-box{
-                display: flex;
-                flex-direction: column;
-                margin-bottom: 1rem;
-                cursor: pointer;
-                padding: 18px;
-                width: 100%;
-                border: none;
-                text-align: left;
-                font-size: 15px;
-                transition: 0.4s;
-                background-color: $secondary;
-                border-radius: 12px;
-
-                .question{
-                    display:flex;
-                    justify-content: space-between;
-                }
-            }
-
-            .question-box:hover, .question-box:active{
-                background: $secondary-hover;
-            }
-        
-
-            .answer{
-                padding: 0 18px;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.2s ease-out;
-            }
         }
 
     }

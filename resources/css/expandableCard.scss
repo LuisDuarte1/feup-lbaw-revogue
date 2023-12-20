@@ -1,0 +1,42 @@
+.question-box{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    font-size: 15px;
+    transition: 0.4s;
+    background-color: $secondary;
+    border-radius: 12px;
+
+    .question{
+        display:flex;
+        justify-content: space-between;
+    }
+
+    ion-icon{
+        font-size: 1.5rem;
+    }
+}
+
+.question-box:hover {
+    background: $secondary-hover;
+}
+
+.question-box:active{
+    background: $secondary-hover;
+    ion-icon{
+        rotate: 180deg;
+    }
+}
+
+
+.answer{
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
