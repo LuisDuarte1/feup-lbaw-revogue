@@ -213,3 +213,16 @@ input[type="radio"]:not(:disabled):checked {
     color: $primary;
 }
 
+.report{
+    color: $text-color;
+    text-decoration: none;
+    gap: 0.2rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover{
+        color: $toast-red;
+        transition: ease-in-out 0.2s;
+    }
+}
+

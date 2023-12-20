@@ -30,16 +30,19 @@ export default function sendReport (element: HTMLElement): void {
 
     if (type === 'product') {
       const req = await fetch(`/products/${id}/report`, { method: 'POST', body: form })
+      window.location.href = req.url
       if (req.status !== 200) {
         console.error(`Report failed with status ${req.status}`)
       }
     } else if (type === 'user') {
-      const req = await fetch(`/users/${id}/report`, { method: 'POST', body: form })
+      const req = await fetch(`/profile/${id}/report`, { method: 'POST', body: form })
+      window.location.href = req.url
       if (req.status !== 200) {
         console.error(`Report failed with status ${req.status}`)
       }
     } else if (type === 'message_thread') {
-      const req = await fetch(`/messages/${id}/report`, { method: 'POST', body: form })
+      const req = await fetch('/messages/report', { method: 'POST', body: form })
+      window.location.href = req.url
       if (req.status !== 200) {
         console.error(`Report failed with status ${req.status}`)
       }

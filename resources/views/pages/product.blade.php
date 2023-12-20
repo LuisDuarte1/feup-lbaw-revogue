@@ -56,10 +56,12 @@
                     <div class="product-shipping">
                         <h3>Shipping: 2€</h3>
                     </div>
+                    @if ($user->id !== Auth::user()->id)
                     <div class="report row items-center" data-type="product" data-id="{{$product->id}}">
                         <ion-icon name="flag-outline"></ion-icon>
                         Report
                     </div>
+                    @endif
                 </div>
                 <div class="product-info">
                     <p>@foreach ($attributes as $attribute)

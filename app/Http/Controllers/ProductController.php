@@ -162,6 +162,12 @@ class ProductController extends Controller
         ]);
         $reporter = $request->user();
         $reported = $product->soldBy;
+
+        $report = Report::where('reporter', $reporter->id)->where('reported', $reported->id)->where('product', $product->id)->get()->first();
+        if ($report !== null) {
+            return back()->withErrors(['create-error' => 'You have already reported this product']);
+        }
+
         $report = Report::create([
             'type' => 'product',
             'is_closed' => false,
@@ -173,6 +179,6 @@ class ProductController extends Controller
             'closed_by' => null,
         ]);
 
-        return redirect('/')->with('success', 'Report sent successfully');
+        return redirect('/products/'.$product->id)->with('success', 'Report sent successfully');
     }
 }
