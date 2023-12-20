@@ -9,7 +9,9 @@ use App\Http\Controllers\api\CartProductController;
 use App\Http\Controllers\api\WishlistController;
 use App\Http\Controllers\Auth\EmailConfirmationController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RecoverPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompleteProfileController;
@@ -116,6 +118,16 @@ Route::controller(LoginController::class)->middleware('auth:web')->group(functio
 Route::controller(RegisterController::class)->middleware('guest:web')->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
+});
+
+Route::controller(RecoverPasswordController::class)->group(function () {
+    Route::get('/recover-password', 'showRecoverPasswordForm')->name('recover-password');
+    Route::post('/recover-password', 'recoverPassword');
+});
+
+Route::controller(ResetPasswordController::class)->group(function () {
+    Route::get('/reset-password/{token}', 'showResetPasswordForm')->name('reset-password');
+    Route::post('/reset-password', 'resetPassword');
 });
 
 Route::prefix('login')->group(function () {
