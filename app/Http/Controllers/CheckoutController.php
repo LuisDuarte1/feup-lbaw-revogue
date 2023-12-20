@@ -162,8 +162,7 @@ class CheckoutController extends Controller
 
         $settings = $user->settings['shipping'];
 
-        return view('pages.checkout', ['cart' => $user->cart()->get(), 'settings' => $settings,
-        , 'countries' => Countries::getList('en')]);
+        return view('pages.checkout', ['cart' => $user->cart()->get(), 'settings' => $settings, 'countries' => Countries::getList('en')]);
     }
 
     public function postPage(Request $request)

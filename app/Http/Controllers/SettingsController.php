@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Monarobase\CountryList\CountryListFacade as Countries;
 
 class SettingsController extends Controller
 {
@@ -230,7 +231,7 @@ class SettingsController extends Controller
         $user = Auth::user();
         $settings = SettingsController::getShippingSettings();
 
-        return view('pages.shippingSettings', ['settings' => $settings, 'user' => $user, 'tab' => 'shipping']);
+        return view('pages.shippingSettings', ['settings' => $settings, 'user' => $user, 'tab' => 'shipping', 'countries' => Countries::getList('en')]);
     }
 
     public function GeneralSettings()
