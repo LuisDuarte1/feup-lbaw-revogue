@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Add this import statement if not already present
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-// Add this import statement
+
 
 class SettingsController extends Controller
 {
@@ -49,7 +49,6 @@ class SettingsController extends Controller
         return $settings;
     }
 
-
     public function deleteAccount(Request $request)
     {
         $user = User::find(Auth::id());
@@ -87,8 +86,6 @@ class SettingsController extends Controller
         return back()->with('success', 'Password changed successfully');
 
     }
-
-
 
     public function updatePaymentSettings(Request $request)
     {
@@ -158,7 +155,7 @@ class SettingsController extends Controller
         $settings['shipping'] = $shipping_settings;
         $user->settings = $settings;
 
-        $user->save(); // Save the updated user object
+        $user->save();
 
         return redirect('/settings/shipping');
     }
@@ -204,7 +201,7 @@ class SettingsController extends Controller
 
         $user->settings = $settings;
 
-        $user->save(); // Save the updated user object
+        $user->save();
 
         return redirect('/settings/shipping');
     }
@@ -225,7 +222,7 @@ class SettingsController extends Controller
         $settings['zip'] = null;
         $settings['country'] = null;
         $user->settings = json_encode($settings);
-        $user->save(); // Save the updated user object
+        $user->save();
 
         return redirect('/profile/complete');
     }
