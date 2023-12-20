@@ -3,18 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\PurchaseIntentTimeoutJob;
+use App\Models\MessageThread;
+use App\Models\Order;
 use App\Models\Purchase;
+use App\Models\User;
 use App\Notifications\ProductCartGoneNotification;
 use App\Notifications\ProductSoldNotification;
 use App\Notifications\WishlistProductGoneNotification;
+use App\View\Components\SystemMessages\ShippingDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
+use Monarobase\CountryList\CountryListFacade as Countries;
 use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
+    public static function createOrderMessageThread(Order $order): MessageThread
+    {
+        $boughtBy = $order->user;
+        $soldBy = $order->products[0]->sold_by;
+
+        $messageThread = MessageThread::create([
+            'type' => 'order',
+            'user_1' => $boughtBy->id,
+            'user_2' => $soldBy,
+            'order' => $order->id,
+        ]);
+
+        //TODO: create message
+        return $messageThread;
+    }
+
     public static function removePurchaseFromOtherUsers($user, $cart): void
     {
         //TODO: remove all vouchers that contain product
@@ -162,8 +183,7 @@ class CheckoutController extends Controller
 
         $settings = $user->settings['shipping'];
 
-        return view('pages.checkout', ['cart' => $user->cart()->get(), 'settings' => $settings,
-        ]);
+        return view('pages.checkout', ['cart' => $user->cart()->get(), 'settings' => $settings, 'countries' => Countries::getList('en')]);
     }
 
     public function postPage(Request $request)
@@ -210,6 +230,12 @@ class CheckoutController extends Controller
                         $order->products()->attach($product->id, ['discount' => $product->price - $voucher->bargainMessage->proposed_price]);
                     }
                 }
+
+                $messageThread = CheckoutController::createOrderMessageThread($order);
+                $shippingDetailsMessage = new ShippingDetails($order->shipping_address);
+                MessageController::sendSystemMessage($messageThread, $shippingDetailsMessage->render()->render(),
+                    User::where('id', $soldBy)->get()->first());
+
             }
         }
         // remove the cart of all users because it has been bought

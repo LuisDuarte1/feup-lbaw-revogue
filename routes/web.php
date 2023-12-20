@@ -18,6 +18,7 @@ use App\Http\Controllers\CompleteProfileController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
@@ -83,6 +84,7 @@ Route::prefix('api')->group(function () {
                     Route::post('/', 'sendMessageAPI');
                     Route::get('/', 'getMessagesAPI');
                     Route::post('/bargain', 'sendBargainAPI');
+                    Route::post('/cancellation', 'sendCancellationRequestAPI');
                 });
             });
         });
@@ -91,6 +93,23 @@ Route::prefix('api')->group(function () {
                 Route::controller(MessageController::class)->group(function () {
                     Route::post('/accept', 'acceptBargainAPI');
                     Route::post('/reject', 'rejectBargainAPI');
+                });
+            });
+        });
+        Route::prefix('orders')->group(function () {
+            Route::prefix('{id}')->group(function () {
+                Route::controller(OrderController::class)->group(function () {
+                    Route::get('/status', 'getOrderStatusAPI');
+                    Route::post('/status', 'changeOrderStatus');
+                    Route::get('/possibleStatus', 'getPossibleStatusChangeAPI');
+                });
+            });
+        });
+        Route::prefix('orderCancellations')->group(function () {
+            Route::prefix('{id}')->group(function () {
+                Route::controller(OrderController::class)->group(function () {
+                    Route::post('/accept', 'acceptOrderCancellation');
+                    Route::post('/reject', 'rejectOrderCancellation');
                 });
             });
         });

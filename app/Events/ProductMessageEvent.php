@@ -17,7 +17,7 @@ class ProductMessageEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(private User $toUser, private Message $message)
+    public function __construct(private ?User $toUser, private Message $message, private bool $systemMessage = false)
     {
         //
     }
@@ -36,9 +36,14 @@ class ProductMessageEvent implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
-        $messageBubble = new MessageBubble($this->message, $this->toUser);
+        $messageBubble = null;
+        if ($this->systemMessage) {
+            $messageBubble = new MessageBubble($this->message, null);
+        } else {
+            $messageBubble = new MessageBubble($this->message, $this->toUser);
+        }
         $content = $messageBubble->render();
 
-        return ['content' => $content->render()];
+        return ['content' => $content->render(), 'id' => isset($this->toUser) ? $this->toUser->id : null];
     }
 }

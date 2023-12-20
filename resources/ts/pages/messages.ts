@@ -9,12 +9,19 @@ export function messages (): void {
   }
 
   const threadId = messageThreadContent.getAttribute('data-thread-id')
-  if (threadId === null) {
-    throw new Error("Couldn't find attribute data-thread-id")
+  const currentUserId = messageThreadContent.getAttribute('data-current-user-id')
+
+  if (threadId === null || currentUserId === null) {
+    throw new Error("Couldn't find attribute data-thread-id or data-current-user-id")
   }
   echo
     .private(`messagethreads.${threadId}`)
     .listen('ProductMessageEvent', (e: any) => {
+      console.log(e)
+      if (e.id !== null && e.id !== Number.parseInt(currentUserId)) {
+        console.log('message not destined to me... ignoring')
+        return
+      }
       const content: string | undefined = e.content
       if (content === undefined) {
         throw Error("Couldn't find event content")
