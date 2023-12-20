@@ -73,6 +73,7 @@ CREATE TYPE MessageThreadType AS ENUM(
 CREATE TABLE Users(
     "id" SERIAL PRIMARY KEY NOT NULL,
     "username" TEXT UNIQUE NOT NULL,
+    "date_birth" DATE NOT NULL,
     "display_name" TEXT NOT NULL,
     "email" TEXT UNIQUE NOT NULL,
     "profile_image_path" TEXT,

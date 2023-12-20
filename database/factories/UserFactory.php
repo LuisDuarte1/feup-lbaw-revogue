@@ -20,9 +20,10 @@ class UserFactory extends Factory
         $settings = User::getDefaultSettings();
 
         return [
-            'username' => $this->faker->unique()->userName(),
-            'display_name' => $this->faker->name(),
-            'email' => $this->faker->unique()->email(),
+            'username' => fake()->unique()->userName(),
+            'display_name' => fake()->name(),
+            'email' => fake()->unique()->email(),
+            'date_birth' => fake()->dateTimeBetween('-80 years', '-13 years')->format('Y-m-d'),
             'password' => password_hash('bloat123', PASSWORD_DEFAULT),
             'settings' => $settings,
             'bio' => $this->faker->paragraph(),
