@@ -50,6 +50,12 @@ class SettingsController extends Controller
     public function deleteAccount(Request $request)
     {
         $user = User::find(Auth::id());
+
+        $activeOrders = $user->orders()->whereNotIn('status', ['cancelled', 'received'])->count();
+        if ($activeOrders > 0) {
+            return back()->withErrors(['active_orders' => 'You have active orders. Please complete or cancel them before deleting your account.']);
+        }
+
         if (Hash::check($request->password, $user->password)) {
             Auth::logout();
             $request->session()->invalidate();
@@ -61,7 +67,6 @@ class SettingsController extends Controller
             return redirect()->route('login')
                 ->withSuccess('You have logged out successfully!');
         } else {
-
             return redirect()->route('general-settings')->withErrors(['password' => 'The password is incorrect']);
         }
     }
@@ -202,27 +207,6 @@ class SettingsController extends Controller
         $user->save();
 
         return redirect('/settings/shipping');
-    }
-
-    public function resetProfileSettings()
-    {
-        $user = User::find(Auth::id());
-        if ($user === null) {
-            return redirect('/login');
-        }
-        $settings = json_decode($user->settings, true);
-        $settings['name'] = null;
-        $settings['email'] = null;
-        $settings['phone'] = null;
-        $settings['address'] = null;
-        $settings['city'] = null;
-        $settings['state'] = null;
-        $settings['zip'] = null;
-        $settings['country'] = null;
-        $user->settings = json_encode($settings);
-        $user->save();
-
-        return redirect('/profile/complete');
     }
 
     public function ShippingSettings()
