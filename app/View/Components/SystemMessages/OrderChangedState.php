@@ -22,6 +22,6 @@ class OrderChangedState extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.system-messages.order-changed-state', ['byUser' => $this->byUser, 'fromState'=>$this->fromState, 'toState'=>$this->toState]);
+        return view('components.system-messages.order-changed-state', ['byUser' => $this->byUser, 'fromState' => $this->fromState, 'toState' => $this->toState]);
     }
 }

@@ -23,7 +23,7 @@ class MessageController extends Controller
             'from_user' => null,
             'to_user' => isset($to_user) ? $to_user->id : null,
         ]);
-        if($to_user === null){
+        if ($to_user === null) {
             broadcast(new ProductMessageEvent(null, $message, true));
         }
 
@@ -68,7 +68,7 @@ class MessageController extends Controller
         $threadId = $request->query('thread');
         $messageThread = null;
 
-        if (!isset($threadId) && ! $messageThreads->isEmpty()) {
+        if (! isset($threadId) && ! $messageThreads->isEmpty()) {
             $messageThread = $messageThreads[0];
         } else {
             $messageThread = MessageThread::find($threadId);

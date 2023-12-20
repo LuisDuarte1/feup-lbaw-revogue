@@ -86,6 +86,7 @@ class OrderController extends Controller
             $order->save();
             $component = (new OrderChangedState($request->user(), $oldState, $order->status))->render();
             MessageController::sendSystemMessage($order->messageThread, $component->render(), null);
+
             return response()->json([]);
         }
 
@@ -95,6 +96,7 @@ class OrderController extends Controller
             $order->save();
             $component = (new OrderChangedState($request->user(), $oldState, $order->status))->render();
             MessageController::sendSystemMessage($order->messageThread, $component->render(), null);
+
             return response()->json([]);
         }
 
