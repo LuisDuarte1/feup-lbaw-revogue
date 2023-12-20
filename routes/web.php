@@ -38,7 +38,6 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::controller(LandingPageController::class)->group(function () {
     Route::get('/', 'getTrendingProducts')->name('landing');
-
 });
 
 // API
@@ -160,7 +159,6 @@ Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function 
         Route::post('/shipping/reset', 'resetShippingSettings')->name('settings.shipping.reset');
         Route::post('/profile/save', 'updateProfileSettings')->name('settings.profile.save');
         Route::post('/profile/reset', 'resetProfileSettings')->name('settings.profile.reset');
-
     });
 });
 
@@ -178,7 +176,6 @@ Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function 
         Route::post('/shipping/reset', 'resetShippingSettings')->name('settings.shipping.reset');
         Route::post('/profile/save', 'updateProfileSettings')->name('settings.profile.save');
         Route::post('/profile/reset', 'resetProfileSettings')->name('settings.profile.reset');
-
     });
 });
 
@@ -244,7 +241,6 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
 Route::controller(NotificationController::class)->middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/notifications', 'getPage')->name('notifications');
     Route::post('/notifications', 'actionPost');
-
 });
 
 Route::prefix('admin')->group(function () {
