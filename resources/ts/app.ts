@@ -50,7 +50,7 @@ const components: ComponentList = {
   '#account_status': submitFormOnChange,
   '#order_status': submitFormOnChange,
   '.upload-photos': imageUploader,
-  '#wishlist_button': wishlistButton,
+  '.wishlist_button': wishlistButton,
   'meta[name="modal-error"]': errorModal,
   '.expandable-image': expandableImage,
   '#notifications-icon': notificationDropdown,

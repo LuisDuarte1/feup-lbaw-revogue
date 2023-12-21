@@ -1,6 +1,6 @@
 import { handleRequestErrorToast } from '../utils/toastUtils'
 
-async function removeFromWishlist (productId: Number, wishlist: HTMLAnchorElement): Promise<void> {
+async function removeFromWishlist (productId: Number, wishlist: HTMLDivElement): Promise<void> {
   const req = await fetch('/api/wishlist', {
     method: 'DELETE',
     body: JSON.stringify({ product: productId }),
@@ -26,12 +26,15 @@ async function removeFromWishlist (productId: Number, wishlist: HTMLAnchorElemen
   } else {
     icon.setAttribute('name', 'heart')
   }
-  wishlist.onclick = async () => {
-    await addToWishlist(productId, wishlist)
+  wishlist.onclick = (event) => {
+    event.stopPropagation()
+    event.preventDefault()
+    void addToWishlist(productId, wishlist)
+    return false
   }
 }
 
-async function addToWishlist (productId: Number, wishlist: HTMLAnchorElement): Promise<void> {
+async function addToWishlist (productId: Number, wishlist: HTMLDivElement): Promise<void> {
   const req = await fetch('/api/wishlist', {
     method: 'POST',
     body: JSON.stringify({ product: productId }),
@@ -57,13 +60,16 @@ async function addToWishlist (productId: Number, wishlist: HTMLAnchorElement): P
   } else {
     icon.setAttribute('name', 'heart')
   }
-  wishlist.onclick = async () => {
-    await removeFromWishlist(productId, wishlist)
+  wishlist.onclick = (event) => {
+    event.stopPropagation()
+    event.preventDefault()
+    void removeFromWishlist(productId, wishlist)
+    return false
   }
 }
 
 export default function (wishlist: HTMLElement): void {
-  if (!(wishlist instanceof HTMLAnchorElement)) {
+  if (!(wishlist instanceof HTMLDivElement)) {
     return
   }
   const inWishlist = wishlist.getAttribute('data-inWishlist')
@@ -78,12 +84,18 @@ export default function (wishlist: HTMLElement): void {
   }
 
   if (inWishlist === 'false') {
-    wishlist.onclick = async () => {
-      await addToWishlist(productId, wishlist)
+    wishlist.onclick = (event) => {
+      event.stopPropagation()
+      event.preventDefault()
+      void addToWishlist(productId, wishlist)
+      return false
     }
   } else {
-    wishlist.onclick = async () => {
-      await removeFromWishlist(productId, wishlist)
+    wishlist.onclick = (event) => {
+      event.stopPropagation()
+      event.preventDefault()
+      void removeFromWishlist(productId, wishlist)
+      return false
     }
   }
 }
