@@ -1,4 +1,5 @@
 #!/bin/bash
+php artisan storage:link
 set -e
 ngrok http --host-header=lbaw23107.lbaw.fe.up.pt http://127.0.0.1:80 --domain typically-primary-lionfish.ngrok-free.app > /dev/null & #add ngrok for webhooks
 cd /var/www

@@ -90,6 +90,10 @@ body {
         background-color: $background;
     }
 
+    .mobile-navbar{
+        display: none;
+    }
+
 
 }
 
@@ -110,11 +114,13 @@ body {
 
         .topnav{
             width: calc(100vw - 2rem);
-            top: 3rem;
+            top: 2.75rem;
+            padding: 0.3rem;
             margin: 0rem 1rem;
             height: auto;
             left: 0;
-            gap: 0;
+            justify-content: unset;
+            gap: 0.5rem;
         }
 
         .main-content{
@@ -125,6 +131,34 @@ body {
             height: calc(100svh - 4rem);
             max-width: none;
             max-height: none;
+        }
+
+        .mobile-navbar{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: calc(100vw - 2rem);
+            padding : 0rem 1rem;
+            background-color: $secondary-background;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+
+            > p.title{
+                font-size: 2rem;
+            }
+
+            .mobile-hamburger-menu {
+                text-decoration: none;
+                line-height: 0;
+                color: $text-color;
+                > ion-icon{
+                    font-size: 1.5rem;
+                }
+            }
+
+
         }
     }
 }

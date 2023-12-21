@@ -164,5 +164,8 @@
         ion-icon:not(#search_icon){
             font-size: 1.5rem;
         }
+        .cart-badge:after{
+            content: none;
+        }
     }
 }
