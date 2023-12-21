@@ -47,7 +47,14 @@ class ProductController extends Controller
 
     public static function getTrendingProducts()
     {
-        return Product::withCount('wishlist')->get()->sortBy('wishlist_count');
+        $products = Product::withCount('wishlist')->get()->sortBy('wishlist_count')->reverse();
+
+        $trendingProducts = $products->filter(function ($product) {
+            return ! self::isProductSold($product);
+        });
+
+        return $trendingProducts;
+
     }
 
     public function listProductsDate(Request $request)
