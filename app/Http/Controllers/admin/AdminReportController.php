@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MessageController;
 use App\Models\Report;
 use App\Models\MessageThread;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminReportController extends Controller
@@ -42,8 +44,8 @@ class AdminReportController extends Controller
     public function showMessageThread(Request $request)
     {
         $messageThread = MessageThread::find($request->messageThread);
-        $reporter = $request->reporter;
-        
-        return view('pages.admin.messageThread', ['messageThread' => $messageThread, 'reporter' => $reporter]);
+        $reporter = User::find($request->reporter);
+        $messages = MessageController::getMessages($reporter, $messageThread, $messageThread->messages->count());
+        return view('pages.admin.messageThread', ['reporter' => $reporter, 'messages' => $messages]);
     }
 }

@@ -1,6 +1,7 @@
 @import 'theme';
 @import 'globals';
 @import 'variables';
+@import 'messageBubble';
 
 *{
     margin: 0;
@@ -95,21 +96,17 @@ section{
     padding: 3rem;
 }
 
-.users-title{
+.table-title{
     h2{
         font-size: 1.4rem;
         color: $secondary;
     }
 }
 
-#users-table{
+.admin-table{
     border-collapse: collapse;
     width: 100%;
     text-align: center;
-
-    .user-id{
-        font-weight: 500;
-    }  
     
     tr{
         border: 1px solid #ddd;
@@ -123,13 +120,7 @@ section{
         background-color: $secondary;
         color: $background;
       }
-    .profile-pic{
-        width: 3rem;
-        height: auto;
-        aspect-ratio: 1;
-        object-fit: cover;
-        border-radius: 0.5rem;
-    }
+
     td {
         padding: 0.5rem 0rem; 
         align-items: center;
@@ -161,10 +152,27 @@ section{
     }
 }
 
- 
-.users{
-    height: 100%;
-    justify-content: space-between;
+#users-table{
+    .user-id{
+        font-weight: 500;
+    } 
+    .profile-pic{
+        width: 3rem;
+        height: auto;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+}
+
+#reports-table{
+    table-layout: fixed;
+    .report-reason{
+        width: 20rem;
+        overflow: scroll;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 .admin-login-page{
     display: flex;
@@ -181,3 +189,20 @@ section{
         width: 40rem;
     }
 }
+
+.admin-message-thread{
+    background: $secondary-background;
+    width: 50rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 1rem;
+}
+
+.admin-message-wrapper{
+    padding-bottom: 2rem;
+}
+
+

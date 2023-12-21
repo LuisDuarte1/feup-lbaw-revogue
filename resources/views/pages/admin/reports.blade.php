@@ -9,13 +9,13 @@ false => 'Open',
 ];
 @endphp
 
-<section class="users column justify-center gap-3">
+<section class="column justify-center gap-3">
     <div class="admin-wrapper">
-        <div class="users-title">
+        <div class="table-title">
             <h2>Reports</h2>
         </div>
-        <div class="users-table column">
-            <table id="users-table">
+        <div class="admin-table-wrapper">
+            <table id="reports-table" class="admin-table">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -27,6 +27,7 @@ false => 'Open',
                         <th scope="col">Reported</th>
                         <th scope="col">Product</th>
                         <th scope="col">Message Thread</th>
+                        <th scope="col" class="report-reason">Reason</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -69,6 +70,7 @@ false => 'Open',
                             <a href="{{route('admin.reports.messages', ['messageThread' => $report->message_thread, 'reporter' => $report->reporter])}}" target="_blank" title="View message thread"><ion-icon name="open-outline"></ion-icon></a>
                             @endif
                         </td>
+                        <td>{{$report->reason}}</td>
                         <td>
                             <form action="#" method='POST'>
                                 @csrf

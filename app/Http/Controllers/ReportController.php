@@ -56,7 +56,7 @@ class ReportController extends Controller
         $reporter = $request->user();
 
         $report = Report::where('reporter', $reporter->id)->where('reported', $reported->id)->get()->first();
-        if ($report !== null) {
+        if ($report !== null && $report->type === 'user') {
             return back()->withErrors(['create-error' => 'You have already reported this user']);
         }
 

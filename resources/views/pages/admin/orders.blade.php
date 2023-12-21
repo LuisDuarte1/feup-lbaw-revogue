@@ -15,11 +15,11 @@ $states = [
 
 <section class="users column justify-center gap-3">
     <div class="admin-wrapper">
-        <div class="users-title">
+        <div class="table-title">
             <h2>Orders</h2>
         </div>
-        <div class="users-table column">
-            <table id="users-table">
+        <div class="admin-table column">
+            <table id="orders-table" class="admin-table">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
