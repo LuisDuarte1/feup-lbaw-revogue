@@ -8,13 +8,7 @@ class CategoryFilter
 {
     public function filter(Builder $builder, $value)
     {
-        $builder->join('Categories', 'products.id', '=', 'Categories.id');
-
-        foreach ($value as $Category => $valor) {
-
-            $builder->where('Categories.key', $Category)
-                ->where('Categories.name', $valor);
-        }
+        $builder->where('category', $value);
 
         //dd($builder->toSql(), $builder->getBindings());
 

@@ -1,8 +1,8 @@
 @extends('layouts.app', ['search_bar' => 'true'])
 
 @section('content')
+    <x-filter-bar :filterAttributes="$filterAttributes"></x-filter-bar>
     <div class="search-page">
-        <ion-icon name="search-outline" class="search-icon"></ion-icon>
         @foreach ($products as $product)
             @php
                 $price = $product['product']->price;

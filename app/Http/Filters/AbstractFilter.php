@@ -33,7 +33,6 @@ abstract class AbstractFilter
 
     protected function getFilters()
     {
-        //dd($this->request->all());
 
         return array_filter($this->request->only(array_keys($this->filters)));
     }
