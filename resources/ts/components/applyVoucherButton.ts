@@ -1,4 +1,5 @@
 import { createFormData } from '../utils/csrf'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 export default function (element: Element): void {
   const inputPromoCode: HTMLInputElement | null = document.querySelector('#promo-code')
@@ -15,6 +16,7 @@ export default function (element: Element): void {
 
     if (res.status !== 200) {
       console.log(`Voucher apply request failed with status ${res.status}`)
+      await handleRequestErrorToast(res)
       return
     }
 

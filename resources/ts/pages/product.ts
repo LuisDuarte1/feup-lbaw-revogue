@@ -2,6 +2,7 @@ import Swal from 'sweetalert2'
 import { Swiper } from 'swiper'
 import { Navigation, Pagination, Thumbs } from 'swiper/modules'
 import { createFormData } from '../utils/csrf'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 async function addToCartRequest (productId: Number): Promise<void> {
   const req = await fetch('/api/cart', {
@@ -13,6 +14,7 @@ async function addToCartRequest (productId: Number): Promise<void> {
   })
   if (req.status !== 200) {
     console.error(`Add to cart failed with status ${req.status}`)
+    await handleRequestErrorToast(req)
     return
   }
 

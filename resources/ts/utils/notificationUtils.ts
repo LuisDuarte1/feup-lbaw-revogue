@@ -1,3 +1,5 @@
+import { handleRequestErrorToast } from './toastUtils'
+
 export async function notificationLoadCallback (element: Element[]): Promise<void> {
   element.forEach(async (val) => {
     if (!(val instanceof HTMLElement)) {
@@ -13,6 +15,7 @@ export async function notificationLoadCallback (element: Element[]): Promise<voi
       const req = await fetch(`/api/notifications/${id}/read`, { method: 'POST' })
       if (req.status !== 200) {
         console.error(`Couldn't mark ${id} as read`)
+        await handleRequestErrorToast(req)
       }
     }
   })
@@ -20,6 +23,7 @@ export async function notificationLoadCallback (element: Element[]): Promise<voi
   const req = await fetch('/api/notifications/unreadCount')
   if (req.status !== 200) {
     console.error('Couldn\'t get unread notifications count')
+    await handleRequestErrorToast(req)
     return
   }
 

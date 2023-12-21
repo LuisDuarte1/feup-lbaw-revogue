@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
 import { createFormData } from '../utils/csrf'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 export default function (element: Element): void {
   const orderId = element.getAttribute('data-order-id')
@@ -13,6 +14,7 @@ export default function (element: Element): void {
 
     if (statusRes.status !== 200) {
       console.error(`Possible Order Status request failed with ${statusRes.status}`)
+      await handleRequestErrorToast(statusRes)
       return
     }
 
@@ -52,7 +54,10 @@ export default function (element: Element): void {
     const req = await fetchWithSocketInformation(`/api/orders/${orderId}/status`, { method: 'POST', body: formBody })
     if (req.status !== 200) {
       console.log(`Change order status to shipping failed with status ${req.status}`)
+      await handleRequestErrorToast(req)
+      return
     }
     // TODO (luisd): make success toast
+    console.log('todo')
   })
 }

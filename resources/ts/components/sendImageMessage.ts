@@ -2,6 +2,7 @@ import Swal from 'sweetalert2'
 import { createFormData } from '../utils/csrf'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
 import { componentAJAXHandler } from '../app'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 interface SendImageFormResult {
   image: File
@@ -106,6 +107,7 @@ export default function (element: HTMLElement): void {
       const res = await fetchWithSocketInformation(`/api/messages/${threadId}`, { method: 'POST', body: formData })
       if (res.status !== 200) {
         console.error(`Send message request failed with status ${res.status}`)
+        await handleRequestErrorToast(res)
         return
       }
       const html = document.createElement('html')

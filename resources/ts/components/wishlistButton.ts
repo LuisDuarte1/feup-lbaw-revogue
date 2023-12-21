@@ -1,3 +1,5 @@
+import { handleRequestErrorToast } from '../utils/toastUtils'
+
 async function removeFromWishlist (productId: Number, wishlist: HTMLAnchorElement): Promise<void> {
   const req = await fetch('/api/wishlist', {
     method: 'DELETE',
@@ -8,6 +10,7 @@ async function removeFromWishlist (productId: Number, wishlist: HTMLAnchorElemen
   })
   if (req.status !== 200) {
     console.error(`Add to cart failed with status ${req.status}`)
+    await handleRequestErrorToast(req)
     return
   }
   const icon = wishlist.querySelector('ion-icon')
@@ -38,6 +41,7 @@ async function addToWishlist (productId: Number, wishlist: HTMLAnchorElement): P
   })
   if (req.status !== 200) {
     console.error(`Add to cart failed with status ${req.status}`)
+    await handleRequestErrorToast(req)
     return
   }
   const icon = wishlist.querySelector('ion-icon')
