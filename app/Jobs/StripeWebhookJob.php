@@ -40,7 +40,6 @@ class StripeWebhookJob implements ShouldQueue
         $user = $purchaseIntent->user()->get()->first();
         $cart = $purchaseIntent->products()->get();
         $cartGrouped = $purchaseIntent->products()->get()->groupBy('sold_by');
-        DB::beginTransaction();
         $purchase = Purchase::create(['method' => 'stripe']);
         foreach ($cartGrouped as $soldBy => $products) {
             $order = $purchaseIntent->user()->get()->first()->orders()->create([
@@ -69,7 +68,6 @@ class StripeWebhookJob implements ShouldQueue
         }
         CheckoutController::removePurchaseFromOtherUsers($user, $cart);
         $purchaseIntent->delete();
-        DB::commit();
     }
 
     /**

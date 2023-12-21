@@ -206,7 +206,6 @@ class CheckoutController extends Controller
             return back();
         }
         $appliedVouchers = VoucherController::getAppliedVouchers($request);
-        DB::beginTransaction();
         $cart = $request->user()->cart()->get();
         $cartGrouped = $cart->groupBy('sold_by');
         if ($request->payment_method === '0') {
@@ -250,7 +249,6 @@ class CheckoutController extends Controller
         }
         // remove the cart of all users because it has been bought
         CheckoutController::removePurchaseFromOtherUsers($request->user(), $cart);
-        DB::commit();
 
         return redirect('/');
     }
