@@ -13,6 +13,32 @@
 
 * The artefacts checklist is available at: [Google Sheet](https://docs.google.com/spreadsheets/d/1KJHTnrm4QXCuKkgCpW1QtOgYxvfV_7D6Sqph21BtQZc/edit#gid=1742390135)
 
+## How to run the project
+
+To run the project, we recommend using the `./dev.sh` command which initializes everthing for you. 
+
+If for some reason you cannot use `./dev.sh`, you must start the database and the mail server using `docker-compose up -d`:
+ - The database is accessible through `localhost:5432` and pgAdmin is exposed through `localhost:4321`;
+ - The mail server exposes it's web ui through `localhost:8025` and the SMTP server exposed through `localhost:1025`
+
+Then you should run the Laravel queue with `php artisan queue:listen --tries=1` and the Laravel web server with `php artisan serve`. Finally if you wish to have hot reloading you should run `npm install && npm run dev` or if want to build it just once do `npm install && npm run build`.
+
+In order to use Stripe, you must also run the `./stripe_webhook.sh` which requires a Stripe account. If you wish to create a Stripe account for testing, you should edit `.env` to change the API key and the webhook secret. Note that you should also alter the publishable key on `checkout.ts`. 
+
+You can also fallback to not using Stripe and using `Payment on Delivery` on Checkout.
+
+## Project Credentials
+
+### User 
+
+Email: chloehall@example.com
+
+Password: cenoura-cozida-321
+
+### Admin
+
+Email: joseph.waldor@revogue.com
+
 ## Team
 
 * Rita Cachaldora, up202108798@g.uporto.pt
