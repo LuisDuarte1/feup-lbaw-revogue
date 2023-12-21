@@ -14,7 +14,7 @@
                     $condition = $product['product']->condition;
                 @endphp
                 <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2"
-                    :condition="'Good'" />
+                    :condition="$condition" />
             @endforeach
         </div>
         {{ $paginator->links('vendor.pagination.simple-default') }}

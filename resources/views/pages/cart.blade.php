@@ -32,35 +32,43 @@ $numProducts = 0;
                                 <div class="seller-username">{{'@' . $seller->username}}</div>
                             </a>
                         </div>
-                    </div>
-                    <a href="#" class="cart-order-remove">
-                        <button>Remove All</button>
-                    </a>
-                </div>
-                <div class="cart-products column gap-1">
-                    @foreach($products as $product)
-                    @php
-                    $sum += $product->price;
-                    $productPicture = $product->image_paths[0];
-                    $price = $product->price;
-                    $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
-                    @endphp
-                    <article class="product column gap-1" data-id="{{$product->id}}">
-                        <a href="#" class="product-remove"><ion-icon name="close-outline"></ion-icon></a>
-                        <div class="cart-product row gap-1 items-center">
-                            <div class="product-image column items-center">
-                                <a href="/products/{{$product->id}}">
-                                    <img src="{{$productPicture}}" alt="product-image">
-                                </a>
-                            </div>
-                            <div class="cart-product-info row gap-1">
-                                <a href="/products/{{$product->id}}" class="column wrapper">
-                                    <div class="product-name">{{$product->name}}</div>
-                                    <div class="product-size">Size: {{$size}}</div>
-                                    <div class="product-condition">Condition: Good</div>
-                                </a>
-                                <div class="product-price">Price: {{$price}}€</div>
-                            </div>
+                        <div class="cart-products column gap-1">
+                            @foreach ($products as $product)
+                                @php
+                                    $sum += $product->price;
+                                    $productPicture = $product->image_paths[0];
+                                    $price = $product->price;
+                                    $size = $product
+                                        ->attributes()
+                                        ->where('key', 'Size')
+                                        ->get()
+                                        ->first()->value;
+                                    $condition = $product
+                                        ->attributes()
+                                        ->where('key', 'Condition')
+                                        ->get()
+                                        ->first()->value;
+
+                                @endphp
+                                <article class="product column gap-1" data-id="{{ $product->id }}">
+                                    <a href="#" class="product-remove"><ion-icon name="close-outline"></ion-icon></a>
+                                    <div class="cart-product row gap-1 items-center">
+                                        <div class="product-image column items-center">
+                                            <a href="/products/{{ $product->id }}">
+                                                <img src="{{ $productPicture }}">
+                                            </a>
+                                        </div>
+                                        <div class="cart-product-info row gap-1">
+                                            <a href="/products/{{ $product->id }}" class="column wrapper">
+                                                <div class="product-name">{{ $product->name }}</div>
+                                                <div class="product-size">Size: {{ $size }}</div>
+                                                <div class="product-condition">Condition:'{{ $condition }}'</div>
+                                            </a>
+                                            <div class="product-price">Price: {{ $price }}€</div>
+                                        </div>
+                                    </div>
+                                </article>
+                            @endforeach
                         </div>
                     </article>
                     @endforeach

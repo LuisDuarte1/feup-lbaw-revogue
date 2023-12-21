@@ -67,13 +67,15 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="item tags">
-                    <label for="tags">
-                        <h2>Enhance your listing</h2>
-                    </label>
-                    <input type="text" id="search_tag" name="search_tag" placeholder="" aria-label="search-input">
-                    <div class="tags-list">
+                    <div class="item tags">
+                        <label for="tags">
+                            <h2>Enhance your listing</h2>
+                        </label>
+                        <input type="text" id="search_tag" name="search_tag" placeholder="">
+                        <div class="tags-list">
+                        </div>
+                        <div class="input-list">
+                        </div>
                     </div>
                     <div class="input-list">
                     </div>

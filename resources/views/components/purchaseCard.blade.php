@@ -71,6 +71,8 @@ $total = $total + $product->price - $product->pivot->discount;
                 $productPicture = $product->image_paths[0];
                 $productName = $product->name;
                 $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
+                $condition = $product->attributes()->where('key', 'Condition')->get()->first()->value;
+
                 $price = $product->price;
                 $discount = $product->pivot->discount;
                 @endphp
@@ -82,7 +84,7 @@ $total = $total + $product->price - $product->pivot->discount;
                         <div class="column wrapper">
                             <div class="product-name">{{$productName}}</div>
                             <div class="product-size">Size: {{$size}}</div>
-                            <div class="product-condition">Condition: Good</div>
+                            <div class="product-condition">Condition: {{$condition}}</div>
                         </div>
                         <div class="column wrapper">
                             <div class="product-total">Total: {{$price - $discount}}€</div>
