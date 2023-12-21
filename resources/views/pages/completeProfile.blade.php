@@ -18,7 +18,7 @@
                 </div>
                 <div class="complete-profile-items">
                     <div class="select-image">
-                        <img id="image"
+                        <img id="image" aria-label="profile-image"
                             src="{{ $imagePath !== null ? '/storage/' . $imagePath : '/defaultProfileImage.png' }}">
                         <input type="file" id="profileImage" name="profileImage" hidden>
                         <label for="profileImage">Upload photo</label>

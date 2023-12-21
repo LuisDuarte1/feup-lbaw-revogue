@@ -35,7 +35,7 @@ export default function (element: HTMLElement): void {
                 <div class="popup-select-image">
                     <img>
                     <label for="image-message" class="image-message-label">
-                        <ion-icon name="camera"></ion-icon>
+                        <ion-icon name="camera" aria-label="add-image-icon"></ion-icon>
                         Add photo
                     </label>
                     <input id="image-message" type="file" accept="image/png, image/jpeg, image/jpg">

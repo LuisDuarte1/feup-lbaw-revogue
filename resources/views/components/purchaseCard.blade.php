@@ -45,7 +45,7 @@ $total = $total + $product->price - $product->pivot->discount;
                         $stat = implode(" ", $stat);
                         @endphp
 
-                        <ion-icon name="ellipse" class="{{$status}}"></ion-icon>
+                        <ion-icon name="ellipse" class="{{$status}}" aria-label="order-status-icon"></ion-icon>
                         Status: {{$stat}}
                     </div>
                     <div class="order-shipping">
