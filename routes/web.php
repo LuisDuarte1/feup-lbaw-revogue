@@ -266,6 +266,7 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
     Route::controller(AdminReportController::class)->group(function () {
         Route::get('/reports', 'getPage')->name('admin.reports');
         Route::post('/reports', 'updateStatus')->name('admin.reports.update');
+        Route::post('/reports/delete', 'delete')->name('admin.reports.delete');
     });
 });
 

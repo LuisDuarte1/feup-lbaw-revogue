@@ -56,10 +56,26 @@ false => 'Open',
                         @else
                         <td></td>
                         @endif
-                        <td>{{$report->reporter}}</td>
-                        <td>{{$report->reported}}</td>
+                        @php
+                        $reporter = App\Models\User::find($report->reporter)->username;
+                        $reported = App\Models\User::find($report->reported)->username;
+                        @endphp
+                        <td>{{$reporter}}</td>
+                        <td>{{$reported}}</td>
                         <td>{{$report->product !== NULL ? $report->product : 'Does not apply' }}</td>
-                        <td>{{$report->message_thread !== NULL ? $report->message_thread : 'Does not apply'}}</td>
+                        <td>
+                            {{$report->message_thread !== NULL ? $report->message_thread : 'Does not apply'}}
+                            @if($report->message_thread !== NULL)
+                            <a href="#" target="_blank" title="View message thread"><ion-icon name="open-outline"></ion-icon></a>
+                            @endif
+                        </td>
+                        <td>
+                            <form action="#" method='POST'>
+                                @csrf
+                                <input type="hidden" name="id" value="{{$report->id}}">
+                                <button type="submit" formaction="{{ route('admin.reports.delete') }}" title="Remove report"><ion-icon name="trash-outline"></ion-icon></button>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

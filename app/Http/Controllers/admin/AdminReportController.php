@@ -27,4 +27,14 @@ class AdminReportController extends Controller
 
         return redirect()->back()->with('success', 'Report status updated successfully');
     }
+
+    public function delete(Request $request)
+    {
+        $report = Report::find($request->id);
+        if($report->delete()){
+            return redirect()->back()->with('success', 'Report deleted successfully');
+        }
+
+        return redirect()->back()->withErrors(['delete-error' => 'Report not deleted']);
+    }
 }
