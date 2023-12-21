@@ -31,6 +31,7 @@ import applyVoucherButton from './components/applyVoucherButton'
 import voucherRemove from './components/voucherRemove'
 import errorToast from './components/errorToast'
 import successToast from './components/successToast'
+import openMobileNavbar from './components/openMobileNavbar.js'
 import expandableCard from './components/expandableCard'
 
 type RouteList = Record<string, () => void>
@@ -73,7 +74,9 @@ const components: ComponentList = {
   '.voucher-remove': voucherRemove,
   'meta[name="toast-error"]': errorToast,
   'meta[name="toast-success"]': successToast,
-  '#report_status': submitFormOnChange
+  '#report_status': submitFormOnChange,
+  '.mobile-hamburger-menu': openMobileNavbar,
+  '.close-menu-mobile': openMobileNavbar
 }
 
 function pageHandler (): void {

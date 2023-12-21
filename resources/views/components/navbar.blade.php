@@ -1,9 +1,10 @@
 <nav class="navbar">
     <div class="sidebar">
-        <div class="logo title">
-            <a href="/">
+        <div class="logo-section row justify-between items-center">
+            <a href="/" class="logo title">
                 <h1> ReVogue </h1>
             </a>
+            <a class="close-menu-mobile" href="#"><ion-icon name="close"></ion-ion></a>
         </div>
         <ul class="menu">
             @auth

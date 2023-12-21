@@ -58,3 +58,14 @@
         color: darken($secondary, 20%);
     }
 }
+
+@media screen and (max-width: 576px) {
+
+    .profile-layout {
+        .profile-picture-container {
+            width: 10rem;
+            height: 10rem;
+        }
+
+    }
+}

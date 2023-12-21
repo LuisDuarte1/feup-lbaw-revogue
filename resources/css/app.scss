@@ -93,11 +93,101 @@ body {
         background-color: $background;
     }
 
+    .mobile-navbar{
+        display: none;
+    }
+
 
 }
 
 @media screen and (max-height: 700px) {
     :root {
         font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    :root {
+        font-size: 15px;
+    }
+
+    body{
+        margin: 0;
+        gap: 0;
+        grid-template-columns: 100%;
+        .navbar{
+            display: none;
+        }
+
+        .topnav{
+            width: calc(100vw - 2rem);
+            top: 2.75rem;
+            padding: 0.3rem;
+            margin: 0rem 1rem;
+            height: auto;
+            left: 0;
+            justify-content: unset;
+            gap: 0.5rem;
+        }
+
+        .main-content{
+            grid-column: 1;
+            margin: 0rem 1rem;
+            margin-top: 5rem;
+            width: calc(100vw - 2rem);
+            height: calc(100svh - 4rem);
+            max-width: none;
+            max-height: none;
+        }
+
+        .mobile-navbar{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: calc(100vw - 2rem);
+            padding : 0rem 1rem;
+            background-color: $secondary-background;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+
+            > a.title{
+                font-size: 2rem;
+                text-decoration: none;
+                color: $accent;
+            }
+
+            .mobile-hamburger-menu {
+                text-decoration: none;
+                line-height: 0;
+                color: $text-color;
+                > ion-icon{
+                    font-size: 1.5rem;
+                }
+            }
+
+
+        }
+    }
+
+    body.mobile-navbar-open{
+        .navbar{
+            display: block;
+            top: 0;
+            border-radius: 0;
+            bottom: 0;
+            width: calc(100vw - 1.6rem);
+        }   
+        .topnav{
+            display: none;
+        }
+        .main-content{
+            display: none;
+        }
+
+        .mobile-navbar{
+            display: none;
+        }
     }
 }

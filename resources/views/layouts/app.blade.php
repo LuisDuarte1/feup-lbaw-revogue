@@ -54,7 +54,10 @@
     @if(isset($search_bar) == true && $search_bar == true)
     <x-searchBar />
     @endif
-   
+    <nav class="mobile-navbar">
+        <a href="/" class="title">ReVogue</a>
+        <a href="#" class="mobile-hamburger-menu"><ion-icon name="menu-outline"></ion-icon></a>
+    </nav>
     <x-navbar />
     <div class="main-content {{isset($needs_full_height) && $needs_full_height == true ? 'full-page-height' : ''}}">@yield('content')</div>
 </body>

@@ -271,3 +271,18 @@
         line-height: 0;
     }
 }
+@media screen and (max-width: 578px) {
+    .layout-wrap{
+        grid-template-columns: 100%;
+        grid-template-rows: fit-content(50%) fit-content(50%);
+    }
+
+    .shopping-cart{
+        grid-row: 1;
+    }
+
+    .purchase-summary{
+        grid-row: 2;
+        height: auto;
+    }
+}

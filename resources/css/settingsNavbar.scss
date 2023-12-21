@@ -40,3 +40,10 @@
 
 
 }
+
+@media screen and (max-width: 576px) {
+
+    .settings-navbar{
+        overflow-x: scroll;
+    }
+}
