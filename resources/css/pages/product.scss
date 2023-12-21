@@ -1,5 +1,16 @@
 @import '../theme';
 
+.product-layout{
+
+    padding-bottom: 2rem;
+
+    .swiper-pagination-bullet-active-main{
+        background-color: $primary;
+    }
+    .review-card-swiper{
+        margin: 1rem 0.3rem 0.3rem 0.3rem;
+    }
+}
 .categories{
     display: flex;
     align-items: end;
@@ -22,7 +33,7 @@
 .layout-wrapper{
     display: grid;
     gap: 3rem;
-    grid-template-columns: 60% auto;
+    grid-template-columns: 57% auto;
     align-items: start;
 
     .product-image{
@@ -30,24 +41,8 @@
         grid-template-columns: 20% auto;
         position: relative;
         min-height: 30rem;
-        gap: 0.3rem;
+        gap: 0.5rem;
 
-        #wishlist_button {
-            z-index: 5;
-            position: absolute;
-            top: 1rem;
-            padding: 0.25rem;
-            border-radius: 50%;
-            left: calc(100% - 3rem);
-            background-color: rgba($background, 0.7);
-            line-height: 0;
-            color: $accent;
-            text-decoration: none;
-            ion-icon{
-                font-size: 2rem;
-                margin-left: 1px;
-            }
-        }
 
         .gallery-main{
             margin: 0;
@@ -227,7 +222,7 @@
     }
 }
 
-.product-price-shipping{
+.product-price-shipping-report{
     display: flex;
     gap: 2rem;
     .product-shipping{
@@ -238,12 +233,12 @@
             font-size: 0.9rem;
         }
     }
-    
 }
 
-.reviews{
+.reviews-empty{
     display: flex;
     flex-direction: column;
+    justify-self: right;
     height: 100%;
     justify-content: center;
     .title{
@@ -254,3 +249,15 @@
     }
 }
 
+.has-reviews{
+    
+    h3{
+        font-size: 1.6rem;
+        text-align: left;
+        margin-left: 0.5rem;
+    }
+    .swiper-pagination{
+        position: relative;
+        margin-top: 1.5rem;
+    }
+}

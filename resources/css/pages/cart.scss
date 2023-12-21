@@ -2,7 +2,7 @@
 @import '../theme.scss';
 
 .layout-wrap{
-    margin-top: 1rem;
+    padding-bottom: 2rem;
     display: grid;
     grid-template-columns: auto 40%;
     align-items: center;
@@ -13,56 +13,56 @@
 .shopping-cart{
     height: 100%;
     padding: 0rem 3rem 0rem 0rem;
-    .products {
+
+    .cart-orders {
         height: 100%;
         overflow-y: auto;
-    
-        .product{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0rem 1.5rem 0rem;
-
-                .layout-divider{
-                    display: flex;
-                    gap: 1.5rem;
+    }
+    .seller-products{
+        padding: 1rem 1.5rem 1rem 2rem;
+        background-color: rgba($secondary-background, 0.5);
+        border-radius: 0.5rem;
+        position: relative;
+    }
+    .seller-products::before{
+        content: "";
+        top: 50%;
+        left: 0;
+        width: 0.7rem;
+        height: 100%;
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+        background-color: $primary;
+        transform: translateY(-50%);
+        position: absolute;
+    }
+    .seller-products-header{
+        justify-content: space-between;
+        .wrapper{
+            gap: 0.6rem;
+        }
+        .seller-image{
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.5rem; 
+        }
+        .seller-display-name{
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .seller-username{
+            font-size: 0.9rem;
+        }
+        .cart-order-remove{
+            button{
+                background-color: $button-text-color;
+                color: $background;
+                height: 2rem;
+                font-size: 0.90rem;
+                &:hover{
+                    background-color: #444c63;
                 }
-
-                ion-icon{
-                    font-size: 1.3rem;
-                    color: $accent;
-                }
-                .product-image{
-                    width: 5rem;
-                    height: 5rem;
-                    flex-grow: 2;
-                    img{
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 0.5rem;
-                        object-fit: cover;
-                    }
-                }
-                .product-details{
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: flex-start;
-                    color: $accent;
-                    flex-shrink: 100;
-                    h3{
-                        font-size: 1rem;
-                        height: 1.2rem;
-                        font-weight: 600;
-                        text-overflow: ellipsis;
-                        overflow: hidden;
-                    }
-                }
-                    .product-price{
-                        font-size: 1rem;
-                        font-weight: 600;
-                        color: $secondary;
-                    }
+            }
         }
     }
 }
@@ -82,8 +82,7 @@
         font-family: 'Abril FatFace';
     }
 }
-.product-categories, .order-categories{
-    display: flex;
+.purchase-details{
     justify-content: space-between;
     padding-right: 1.1rem;
 
@@ -94,7 +93,7 @@
     }
 }
 
-.order-summary{
+.purchase-summary{
     right: $page-margin;
     top: $page-margin;
     bottom: $page-margin;
@@ -103,6 +102,16 @@
     padding: 0rem 3rem;
     background-color: $secondary-background;
     border-radius: 0.5rem;
+
+    .purchase-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 0rem 1rem 0rem;
+        .title{
+            font-size: 1.75rem;
+        }
+    }
     h3{
         color: $accent;
         font-size: 1.1rem;
@@ -129,17 +138,33 @@
         align-items: center;
         font-size: 1.1rem;
     }
-}
 
-.order-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem 0rem 1rem 0rem;
-    .title{
-        font-size: 1.75rem;
+    .voucher{
+        > .voucher-code{
+            color: $accent;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            > span{
+                color: $text-color;
+                font-weight: normal;
+                font-size: 0.9rem;
+            }
+
+            > .voucher-remove{
+                line-height: 0;
+                color: $toast-red;
+            }
+        }
+
+        > .difference {
+            color: $toast-red;
+            text-decoration: none;
+        }
     }
 }
+
 
 .shipping{
 
@@ -178,4 +203,71 @@
     display: flex;
     gap: 2rem;
     align-items: center;
+}
+
+.cart-product{
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: $text-color;
+    background-color: rgba($background, 0.6);
+    padding: 1.5rem 1rem;
+    box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
+
+    .product-image{
+        width: 5rem;
+        height: auto;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            border-radius: 0.5rem;
+        }
+    }
+    .cart-product-info{
+        justify-content: space-between;
+        align-items: end;
+        flex: 1;
+        a{
+            text-decoration: none;
+            color: $text-color;
+        }
+        .product-remove{
+            font-size: 1.3rem;
+            text-align: right;
+        }
+        .wrapper{
+            gap: 0.3rem;
+        }
+        .product-name{
+            font-weight: 500;
+        }
+        .product-size, .product-condition{
+            font-size: 0.90rem;
+        }
+
+        .product-price{
+            font-weight: 500;
+            text-align: right;
+            color: $primary;
+        }
+    }
+}
+
+.product{
+    position: relative;
+    .product-remove{
+        position: absolute;
+        top: 0.35rem;
+        left: calc(100% - 2rem);
+        z-index: 1;
+        background-color: rgba($secondary-background, 0.9);
+        border-radius: 50%;
+        padding: 0.2rem;
+        align-items: center;
+        color: $text-color;
+        font-size: 1.2rem;
+        text-align: center;
+        line-height: 0;
+    }
 }

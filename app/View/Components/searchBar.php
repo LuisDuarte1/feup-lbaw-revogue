@@ -13,7 +13,7 @@ class SearchBar extends Component
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -21,6 +21,10 @@ class SearchBar extends Component
      */
     public function render(): View|Closure|string
     {
+        /*        if ($user != null) {
+                    $cartCount = $user->cart()->count();
+                }
+        */
         return view('components.searchBar');
     }
 }

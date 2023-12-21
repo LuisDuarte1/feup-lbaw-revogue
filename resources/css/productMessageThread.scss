@@ -1,0 +1,70 @@
+.product-message-thread,.order-message-thread{
+    display: grid;
+    grid-template-columns: fit-content(25%) minmax(50%, 100%) fit-content(25%);
+    grid-template-rows: 100%;
+    gap: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    > .profile-image{
+        aspect-ratio: 1;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 0.5rem;
+    }
+    
+    > .product-image-link{
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 0.5rem;
+        .product-image{
+            aspect-ratio: 1;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.5rem;
+            object-fit: cover;
+        }
+    }
+    > .product-message-thread-details{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        > .username::before {
+            content: '@';
+        }
+
+        > .username{
+            text-decoration: none;
+            color: $text-color;
+            font-size: 1rem;
+        }
+
+        > .username:hover{
+            color: rgb($text-color, 0.7);
+        }
+
+        > .content{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 0.8rem;
+        }
+
+    }
+
+}
+
+.product-message-thread:hover,.order-message-thread:hover{
+    background-color: $secondary-background;
+}
+
+.product-message-thread.thread-active,.order-message-thread.thread-active{
+    background-color: rgba($button-text-color, 0.1);
+}
+
+.order-message-thread{
+    grid-template-columns: fit-content(25%) minmax(50%, 100%);
+    padding-right: 1rem;
+}

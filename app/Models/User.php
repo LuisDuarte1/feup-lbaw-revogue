@@ -6,7 +6,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // Added to define Eloquent relationships.
@@ -34,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'display_name',
         'email',
+        'date_birth',
         'password',
         'settings',
         'profile_image_path',
@@ -50,6 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'settings',
+        'remember_token',
     ];
 
     /**
@@ -61,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'creation_date' => 'datetime',
         'password' => 'hashed',
         'settings' => 'array',
+        'date_birth' => 'date',
     ];
 
     public function messagesFrom(): HasMany
@@ -78,10 +80,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Product::class, 'sold_by');
     }
 
-    public function voucher(): HasOne
+    public function voucher(): HasMany
     {
 
-        return $this->hasOne(Voucher::class, 'belongs_to');
+        return $this->hasMany(Voucher::class, 'belongs_to');
     }
 
     public function reviewing(): HasMany
@@ -150,5 +152,27 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getEmailForVerification()
     {
         return $this->email;
+    }
+
+    public static function getDefaultSettings()
+    {
+        return [
+            'payment' => [
+                'bank_name' => '',
+                'bank_account_number' => '',
+                'bank_routing_number' => '',
+                'bank_account_type' => '',
+                'bank_account_name' => '',
+            ],
+            'shipping' => [
+                'name' => '',
+                'address' => '',
+                'country' => '',
+                'city' => '',
+                'zip-code' => '',
+                'phone' => '',
+                'email' => '',
+            ],
+        ];
     }
 }

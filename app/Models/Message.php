@@ -15,6 +15,8 @@ class Message extends Model
 
     const UPDATED_AT = null;
 
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     protected $primaryKey = 'id';
 
     /**
@@ -26,8 +28,12 @@ class Message extends Model
         'message_type',
         'text_content',
         'image_path',
-        'proposed_price',
-        'bargain_status',
+        'to_user',
+        'from_user',
+        'message_thread',
+        'bargain',
+        'system_message',
+        'order_cancellation',
     ];
 
     /**
@@ -38,7 +44,13 @@ class Message extends Model
     protected $casts = [
         'sent_date' => 'datetime',
         'proposed_price' => 'float',
+        'image_path' => 'array',
     ];
+
+    public function messageThread(): BelongsTo
+    {
+        return $this->belongsTo(MessageThread::class, 'message_thread');
+    }
 
     public function fromUser(): BelongsTo
     {
@@ -50,24 +62,19 @@ class Message extends Model
         return $this->belongsTo(User::class, 'to_user');
     }
 
-    public function subjectProduct(): BelongsTo
-    {
-        return $this->belongsTo(Product::class, 'subject_product');
-    }
-
-    public function voucher(): HasOne
-    {
-        return $this->hasOne(Voucher::class, 'bargain_message');
-    }
-
     public function notification(): HasOne
     {
         return $this->hasOne(Notification::class, 'message');
     }
 
-    public function messageReport(): BelongsTo
+    public function associatedBargain(): BelongsTo
     {
-        return $this->belongsTo(Report::class, 'message');
+        return $this->belongsTo(Bargain::class, 'bargain');
+    }
+
+    public function orderCancellation(): BelongsTo
+    {
+        return $this->belongsTo(OrderCancellation::class, 'order_cancellation');
     }
 
     /**

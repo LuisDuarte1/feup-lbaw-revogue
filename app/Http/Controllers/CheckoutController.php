@@ -3,14 +3,67 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\PurchaseIntentTimeoutJob;
+use App\Models\MessageThread;
+use App\Models\Order;
 use App\Models\Purchase;
+use App\Models\User;
+use App\Notifications\ProductCartGoneNotification;
+use App\Notifications\ProductSoldNotification;
+use App\Notifications\WishlistProductGoneNotification;
+use App\View\Components\SystemMessages\ShippingDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
+use Monarobase\CountryList\CountryListFacade as Countries;
 use Stripe\StripeClient;
 
 class CheckoutController extends Controller
 {
+    public static function createOrderMessageThread(Order $order): MessageThread
+    {
+        $boughtBy = $order->user;
+        $soldBy = $order->products[0]->sold_by;
+
+        $messageThread = MessageThread::create([
+            'type' => 'order',
+            'user_1' => $boughtBy->id,
+            'user_2' => $soldBy,
+            'order' => $order->id,
+        ]);
+
+        //TODO: create message
+        return $messageThread;
+    }
+
+    public static function removePurchaseFromOtherUsers($user, $cart): void
+    {
+        //TODO: remove all vouchers that contain product
+        foreach ($cart as $product) {
+            Notification::send(
+                $product->inCart()
+                    ->whereNot(
+                        function ($query) use ($user) {
+                            $query->where('id', $user->id);
+                        })
+                    ->get(), new ProductCartGoneNotification($product));
+            $product->inCart()->detach();
+            Notification::send(
+                $product->wishlist()
+                    ->whereNot(
+                        function ($query) use ($user) {
+                            $query->where('id', $user->id);
+                        })
+                    ->get(), new WishlistProductGoneNotification($product));
+            $product->wishlist()->detach();
+            Notification::send(
+                $product->soldBy()->get(),
+                new ProductSoldNotification($product)
+            );
+        }
+
+    }
+
     public static function canEnterCheckout(Request $request): bool
     {
         $cart = $request->user()->cart()->withCount('purchaseIntents')->get();
@@ -34,7 +87,7 @@ class CheckoutController extends Controller
     public static function validateCheckoutRequest(Request $request)
     {
         $request->validate([
-            'full_name' => 'required|max:250',
+            'name' => 'required|max:250',
             'email' => 'required|email:rfc',
             'address' => 'required|max:500',
             'country' => 'required',
@@ -46,21 +99,22 @@ class CheckoutController extends Controller
 
     public static function createPaymentIntent(StripeClient $stripe, $cart, Request $request): \Stripe\PaymentIntent
     {
-        $amount = 0;
-        foreach ($cart as $product) {
-            $amount += $product->price;
-        }
+        $amount = CartController::getCartPrice($request);
+        $appliedVouchers = VoucherController::getAppliedVouchers($request)->map(function ($value, $key) {
+            return $value->code;
+        })->toArray();
         $paymentIntent = $stripe->paymentIntents->create([
             'amount' => $amount * 100,
             'currency' => 'eur',
             'automatic_payment_methods' => [
                 'enabled' => true,
             ],
+            'metadata' => ['vouchers' => json_encode($appliedVouchers)],
         ]);
 
         $purchaseIntent = $request->user()->purchaseIntents()->create([
             'shipping_address' => [
-                'name' => $request->full_name,
+                'name' => $request->name,
                 'email' => $request->email,
                 'country' => $request->country,
                 'address' => $request->address,
@@ -119,11 +173,17 @@ class CheckoutController extends Controller
         $user = $request->user();
 
         if (! CheckoutController::canEnterCheckout($request)) {
-            //TODO(luisd): redirect to cart with an error
-            return redirect('/cart');
+            return redirect('/cart')->with('modal-error',
+                [
+                    'title' => 'Item reserved',
+                    'content' => 'Looks like someone is trying to buy the same item as you at the same time. Please wait and try again.',
+                    'confirm-button' => 'Close',
+                ]);
         }
 
-        return view('pages.checkout', ['cart' => $user->cart()->get()]);
+        $settings = $user->settings['shipping'];
+
+        return view('pages.checkout', ['cart' => $user->cart()->get(), 'settings' => $settings, 'countries' => Countries::getList('en')]);
     }
 
     public function postPage(Request $request)
@@ -135,6 +195,7 @@ class CheckoutController extends Controller
         if (! CheckoutController::canEnterCheckout($request)) {
             return back();
         }
+        $appliedVouchers = VoucherController::getAppliedVouchers($request);
         DB::beginTransaction();
         $cart = $request->user()->cart()->get();
         $cartGrouped = $cart->groupBy('sold_by');
@@ -144,7 +205,7 @@ class CheckoutController extends Controller
                 $order = $request->user()->orders()->create([
                     'status' => 'pendingShipment', //payment at delivery goes straight to pendingShipment
                     'shipping_address' => [
-                        'name' => $request->full_name,
+                        'name' => $request->name,
                         'email' => $request->email,
                         'country' => $request->country,
                         'address' => $request->address,
@@ -154,22 +215,31 @@ class CheckoutController extends Controller
                     'purchase' => $purchase->id,
                 ]);
 
-                $ids = [];
                 foreach ($products as $product) {
                     if (ProductController::isProductSold($product)) {
                         return back()->with('error', 'A product has been sold while on the checkout page. Please check the cart details and try again');
                     }
-                    array_push($ids, $product->id);
+                    $voucher = $appliedVouchers->filter(function ($value, $key) use ($product) {
+                        return $product->id === $value->product;
+                    })->first();
+                    if ($voucher === null) {
+                        $order->products()->attach($product->id);
+                    } else {
+                        $voucher->used = true;
+                        $voucher->save();
+                        $order->products()->attach($product->id, ['discount' => $product->price - $voucher->bargainMessage->proposed_price]);
+                    }
                 }
-                $order->products()->attach($ids);
+
+                $messageThread = CheckoutController::createOrderMessageThread($order);
+                $shippingDetailsMessage = new ShippingDetails($order->shipping_address);
+                MessageController::sendSystemMessage($messageThread, $shippingDetailsMessage->render()->render(),
+                    User::where('id', $soldBy)->get()->first());
+
             }
         }
         // remove the cart of all users because it has been bought
-        // TODO(luisd): send notification
-        foreach ($cart as $product) {
-            $product->inCart()->detach();
-            $product->wishlist()->detach();
-        }
+        CheckoutController::removePurchaseFromOtherUsers($request->user(), $cart);
         DB::commit();
 
         return redirect('/');

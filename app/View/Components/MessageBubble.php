@@ -2,20 +2,18 @@
 
 namespace App\View\Components;
 
+use App\Models\Message;
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Chat extends Component
+class MessageBubble extends Component
 {
-    public $user;
-
-    public $messages;
-
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public Message $message, public ?User $currentUser)
     {
         //
     }
@@ -25,6 +23,6 @@ class Chat extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.chat');
+        return view('components.message-bubble', ['message' => $this->message, 'currentUser' => $this->currentUser]);
     }
 }

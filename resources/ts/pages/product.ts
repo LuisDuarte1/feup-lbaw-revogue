@@ -1,5 +1,8 @@
+import Swal from 'sweetalert2'
 import { Swiper } from 'swiper'
 import { Navigation, Pagination, Thumbs } from 'swiper/modules'
+import { createFormData } from '../utils/csrf'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 async function addToCartRequest (productId: Number): Promise<void> {
   const req = await fetch('/api/cart', {
@@ -11,7 +14,42 @@ async function addToCartRequest (productId: Number): Promise<void> {
   })
   if (req.status !== 200) {
     console.error(`Add to cart failed with status ${req.status}`)
+    await handleRequestErrorToast(req)
+    return
   }
+
+  const cartBadge = document.querySelector('.cart-badge')
+  cartBadge?.setAttribute('value', (Number.parseInt(cartBadge?.getAttribute('value') ?? '0') + 1).toString())
+}
+
+function makeSendMesssageDialog (productId: number): void {
+  const button = document.querySelector('.ask-question')
+  if (button === null) {
+    throw Error("Couldn't find ask question button")
+  }
+  button.addEventListener('click', async () => {
+    const text = await Swal.fire<string>({
+      title: 'Ask a question',
+      input: 'textarea',
+      confirmButtonText: 'Send',
+      showCloseButton: true,
+      confirmButtonColor: '#B794B8'
+    })
+
+    if (!text.isConfirmed || text.value === undefined) {
+      console.log('User did not confirm send or input is null so we skip it')
+      return
+    }
+    if (text.value === '') {
+      return
+    }
+
+    const form = createFormData()
+    form.set('text', text.value)
+
+    const req = await fetch(`/products/${productId}/messages`, { method: 'POST', body: form, redirect: 'follow' })
+    window.location.href = req.url
+  })
 }
 
 export function productPage (): void {
@@ -47,15 +85,16 @@ export function productPage (): void {
       swiper: galleryThumbs
     }
   })
+
   const productId = Number.parseInt(window.location.pathname.match(/^\/products\/(.*)$/)?.at(1) ?? '-1')
   if (productId === -1) {
     console.error("Couldn't get product id")
     return
   }
+  makeSendMesssageDialog(productId)
   const buyNow: HTMLButtonElement | null = document.querySelector('.buy-now')
   const addToCart: HTMLButtonElement | null = document.querySelector('.add-to-cart')
   if (buyNow !== null && addToCart !== null) {
-    // TODO (luisd): add error if fails
     buyNow.onclick = async () => {
       await addToCartRequest(productId)
       window.location.href = '/cart'
@@ -64,4 +103,11 @@ export function productPage (): void {
       await addToCartRequest(productId)
     }
   }
+  new Swiper('.scrollSwiper', {
+    modules: [Pagination],
+    pagination: {
+      el: '.swiper-pagination',
+      dynamicBullets: true
+    }
+  })
 }

@@ -1,0 +1,158 @@
+@import '../theme';
+@import '../globals';
+
+
+.messages-page{
+    display: grid;
+    grid-template-columns: 30% auto;
+    grid-template-rows: fit-content(5rem) auto;
+    gap: 2rem;
+    height: 100%;
+    margin-top: 1rem;
+    background-color: $background;
+    border-radius: 1rem;
+
+
+    .title{
+        grid-row: 1/1;
+        grid-column: 1/1;
+        font-size: revert;
+    }
+
+
+    .message-list{
+        margin-top: 0.5rem;
+        grid-row: 2/2;
+        grid-column: 1/1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        
+        .messages-tab{
+            display:  flex;
+            justify-content: space-between;
+            align-self: stretch;
+            > a {
+                text-decoration: none;
+                color: $text-color;
+            }
+
+            a {
+                text-decoration: none;
+                color: $primary;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                font-weight: 500;
+                font-size: 1rem;
+            }
+        
+            a:hover{
+                background-color: #F3F3EB;
+            }
+        
+        
+            a.active{
+                background-color: $secondary;
+                color: $accent;
+            }
+        }
+    }
+
+    .message-thread-list{
+        width: 100%;
+
+
+    }
+
+    .message-thread-details{
+        grid-row: 1/1;
+        grid-column: 2/2;
+        align-items: center;
+        .username {
+            color: $text-color;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .message-thread-details-buttons{
+            display: flex;
+            gap: 1rem;
+        }
+    }
+
+    .message-thread{
+        grid-row: 2/2;
+        grid-row: 2/2;
+        background: $secondary-background;
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        .message-thread-content{
+            flex-grow: 2;
+
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 1rem 1rem;
+        }
+
+        .message-thread-input{
+            position: sticky;
+            bottom: 0rem;
+            background-color: $secondary-background;
+            display: flex;
+            justify-content: space-evenly;
+            gap: 2rem;
+            padding: 0.5rem 3rem 2rem 3rem;
+            align-items: center;
+            width: calc(100% - #{3rem * 2});
+
+            .text-input{
+                flex-grow: 2;
+                position: relative;
+                box-sizing: border-box;
+
+                > textarea{
+                    width: 100%;
+                    box-sizing: border-box;
+                    border-radius: 0.5rem;
+                    border: 2px $primary solid;
+                    resize: none;
+                    max-height: 6rem;
+                }
+    
+                > .send-icon{
+                    position: absolute;
+                    top: calc(50% - 1.5rem/2);
+                    right: 0.5rem;
+                    font-size: 1.5rem;
+                    color: $primary;
+                }
+                > .send-icon:hover{
+                    color: darken($primary, 10%);
+                }
+            }
+            .misc-buttons{
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                > a {
+                    line-height: 0;
+                    display: block;
+                    text-decoration: none;
+                    color: $primary;
+                    font-size: 1.5rem;
+                }
+
+                > a:hover {
+                    color: darken($primary, 10%);
+                }
+
+                .change-order-status,.cancel-order{
+                    font-size: 1.85rem;
+                }
+            }
+        }
+    }
+}

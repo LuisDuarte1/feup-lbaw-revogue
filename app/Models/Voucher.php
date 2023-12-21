@@ -12,6 +12,10 @@ class Voucher extends Model
 
     protected $primaryKey = 'code';
 
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -19,7 +23,10 @@ class Voucher extends Model
      */
     protected $fillable = [
         'code',
-
+        'belongs_to',
+        'product',
+        'bargain',
+        'used',
     ];
 
     /**
@@ -27,8 +34,9 @@ class Voucher extends Model
      *
      * @var array<string, string>
      */
-    protected $hidden = [
-        'code',
+    protected $cast = [
+        'code' => 'string',
+        'used' => 'bool',
     ];
 
     public function voucherBelongsTo(): BelongsTo
@@ -36,14 +44,14 @@ class Voucher extends Model
         return $this->belongsTo(User::class, 'belongs_to');
     }
 
-    public function product(): BelongsTo
+    public function getProduct(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product');
     }
 
     public function bargainMessage(): BelongsTo
     {
-        return $this->BelongsTo(Message::class, 'bargain_message');
+        return $this->belongsTo(Bargain::class, 'bargain');
     }
 
     public function appliedVoucher(): HasOne

@@ -1,0 +1,68 @@
+@import '../theme.scss';
+
+$notifications-page-width: 75%;
+
+.notifications-page{
+    min-height: calc(100vh - #{$page-margin * 2});
+    padding: 2rem 0rem;
+
+    .action-buttons{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        width: calc($notifications-page-width - 2rem);
+
+        .read, .dismiss{
+            padding: 0rem 1rem;
+            height: fit-content;
+            font-size: 1.1rem;
+            font-weight: 500;
+            background-color: $background;
+            gap: 0.5rem;
+            text-decoration: underline solid transparent;
+            transition: text-decoration 0.7s ease;
+
+            &:hover{
+                color: $primary;
+                text-decoration: underline solid $primary;
+            }
+        }
+    }
+
+    .notification-tab{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        width: calc($notifications-page-width - 2rem);
+    
+        a {
+            text-decoration: none;
+            text-align: center;
+            background-color: $secondary-background;
+            color: $primary;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+    
+        a:hover{
+            background-color: rgba($button-text-color, 0.1);
+        }
+    
+    
+        a.active{
+            background-color: $secondary;
+            color: $accent;
+        }
+    }
+    
+    .notifications-list{
+        margin-top: 2rem;
+        width: $notifications-page-width;
+    
+    }
+}
+
+
+

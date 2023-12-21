@@ -1,6 +1,7 @@
 import { type StripePaymentElement, type Stripe, type StripeElements } from '@stripe/stripe-js'
 import { loadStripe } from '@stripe/stripe-js/pure'
 import Swal from 'sweetalert2'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 let paymentElement: StripePaymentElement | null = null
 let elements: StripeElements | null = null
@@ -88,7 +89,7 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
         })
       if (req.status !== 200) {
         submitButton.disabled = false
-        console.log(await req.json())
+        await handleRequestErrorToast(req)
         toggleSpinner()
         throw Error(`Payment intent failed with status ${req.status}`)
       }
@@ -110,8 +111,8 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
       }
     })
     toggleSpinner()
-    console.log(result.error)
     submitButton.disabled = false
+    console.log(result.error)
     await Swal.fire({
       title: 'Payment error',
       text: result.error.message,
@@ -130,10 +131,10 @@ export async function checkout (): Promise<void> {
   if (checkoutForm === null) {
     throw Error('Cannot find checkout form')
   }
-
+  const submitHandler = submitFormStripe.bind(null, stripeObject, checkoutForm)
   if (document.querySelector<HTMLInputElement>('input[name=payment_method]:checked')?.value === '1') {
     intializeStripeElement(stripeObject)
-    checkoutForm.addEventListener('submit', submitFormStripe.bind(null, stripeObject, checkoutForm))
+    checkoutForm.addEventListener('submit', submitHandler)
   }
 
   const radios = document.querySelectorAll<HTMLInputElement>('input[type=radio][name=payment_method]')
@@ -141,10 +142,10 @@ export async function checkout (): Promise<void> {
     radio.addEventListener('change', (ev) => {
       if (radio.value === '1') {
         intializeStripeElement(stripeObject)
-        checkoutForm.addEventListener('submit', submitFormStripe.bind(null, stripeObject, checkoutForm))
-      } else if (paymentElement !== null) {
-        paymentElement.unmount()
-        checkoutForm.removeEventListener('submit', submitFormStripe.bind(null, stripeObject, checkoutForm))
+        checkoutForm.addEventListener('submit', submitHandler)
+      } else {
+        if (paymentElement !== null) paymentElement.unmount()
+        checkoutForm.removeEventListener('submit', submitHandler)
       }
     })
   })

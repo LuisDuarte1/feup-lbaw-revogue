@@ -10,7 +10,6 @@
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^6.11.0",
         "@typescript-eslint/parser": "^6.11.0",
-        "axios": "^1.1.2",
         "eslint": "^8.53.0",
         "eslint-config-standard-with-typescript": "^39.1.1",
         "eslint-plugin-import": "^2.29.0",
@@ -25,7 +24,9 @@
     "dependencies": {
         "@stripe/stripe-js": "^2.2.0",
         "debounce": "^2.0.0",
-        "sweetalert2": "^11.6.13",
+        "laravel-echo": "^1.15.3",
+        "pusher-js": "^8.4.0-rc2",
+        "sweetalert2": "^11.10.1",
         "swiper": "^11.0.5"
     }
 }

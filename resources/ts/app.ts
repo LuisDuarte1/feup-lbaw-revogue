@@ -1,3 +1,5 @@
+import './bootstrap.ts'
+
 import imageUploader from './components/imageUploader'
 import submitFormOnChange from './components/submitFormOnChange'
 import wishlistButton from './components/wishlistButton'
@@ -11,6 +13,24 @@ import 'swiper/css/bundle'
 import { checkout } from './pages/checkout'
 import errorModal from './components/errorModal'
 import { expandableCard } from './components/expandableCard'
+import expandableImage from './components/expandableImage'
+import notificationDropdown from './components/notificationDropdown'
+import notification from './components/notification'
+import { notifications } from './pages/notifications'
+import productMessageThread from './components/productMessageThread'
+import sendTextMessage from './components/sendTextMessage'
+import { messages } from './pages/messages'
+import sendImageMessage from './components/sendImageMessage'
+import sendBargainMessage from './components/sendBargainMessage'
+import sendReport from './components/sendReport'
+import messageBargainContent from './components/messageBargainContent'
+import changeOrderStatus from './components/changeOrderStatus'
+import requestOrderCancellation from './components/requestOrderCancellation'
+import messageCancellationContent from './components/messageCancellationContent'
+import applyVoucherButton from './components/applyVoucherButton'
+import voucherRemove from './components/voucherRemove'
+import errorToast from './components/errorToast'
+import successToast from './components/successToast'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -22,16 +42,36 @@ const routes: RouteList = {
   '/search': searchPage,
   '/products/{id}': productPage,
   '/cart': cart,
-  '/checkout': checkout
+  '/checkout': checkout,
+  '/notifications': notifications,
+  '/messages': messages
 }
 
 const components: ComponentList = {
   '#account_status': submitFormOnChange,
   '#order_status': submitFormOnChange,
   '.upload-photos': imageUploader,
-  '#wishlist_button': wishlistButton,
+  'expandable-card': expandableCard,
+  '.wishlist_button': wishlistButton,
   'meta[name="modal-error"]': errorModal,
-  'expandable-card': expandableCard
+  '.expandable-image': expandableImage,
+  '#notifications-icon': notificationDropdown,
+  '.notification': notification,
+  '.message-thread-input > .text-input': sendTextMessage,
+  '.product-message-thread': productMessageThread,
+  '.send-image-message': sendImageMessage,
+  '.send-bargain-message': sendBargainMessage,
+  '.message-bargain-content': messageBargainContent,
+  '.report': sendReport,
+  '.change-order-status': changeOrderStatus,
+  '.cancel-order': requestOrderCancellation,
+  '.message-cancellation-content': messageCancellationContent,
+  '.order-message-thread': productMessageThread,
+  '.apply-button > button': applyVoucherButton,
+  '.voucher-remove': voucherRemove,
+  'meta[name="toast-error"]': errorToast,
+  'meta[name="toast-success"]': successToast,
+  '#report_status': submitFormOnChange
 }
 
 function pageHandler (): void {
@@ -41,6 +81,10 @@ function pageHandler (): void {
     const regex = new RegExp(rule)
 
     if (regex.test(window.location.pathname)) {
+      if (Object.keys(routes).includes(window.location.pathname) && value !== window.location.pathname) {
+        console.warn('found ambiguous route... skipping this one because there\'s an exact match')
+        return
+      }
       routes[value]()
       hasRan = true
     }
@@ -53,12 +97,42 @@ function pageHandler (): void {
 function componentHandler (): void {
   Object.keys(components).forEach((value, _) => {
     document.querySelectorAll<HTMLElement>(value).forEach((element, _) => {
-      components[value](element)
+      try {
+        components[value](element)
+      } catch (e: any) {
+        console.error(`Component ${value} had an error while executing: ${e.toString()}`)
+      }
+    })
+  })
+}
+
+export function componentAJAXHandler (elements: Element[]): void {
+  elements.forEach((element) => {
+    // first we check if the element itself matches any of the componentlist
+    Object.keys(components)
+      .filter((value) => element.matches(value))
+      .forEach((value) => { components[value](element as HTMLElement) })
+
+    // then we check for the children of the element
+    Object.keys(components).forEach((value, _) => {
+      element.querySelectorAll<HTMLElement>(value).forEach((el, _) => {
+        components[value](el)
+      })
     })
   })
 }
 
 document.addEventListener('DOMContentLoaded', (_) => {
+  // idk why but sometimes DOMContentLoaded is called twice (probably because somehow this is being imported twice),
+  // so to avoid that we create the meta so that the js runs like a singleton
+  if (document.querySelector('meta[name=app-singleton]') !== null) {
+    return
+  }
+  const meta = document.createElement('meta')
+  meta.content = 'true'
+  meta.name = 'app-singleton'
+  document.getElementsByTagName('head')[0]?.append(meta)
+
   componentHandler()
   pageHandler()
-})
+}, { once: true })
