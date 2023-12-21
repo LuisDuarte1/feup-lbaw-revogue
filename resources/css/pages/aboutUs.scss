@@ -1,0 +1,31 @@
+.about-us-content{
+    width: calc(100% - 5rem);
+    word-break: break-word;
+    background-color: rba($secondary-background, 0.7);
+    border-radius: 0.5rem;
+    padding: 1rem 1rem 1rem 2rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    position: relative;
+    p{
+        word-break: break-word;
+    }
+}
+
+.about-us-content::before{
+    content: "";
+    top: 50%;
+    left: 0;
+    width: 0.7rem;
+    height: 100%;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    background-color: $primary;
+    transform: translateY(-50%);
+    position: absolute;
+}
+
+.social-media-link{
+    text-decoration: none;
+    font-size: 2rem;
+    color: rgba($primary, 1);
+}

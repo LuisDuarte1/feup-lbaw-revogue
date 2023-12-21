@@ -31,6 +31,7 @@ import applyVoucherButton from './components/applyVoucherButton'
 import voucherRemove from './components/voucherRemove'
 import errorToast from './components/errorToast'
 import successToast from './components/successToast'
+import expandableCard from './components/expandableCard'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -51,6 +52,7 @@ const components: ComponentList = {
   '#account_status': submitFormOnChange,
   '#order_status': submitFormOnChange,
   '.upload-photos': imageUploader,
+  '.question': expandableCard,
   '.wishlist_button': wishlistButton,
   'meta[name="modal-error"]': errorModal,
   '.expandable-image': expandableImage,
