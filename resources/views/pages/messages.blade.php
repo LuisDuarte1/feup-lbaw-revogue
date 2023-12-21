@@ -94,7 +94,7 @@
         </div>
         @else
         <div class="no-messages column items-center justify-center h-full">
-            <img src="/empty_notifications.svg" width="500">
+            <img src="/empty_notifications.svg" width="500" alt="no-messages">
             <p>You don't have any messages yet</p>
         </div>
         @endif

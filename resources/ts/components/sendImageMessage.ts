@@ -33,7 +33,7 @@ export default function (element: HTMLElement): void {
         <div class="column justify-center items-center gap-2">
             <div class="select-image-wrapper">
                 <div class="popup-select-image">
-                    <img>
+                    <img alt="">
                     <label for="image-message" class="image-message-label">
                         <ion-icon name="camera" aria-label="add-image-icon"></ion-icon>
                         Add photo

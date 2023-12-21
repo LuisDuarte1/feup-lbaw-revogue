@@ -122,7 +122,7 @@
                 </div>
                 <div class="seller-wrapper">
                     <div class="profile-pic">
-                        <img id="image" aria-label="profile-image" src="/storage/{{ $imagePath }}">
+                        <img id="image" aria-label="profile-image" src="/storage/{{ $imagePath }}" alt="profile-picture">
                     </div>
                     <div class="seller-info">
                         <div class="seller-name">
