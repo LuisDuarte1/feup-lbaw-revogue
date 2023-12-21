@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -19,9 +20,12 @@ class UserSeeder extends Seeder
 
     public function run(): void
     {
-        User::factory()->count(UserSeeder::VERIFIED_COUNT)->create();
-        User::factory()->banned()->count(UserSeeder::BANNED_COUNT)->create();
-        User::factory()->needsConfirmation()->count(UserSeeder::UNVERIFIED_COUNT)->create();
+        if (! App::environment(['production'])) {
+            User::factory()->count(UserSeeder::VERIFIED_COUNT)->create();
+            User::factory()->banned()->count(UserSeeder::BANNED_COUNT)->create();
+            User::factory()->needsConfirmation()->count(UserSeeder::UNVERIFIED_COUNT)->create();
+        }
+
         $settings = User::getDefaultSettings();
 
         User::factory()->create([

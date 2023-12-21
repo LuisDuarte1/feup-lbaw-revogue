@@ -39,12 +39,16 @@ class SearchController extends Controller
         foreach ($products as $product) {
             $attributes = $product->attributes()->get();
             $size = null;
+            $condition = null;
             foreach ($attributes as $attribute) {
                 if ($attribute->key == 'Size') {
                     $size = $attribute->value;
                 }
+                if ($attribute->key == 'Condition') {
+                    $condition = $attribute->value;
+                }
             }
-            array_push($list, ['product' => $product, 'size' => $size]);
+            array_push($list, ['product' => $product, 'size' => $size, 'condition' => $condition]);
         }
 
         return view('pages.search', ['products' => $list, 'filterAttributes' => $availableAttributes]);
@@ -60,12 +64,16 @@ class SearchController extends Controller
         foreach ($products as $product) {
             $attributes = $product->attributes()->get();
             $size = null;
+            $condition = null;
             foreach ($attributes as $attribute) {
                 if ($attribute->key == 'Size') {
                     $size = $attribute->value;
                 }
+                if ($attribute->key == 'Condition') {
+                    $condition = $attribute->value;
+                }
             }
-            array_push($list, ['product' => $product, 'size' => $size]);
+            array_push($list, ['product' => $product, 'size' => $size, 'condition' => $condition]);
         }
 
         return view('api.search', ['products' => $list, 'cursor' => $products]);

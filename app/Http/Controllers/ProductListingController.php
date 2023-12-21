@@ -13,10 +13,10 @@ class ProductListingController extends Controller
 {
     public function getPage()
     {
-
         return view('pages.productListing', [
             'colors' => AttributeController::getAttributeValues('Color'),
             'sizes' => AttributeController::getAttributeValues('Size'),
+            'conditions' => AttributeController::getAttributeValues('Condition'),
             'categories' => Category::all(),
         ]);
     }
@@ -58,6 +58,8 @@ class ProductListingController extends Controller
         $attr = Attribute::where('key', 'Size')->where('value', $request->size)->get();
         $product->attributes()->save($attr[0]);
         $attr = Attribute::where('key', 'Color')->where('value', $request->color)->get();
+        $product->attributes()->save($attr[0]);
+        $attr = Attribute::where('key', 'Condition')->where('value', $request->condition)->get();
         $product->attributes()->save($attr[0]);
         DB::commit();
 
