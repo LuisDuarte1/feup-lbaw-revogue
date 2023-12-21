@@ -55,11 +55,9 @@ class ProductController extends Controller
         $products = Product::latest()->paginate(40);
         $list = [];
         foreach ($products as $product) {
-
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
             $color = $product->attributes()->where('key', 'Color')->get()->first()->value;
-            $condition = $product->attributes()->where('key', 'Condition')->get()->first()->value;
-            array_push($list, ['product' => $product, 'size' => $size, 'color' => $color, 'condition' => $condition]);
+            array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
         }
 
         return view('pages.productList', ['products' => $list, 'paginator' => $products]);
