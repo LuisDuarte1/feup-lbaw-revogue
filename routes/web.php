@@ -180,14 +180,15 @@ Route::prefix('products')->group(function () {
         Route::get('/', 'listProductsDate');
         Route::post('/{id}/report', 'reportProduct');
     });
-});
-Route::prefix('{id}')->group(function () {
-    Route::prefix('/messages')->group(function () {
-        Route::controller(MessageController::class)->group(function () {
-            Route::post('/', 'createMessageThread');
+    Route::prefix('{id}')->group(function () {
+        Route::prefix('/messages')->group(function () {
+            Route::controller(MessageController::class)->group(function () {
+                Route::post('/', 'createMessageThread');
+            });
         });
     });
 });
+
 
 Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function () {
     Route::controller(SettingsController::class)->group(function () {

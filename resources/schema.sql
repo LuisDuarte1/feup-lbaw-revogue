@@ -575,7 +575,7 @@ BEGIN
     IF ((SELECT "type" FROM MessageThread WHERE "id"=NEW."message_thread") = 'product' AND NOT (NEW.message_type = 'text' OR NEW.message_type = 'bargain')) THEN
         RAISE EXCEPTION 'tried to add a system or cancellation message to a product message thread';
     END IF;
-    IF ((SELECT "type" FROM MessageThread WHERE "id"=NEW."message_thread") = 'product' AND NOT
+    IF ((SELECT "type" FROM MessageThread WHERE "id"=NEW."message_thread") = 'order' AND NOT
         (NEW.message_type = 'text' OR NEW.message_type = 'system' OR NEW.message_type = 'cancellation')) THEN
             RAISE EXCEPTION 'tried to add a bargain message to a order message thread';
     END IF;

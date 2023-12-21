@@ -48,7 +48,12 @@ function makeSendMesssageDialog (productId: number): void {
     form.set('text', text.value)
 
     const req = await fetch(`/products/${productId}/messages`, { method: 'POST', body: form, redirect: 'follow' })
-    window.location.href = req.url
+    if (req.status > 400) {
+      console.error('Request failed')
+      return
+    }
+
+    window.location.href = '/messages'
   })
 }
 
