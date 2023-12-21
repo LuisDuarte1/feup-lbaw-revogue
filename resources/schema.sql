@@ -98,6 +98,7 @@ CREATE TABLE Users(
     "password" TEXT,
     "creation_date" TIMESTAMP NOT NULL,
     "settings" JSON NOT NULL,
+    "remember_token" TEXT,
     "account_status" AccountStatus NOT NULL DEFAULT 'needsConfirmation'::AccountStatus
 );
 
