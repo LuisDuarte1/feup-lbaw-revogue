@@ -19,8 +19,7 @@ export const SuccessToast = Toast.mixin({
 
 export async function handleRequestErrorToast (response: Response): Promise<void> {
   if (response.status >= 500 && response.status <= 599) {
-    console.log(`Will not handle ${response.status} responses to error toast.. sending a generic one`)
-    void ErrorToast.fire('Something wrong happened... Please try again later.')
+    return
   }
 
   const errorJson = await response.json()
