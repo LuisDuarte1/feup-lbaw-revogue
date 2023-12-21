@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attribute;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -54,6 +55,7 @@ class ProductController extends Controller
     {
 
         $products = Product::filter($request)->latest()->paginate(40); // se n funcionar trocar para filter
+        $attributes = Attribute::all();
         $list = [];
         foreach ($products as $product) {
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
@@ -61,7 +63,7 @@ class ProductController extends Controller
             array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
         }
 
-        return view('pages.productList', ['products' => $list, 'paginator' => $products]);
+        return view('pages.productList', ['products' => $list, 'paginator' => $products, 'filterAttributes' => $attributes]);
     }
 
     public function deleteProduct(Request $request)

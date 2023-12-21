@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="column gap-2 justify-center product-list">
+        <x-filter-bar :filterAttributes="$filterAttributes"></x-filter-bar> 
         <div class="search-page" style="justify-content: center">
             @foreach ($products as $product)
                 @php
