@@ -10,7 +10,6 @@ use App\Models\Product;
 use App\Models\User;
 use App\View\Components\MessageBubble;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class MessageController extends Controller
@@ -286,7 +285,6 @@ class MessageController extends Controller
             return response()->json(['error' => "There's already a active cancellation request on this order."], 400);
         }
 
-
         $orderCancellation = $order->orderCancellations()->create([
             'order_cancellation_status' => 'pending',
         ]);
@@ -297,7 +295,6 @@ class MessageController extends Controller
             'from_user' => $request->user()->id,
             'order_cancellation' => $orderCancellation->id,
         ]);
-
 
         broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
 

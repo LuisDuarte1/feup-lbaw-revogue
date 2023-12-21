@@ -10,7 +10,6 @@ use App\Models\User;
 use App\View\Components\MessageBubble;
 use App\View\Components\SystemMessages\OrderChangedState;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {

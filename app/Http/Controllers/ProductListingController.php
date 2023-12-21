@@ -6,7 +6,6 @@ use App\Http\Controllers\api\AttributeController;
 use App\Http\Requests\ProductListingForm;
 use App\Models\Attribute;
 use App\Models\Category;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProductListingController extends Controller
