@@ -39,6 +39,12 @@ Password: cenoura-cozida-321
 
 Email: joseph.waldor@revogue.com
 
+Password: alface-torrada-149
+
+### Stripe Testing Cards
+
+[Stripe testing cards](https://stripe.com/docs/testing?testing-method=card-numbers)
+
 ## Team
 
 * Rita Cachaldora, up202108798@g.uporto.pt
