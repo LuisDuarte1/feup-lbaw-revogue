@@ -48,9 +48,9 @@
             @endphp
             <div class="avatar-logout">
                 <div class="profile-pic">
-                    <img src="{{isset($user->profile_image_path) === false ? '/defaultProfileImage.png' : $user->profile_image_path}}" class="profile-pic">
+                    <img aria-label="profile-image" src="{{isset($user->profile_image_path) === false ? '/defaultProfileImage.png' : $user->profile_image_path}}" class="profile-pic" alt="profile-picture">
                 </div>
-                <a href="/admin/logout"><ion-icon name="log-out"></ion-icon></a>
+                <a href="/admin/logout"><ion-icon name="log-out" aria-label="admin-log-out-icon"></ion-icon></a>
             </div>
         @endauth
 

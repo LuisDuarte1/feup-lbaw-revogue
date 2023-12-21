@@ -7,7 +7,7 @@
     <div class="admin-message-thread items-center gap-2">
         @if($messages->count() === 0)
         <div class="no-messages column items-center justify-center h-full">
-            <img src="/empty_notifications.svg" width="500">
+            <img src="/empty_notifications.svg" width="500" alt="no-messages">
             <p>These users did not exchange messages</p>
         </div>
         @else

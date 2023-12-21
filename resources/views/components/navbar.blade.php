@@ -9,40 +9,40 @@
             @auth
                 <li>
                     <a href="/profile/me" class="menu-item">
-                        <ion-icon name="person-circle"></ion-icon>
+                        <ion-icon name="person-circle" aria-label="profile-icon"></ion-icon>
                         Profile
                     </a>
                 </li>
             @endauth
             <li>
                 <a href="/" class="menu-item">
-                    <ion-icon name="home"></ion-icon>
+                    <ion-icon name="home" aria-label="home-icon"></ion-icon>
                     Home
                 </a>
             </li>
             @auth
                 <li>
                     <a href="/products" class="menu-item">
-                        <ion-icon name="bag-handle-sharp"></ion-icon>
+                        <ion-icon name="bag-handle-sharp" aria-label="listings-icon"></ion-icon>
                         Listings
                     </a>
                 </li>
                 <li>
                     <a href="/messages" class="menu-item">
-                        <ion-icon name="chatbubble-ellipses-sharp"></ion-icon>
+                        <ion-icon name="chatbubble-ellipses-sharp" aria-label="messages-icon"></ion-icon>
                         Messages
                     </a>
                 </li>
                 <li>
                     <a href="/settings/general" class="menu-item">
-                        <ion-icon name="settings"></ion-icon>
+                        <ion-icon name="settings" aria-label="settings-icon"></ion-icon>
                         Settings
                     </a>
                 </li>
             @endauth
             <li>
                 <a href="#" class="menu-item">
-                    <ion-icon name="help-circle"></ion-icon>
+                    <ion-icon name="help-circle" aria-label="faqs-icon"></ion-icon>
                     FAQs
                 </a>
             </li>
@@ -50,18 +50,18 @@
     </div>
     @auth
         <a href="/logout" class="menu-item logout">
-            <ion-icon name="log-out"></ion-icon>
+            <ion-icon name="log-out" aria-label="log-out-icon"></ion-icon>
             Logout
         </a>
     @endauth
     @guest
         <div>
             <a href="/login" class="menu-item sign-in">
-                <ion-icon name="log-in"></ion-icon>
+                <ion-icon name="log-in" aria-label="log-in-icon"></ion-icon>
                 Login
             </a>
             <a href="/register" class="menu-item sign-up">
-                <ion-icon name="person-add"></ion-icon>
+                <ion-icon name="person-add" aria-label="register-icon"></ion-icon>
                 Register
             </a>
         </div>

@@ -53,7 +53,7 @@ export default async function (imageElement: Element): Promise<void> {
     inputSquare.classList.add('add-photo')
     inputSquare.innerHTML = `                        
     <label for="product-photos" class="product-photos">
-    <ion-icon name="camera"></ion-icon>
+    <ion-icon name="camera" aria-label="add-product-icon"></ion-icon>
     Add photos
     </label>`
     inputSquare.append(input)
@@ -129,7 +129,7 @@ function renderPhotos (parent: HTMLElement, normalSquare: Node, inputSquare: HTM
 
     closeIcon.href = '#'
     closeIcon.classList.add('close-icon')
-    closeIcon.innerHTML = '<ion-icon name="close"></ion-icon>'
+    closeIcon.innerHTML = '<ion-icon name="close" aria-label="close-icon"></ion-icon>'
 
     img.src = URL.createObjectURL(input.files[i])
 

@@ -50,7 +50,7 @@ $numProducts = 0;
                         <div class="cart-product row gap-1 items-center">
                             <div class="product-image column items-center">
                                 <a href="/products/{{$product->id}}">
-                                    <img src="{{$productPicture}}">
+                                    <img src="{{$productPicture}}" alt="product-image">
                                 </a>
                             </div>
                             <div class="cart-product-info row gap-1">
