@@ -320,3 +320,11 @@ Route::prefix('messages')->middleware(['auth:web', 'verified'])->group(function 
         Route::get('/', 'getPage');
     });
 });
+
+Route::get('/faqs', function () {
+    return view('pages.faqs');
+})->name('faqs');
+
+Route::get('/aboutUs', function () {
+    return view('pages.aboutUs');
+})->name('aboutUs');
