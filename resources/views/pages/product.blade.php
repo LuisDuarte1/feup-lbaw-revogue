@@ -49,13 +49,19 @@
                 <div class="product-title">
                     <h1 class="title">{{$product->name}}</h1>
                 </div>
-                <div class="product-price-shipping">
+                <div class="product-price-shipping-report items-center">
                     <div class="product-price">
                         <h3> {{$product->price}}€</h3>
                     </div>
                     <div class="product-shipping">
                         <h3>Shipping: 2€</h3>
                     </div>
+                    @if ($user->id !== Auth::user()->id)
+                    <div class="report row items-center" data-type="product" data-id="{{$product->id}}">
+                        <ion-icon name="flag-outline"></ion-icon>
+                        Report
+                    </div>
+                    @endif
                 </div>
                 <div class="product-info">
                     <p>@foreach ($attributes as $attribute)

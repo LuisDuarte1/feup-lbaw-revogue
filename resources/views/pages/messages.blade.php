@@ -13,6 +13,10 @@
         @endphp
         <a class="username" href="/profile/{{$soldBy->id}}">{{'@'.$soldBy->username}}</a>
         <div class="message-thread-details-buttons">
+            <div class="report row items-center" data-type="message_thread" data-id="{{$currentThread->id}}">
+                <ion-icon name="flag-outline"></ion-icon>
+                Report
+            </div>
             <a href="/products/{{$product->id}}" class="row button items-center">View Item</a>
             <a href="/profile/{{$soldBy->id}}" class="button outline">Visit Shop</a>
         </div>
@@ -20,6 +24,10 @@
         @php
         $soldBy = $currentThread->messageOrder->products[0]->soldBy;
         @endphp
+        <div class="report row items-center" data-type="message_thread" data-id="{{$currentThread->id}}">
+            <ion-icon name="flag-outline"></ion-icon>
+            Report
+        </div>
         <a class="username" href="#">{{'@'.$soldBy->username}}</a>
         <div class="order-status row items-center">
             @php
@@ -59,7 +67,6 @@
     <div class="message-thread">
         @if($currentThread !== null)
         <div class="message-thread-content" data-thread-id="{{$currentThread->id}}" data-current-user-id="{{Auth::user()->id}}">
-            <!--TODO: add bargain logic  -->
             <div id="page-end"></div>
             @foreach ($messages->reverse() as $message)
             @if($message->message_type !== 'system')

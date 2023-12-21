@@ -210,7 +210,20 @@ input[type="radio"]:not(:disabled):checked {
 }
 
 .modal-expandable-image-close-button:hover{
-    color: $background;
+    color: $primary;
+}
+
+.report{
+    color: $text-color;
+    text-decoration: none;
+    gap: 0.2rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover{
+        color: $toast-red;
+        transition: ease-in-out 0.2s;
+    }
 }
 
 .order-status{

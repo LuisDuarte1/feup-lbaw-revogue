@@ -21,6 +21,7 @@ import sendTextMessage from './components/sendTextMessage'
 import { messages } from './pages/messages'
 import sendImageMessage from './components/sendImageMessage'
 import sendBargainMessage from './components/sendBargainMessage'
+import sendReport from './components/sendReport'
 import messageBargainContent from './components/messageBargainContent'
 import changeOrderStatus from './components/changeOrderStatus'
 import requestOrderCancellation from './components/requestOrderCancellation'
@@ -59,6 +60,7 @@ const components: ComponentList = {
   '.send-image-message': sendImageMessage,
   '.send-bargain-message': sendBargainMessage,
   '.message-bargain-content': messageBargainContent,
+  '.report': sendReport,
   '.change-order-status': changeOrderStatus,
   '.cancel-order': requestOrderCancellation,
   '.message-cancellation-content': messageCancellationContent,
@@ -66,7 +68,8 @@ const components: ComponentList = {
   '.apply-button > button': applyVoucherButton,
   '.voucher-remove': voucherRemove,
   'meta[name="toast-error"]': errorToast,
-  'meta[name="toast-success"]': successToast
+  'meta[name="toast-success"]': successToast,
+  '#report_status': submitFormOnChange
 }
 
 function pageHandler (): void {
