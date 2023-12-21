@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
 import { createFormData } from '../utils/csrf'
-import { handleRequestErrorToast } from '../utils/toastUtils'
+import { SuccessToast, handleRequestErrorToast } from '../utils/toastUtils'
 
 export default function (element: Element): void {
   const orderId = element.getAttribute('data-order-id')
@@ -57,7 +57,6 @@ export default function (element: Element): void {
       await handleRequestErrorToast(req)
       return
     }
-    // TODO (luisd): make success toast
-    console.log('todo')
+    void SuccessToast.fire('Order Status changed successfully.')
   })
 }

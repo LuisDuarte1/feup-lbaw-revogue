@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
 import { componentAJAXHandler } from '../app'
-import { handleRequestErrorToast } from '../utils/toastUtils'
+import { ErrorToast, handleRequestErrorToast } from '../utils/toastUtils'
 
 export default function (element: Element): void {
   const orderId = element.getAttribute('data-order-id')
@@ -30,7 +30,7 @@ export default function (element: Element): void {
     const orderStatus = await orderStatusRes.json()
 
     if (orderStatus.status !== 'pendingShipment') {
-      // TODO (luisd): show error toast
+      void ErrorToast.fire('You cannot request cancellation because your order already shipped')
       console.log('Order is not in pending shipment state skipping...')
       return
     }
