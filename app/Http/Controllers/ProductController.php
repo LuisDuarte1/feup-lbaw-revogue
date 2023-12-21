@@ -48,14 +48,7 @@ class ProductController extends Controller
 
     public static function getTrendingProducts()
     {
-        $products = Product::withCount('wishlist')->get()->sortBy('wishlist_count')->reverse();
-
-        $trendingProducts = $products->filter(function ($product) {
-            return ! self::isProductSold($product);
-        });
-
-        return $trendingProducts;
-
+        return Product::withCount('wishlist')->get()->sortBy('wishlist_count');
     }
 
     public function listProductsDate(Request $request)
@@ -65,9 +58,11 @@ class ProductController extends Controller
         $attributes = Attribute::all();
         $list = [];
         foreach ($products as $product) {
+
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
             $color = $product->attributes()->where('key', 'Color')->get()->first()->value;
-            array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
+            $condition = $product->attributes()->where('key', 'Condition')->get()->first()->value;
+            array_push($list, ['product' => $product, 'size' => $size, 'color' => $color, 'condition' => $condition]);
         }
 
         return view('pages.productList', ['products' => $list, 'paginator' => $products, 'filterAttributes' => $attributes]);

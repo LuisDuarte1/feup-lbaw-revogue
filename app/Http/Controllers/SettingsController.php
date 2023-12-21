@@ -51,12 +51,6 @@ class SettingsController extends Controller
     public function deleteAccount(Request $request)
     {
         $user = User::find(Auth::id());
-
-        $activeOrders = $user->orders()->whereNotIn('status', ['cancelled', 'received'])->count();
-        if ($activeOrders > 0) {
-            return back()->withErrors(['active_orders' => 'You have active orders. Please complete or cancel them before deleting your account.']);
-        }
-
         if (Hash::check($request->password, $user->password)) {
             Auth::logout();
             $request->session()->invalidate();
@@ -68,6 +62,7 @@ class SettingsController extends Controller
             return redirect()->route('login')
                 ->withSuccess('You have logged out successfully!');
         } else {
+
             return redirect()->route('general-settings')->withErrors(['password' => 'The password is incorrect']);
         }
     }
