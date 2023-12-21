@@ -39,7 +39,7 @@
                 </form>
                 <div class="goto-register">
                     <a href="{{ route('register') }}">Don't have an account? Register now</a>
-                    <br> <a href="{{ route('recover-password') }}">Forgot Your Password?</a>
+                    <a href="{{ route('recover-password') }}">Forgot Your Password?</a>
                 </div>
 
             </div>

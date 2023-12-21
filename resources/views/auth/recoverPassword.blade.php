@@ -10,8 +10,8 @@
 
                     <label for="email">E-mail</label>
 
-                    <input class="search" placeholder="Write your email" id="email" type="email" name="email"
-                        value="{{ old('email') }}" required autofocus>
+                    <input class="search" id="email" type="email" name="email" value="{{ old('email') }}" required
+                        autofocus>
                     @if ($errors->has('email'))
                         <span class="error">
                             {{ $errors->first('email') }}

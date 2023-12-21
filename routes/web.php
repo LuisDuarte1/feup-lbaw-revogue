@@ -141,12 +141,12 @@ Route::controller(RegisterController::class)->middleware('guest:web')->group(fun
 
 Route::controller(RecoverPasswordController::class)->group(function () {
     Route::get('/recover-password', 'showRecoverPasswordForm')->name('recover-password');
-    Route::post('/recover-password', 'recoverPassword');
+    Route::post('/recover-password', 'sendEmailPasswordRecovery');
 });
 
 Route::controller(ResetPasswordController::class)->group(function () {
-    Route::get('/reset-password/{token}', 'showResetPasswordForm')->name('reset-password');
-    Route::post('/reset-password', 'resetPassword');
+    Route::get('/reset-password/{token}', 'showResetPasswordForm')->name('password.reset');
+    Route::post('/reset-password', 'resetPassword')->name('password.update');
 });
 
 Route::prefix('login')->group(function () {

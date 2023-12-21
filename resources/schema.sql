@@ -1,6 +1,7 @@
 SET search_path TO lbaw23107;
 
 DROP TABLE IF EXISTS
+    "password_reset_tokens",
     Users,
     Products,
     PurchaseIntents,
@@ -78,6 +79,12 @@ CREATE TYPE OrderCancellationStatus AS ENUM(
     'pending',
     'accepted',
     'cancelled'
+);
+
+CREATE TABLE "password_reset_tokens" (
+    "email" TEXT PRIMARY KEY NOT NULL,
+    "token" TEXT NOT NULL,
+    "created_at" TIMESTAMP 
 );
 
 CREATE TABLE Users(

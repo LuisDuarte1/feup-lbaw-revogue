@@ -7,26 +7,21 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password; // Add this line
 use Illuminate\Support\Str; // Add this line
 
 class ResetPasswordController extends Controller
 {
-    public function showResetPasswordForm(Request $request)
+    public function showResetPasswordForm($token)
     {
-        $token = $request->input('token');
 
-        if (! $token || ! DB::table('password_resets')->where('token', $token)->first()) {
-            abort(403, 'Invalid password reset token.');
-        }
-
-        return view('auth.reset-password');
+        return view('/auth/resetPassword', ['token' => $token]);
     }
 
     public function resetPassword(Request $request): RedirectResponse
     {
+
         $request->validate([
             'token' => ['required'],
             'email' => ['required', 'email'],
