@@ -20,10 +20,11 @@
         // Fix for Firefox autofocus CSS bug
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
-    
+
 
     @if (session('modal-error'))
-        <meta name="modal-error" confirm-button="{{session('modal-error')['confirm-button']}}" title="{{session('modal-error')['title']}}" content="{{session('modal-error')['content']}}">
+        <meta name="modal-error" confirm-button="{{ session('modal-error')['confirm-button'] }}"
+            title="{{ session('modal-error')['title'] }}" content="{{ session('modal-error')['content'] }}">
     @endif
 
     @if (isset($errors) && get_class($errors) == 'Illuminate\Support\ViewErrorBag' && $errors->count() > 0)
@@ -51,12 +52,14 @@
 
 <body>
 
-    @if(isset($search_bar) == true && $search_bar == true)
-    <x-searchBar />
+    @if (isset($search_bar) == true && $search_bar == true)
+        <x-searchBar />
     @endif
-   
+
     <x-navbar />
-    <div class="main-content {{isset($needs_full_height) && $needs_full_height == true ? 'full-page-height' : ''}}">@yield('content')</div>
+    <div class="main-content {{ isset($needs_full_height) && $needs_full_height == true ? 'full-page-height' : '' }}">
+        @yield('content')</div>
 </body>
+
 
 </html>
