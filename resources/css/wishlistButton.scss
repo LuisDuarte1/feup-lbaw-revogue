@@ -1,0 +1,17 @@
+.wishlist_button {
+    z-index: 5;
+    position: absolute;
+    cursor: pointer;
+    top: 0.7rem;
+    padding: 0.25rem;
+    border-radius: 50%;
+    left: calc(100% - 3.2rem);
+    background-color: rgba($background, 0.7);
+    line-height: 0;
+    color: $accent;
+    text-decoration: none;
+    ion-icon{
+        font-size: 2rem;
+        margin-left: 1px;
+    }
+}
