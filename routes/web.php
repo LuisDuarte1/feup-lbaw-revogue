@@ -189,7 +189,6 @@ Route::prefix('products')->group(function () {
     });
 });
 
-
 Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function () {
     Route::controller(SettingsController::class)->group(function () {
         Route::get('/payment', 'PaymentsSettings')->name('payment-settings');
