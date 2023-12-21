@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2'
 import { createFormData } from '../utils/csrf'
+import { SuccessToast, handleRequestErrorToast } from '../utils/toastUtils'
 
 export default function sendReport (element: HTMLElement): void {
   const elem = element
@@ -34,20 +35,28 @@ export default function sendReport (element: HTMLElement): void {
       const req = await fetch(`/api/products/${id}/report`, { method: 'POST', body: form })
       if (req.status !== 200) {
         console.error(`Report failed with status ${req.status}`)
+        await handleRequestErrorToast(req)
+        return
       }
     } else if (type === 'user') {
       const req = await fetch(`/api/profile/${id}/report`, { method: 'POST', body: form })
 
       if (req.status !== 200) {
         console.error(`Report failed with status ${req.status}`)
+        await handleRequestErrorToast(req)
+        return
       }
     } else if (type === 'message thread') {
       const req = await fetch(`/api/messages/${id}/report`, { method: 'POST', body: form })
       if (req.status !== 200) {
         console.error(`Report failed with status ${req.status}`)
+        await handleRequestErrorToast(req)
+        return
       }
     } else {
       throw Error(`Unknown type ${type}`)
     }
+
+    void SuccessToast.fire('Report submitted successfully.')
   })
 }
