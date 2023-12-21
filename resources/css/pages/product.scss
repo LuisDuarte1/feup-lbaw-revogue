@@ -261,3 +261,30 @@
         margin-top: 1.5rem;
     }
 }
+
+@media screen and (max-width: 576px) {
+    .product-layout{
+        margin-top: 1rem;
+    }
+
+    .layout-wrapper{
+        grid-template-rows: fit-content(50%) fit-content(50%);
+        grid-template-columns: 100%;
+
+        .product-details{
+            grid-row: 1;
+        }
+
+        .product-image{
+            grid-row: 2;
+        }
+
+        .has-reviews{
+            grid-row: 1;
+        }
+
+        .seller{
+            grid-row: 2;
+        }
+    }
+}
