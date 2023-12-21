@@ -13,11 +13,7 @@ function addQuery (query: string | null): void {
 
 export function searchPage (): void {
   const URLParams = new URLSearchParams(window.location.search)
-  let page = URLParams.get('page')
-  if (page === null) {
-    URLParams.set('page', '1')
-    page = '1'
-  }
+  URLParams.set('page', '2')
   const element = document.querySelector('.search-page')
   if (element !== null) {
     addEndObserver(URLParams, '/api/search', element, 'a', { editPage: false })
