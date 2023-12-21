@@ -224,3 +224,11 @@ input[type="radio"]:not(:disabled):checked {
         color: $toast-green;
     }
 }
+
+.swal2-toast{
+
+    .swal2-title{
+        word-break: normal;
+    
+    }
+}

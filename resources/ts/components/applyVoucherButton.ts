@@ -15,6 +15,7 @@ export default function (element: Element): void {
 
     if (res.status !== 200) {
       console.log(`Voucher apply request failed with status ${res.status}`)
+      return
     }
 
     location.reload()
