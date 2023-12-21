@@ -20,11 +20,11 @@ class MessageSeeder extends Seeder
 
     public function run(): void
     {
-        if(App::environment(['production'])){
+        if (App::environment(['production'])) {
             $chloe = User::where('username', 'chloehall')->get()->first();
 
             $products = Product::inRandomOrder()->limit(MessageSeeder::THREAD_COUNT)->get();
-    
+
             foreach ($products as $product) {
                 $messageThread = MessageThread::factory()->state(['user_1' => $chloe->id, 'user_2' => $product->sold_by, 'product' => $product->id])->create();
                 for ($i = 0; $i < MessageSeeder::NUM_OF_MESSAGES_PER_THREAD / 2; $i++) {

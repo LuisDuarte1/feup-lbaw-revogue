@@ -18,14 +18,13 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         //reset faker
-        if(App::environment(['production'])){
+        if (App::environment(['production'])) {
             Category::create(['name' => 'Apparel']);
             Category::create(['name' => 'Footwear']);
-        }
-        else {
+        } else {
             fake()->unique(true);
             $categories = Category::factory()->count(CategorySeeder::CATEGORY_COUNT)->create();
-    
+
             for ($i = 0; $i < CategorySeeder::LINKED_CATEGORY_COUNT; $i++) {
                 Category::factory()->state(['parent_category' => $categories->random()->id])->create();
             }

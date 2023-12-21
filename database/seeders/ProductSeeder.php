@@ -21,13 +21,13 @@ class ProductSeeder extends Seeder
 
     public function run(): void
     {
-        if(!App::environment(['production'])){
+        if (! App::environment(['production'])) {
             $users = User::where('account_status', 'needsConfirmation')->get();
             $products = [];
             for ($i = 0; $i < ProductSeeder::PRODUCTS_COUNT; $i++) {
                 array_push($products, Product::factory()->state(['sold_by' => $users->random()->id])->create());
             }
-    
+
             foreach ($products as $product) {
                 $wishlistUsers = $users->random(ProductSeeder::WISHLIST_USERS);
                 foreach ($wishlistUsers as $user) {
@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
                     }
                     $user->wishlist()->attach($product);
                 }
-    
+
                 $cartUsers = $users->random(ProductSeeder::CART_USERS);
                 foreach ($cartUsers as $user) {
                     if ($user->id == $product->soldBy()->get()[0]->id) {
@@ -45,7 +45,7 @@ class ProductSeeder extends Seeder
                     $user->cart()->attach($product);
                 }
             }
-    
+
             $allProducts = Product::all();
             $sizes = Attribute::where('key', 'Size')->get();
             foreach ($allProducts as $product) {

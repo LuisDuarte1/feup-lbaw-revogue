@@ -19,7 +19,7 @@ class ReviewSeeder extends Seeder
 
     public function run(): void
     {
-        if(!App::environment(['production'])){
+        if (! App::environment(['production'])) {
             $users = User::where('account_status', 'needsConfirmation')->get();
 
             for ($i = 0; $i < ReviewSeeder::REVIEW_COUNT; $i++) {
@@ -28,14 +28,14 @@ class ReviewSeeder extends Seeder
                 while ($random_user == $reviewer) {
                     $reviewer = $users->random()->id;
                 }
-    
+
                 $product = Product::factory()->state(['sold_by' => $random_user])->create();
                 $order = Order::factory()->state(['belongs_to' => $reviewer, 'purchase' => Purchase::factory()->create()])->create();
                 $order->products()->attach($product->id, ['discount' => 0]);
-    
+
                 $review = Review::factory()->state(['reviewer' => $reviewer,
                     'reviewed' => $random_user, 'reviewed_order' => $order->id])->create();
-    
+
             }
         }
     }

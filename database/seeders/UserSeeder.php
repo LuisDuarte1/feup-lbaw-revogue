@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
 
     public function run(): void
     {
-        if(!App::environment(['production'])){
+        if (! App::environment(['production'])) {
             User::factory()->count(UserSeeder::VERIFIED_COUNT)->create();
             User::factory()->banned()->count(UserSeeder::BANNED_COUNT)->create();
             User::factory()->needsConfirmation()->count(UserSeeder::UNVERIFIED_COUNT)->create();
