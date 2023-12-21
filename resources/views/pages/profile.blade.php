@@ -25,9 +25,8 @@
                     $id = $product['product']->id;
                     $condition = $product['condition'];
                 @endphp
-                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2"
-                    :condition="$condition />
-     @endforeach
+                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2" :condition="$condition"></x-productCard>
+            @endforeach
                     <div id="page-end">
                     </div>
         </div>
