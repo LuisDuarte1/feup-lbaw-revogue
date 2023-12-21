@@ -10,6 +10,7 @@ use Illuminate\View\Component;
 class wishlistButton extends Component
 {
     public Product $product;
+
     public bool $inwishlist;
 
     public function __construct(Product $product, bool $inwishlist)
