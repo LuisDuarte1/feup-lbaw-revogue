@@ -232,3 +232,16 @@ input[type="radio"]:not(:disabled):checked {
     
     }
 }
+
+.swal2-popup{
+    background-color: $background;
+    color: $text-color;
+
+    .swal2-confirm{
+        background-color: $accent;
+    }
+
+    .swal2-deny {
+        background-color: $toast-red;
+    }
+}
