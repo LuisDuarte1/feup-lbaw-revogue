@@ -1,29 +1,7 @@
+.questions-wrapper{
+    width: calc(100% - 4rem);
+}
 
-@import '../theme';
-
-.faqs-wrapper {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-
-    .faqs-page{
-        height: 60%;
-        display: flex;
-        gap: 3rem;
-        flex-direction: column;
-        align-items: center;
-
-        .questions-wrapper{
-            width: 50rem;
-            margin-bottom: 0.5rem;
-
-            h2 {
-                font-size: 2rem;
-                font-weight: 600;
-                margin-bottom: 1rem;}
-
-        }
-
-    }
-
+.faqs-wrapper{
+    padding-bottom: 2.5rem;
 }

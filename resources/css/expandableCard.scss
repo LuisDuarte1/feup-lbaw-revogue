@@ -1,42 +1,53 @@
 .question-box{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    font-size: 15px;
-    transition: 0.4s;
-    background-color: $secondary;
-    border-radius: 12px;
+    background-color: $secondary-background;
+    border-radius: 0.5rem;
+    padding: 1rem 0.5rem 1rem 1.5rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    position: relative;
 
     .question{
-        display:flex;
-        justify-content: space-between;
-    }
+        color: $text-color;
+        min-height: 3rem;
+        cursor: pointer;
+        line-height: 1.25rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 1rem 0.5 1rem 0.5rem;
 
-    ion-icon{
+    }
+    .question::after{
+        content: "\002B";
         font-size: 1.5rem;
+        position: absolute;
+        right: 0.5rem;
+    }
+    .question.active::after{
+        content: "\2212";
+    }
+
+    .answer{
+        display: none;
+        max-height: 0;
+        padding: 1rem 0rem;
+        line-height: 1.2rem;
+        transition: max-height 0.5s ease-out;
+        text-align: justify;
+        word-wrap: break-word;
     }
 }
 
-.question-box:hover {
-    background: $secondary-hover;
-}
-
-.question-box:active{
-    background: $secondary-hover;
-    ion-icon{
-        rotate: 180deg;
-    }
-}
-
-
-.answer{
-    padding: 0 18px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
+.question-box::before{
+    content: "";
+    top: 50%;
+    left: 0;
+    width: 0.7rem;
+    height: 100%;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    background-color: $primary;
+    transform: translateY(-50%);
+    position: absolute;
 }

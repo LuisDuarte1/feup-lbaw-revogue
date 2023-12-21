@@ -41,7 +41,7 @@
                 </li>
             @endauth
             <li>
-                <a href="#" class="menu-item">
+                <a href="/faqs" class="menu-item">
                     <ion-icon name="help-circle" aria-label="faqs-icon"></ion-icon>
                     FAQs
                 </a>

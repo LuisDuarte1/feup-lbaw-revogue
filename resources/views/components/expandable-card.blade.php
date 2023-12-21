@@ -1,9 +1,10 @@
-<div class="question-box">
+<div class="question-box column">
     <div class="question">
-        <p>{{ $question }}</p>
-        <ion-icon name="chevron-down-outline"></ion-icon>
+        {{ $question }}
     </div>
     <div class="answer">
-        <p>{{ $answer }}</p>
+        <div class="answer-content">
+            {{ $answer }}
+        </div>
     </div>
 </div>
