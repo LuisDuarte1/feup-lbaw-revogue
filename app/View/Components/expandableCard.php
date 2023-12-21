@@ -3,15 +3,15 @@
 namespace App\View\Components;
 
 use Closure;
-use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 class expandableCard extends Component
 {
-    
     public $question;
 
     public $answer;
+
     public function __construct($question, $answer)
     {
         $this->question = $question;
