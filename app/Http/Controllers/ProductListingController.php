@@ -6,7 +6,6 @@ use App\Http\Controllers\api\AttributeController;
 use App\Http\Requests\ProductListingForm;
 use App\Models\Attribute;
 use App\Models\Category;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProductListingController extends Controller
@@ -36,7 +35,6 @@ class ProductListingController extends Controller
             $filename = '/storage/'.$image->storePublicly('product-images', ['disk' => 'public']);
             array_push($image_paths, $filename);
         }
-        DB::beginTransaction();
 
         $product = $request->user()->products()->create([
             'slug' => 'bloat',
@@ -61,7 +59,6 @@ class ProductListingController extends Controller
         $product->attributes()->save($attr[0]);
         $attr = Attribute::where('key', 'Condition')->where('value', $request->condition)->get();
         $product->attributes()->save($attr[0]);
-        DB::commit();
 
         //TODO (luisd): use named routed
         return redirect('/products/'.$product->id);

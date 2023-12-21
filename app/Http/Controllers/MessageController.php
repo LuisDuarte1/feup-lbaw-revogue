@@ -10,7 +10,6 @@ use App\Models\Product;
 use App\Models\User;
 use App\View\Components\MessageBubble;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class MessageController extends Controller
@@ -111,7 +110,6 @@ class MessageController extends Controller
             return response()->json(['error' => 'You can only make one action to a bargain'], 400);
         }
 
-        DB::beginTransaction();
         $bargain->bargain_status = 'accepted';
         $bargain->update();
 
@@ -128,8 +126,6 @@ class MessageController extends Controller
             'message_thread' => $messageThread->id,
             'bargain' => $bargain->id,
         ]);
-
-        DB::commit();
 
         broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
 
@@ -164,7 +160,6 @@ class MessageController extends Controller
             return response()->json(['error' => 'You can only make one action to a bargain'], 400);
         }
 
-        DB::beginTransaction();
         $bargain->bargain_status = 'rejected';
         $bargain->update();
 
@@ -175,7 +170,6 @@ class MessageController extends Controller
             'message_thread' => $messageThread->id,
             'bargain' => $bargain->id,
         ]);
-        DB::commit();
 
         broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
 
@@ -241,7 +235,6 @@ class MessageController extends Controller
             $bargain->save();
             //TODO: send message that request has been cancelled
         }
-        DB::beginTransaction();
         $bargain = Bargain::create([
             'bargain_status' => 'pending',
             'proposed_price' => $validated['proposed_price'],
@@ -255,7 +248,6 @@ class MessageController extends Controller
             'message_thread' => $messageThread->id,
             'bargain' => $bargain->id,
         ]);
-        DB::commit();
 
         broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
 
@@ -293,8 +285,6 @@ class MessageController extends Controller
             return response()->json(['error' => "There's already a active cancellation request on this order."], 400);
         }
 
-        DB::beginTransaction();
-
         $orderCancellation = $order->orderCancellations()->create([
             'order_cancellation_status' => 'pending',
         ]);
@@ -305,8 +295,6 @@ class MessageController extends Controller
             'from_user' => $request->user()->id,
             'order_cancellation' => $orderCancellation->id,
         ]);
-
-        DB::commit();
 
         broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
 

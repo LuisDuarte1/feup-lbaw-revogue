@@ -22,7 +22,7 @@
                         $seller = App\Models\User::where('id', $id)
                             ->get()
                             ->first();
-                        $sellerPicture = $seller->profile_image_path !== null ? '/storage/' . $user->profile_image_path : '/defaultProfileImage.png';
+                        $sellerPicture = $seller->profile_image_path !== null ? '/storage/' . $seller->profile_image_path : '/defaultProfileImage.png';
                     @endphp
                     <div class="seller-products column gap-2" data-seller-id="{{ $seller->id }}">
                         <div class="seller-products-header row items-center">

@@ -10,7 +10,6 @@ use App\Models\User;
 use App\View\Components\MessageBubble;
 use App\View\Components\SystemMessages\OrderChangedState;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -159,7 +158,6 @@ class OrderController extends Controller
             return response()->json(['error' => 'You can only make one action to a cancellation'], 400);
         }
 
-        DB::beginTransaction();
         if ($newStatus === 'accepted') {
             $order = $orderCancellation->getOrder;
             $order->status = 'cancelled';
@@ -175,7 +173,6 @@ class OrderController extends Controller
             'message_thread' => $messageThread->id,
             'order_cancellation' => $orderCancellation->id,
         ]);
-        DB::commit();
 
         broadcast(new ProductMessageEvent(User::where('id', $otherUser)->get()->first(), $message))->toOthers();
 

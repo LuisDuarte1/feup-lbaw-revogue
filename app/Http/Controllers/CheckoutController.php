@@ -12,7 +12,6 @@ use App\Notifications\ProductSoldNotification;
 use App\Notifications\WishlistProductGoneNotification;
 use App\View\Components\SystemMessages\ShippingDetails;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use Monarobase\CountryList\CountryListFacade as Countries;
@@ -206,7 +205,6 @@ class CheckoutController extends Controller
             return back();
         }
         $appliedVouchers = VoucherController::getAppliedVouchers($request);
-        DB::beginTransaction();
         $cart = $request->user()->cart()->get();
         $cartGrouped = $cart->groupBy('sold_by');
         if ($request->payment_method === '0') {
@@ -250,7 +248,6 @@ class CheckoutController extends Controller
         }
         // remove the cart of all users because it has been bought
         CheckoutController::removePurchaseFromOtherUsers($request->user(), $cart);
-        DB::commit();
 
         return redirect('/');
     }
