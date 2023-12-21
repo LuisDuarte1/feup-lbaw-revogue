@@ -1,6 +1,5 @@
 .profile-navbar{
     display: flex;
-    width: 55rem;
     justify-content: space-between;
     align-items: center;
 
@@ -39,4 +38,10 @@
     }
 
     
+}
+
+@media screen and (max-width: 576px) {
+    .profile-navbar{
+        overflow-x: scroll;
+    }
 }

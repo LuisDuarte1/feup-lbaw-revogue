@@ -55,7 +55,7 @@
     <x-searchBar />
     @endif
     <nav class="mobile-navbar">
-        <p class="title">ReVogue</p>
+        <a href="/" class="title">ReVogue</a>
         <a href="#" class="mobile-hamburger-menu"><ion-icon name="menu-outline"></ion-icon></a>
     </nav>
     <x-navbar />

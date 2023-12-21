@@ -60,3 +60,18 @@
     gap: 3rem;
     margin-bottom: 2rem;
 }
+
+
+@media screen and (max-width: 576px) {
+    .complete-profile-page{
+        width: 100%;
+    }
+
+    .complete-profile-items{
+        flex-direction: column;
+
+        .biography > textarea{
+            height: 10rem;
+        }
+    }
+}

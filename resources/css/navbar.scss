@@ -10,7 +10,11 @@
     background: $secondary-background;
 }
 
-.logo {
+.close-menu-mobile{
+    display: none;
+}
+
+.logo-section {
     text-align: center;
     font-family: 'Abril Fatface', serif;
 
@@ -73,4 +77,14 @@
     transition: all 0.1s ease-out;
     border: 1px solid #dcdbdb;
     box-shadow: 0 0.1rem 0.2rem 0.3rem 0.3rem $secondary;
+}
+
+@media screen and (max-width: 576px) {
+    .close-menu-mobile{
+        display: block;
+    }
+
+    .menu-item{
+        justify-content: center;
+    }
 }
