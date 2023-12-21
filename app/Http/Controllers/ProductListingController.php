@@ -13,8 +13,6 @@ class ProductListingController extends Controller
 {
     public function getPage()
     {
-        dd('here');
-
         return view('pages.productListing', [
             'colors' => AttributeController::getAttributeValues('Color'),
             'sizes' => AttributeController::getAttributeValues('Size'),
