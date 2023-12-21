@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\AdminAttributeController;
+use App\Http\Controllers\admin\AdminCategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\AdminPayoutController;
@@ -247,6 +249,16 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
     Route::controller(AdminOrderController::class)->group(function () {
         Route::get('/orders', 'getPage')->name('admin.orders');
         Route::post('/orders', 'updateStatus')->name('admin.orders.update');
+    });
+    Route::controller(AdminAttributeController::class)->group(function () {
+        Route::get('/attributes', 'getPage');
+        Route::post('/attributes/remove', 'removeAttribute');
+        Route::post('/attributes/add', 'createAttribute');
+
+    });
+    Route::controller(AdminCategoryController::class)->group(function () {
+        Route::get('/categories', 'getPage');
+        Route::post('/categories/add', 'createCategory');
     });
     Route::controller(AdminUserController::class)->group(function () {
         Route::get('/users', 'getPage')->name('admin.users');
