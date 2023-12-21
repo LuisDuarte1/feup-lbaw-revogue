@@ -8,6 +8,7 @@ use App\Models\Purchase;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class ReviewSeeder extends Seeder
 {
@@ -18,24 +19,24 @@ class ReviewSeeder extends Seeder
 
     public function run(): void
     {
+        if (! App::environment(['production'])) {
+            $users = User::where('account_status', 'needsConfirmation')->get();
 
-        $users = User::where('account_status', 'needsConfirmation')->get();
-
-        for ($i = 0; $i < ReviewSeeder::REVIEW_COUNT; $i++) {
-            $random_user = $users->random()->id;
-            $reviewer = $users->random()->id;
-            while ($random_user == $reviewer) {
+            for ($i = 0; $i < ReviewSeeder::REVIEW_COUNT; $i++) {
+                $random_user = $users->random()->id;
                 $reviewer = $users->random()->id;
+                while ($random_user == $reviewer) {
+                    $reviewer = $users->random()->id;
+                }
+
+                $product = Product::factory()->state(['sold_by' => $random_user])->create();
+                $order = Order::factory()->state(['belongs_to' => $reviewer, 'purchase' => Purchase::factory()->create()])->create();
+                $order->products()->attach($product->id, ['discount' => 0]);
+
+                $review = Review::factory()->state(['reviewer' => $reviewer,
+                    'reviewed' => $random_user, 'reviewed_order' => $order->id])->create();
+
             }
-
-            $product = Product::factory()->state(['sold_by' => $random_user])->create();
-            $order = Order::factory()->state(['belongs_to' => $reviewer, 'purchase' => Purchase::factory()->create()])->create();
-            $order->products()->attach($product->id, ['discount' => 0]);
-
-            $review = Review::factory()->state(['reviewer' => $reviewer,
-                'reviewed' => $random_user, 'reviewed_order' => $order->id])->create();
-
         }
-
     }
 }

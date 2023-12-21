@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Attribute;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class ProductAttributeSeeder extends Seeder
 {
@@ -16,14 +17,17 @@ class ProductAttributeSeeder extends Seeder
 
     public function run(): void
     {
-        $array = [];
-        for ($i = 0; $i < ProductAttributeSeeder::ATTRIBUTE_COUNT; $i++) {
-            array_push($array, fake()->unique()->word());
+        if (! App::environment(['production'])) {
+            $array = [];
+            for ($i = 0; $i < ProductAttributeSeeder::ATTRIBUTE_COUNT; $i++) {
+                array_push($array, fake()->unique()->word());
+            }
+            for ($i = 0; $i < ProductAttributeSeeder::ATTRIBUTE_COUNT; $i++) {
+                $key = fake()->unique(true)->word();
+                Attribute::factory()->state(['key' => $array[$i]])->count(ProductAttributeSeeder::VALUE_COUNT)->create();
+            }
         }
-        for ($i = 0; $i < ProductAttributeSeeder::ATTRIBUTE_COUNT; $i++) {
-            $key = fake()->unique(true)->word();
-            Attribute::factory()->state(['key' => $array[$i]])->count(ProductAttributeSeeder::VALUE_COUNT)->create();
-        }
+
         // size
         Attribute::factory()->create([
             'key' => 'Size',

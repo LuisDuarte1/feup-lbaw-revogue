@@ -163,7 +163,7 @@ Route::prefix('login')->group(function () {
     Route::controller(EmailConfirmationController::class)->middleware('auth:web')->group(function () {
         Route::get('/email-confirmation', 'getPage')->name('verification.notice');
         Route::post('/email-confirmation', 'resendEmail')->middleware('throttle:2,1');
-        Route::get('/email-confirmation/verify/{id}/{hash}', 'verifyEmail')->middleware('signed')->name('verification.verify');
+        Route::get('/email-confirmation/verify/{id}/{hash}', 'verifyEmail')->name('verification.verify');
     });
 });
 
