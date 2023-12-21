@@ -14,7 +14,7 @@
         <a class="username" href="/profile/{{$soldBy->id}}">{{'@'.$soldBy->username}}</a>
         <div class="message-thread-details-buttons">
             <div class="report row items-center" data-type="message_thread" data-id="{{$currentThread->id}}">
-                <ion-icon name="flag-outline"></ion-icon>
+                <ion-icon name="flag-outline" aria-label="report-icon"></ion-icon>
                 Report
             </div>
             <a href="/products/{{$product->id}}" class="row button items-center">View Item</a>
@@ -25,7 +25,7 @@
         $soldBy = $currentThread->messageOrder->products[0]->soldBy;
         @endphp
         <div class="report row items-center" data-type="message_thread" data-id="{{$currentThread->id}}">
-            <ion-icon name="flag-outline"></ion-icon>
+            <ion-icon name="flag-outline" aria-label="report-icon"></ion-icon>
             Report
         </div>
         <a class="username" href="#">{{'@'.$soldBy->username}}</a>
@@ -37,7 +37,7 @@
             $stat = implode(" ", $stat);
             @endphp
 
-            <ion-icon name="ellipse" class="{{$status}}"></ion-icon>
+            <ion-icon name="ellipse" class="{{$status}}" aria-label="order-status-icon"></ion-icon>
             Status: {{$stat}}
         </div>
         <div class="message-thread-details-buttons">
@@ -78,23 +78,23 @@
         </div>
         <div class="message-thread-input">
             <div class="text-input" data-thread-id="{{$currentThread->id}}">
-                <textarea class="message" rows="1" wrap="hard"></textarea>
-                <a href="#" class="send-icon"><ion-icon name="send"></ion-icon></a>
+                <textarea class="message" aria-label="message-text-area" rows="1" wrap="hard"></textarea>
+                <a href="#" class="send-icon" aria-label="message-send-button"><ion-icon name="send" aria-label="send-icon"></ion-icon></a>
             </div>
             <div class="misc-buttons">
-                <a href="#" class="send-image-message"><ion-icon name="images"></ion-icon></a>
+                <a href="#" class="send-image-message" aria-label="message-send-image"><ion-icon name="images" aria-label="images-icon"></ion-icon></a>
                 @if ($messageThreadType == 'product')
-                <a href="#" class="send-bargain-message" data-product-id="{{$currentThread->product}}"><ion-icon name="diamond"></ion-icon></a>
+                <a href="#" class="send-bargain-message" aria-label="message-send-bargain" data-product-id="{{$currentThread->product}}"><ion-icon name="diamond" aria-label="bargain-icon"></ion-icon></a>
                 @endif
                 @if ($messageThreadType == 'order')
-                <a href="#" class="change-order-status" data-order-id="{{$currentThread->order}}"><ion-icon src="/truck-line.svg"></ion-icon></a>
-                <a href="#" class="cancel-order" data-order-id="{{$currentThread->order}}"><ion-icon name="close"></ion-icon></a>
+                <a href="#" class="change-order-status" aria-label="change-order-status" data-order-id="{{$currentThread->order}}"><ion-icon src="/truck-line.svg" aria-label="status-icon"></ion-icon></a>
+                <a href="#" class="cancel-order" aria-label="cancel-order" data-order-id="{{$currentThread->order}}"><ion-icon name="close" aria-label="cancel-icon"></ion-icon></a>
                 @endif
             </div>
         </div>
         @else
         <div class="no-messages column items-center justify-center h-full">
-            <img src="/empty_notifications.svg" width="500">
+            <img src="/empty_notifications.svg" width="500" alt="no-messages">
             <p>You don't have any messages yet</p>
         </div>
         @endif

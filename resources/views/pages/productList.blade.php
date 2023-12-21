@@ -6,15 +6,16 @@
         <div class="search-page" style="justify-content: center">
             @foreach ($products as $product)
                 @php
+
                     $price = $product['product']->price;
                     $image = $product['product']->image_paths[0];
                     $size = $product['size'];
                     $id = $product['product']->id;
                     $shipping = $product['product']->shipping;
-                    $condition = $product['product']->condition;
+                    $condition = $product['condition'];
                 @endphp
                 <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2"
-                    :condition="'Good'" />
+                    :condition="$condition" />
             @endforeach
         </div>
         {{ $paginator->links('vendor.pagination.simple-default') }}

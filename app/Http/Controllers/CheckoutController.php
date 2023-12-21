@@ -168,10 +168,20 @@ class CheckoutController extends Controller
 
     public function getPage(Request $request)
     {
-        //FIXME(luisd): there can be a race condition on checkout if a product is already sold, handle that notification
-        // and reload the checkout page
-        $user = $request->user();
 
+        $user = $request->user();
+        $cart = $user->cart()->get()->groupBy('sold_by');
+        $errors = collect([]);
+        if ($cart->isEmpty()) {
+            $errors->put('cart_empty', 'Your cart is empty.');
+
+            return back()->with('modal-error',
+                [
+                    'title' => 'Cart empty',
+                    'content' => 'Your cart is empty.',
+                    'confirm-button' => 'Close',
+                ]);
+        }
         if (! CheckoutController::canEnterCheckout($request)) {
             return redirect('/cart')->with('modal-error',
                 [

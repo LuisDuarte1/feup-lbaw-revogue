@@ -9,8 +9,9 @@
                 $image = $product['product']->image_paths[0];
                 $size = $product['size'];
                 $id = $product['product']->id;
+                $condition = $product['condition'];
             @endphp
-            <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :condition="'new'"
+            <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :condition="$condition"
                 :shipping="2" />
         @endforeach
         <div id="page-end">
