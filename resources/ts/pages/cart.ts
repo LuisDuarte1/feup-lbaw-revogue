@@ -51,9 +51,6 @@ function deleteProductHandler (parent: Element): (event?: Event) => Promise<void
       console.error(`Remove from cart failed with status ${req.status}`)
       await handleRequestErrorToast(req)
     }
-    parent.remove()
-    // TODO(luisd): insert empty message when removing🚬
-    // TODO(luisd): update count and total price🚬
     removeProductAndSellerDiv(parent)
     updateSum(dataPrice)
     updateNumberOfProducts()
