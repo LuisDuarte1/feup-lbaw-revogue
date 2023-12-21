@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Report;
+use App\Models\MessageThread;
 use Illuminate\Http\Request;
 
 class AdminReportController extends Controller
@@ -36,5 +37,13 @@ class AdminReportController extends Controller
         }
 
         return redirect()->back()->withErrors(['delete-error' => 'Report not deleted']);
+    }
+
+    public function showMessageThread(Request $request)
+    {
+        $messageThread = MessageThread::find($request->messageThread);
+        $reporter = $request->reporter;
+        
+        return view('pages.admin.messageThread', ['messageThread' => $messageThread, 'reporter' => $reporter]);
     }
 }

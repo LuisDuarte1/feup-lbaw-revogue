@@ -66,7 +66,7 @@ false => 'Open',
                         <td>
                             {{$report->message_thread !== NULL ? $report->message_thread : 'Does not apply'}}
                             @if($report->message_thread !== NULL)
-                            <a href="#" target="_blank" title="View message thread"><ion-icon name="open-outline"></ion-icon></a>
+                            <a href="{{route('admin.reports.messages', ['messageThread' => $report->message_thread, 'reporter' => $report->reporter])}}" target="_blank" title="View message thread"><ion-icon name="open-outline"></ion-icon></a>
                             @endif
                         </td>
                         <td>
