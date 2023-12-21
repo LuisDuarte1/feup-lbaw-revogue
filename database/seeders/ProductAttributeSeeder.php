@@ -67,27 +67,5 @@ class ProductAttributeSeeder extends Seeder
             'key' => 'Color',
             'value' => 'Yellow',
         ]);
-
-        Attribute::factory()->create([
-            'key' => 'Condition',
-            'value' => 'New',
-        ]);
-        Attribute::factory()->create([
-            'key' => 'Condition',
-            'value' => 'Like New',
-        ]);
-        Attribute::factory()->create([
-            'key' => 'Condition',
-            'value' => 'Good',
-        ]);
-        Attribute::factory()->create([
-            'key' => 'Condition',
-            'value' => 'Used',
-        ]);
-        Attribute::factory()->create([
-            'key' => 'Condition',
-            'value' => 'Poor',
-        ]);
-
     }
 }

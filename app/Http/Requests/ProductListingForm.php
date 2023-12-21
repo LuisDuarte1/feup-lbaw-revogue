@@ -18,7 +18,7 @@ class ProductListingForm extends FormRequest
 
     public function prepareForValidation()
     {
-        $attributes = Attribute::select('key')->whereNotIn('key', ['Price', 'Color', 'Condition'])->get()->unique('key')->pluck('key')->values()->toArray();
+        $attributes = Attribute::select('key')->whereNotIn('key', ['Price', 'Color'])->get()->unique('key')->pluck('key')->values()->toArray();
         $inputs = $this->all();
         $inputs_attribute = array_filter($inputs, function ($var) use ($attributes) {
             return in_array($var, $attributes, true);
@@ -55,7 +55,6 @@ class ProductListingForm extends FormRequest
             'size' => 'required|exists:attributes,value',
             'color' => 'required|exists:attributes,value',
             'price' => 'required|gt:0',
-            'condition' => 'required|exists:attributes,value',
         ];
     }
 }
