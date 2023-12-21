@@ -19,7 +19,7 @@ class SearchController extends Controller
 
     public static function getAvailableAttributes($searchTerm)
     {
-        return Attribute::wherehas('products', function ($q) use ($searchTerm){
+        return Attribute::wherehas('products', function ($q) use ($searchTerm) {
             return $q->whereHas('orders', function ($query) {
                 $query->where('status', 'cancelled');
             })->doesntHave('orders', 'or')->whereRaw('(fts_search @@ plainto_tsquery(\'english\', ?) OR name = ?)', [$searchTerm, $searchTerm])

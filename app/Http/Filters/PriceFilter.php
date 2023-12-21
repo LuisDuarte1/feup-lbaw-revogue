@@ -5,11 +5,9 @@
 namespace App\Http\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class PriceFilter
 {
-
     public function filter(Builder $builder, $value)
     {
 
