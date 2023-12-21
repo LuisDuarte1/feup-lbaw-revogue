@@ -17,7 +17,7 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        'parent_category'
+        'parent_category',
     ];
 
     public function parentCategory(): BelongsTo
