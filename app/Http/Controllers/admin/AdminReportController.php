@@ -4,8 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MessageController;
-use App\Models\Report;
 use App\Models\MessageThread;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class AdminReportController extends Controller
     public function updateStatus(Request $request)
     {
         $report = Report::find($request->id);
-        if ($report->is_closed){
+        if ($report->is_closed) {
             return redirect()->back()->withErrors(['update-error' => 'Report is already closed']);
         }
         $report->is_closed = $request->report_status;
@@ -34,7 +34,7 @@ class AdminReportController extends Controller
     public function delete(Request $request)
     {
         $report = Report::find($request->id);
-        if($report->delete()){
+        if ($report->delete()) {
             return redirect()->back()->with('success', 'Report deleted successfully');
         }
 
@@ -46,6 +46,7 @@ class AdminReportController extends Controller
         $messageThread = MessageThread::find($request->messageThread);
         $reporter = User::find($request->reporter);
         $messages = MessageController::getMessages($reporter, $messageThread, $messageThread->messages->count());
+
         return view('pages.admin.messageThread', ['reporter' => $reporter, 'messages' => $messages]);
     }
 }

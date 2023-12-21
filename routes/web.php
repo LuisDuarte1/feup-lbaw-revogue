@@ -3,8 +3,8 @@
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\AdminPayoutController;
-use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\admin\AdminReportController;
+use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\api\AttributeController;
 use App\Http\Controllers\api\CartProductController;
 use App\Http\Controllers\api\WishlistController;
@@ -203,7 +203,6 @@ Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function 
         Route::post('/profile/reset', 'resetProfileSettings')->name('settings.profile.reset');
     });
 });
-
 
 Route::prefix('profile')->middleware(['auth:web', 'verified'])->group(function () {
     Route::controller(CompleteProfileController::class)->group(function () {
