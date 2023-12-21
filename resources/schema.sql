@@ -52,7 +52,7 @@ CREATE TYPE BargainStatus AS ENUM(
 CREATE TYPE ReportType AS ENUM (
     'user',
     'product',
-    'message'
+    'message_thread'
 );
 
 CREATE TYPE PaymentMethod AS ENUM(
@@ -97,7 +97,6 @@ CREATE TABLE Users(
     "bio" TEXT,
     "password" TEXT,
     "creation_date" TIMESTAMP NOT NULL,
-    "remember_token" TEXT,
     "settings" JSON NOT NULL,
     "account_status" AccountStatus NOT NULL DEFAULT 'needsConfirmation'::AccountStatus
 );
@@ -283,13 +282,14 @@ CREATE TABLE Reports(
     "reporter" INT,
     "reported" INT,
     "product" INT,
-    "message" INT,
+    "message_thread" INT,
+    "reason" TEXT,
     FOREIGN KEY ("closed_by") REFERENCES Admins("id") ON DELETE CASCADE,
     FOREIGN KEY ("reporter") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("reported") REFERENCES Users("id") ON DELETE CASCADE,
     FOREIGN KEY ("product") REFERENCES Products("id") ON DELETE CASCADE,
-    FOREIGN KEY ("message") REFERENCES Messages("id") ON DELETE CASCADE,
-    CHECK ( ("type" = 'message' AND "message" IS NOT NULL) OR
+    FOREIGN KEY ("message_thread") REFERENCES MessageThread("id") ON DELETE CASCADE,
+    CHECK ( ("type" = 'message_thread' AND "message_thread" IS NOT NULL) OR
             ("type" = 'user' AND "reported" IS NOT NULL) OR
             ("type" = 'product' AND "product" IS NOT NULL) )
 );

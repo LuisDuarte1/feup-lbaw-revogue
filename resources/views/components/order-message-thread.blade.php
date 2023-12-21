@@ -1,5 +1,5 @@
 <div @class(['order-message-thread', 'thread-active' => $isActive]) data-message-thread-id="{{$messageThread->id}}">
-    <img class="profile-image" src="{{$soldBy->profile_image_path !== null ? '/storage/'.$soldBy->profile_image_path :  '/defaultProfileImage.png'}}">
+    <img class="profile-image" aria-label="profile-image" src="{{$soldBy->profile_image_path !== null ? '/storage/'.$soldBy->profile_image_path :  '/defaultProfileImage.png'}}" alt="profile-image">
     <div class="product-message-thread-details">
         <div  class="username">{{$soldBy->username}}</div>
         @if(isset($latestMessage))

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attribute;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -47,12 +48,21 @@ class ProductController extends Controller
 
     public static function getTrendingProducts()
     {
-        return Product::withCount('wishlist')->get()->sortBy('wishlist_count');
+        $products = Product::withCount('wishlist')->get()->sortBy('wishlist_count')->reverse();
+
+        $trendingProducts = $products->filter(function ($product) {
+            return ! self::isProductSold($product);
+        });
+
+        return $trendingProducts;
+
     }
 
     public function listProductsDate(Request $request)
     {
-        $products = Product::latest()->paginate(40);
+
+        $products = Product::filter($request)->latest()->paginate(40)->withQueryString(); // se n funcionar trocar para filter
+        $attributes = Attribute::all();
         $list = [];
         foreach ($products as $product) {
             $size = $product->attributes()->where('key', 'Size')->get()->first()->value;
@@ -60,7 +70,7 @@ class ProductController extends Controller
             array_push($list, ['product' => $product, 'size' => $size, 'color' => $color]);
         }
 
-        return view('pages.productList', ['products' => $list, 'paginator' => $products]);
+        return view('pages.productList', ['products' => $list, 'paginator' => $products, 'filterAttributes' => $attributes]);
     }
 
     public function deleteProduct(Request $request)
@@ -136,6 +146,14 @@ class ProductController extends Controller
 
         return redirect('/products/'.$product->id);
     }
+
+    /*public function index(Request $request)
+    {
+        //return Product::get();
+        dd($request->all());
+
+        return Product::filter($request)->get();
+    }*/
 
     public function getProductAPI(Request $request): Product
     {

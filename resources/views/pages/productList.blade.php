@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="column gap-2 justify-center product-list">
+        <x-filter-bar :filterAttributes="$filterAttributes"></x-filter-bar> 
         <div class="search-page" style="justify-content: center">
             @foreach ($products as $product)
                 @php
@@ -12,9 +13,10 @@
                     $shipping = $product['product']->shipping;
                     $condition = $product['product']->condition;
                 @endphp
-                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2" :condition="'Good'"/>
+                <x-productCard :price="$price" :image="$image" :size="$size" :id="$id" :shipping="2"
+                    :condition="'Good'" />
             @endforeach
         </div>
         {{ $paginator->links('vendor.pagination.simple-default') }}
-    <div>
-@endsection
+        <div>
+        @endsection

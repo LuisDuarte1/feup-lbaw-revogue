@@ -12,7 +12,7 @@
                 @for ($i = 5; $i > 0; $i--)
                 <input type="radio" id="star-{{$i}}" name="rating" value="{{$i}}"/>
                 <label for="star-{{$i}}">
-                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star" aria-label="star-icon"></ion-icon>
                 </label>
                 @endfor
             </div>

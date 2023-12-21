@@ -30,7 +30,7 @@ $total = $total + $product->price - $product->pivot->discount;
             <div class="order-header row gap-1">
                 <div class="row items-center gap-3">
                     <div class="row items-center">
-                        <img src="{{$userPicture}}" class="profile-picture">
+                        <img src="{{$userPicture}}" class="profile-picture" alt="profile-picture">
                         <div class="order-user">
                             <a href="/profile/{{$seller->id}}" class="profile-link">
                                 <div class="display-name">{{$seller->display_name}}</div>
@@ -45,7 +45,7 @@ $total = $total + $product->price - $product->pivot->discount;
                         $stat = implode(" ", $stat);
                         @endphp
 
-                        <ion-icon name="ellipse" class="{{$status}}"></ion-icon>
+                        <ion-icon name="ellipse" class="{{$status}}" aria-label="order-status-icon"></ion-icon>
                         Status: {{$stat}}
                     </div>
                     <div class="order-shipping">
@@ -76,7 +76,7 @@ $total = $total + $product->price - $product->pivot->discount;
                 @endphp
                 <a href="/products/{{$product->id}}" class="order-product row gap-1 items-center">
                     <div class="product-image column items-center">
-                        <img src="{{$productPicture}}">
+                        <img src="{{$productPicture}}" alt="product-image">
                     </div>
                     <div class="product-info row gap-1 items-center">
                         <div class="column wrapper">

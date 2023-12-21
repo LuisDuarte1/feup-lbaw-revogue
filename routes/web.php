@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\AdminPayoutController;
+use App\Http\Controllers\admin\AdminReportController;
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\api\AttributeController;
 use App\Http\Controllers\api\CartProductController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
@@ -86,6 +88,9 @@ Route::prefix('api')->group(function () {
                     Route::post('/bargain', 'sendBargainAPI');
                     Route::post('/cancellation', 'sendCancellationRequestAPI');
                 });
+                Route::controller(ReportController::class)->group(function () {
+                    Route::post('/report', 'reportMessageThreadAPI');
+                });
             });
         });
         Route::prefix('bargains')->group(function () {
@@ -124,6 +129,16 @@ Route::prefix('api')->group(function () {
         Route::prefix('{id}')->group(function () {
             Route::controller(ProductController::class)->group(function () {
                 Route::get('/', 'getProductAPI');
+            });
+            Route::controller(ReportController::class)->group(function () {
+                Route::post('/report', 'reportProductAPI');
+            });
+        });
+    });
+    Route::prefix('profile')->middleware(['auth:web', 'verified'])->group(function () {
+        Route::prefix('{id}')->group(function () {
+            Route::controller(ReportController::class)->group(function () {
+                Route::post('/report', 'reportUserAPI');
             });
         });
     });
@@ -173,6 +188,7 @@ Route::prefix('products')->group(function () {
         Route::get('/{id}/edit', 'editProductPage');
         Route::post('/{id}/edit', 'editProduct');
         Route::get('/', 'listProductsDate');
+        Route::post('/{id}/report', 'reportProduct');
     });
 });
 Route::prefix('{id}')->group(function () {
@@ -180,23 +196,6 @@ Route::prefix('{id}')->group(function () {
         Route::controller(MessageController::class)->group(function () {
             Route::post('/', 'createMessageThread');
         });
-    });
-});
-
-Route::prefix('settings')->middleware(['auth:web', 'verified'])->group(function () {
-    Route::controller(SettingsController::class)->group(function () {
-        Route::get('/payment', 'PaymentsSettings')->name('payment-settings');
-        Route::get('/shipping', 'ShippingSettings')->name('shipping-settings');
-        Route::get('/general', 'GeneralSettings')->name('general-settings');
-        Route::get('/profile', 'ProfileSettings')->name('profile-settings');
-        Route::post('/payment/save', 'updatePaymentSettings')->name('settings.payment.save');
-        Route::post('/payment/reset', 'resetPaymentSettings')->name('settings.payment.reset');
-        Route::post('/general/delete', 'deleteAccount')->name('settings.general.delete');
-        Route::post('/general/reset', 'changePassword')->name('settings.general.reset');
-        Route::post('/shipping/save', 'updateShippingSettings')->name('settings.shipping.save');
-        Route::post('/shipping/reset', 'resetShippingSettings')->name('settings.shipping.reset');
-        Route::post('/profile/save', 'updateProfileSettings')->name('settings.profile.save');
-        Route::post('/profile/reset', 'resetProfileSettings')->name('settings.profile.reset');
     });
 });
 
@@ -229,6 +228,7 @@ Route::prefix('profile')->middleware(['auth:web', 'verified'])->group(function (
             Route::get('/likes', 'likedProducts');
             Route::get('/history', 'historyProducts');
             Route::get('/reviews', 'reviews');
+            Route::post('/report', 'reportUser');
         });
     });
 });
@@ -273,6 +273,12 @@ Route::prefix('admin')->middleware('auth:webadmin')->group(function () {
         Route::get('/login', 'showLoginForm')->name('admin-login')->withoutMiddleware('auth:webadmin')->middleware('guest:webadmin');
         Route::post('/login', 'authenticate')->withoutMiddleware('auth:webadmin')->middleware('guest:webadmin');
         Route::get('/logout', 'logout');
+    });
+    Route::controller(AdminReportController::class)->group(function () {
+        Route::get('/reports', 'getPage')->name('admin.reports');
+        Route::post('/reports', 'updateStatus')->name('admin.reports.update');
+        Route::post('/reports/delete', 'delete')->name('admin.reports.delete');
+        Route::get('/reports/{reporter}/{messageThread}', 'showMessageThread')->name('admin.reports.messages');
     });
 });
 

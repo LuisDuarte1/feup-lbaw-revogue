@@ -27,6 +27,25 @@
             title="{{ session('modal-error')['title'] }}" content="{{ session('modal-error')['content'] }}">
     @endif
 
+    @if (isset($errors) && get_class($errors) == 'Illuminate\Support\ViewErrorBag' && $errors->count() > 0)
+        @php
+            $errorArray = $errors->getBag('default')->all();    
+        @endphp
+        <meta name="toast-error" content="{{json_encode($errorArray)}}">
+    @elseif (isset($errors) && get_class($errors) == 'Illuminate\Support\Collection' && $errors->count() > 0)
+        @php
+            $errorArray = $errors->values()->toArray();
+        @endphp
+        <meta name="toast-error" content="{{json_encode($errorArray)}}">
+    @endif
+
+    @if (session()->has('success'))
+        @php
+            $errorMessage = session('success');
+        @endphp
+        <meta name="toast-success", content="{{json_encode($errorMessage)}}">
+    @endif
+
     @vite(['resources/css/app.scss', 'resources/ts/app.ts'])
 
 </head>

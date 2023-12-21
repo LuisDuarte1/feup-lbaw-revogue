@@ -109,6 +109,7 @@ a.button.outline{
     align-self: center;
 }
 
+
 .gap-1{
     gap: 1rem;
 }
@@ -210,7 +211,20 @@ input[type="radio"]:not(:disabled):checked {
 }
 
 .modal-expandable-image-close-button:hover{
-    color: $background;
+    color: $primary;
+}
+
+.report{
+    color: $text-color;
+    text-decoration: none;
+    gap: 0.2rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover{
+        color: $toast-red;
+        transition: ease-in-out 0.2s;
+    }
 }
 
 .order-status{
@@ -222,5 +236,30 @@ input[type="radio"]:not(:disabled):checked {
     }
     .received{
         color: $toast-green;
+    }
+}
+
+.swal2-toast{
+
+    .swal2-title{
+        word-break: normal;
+    
+    }
+}
+
+.swal2-popup{
+    background-color: $background;
+    color: $text-color;
+
+    .swal2-confirm{
+        background-color: $accent;
+    }
+
+    .swal2-deny {
+        background-color: $toast-red;
+    }
+
+    .swal2-error {
+        color: $toast-red;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,18 @@ class SearchController extends Controller
         return Product::whereHas('orders', function ($q) {
             $q->where('status', 'cancelled');
         })->doesntHave('orders', 'or')->whereRaw('(fts_search @@ plainto_tsquery(\'english\', ?) OR name = ?)', [$searchTerm, $searchTerm])
-            ->orderByRaw('ts_rank(fts_search, plainto_tsquery(\'english\', ?)) DESC', [$searchTerm])->paginate($perPage);
+            ->orderByRaw('ts_rank(fts_search, plainto_tsquery(\'english\', ?)) DESC', [$searchTerm])->filter(request())->paginate($perPage);
+        // n sei se aqui o request() ta certo
+    }
+
+    public static function getAvailableAttributes($searchTerm)
+    {
+        return Attribute::wherehas('products', function ($q) use ($searchTerm) {
+            return $q->whereHas('orders', function ($query) {
+                $query->where('status', 'cancelled');
+            })->doesntHave('orders', 'or')->whereRaw('(fts_search @@ plainto_tsquery(\'english\', ?) OR name = ?)', [$searchTerm, $searchTerm])
+                ->orderByRaw('ts_rank(fts_search, plainto_tsquery(\'english\', ?)) DESC', [$searchTerm]);
+        })->get();
 
     }
 
@@ -22,6 +34,7 @@ class SearchController extends Controller
             return view('pages.search', ['products' => []]);
         }
         $products = SearchController::search_products($request->query('q'))->withQueryString();
+        $availableAttributes = SearchController::getAvailableAttributes($request->query('q'));
         $list = [];
         foreach ($products as $product) {
             $attributes = $product->attributes()->get();
@@ -34,7 +47,7 @@ class SearchController extends Controller
             array_push($list, ['product' => $product, 'size' => $size]);
         }
 
-        return view('pages.search', ['products' => $list]);
+        return view('pages.search', ['products' => $list, 'filterAttributes' => $availableAttributes]);
     }
 
     public function searchGetApi(Request $request)
