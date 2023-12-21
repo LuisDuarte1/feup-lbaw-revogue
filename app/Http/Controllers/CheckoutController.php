@@ -18,8 +18,6 @@ use Illuminate\Validation\ValidationException;
 use Monarobase\CountryList\CountryListFacade as Countries;
 use Stripe\StripeClient;
 
-use function PHPUnit\Framework\isEmpty;
-
 class CheckoutController extends Controller
 {
     public static function createOrderMessageThread(Order $order): MessageThread
@@ -176,6 +174,7 @@ class CheckoutController extends Controller
         $errors = collect([]);
         if ($cart->isEmpty()) {
             $errors->put('cart_empty', 'Your cart is empty.');
+
             return back()->with('modal-error',
                 [
                     'title' => 'Cart empty',
