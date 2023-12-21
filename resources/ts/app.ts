@@ -64,7 +64,8 @@ const components: ComponentList = {
   '.message-cancellation-content': messageCancellationContent,
   '.order-message-thread': productMessageThread,
   '.apply-button > button': applyVoucherButton,
-  '.voucher-remove': voucherRemove
+  '.voucher-remove': voucherRemove,
+  '#report_status': submitFormOnChange
 }
 
 function pageHandler (): void {
