@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 export const Toast = Swal.mixin({
   toast: true,
   position: 'top-right',
-  timer: 8000,
+  timer: 800000,
   timerProgressBar: true,
   showConfirmButton: false,
   showCloseButton: true

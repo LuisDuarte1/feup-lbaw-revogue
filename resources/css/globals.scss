@@ -244,4 +244,8 @@ input[type="radio"]:not(:disabled):checked {
     .swal2-deny {
         background-color: $toast-red;
     }
+
+    .swal2-error {
+        color: $toast-red;
+    }
 }
