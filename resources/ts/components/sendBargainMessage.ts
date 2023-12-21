@@ -2,6 +2,7 @@ import Swal from 'sweetalert2'
 import { createFormData } from '../utils/csrf'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
 import { componentAJAXHandler } from '../app'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 export default function (element: Element): void {
   const messageThreadContent = document.querySelector('.message-thread-content')
@@ -21,6 +22,7 @@ export default function (element: Element): void {
     const productRes = await fetch(`/api/products/${productId}`)
     if (productRes.status !== 200) {
       console.error(`Product get failed with status ${productRes.status}`)
+      await handleRequestErrorToast(productRes)
       return
     }
     const product = await productRes.json()
@@ -60,6 +62,7 @@ export default function (element: Element): void {
       const res = await fetchWithSocketInformation(`/api/messages/${threadId}/bargain`, { method: 'POST', body: formData })
       if (res.status !== 200) {
         console.error(`Bargain send request failed with status ${res.status}`)
+        await handleRequestErrorToast(res)
         return
       }
       const html = document.createElement('html')

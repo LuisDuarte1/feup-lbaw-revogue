@@ -1,3 +1,5 @@
+import { handleRequestErrorToast } from '../utils/toastUtils'
+
 export default function (element: HTMLElement): void {
   const clickURL = element.getAttribute('actionURL')
   const notificationId = element.getAttribute('data-notificationId')
@@ -29,6 +31,7 @@ export default function (element: HTMLElement): void {
 
       if (req.status !== 200) {
         console.warn(`Read toggle returned status ${req.status}`)
+        await handleRequestErrorToast(req)
         return
       }
 
@@ -53,6 +56,7 @@ export default function (element: HTMLElement): void {
 
       if (req.status !== 200) {
         console.warn(`Dismiss toggle returned status ${req.status}`)
+        await handleRequestErrorToast(req)
         return
       }
       element.parentElement?.remove()

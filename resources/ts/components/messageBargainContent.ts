@@ -1,10 +1,12 @@
 import { componentAJAXHandler } from '../app'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 async function changeBargainState (state: 'accept' | 'reject', messageThreadContent: Element, bargainId: string): Promise<void> {
   const res = await fetchWithSocketInformation(`/api/bargains/${bargainId}/${state}`, { method: 'POST' })
   if (res.status !== 200) {
     console.error(`Request bargain with state ${state} failed with status: ${res.status}`)
+    await handleRequestErrorToast(res)
     return
   }
   const html = document.createElement('html')

@@ -18,8 +18,9 @@ class ReportFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => fake()->randomElement(['user', 'message', 'product']),
+            'type' => fake()->randomElement(['user', 'message_thread', 'product']),
             'is_closed' => fake()->boolean(),
+            'reason' => fake()->paragraphs(3, true),
         ];
     }
 
@@ -33,11 +34,21 @@ class ReportFactory extends Factory
         });
     }
 
-    public function message(): Factory
+    public function messageThread(): Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'type' => 'message',
+                'type' => 'message_thread',
+                'is_close' => fake()->boolean(),
+            ];
+        });
+    }
+
+    public function product(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'product',
                 'is_close' => fake()->boolean(),
             ];
         });

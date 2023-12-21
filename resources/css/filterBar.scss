@@ -1,0 +1,35 @@
+.filter-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+
+    .filter-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+
+        .filter-price {
+            div.row{
+                gap: 0.5rem;
+            }
+
+            input {
+                width: 5rem;
+            }
+        }
+
+        .filter-select,.filter-input {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            > p {
+                color: $accent;
+                font-weight: 500;
+            }
+        }
+    }
+}

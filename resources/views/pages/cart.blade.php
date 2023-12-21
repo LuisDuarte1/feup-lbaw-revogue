@@ -24,7 +24,7 @@
                             ->first();
                         $sellerPicture = $seller->profile_image_path !== null ? '/storage/' . $user->profile_image_path : '/defaultProfileImage.png';
                     @endphp
-                    <div class="seller-products column gap-2" data-seller-id="{{ $seller->id }}"">
+                    <div class="seller-products column gap-2" data-seller-id="{{ $seller->id }}">
                         <div class="seller-products-header row items-center">
                             <div class="row wrapper items-center">
                                 <img src="{{ $sellerPicture }}" alt="seller" class="seller-image">
@@ -51,9 +51,14 @@
                                         ->where('key', 'Size')
                                         ->get()
                                         ->first()->value;
+                                    $condition = $product
+                                        ->attributes()
+                                        ->where('key', 'Condition')
+                                        ->get()
+                                        ->first()->value;
+
                                 @endphp
-                                <article class="product column gap-1" data-id="{{ $product->id }}"
-                                    data-price="{{ $price }}">
+                                <article class="product column gap-1" data-id="{{ $product->id }}" data-price="{{ $price }}">
                                     <a href="#" class="product-remove"><ion-icon name="close-outline"></ion-icon></a>
                                     <div class="cart-product row gap-1 items-center">
                                         <div class="product-image column items-center">
@@ -65,7 +70,7 @@
                                             <a href="/products/{{ $product->id }}" class="column wrapper">
                                                 <div class="product-name">{{ $product->name }}</div>
                                                 <div class="product-size">Size: {{ $size }}</div>
-                                                <div class="product-condition">Condition: Good</div>
+                                                <div class="product-condition">Condition:'{{ $condition }}'</div>
                                             </a>
                                             <div class="product-price">Price: {{ $price }}€</div>
                                         </div>

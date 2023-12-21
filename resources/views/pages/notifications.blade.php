@@ -40,7 +40,7 @@
             </div>
         @else
             <div class="column w-full items-center justify-center grow-2">
-                <img src="/empty_notifications.svg" width="400">
+                <img src="/empty_notifications.svg" width="400" alt="Empty notifications">
                 <p>It seems that your notification section is empty.</p>
             </div>
         @endif

@@ -1,4 +1,5 @@
 import { createFormData } from '../utils/csrf'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 export default function (element: Element): void {
   const voucherCode = element.getAttribute('data-voucher-code')
@@ -13,6 +14,8 @@ export default function (element: Element): void {
 
     if (res.status !== 200) {
       console.error(`Remove voucher code failed with status ${res.status}`)
+      await handleRequestErrorToast(res)
+
       return
     }
 

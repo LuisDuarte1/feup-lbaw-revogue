@@ -2,6 +2,7 @@ import Swal from 'sweetalert2'
 import { createFormData } from '../utils/csrf'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
 import { componentAJAXHandler } from '../app'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 interface SendImageFormResult {
   image: File
@@ -24,13 +25,17 @@ export default function (element: HTMLElement): void {
       confirmButtonText: 'Send',
       showCloseButton: true,
       focusConfirm: false,
+      confirmButtonColor: '#B794B8',
+      customClass: {
+        closeButton: 'modal-expandable-image-close-button'
+      },
       html: `
         <div class="column justify-center items-center gap-2">
             <div class="select-image-wrapper">
                 <div class="popup-select-image">
-                    <img>
+                    <img alt="">
                     <label for="image-message" class="image-message-label">
-                        <ion-icon name="camera"></ion-icon>
+                        <ion-icon name="camera" aria-label="add-image-icon"></ion-icon>
                         Add photo
                     </label>
                     <input id="image-message" type="file" accept="image/png, image/jpeg, image/jpg">
@@ -106,6 +111,7 @@ export default function (element: HTMLElement): void {
       const res = await fetchWithSocketInformation(`/api/messages/${threadId}`, { method: 'POST', body: formData })
       if (res.status !== 200) {
         console.error(`Send message request failed with status ${res.status}`)
+        await handleRequestErrorToast(res)
         return
       }
       const html = document.createElement('html')

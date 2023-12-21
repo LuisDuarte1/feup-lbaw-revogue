@@ -32,10 +32,13 @@
             </div>
             <nav>
                 <ul class="nav-links">
+                    @auth('webadmin')
                     <li><a href="/admin" class="home">Home</a></li>
                     <li><a href="/admin/users">Users</a></li>
                     <li><a href="/admin/orders">Orders</a></li>
                     <li><a href="/admin/payouts">Payouts</a></li>
+                    <li><a href="/admin/reports">Reports</a></li>
+                    @endauth
                 </ul>
             </nav>
         </div>
@@ -45,9 +48,9 @@
             @endphp
             <div class="avatar-logout">
                 <div class="profile-pic">
-                    <img src="{{isset($user->profile_image_path) === false ? '/defaultProfileImage.png' : $user->profile_image_path}}" class="profile-pic">
+                    <img aria-label="profile-image" src="{{isset($user->profile_image_path) === false ? '/defaultProfileImage.png' : $user->profile_image_path}}" class="profile-pic" alt="profile-picture">
                 </div>
-                <a href="/admin/logout"><ion-icon name="log-out"></ion-icon></a>
+                <a href="/admin/logout"><ion-icon name="log-out" aria-label="admin-log-out-icon"></ion-icon></a>
             </div>
         @endauth
 
