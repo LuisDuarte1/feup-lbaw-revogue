@@ -1,3 +1,5 @@
+import { handleRequestErrorToast } from '../utils/toastUtils'
+
 function deleteProductHandler (parent: Element): (event: Event) => Promise<void> {
   return async (event: Event) => {
     const dataId = Number.parseInt(parent.attributes.getNamedItem('data-id')?.value ?? '-1')
@@ -11,11 +13,12 @@ function deleteProductHandler (parent: Element): (event: Event) => Promise<void>
         'Content-Type': 'application/json'
       }
     })
-    if (req.status !== 200) {
-      console.error(`Remove from cart failed with status ${req.status}`)
-    }
     if (req.status === 404) {
       return
+    }
+    if (req.status !== 200) {
+      console.error(`Remove from cart failed with status ${req.status}`)
+      await handleRequestErrorToast(req)
     }
     parent.remove()
     // TODO(luisd): insert empty message when removing🚬
@@ -35,5 +38,6 @@ function deleteProduct (): void {
 }
 
 export function cart (): void {
+  window.history.replaceState(null, '', window.location.pathname)
   deleteProduct()
 }

@@ -34,28 +34,27 @@
                     <div class="swiper-button-next swiper-button-white"></div>
                     <div class="swiper-button-prev swiper-button-white"></div>
                     @if ($sold === false)
-                    @if ($isInWishlist)
-                    <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
-                        <ion-icon name="heart"></ion-icon>
-                        @else
-                        <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
-                            <ion-icon name="heart-outline"></ion-icon>
-                            @endif
-                        </a>
-                        @endif
+                    <x-wishlist-button :product="$product" :inwishlist="$isInWishlist" />
+                    @endif
                 </div>
             </div>
             <div class="product-details">
                 <div class="product-title">
                     <h1 class="title">{{$product->name}}</h1>
                 </div>
-                <div class="product-price-shipping">
+                <div class="product-price-shipping-report items-center">
                     <div class="product-price">
                         <h3> {{$product->price}}€</h3>
                     </div>
                     <div class="product-shipping">
                         <h3>Shipping: 2€</h3>
                     </div>
+                    @if ($user->id !== Auth::user()->id)
+                    <div class="report row items-center" data-type="product" data-id="{{$product->id}}">
+                        <ion-icon name="flag-outline"></ion-icon>
+                        Report
+                    </div>
+                    @endif
                 </div>
                 <div class="product-info">
                     <p>@foreach ($attributes as $attribute)

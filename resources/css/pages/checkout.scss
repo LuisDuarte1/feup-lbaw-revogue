@@ -7,6 +7,18 @@
     justify-content: center;
     padding: 1.5rem 0;
 
+    .shipping-details{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        input{
+            width: 100%;
+        }
+        select {
+            width: calc(100% + 1rem);
+        }
+    }
 }
 
 .checkout-wrapper{
@@ -21,18 +33,7 @@
     }
 }
 
-.shipping-details{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    input{
-        width: 100%;
-    }
-    select {
-        width: calc(100% + 1rem);
-    }
-}
+
 
 .payment-methods{
     width: 100%;

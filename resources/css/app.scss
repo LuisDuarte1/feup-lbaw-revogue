@@ -6,6 +6,7 @@
 @import 'productCard';
 @import 'profileLayout';
 @import 'profileNavbar';
+@import 'settingsNavbar';
 @import 'searchBar';
 @import 'loader';
 @import 'productPhotos';
@@ -15,7 +16,7 @@
 @import 'messageBubble';
 @import 'popup';
 @import 'filterBar';
-
+@import 'wishlistButton';
 
 @import 'pages/register';
 @import 'pages/login';
@@ -34,6 +35,8 @@
 @import 'pages/notificationPage';
 @import 'pages/messages';
 @import 'pages/purchaseHistory';
+@import 'pages/settings';
+
 
 
 * {

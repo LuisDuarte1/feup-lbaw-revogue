@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
         User::factory()->count(UserSeeder::VERIFIED_COUNT)->create();
         User::factory()->banned()->count(UserSeeder::BANNED_COUNT)->create();
         User::factory()->needsConfirmation()->count(UserSeeder::UNVERIFIED_COUNT)->create();
+        $settings = User::getDefaultSettings();
 
         User::factory()->create([
             'email' => 'chloehall@example.com',
@@ -29,7 +30,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('cenoura-cozida-321'),
             'display_name' => 'Chloe Hall',
             'account_status' => 'active',
-            'settings' => json_encode([]),
+            'settings' => $settings,
         ]);
     }
 }

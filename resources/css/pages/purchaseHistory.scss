@@ -3,16 +3,7 @@
     flex-grow: 2;
 }
 .purchase{
-    .shipped, .pendingShipment{
-        color: $toast-yellow;
-    }
-    .cancelled, .requestCancellation{
-        color: $toast-red;
-    }
-    
-    .received{
-        color: $toast-green;
-    }
+
     background-color: rgba($secondary-background, 0.5);
     border-radius: 0.5rem;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;

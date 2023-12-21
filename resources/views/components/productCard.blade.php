@@ -1,5 +1,18 @@
 <a href="/products/{{$id}}">
+    @php
+    $isInWishlist = false;
+    if (Auth::user() !== null){
+    $isInWishlist = Auth::user()->wishlist()->where('id', $id)->exists();
+    }   
+    $product = App\Models\Product::find($id);
+    $sold = App\Http\Controllers\ProductController::isProductSold($product);
+    @endphp
     <div class="product-card">
+        @auth
+        @if (!$sold)
+        <x-wishlist-button :product="$product" :inwishlist="$isInWishlist"/>
+        @endif
+        @endauth
         <div class="product-image-card">
             <!--TODO (luisd): do the random hash if only on debug mode -->
             <img src="{{ $image }}?hash={{fake()->lexify('???????????????')}}" loading="lazy" decoding="async" alt="product image">

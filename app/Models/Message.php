@@ -32,6 +32,8 @@ class Message extends Model
         'from_user',
         'message_thread',
         'bargain',
+        'system_message',
+        'order_cancellation',
     ];
 
     /**
@@ -65,14 +67,14 @@ class Message extends Model
         return $this->hasOne(Notification::class, 'message');
     }
 
-    public function messageReport(): BelongsTo
-    {
-        return $this->belongsTo(Report::class, 'message');
-    }
-
     public function associatedBargain(): BelongsTo
     {
         return $this->belongsTo(Bargain::class, 'bargain');
+    }
+
+    public function orderCancellation(): BelongsTo
+    {
+        return $this->belongsTo(OrderCancellation::class, 'order_cancellation');
     }
 
     /**

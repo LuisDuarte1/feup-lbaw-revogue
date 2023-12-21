@@ -4,7 +4,7 @@
 
 .messages-page{
     display: grid;
-    grid-template-columns: fit-content(30%) auto;
+    grid-template-columns: 30% auto;
     grid-template-rows: fit-content(5rem) auto;
     gap: 2rem;
     height: 100%;
@@ -135,13 +135,22 @@
             }
             .misc-buttons{
                 display: flex;
+                align-items: center;
                 gap: 1.5rem;
                 > a {
+                    line-height: 0;
                     display: block;
                     text-decoration: none;
                     color: $primary;
                     font-size: 1.5rem;
-                    height: 1.5rem;
+                }
+
+                > a:hover {
+                    color: darken($primary, 10%);
+                }
+
+                .change-order-status,.cancel-order{
+                    font-size: 1.85rem;
                 }
             }
         }
