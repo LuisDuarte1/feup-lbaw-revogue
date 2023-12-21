@@ -1,8 +1,5 @@
 @extends('layouts.app', ['search_bar' => true])
 
-
-
-
 @section('content')
     <div class="column gap-3 landing-page">
         <div class="header-image">

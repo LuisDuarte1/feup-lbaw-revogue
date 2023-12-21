@@ -1,6 +1,7 @@
 import { componentAJAXHandler } from '../app'
 import { createFormData } from '../utils/csrf'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 async function sendTextMessage (text: string, threadId: string): Promise<void> {
   const messageThreadContent = document.querySelector('.message-thread-content')
@@ -11,7 +12,7 @@ async function sendTextMessage (text: string, threadId: string): Promise<void> {
   formData.set('text', text)
   const req = await fetchWithSocketInformation(`/api/messages/${threadId}`, { method: 'POST', body: formData })
   if (req.status !== 200) {
-    // TODO(luisd): maybe show popup or toast?
+    await handleRequestErrorToast(req)
     throw Error(`Couldn't send message got ${req.status}`)
   }
   const html = document.createElement('html')

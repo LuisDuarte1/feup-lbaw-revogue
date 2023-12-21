@@ -24,6 +24,7 @@ class ProductListingController extends Controller
 
     public function addProduct(ProductListingForm $request)
     {
+
         $validated = collect($request->validated());
         $image_paths = [];
 

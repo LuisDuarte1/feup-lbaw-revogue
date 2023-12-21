@@ -23,22 +23,21 @@
     </div>
     <div class="purchase-orders column gap-2">
         @foreach ($orders as $order)
-            @php
-                $seller = $order->products[0]->soldBy;
-                $userPicture = $seller->profile_image_path !== null ? '/storage/' . $user->profile_image_path : '/defaultProfileImage.png';
-                $status = $order->status;
-            @endphp
-            <div class="purchase-order column gap-3">
-                <div class="order-header row gap-1">
-                    <div class="row items-center gap-3">
-                        <div class="row items-center">
-                            <img src="{{ $userPicture }}" class="profile-picture">
-                            <div class="order-user">
-                                <a href="/profile/{{ $seller->id }}" class="profile-link">
-                                    <div class="display-name">{{ $seller->display_name }}</div>
-                                    <div class="username">{{ '@' . $seller->username }}</div>
-                                </a>
-                            </div>
+        @php
+        $seller = $order->products[0]->soldBy;
+        $userPicture = $seller->profile_image_path !== null ? "/storage/".$user->profile_image_path : '/defaultProfileImage.png';
+        $status = $order->status;
+        @endphp
+        <div class="purchase-order column gap-3">
+            <div class="order-header row gap-1">
+                <div class="row items-center gap-3">
+                    <div class="row items-center">
+                        <img src="{{$userPicture}}" class="profile-picture" alt="profile-picture">
+                        <div class="order-user">
+                            <a href="/profile/{{$seller->id}}" class="profile-link">
+                                <div class="display-name">{{$seller->display_name}}</div>
+                                <div class="username">{{'@' . $seller->username}}</div>
+                            </a>
                         </div>
                         <div class="order-status row items-center">
                             @php

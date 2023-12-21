@@ -1,6 +1,7 @@
 @extends('layouts.app', ['search_bar' => 'true'])
 
 @section('content')
+    <x-filter-bar :filterAttributes="$filterAttributes"></x-filter-bar>
     <div class="search-page">
         @foreach ($products as $product)
             @php

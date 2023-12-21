@@ -13,9 +13,9 @@
 
     }
     .profile-products {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(10rem), 1fr));
+        gap: 1rem 1rem;
         padding-top: 2rem;
         a {
             text-decoration: none;

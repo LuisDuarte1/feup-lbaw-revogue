@@ -43,22 +43,6 @@
         min-height: 30rem;
         gap: 0.5rem;
 
-        #wishlist_button {
-            z-index: 5;
-            position: absolute;
-            top: 0.7rem;
-            padding: 0.25rem;
-            border-radius: 50%;
-            left: calc(100% - 3.2rem);
-            background-color: rgba($background, 0.7);
-            line-height: 0;
-            color: $accent;
-            text-decoration: none;
-            ion-icon{
-                font-size: 2rem;
-                margin-left: 1px;
-            }
-        }
 
         .gallery-main{
             margin: 0;
@@ -238,7 +222,7 @@
     }
 }
 
-.product-price-shipping{
+.product-price-shipping-report{
     display: flex;
     gap: 2rem;
     .product-shipping{
@@ -249,7 +233,6 @@
             font-size: 0.9rem;
         }
     }
-    
 }
 
 .reviews-empty{

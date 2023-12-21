@@ -14,7 +14,7 @@
     'has-element' => $message->image_path !== null || $message->message_type == 'bargain'
     ])>
     @if($message->image_path !== null)
-        <img class="message-image expandable-image" src="{{$message->image_path}}">
+        <img class="message-image expandable-image" src="{{$message->image_path}}" alt="message-image">
     @endif
     @if ($message->message_type == 'text')
     <div class="message-text-content">
