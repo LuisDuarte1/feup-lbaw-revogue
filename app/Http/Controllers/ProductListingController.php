@@ -13,6 +13,7 @@ class ProductListingController extends Controller
 {
     public function getPage()
     {
+
         return view('pages.productListing', [
             'colors' => AttributeController::getAttributeValues('Color'),
             'sizes' => AttributeController::getAttributeValues('Size'),
@@ -22,6 +23,7 @@ class ProductListingController extends Controller
 
     public function addProduct(ProductListingForm $request)
     {
+
         $validated = collect($request->validated());
         $image_paths = [];
 

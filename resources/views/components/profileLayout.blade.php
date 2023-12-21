@@ -14,7 +14,7 @@
                     </div>
                     @if ($id !== 'me')
                     <div class="report row items-center" data-type="user" data-id="{{$id}}">
-                        <ion-icon name="flag-outline"></ion-icon>
+                        <ion-icon name="flag-outline" aria-label="report-icon"></ion-icon>
                         Report
                     </div>
                     @endif

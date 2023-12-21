@@ -17,7 +17,7 @@
     <div class="purchase-history column gap-3">
         @if (count($purchases) === 0)
         <div class="empty-purchase column items-center gap-3">
-            <img src="/empty_purchase.svg" width="500">
+            <img src="/empty_purchase.svg" width="500" alt="Empty purchase">
             <div class="column items-center gap-1">
                 <p>You still haven't made any purchases yet.</p>
                 <a href="/products" class="shop-button">Shop</a>

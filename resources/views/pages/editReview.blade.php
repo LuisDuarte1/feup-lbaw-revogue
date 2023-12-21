@@ -16,7 +16,7 @@
                 <input type="radio" id="{{$i}}-star" name="rating" value="{{$i}}"/>
                 @endif
                 <label for="{{$i}}-star">
-                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star" aria-label="star-icon"></ion-icon>
                 </label>
                 @endfor
             </div>

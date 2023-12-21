@@ -5,10 +5,10 @@
 <section class="product-layout column justify-center gap-1">
     <div class="categories">
         <p>
-            <a href="/">Home</a><span class="separator">/</span>
+            <a href="/products">Home</a><span class="separator">/</span>
             @foreach ($categories as $category)
 
-            <a href="#">{{$category->name}}</a>
+            <a href="/products?category={{$category->id}}">{{$category->name}}</a>
             @if(!$loop->last)
             <span class="separator">/</span>
             @endif
@@ -49,12 +49,14 @@
                     <div class="product-shipping">
                         <h3>Shipping: 2€</h3>
                     </div>
+                    @auth
                     @if ($user->id !== Auth::user()->id)
                     <div class="report row items-center" data-type="product" data-id="{{$product->id}}">
-                        <ion-icon name="flag-outline"></ion-icon>
+                        <ion-icon name="flag-outline" aria-label="report-icon"></ion-icon>
                         Report
                     </div>
                     @endif
+                    @endauth
                 </div>
                 <div class="product-info">
                     <p>@foreach ($attributes as $attribute)
@@ -120,7 +122,7 @@
                 </div>
                 <div class="seller-wrapper">
                     <div class="profile-pic">
-                        <img id="image" src="/storage/{{ $imagePath }}">
+                        <img id="image" aria-label="profile-image" src="/storage/{{ $imagePath }}" alt="profile-picture">
                     </div>
                     <div class="seller-info">
                         <div class="seller-name">

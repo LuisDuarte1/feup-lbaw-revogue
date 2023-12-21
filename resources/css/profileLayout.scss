@@ -48,13 +48,13 @@
         align-items: flex-end;
         a{
             text-decoration: none;
-            color: $secondary;
+            color: darken($secondary, 20%);
             font-weight: 500;
         }
     }
 
     .rating ion-icon {
         font-size: 1.4rem;
-        color: $secondary;
+        color: darken($secondary, 20%);
     }
 }

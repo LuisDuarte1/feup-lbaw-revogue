@@ -42,7 +42,7 @@
         @php
             $errorMessage = session('success');
         @endphp
-        <meta name="toast-success", content="{{json_encode()}}">
+        <meta name="toast-success", content="{{json_encode($errorMessage)}}">
     @endif
 
     @vite(['resources/css/app.scss', 'resources/ts/app.ts'])

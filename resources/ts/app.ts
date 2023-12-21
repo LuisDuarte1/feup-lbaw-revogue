@@ -22,6 +22,7 @@ import sendTextMessage from './components/sendTextMessage'
 import { messages } from './pages/messages'
 import sendImageMessage from './components/sendImageMessage'
 import sendBargainMessage from './components/sendBargainMessage'
+import filterBar from './components/filterBar.js'
 import sendReport from './components/sendReport'
 import messageBargainContent from './components/messageBargainContent'
 import changeOrderStatus from './components/changeOrderStatus'
@@ -62,6 +63,7 @@ const components: ComponentList = {
   '.send-image-message': sendImageMessage,
   '.send-bargain-message': sendBargainMessage,
   '.message-bargain-content': messageBargainContent,
+  '.filter-bar': filterBar,
   '.report': sendReport,
   '.change-order-status': changeOrderStatus,
   '.cancel-order': requestOrderCancellation,

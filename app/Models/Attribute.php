@@ -21,7 +21,7 @@ class Attribute extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'product_attributes', 'attribute', 'product');
+        return $this->belongsToMany(Product::class, 'productattributes', 'attribute', 'product');
     }
 
     protected $table = 'attributes';

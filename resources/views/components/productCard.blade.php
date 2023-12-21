@@ -32,7 +32,7 @@
                         <p>{{ $shipping }}</p>
                     </div>
                     <div class="product-shipping-icon">
-                        <ion-icon name="airplane"></ion-icon>
+                        <ion-icon name="airplane" aria-label="airplane-icon"></ion-icon>
                     </div>
                 </div>
                 <div class="product-condition">
