@@ -54,7 +54,7 @@ class ProductController extends Controller
     public function listProductsDate(Request $request)
     {
 
-        $products = Product::filter($request)->latest()->paginate(40); // se n funcionar trocar para filter
+        $products = Product::filter($request)->latest()->paginate(40)->withQueryString(); // se n funcionar trocar para filter
         $attributes = Attribute::all();
         $list = [];
         foreach ($products as $product) {

@@ -35,6 +35,10 @@ function handlePriceInput (element: Element, url: URL): void {
     url.searchParams.set('price[max_price]', maxPriceInput.value)
     url.searchParams.set('price[min_price]', minPriceInput.value)
 
+    if (url.searchParams.get('page') !== null) {
+      url.searchParams.delete('page')
+    }
+
     window.history.pushState({}, '', url)
     window.location.href = url.toString()
   }
@@ -68,6 +72,10 @@ function handleCategory (element: Element, url: URL): void {
       url.searchParams.set('category', selectElement.value)
     }
 
+    if (url.searchParams.get('page') !== null) {
+      url.searchParams.delete('page')
+    }
+
     window.history.pushState({}, '', url)
     window.location.href = url.toString()
   })
@@ -97,6 +105,10 @@ function handleAttributes (element: Element, url: URL): void {
         url.searchParams.delete(`attribute[${filterName}]`)
       } else {
         url.searchParams.set(`attribute[${filterName}]`, selectElement.value)
+      }
+
+      if (url.searchParams.get('page') !== null) {
+        url.searchParams.delete('page')
       }
 
       window.history.pushState({}, '', url)
