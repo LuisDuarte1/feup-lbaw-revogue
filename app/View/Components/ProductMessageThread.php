@@ -26,7 +26,15 @@ class ProductMessageThread extends Component
     public function __construct(public MessageThread $messageThread, public bool $isActive)
     {
         $this->product = $messageThread->messageProduct()->get()->first();
-        $this->soldBy = $this->product->soldBy()->get()->first();
+        $otherUser = null;
+
+        if ($messageThread->user_1 === Auth::user()->id) {
+            $otherUser = $messageThread->user_2;
+        } elseif ($messageThread->user_2 === Auth::user()->id) {
+            $otherUser = $messageThread->user_1;
+        }
+
+        $this->soldBy = User::where('id', $otherUser)->get()->first();
         $this->latestMessage = MessageController::getMessages(Auth::user(), $messageThread)->first();
     }
 

@@ -6,6 +6,7 @@
 @import 'productCard';
 @import 'profileLayout';
 @import 'profileNavbar';
+@import 'settingsNavbar';
 @import 'searchBar';
 @import 'loader';
 @import 'productPhotos';
@@ -32,6 +33,8 @@
 @import 'pages/notificationPage';
 @import 'pages/messages';
 @import 'pages/purchaseHistory';
+@import 'pages/settings';
+
 
 
 * {
@@ -60,7 +63,7 @@ body {
         grid-column: 2;
     }
 
-    .main-content.full-page-height{
+    .main-content.full-page-height {
         min-height: calc(100vh - #{$page-margin*2});
     }
 
@@ -89,7 +92,7 @@ body {
 }
 
 @media screen and (max-height: 700px) {
-    :root{
+    :root {
         font-size: 15px;
     }
 }

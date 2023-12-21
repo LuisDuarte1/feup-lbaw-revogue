@@ -110,8 +110,8 @@ function submitFormStripe (stripe: Stripe, checkoutForm: HTMLFormElement, ev: Ev
       }
     })
     toggleSpinner()
-    console.log(result.error)
     submitButton.disabled = false
+    console.log(result.error)
     await Swal.fire({
       title: 'Payment error',
       text: result.error.message,
