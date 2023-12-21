@@ -5,10 +5,10 @@
 <section class="product-layout column justify-center gap-1">
     <div class="categories">
         <p>
-            <a href="/">Home</a><span class="separator">/</span>
+            <a href="/products">Home</a><span class="separator">/</span>
             @foreach ($categories as $category)
 
-            <a href="#">{{$category->name}}</a>
+            <a href="/products?category={{$category->id}}">{{$category->name}}</a>
             @if(!$loop->last)
             <span class="separator">/</span>
             @endif

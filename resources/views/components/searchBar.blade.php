@@ -6,7 +6,6 @@
             ->count();
     }
 @endphp
-
 <nav class= "topnav">
     <form method="GET" action="/search">
         <ion-icon id="search_icon" name="search"></ion-icon>
@@ -47,6 +46,7 @@
                 <ion-icon name="notifications-outline"></ion-icon>
             </a>
         @endguest
+
         <a href="/products/new">
             <ion-icon name="add"></ion-icon>
         </a>
@@ -56,9 +56,13 @@
 
         <a href="{{ route('cart') }}">
             <ion-icon name="cart"></ion-icon>
-            @auth
-                <span class="cart-badge" style="font-size:24px" value={{ $cartCount }}></span>
-            @endauth
+
         </a>
     </div>
+    @auth
+        <span class="cart-badge" style="font-size:24px" value={{ $cartCount }}></span>
+    @endauth
+    </a>
+    </div>
+
 </nav>
