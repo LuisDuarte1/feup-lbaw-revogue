@@ -30,7 +30,8 @@ function makeSendMesssageDialog (productId: number): void {
       title: 'Ask a question',
       input: 'textarea',
       confirmButtonText: 'Send',
-      showCloseButton: true
+      showCloseButton: true,
+      confirmButtonColor: '#B794B8'
     })
 
     if (!text.isConfirmed || text.value === undefined) {

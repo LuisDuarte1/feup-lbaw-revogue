@@ -12,6 +12,7 @@ export default async function (element: HTMLElement): Promise<void> {
     title,
     text: content,
     icon: 'error',
-    confirmButtonText
+    confirmButtonText,
+    confirmButtonColor: '#B794B8'
   })
 }

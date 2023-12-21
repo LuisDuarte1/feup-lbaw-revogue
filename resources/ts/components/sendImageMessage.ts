@@ -24,6 +24,10 @@ export default function (element: HTMLElement): void {
       confirmButtonText: 'Send',
       showCloseButton: true,
       focusConfirm: false,
+      confirmButtonColor: '#B794B8',
+      customClass: {
+        closeButton: 'modal-expandable-image-close-button'
+      },
       html: `
         <div class="column justify-center items-center gap-2">
             <div class="select-image-wrapper">

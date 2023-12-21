@@ -21,7 +21,7 @@
 
                     <div class="shipping-full-name">
                         <label for="full-name" required>Full name</label>
-                        <input type="text" name="full_name" id="full-name" required>
+                        <input type="text" name="name" id="full-name" required>
                     </div>
                     <div class="shipping-email">
                         <label for="email" required>Email</label>

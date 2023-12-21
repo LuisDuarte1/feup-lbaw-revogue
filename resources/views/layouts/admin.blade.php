@@ -32,10 +32,13 @@
             </div>
             <nav>
                 <ul class="nav-links">
+                    @auth('webadmin')
                     <li><a href="/admin" class="home">Home</a></li>
                     <li><a href="/admin/users">Users</a></li>
                     <li><a href="/admin/orders">Orders</a></li>
                     <li><a href="/admin/payouts">Payouts</a></li>
+                    <li><a href="/admin/reports">Reports</a></li>
+                    @endauth
                 </ul>
             </nav>
         </div>
