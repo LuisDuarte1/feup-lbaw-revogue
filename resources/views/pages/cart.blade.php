@@ -13,7 +13,7 @@
             </div>
             <div class="purchase-details row items-center">
                 <p>Purchase details</p>
-                <p>{{ $numOrders }} Orders</p>
+                <p class="number-of-orders">{{ $numOrders }} Orders</p>
             </div>
             <div class="cart-orders column gap-3">
                 @foreach ($cart as $id => $products)
@@ -24,7 +24,7 @@
                             ->first();
                         $sellerPicture = $seller->profile_image_path !== null ? '/storage/' . $user->profile_image_path : '/defaultProfileImage.png';
                     @endphp
-                    <div class="seller-products column gap-2">
+                    <div class="seller-products column gap-2" data-seller-id="{{ $seller->id }}">
                         <div class="seller-products-header row items-center">
                             <div class="row wrapper items-center">
                                 <img src="{{ $sellerPicture }}" alt="seller" class="seller-image">
@@ -36,10 +36,11 @@
                                 </div>
                             </div>
                             <a href="#" class="cart-order-remove">
-                                <button>Remove All</button>
+                                <button class="remove-all-button" data-seller-id="{{ $seller->id }}">Remove All</button>
                             </a>
                         </div>
-                        <div class="cart-products column gap-1">
+                        <div class="cart-products
+                                    column gap-1">
                             @foreach ($products as $product)
                                 @php
                                     $sum += $product->price;
@@ -57,7 +58,7 @@
                                         ->first()->value;
 
                                 @endphp
-                                <article class="product column gap-1" data-id="{{ $product->id }}">
+                                <article class="product column gap-1" data-id="{{ $product->id }}" data-price="{{ $price }}">
                                     <a href="#" class="product-remove"><ion-icon name="close-outline"></ion-icon></a>
                                     <div class="cart-product row gap-1 items-center">
                                         <div class="product-image column items-center">
@@ -86,8 +87,8 @@
                 <h1 class="title">Purchase Summary</h1>
             </div>
             <div class="purchase-details items-center row">
-                <p>{{ $numProducts }} items</p>
-                <p>{{ $sum }}€</p>
+                <p class="number-of-products">{{ $numProducts }} items</p>
+                <p class="price-sum">{{ $sum }}€</p>
             </div>
             <div class="shipping column justify-center gap-1">
                 <h3>Shipping: </h3>
@@ -119,7 +120,7 @@
             <div class="total">
                 <h3>Total: </h3>
                 <div class="total-price">
-                    <p>{{ $cartPrice }}€</p>
+                    <p class="price-sum">{{ $cartPrice }}€</p>
                 </div>
             </div>
             <div class="checkout-button column">
