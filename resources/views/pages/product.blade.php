@@ -34,15 +34,8 @@
                     <div class="swiper-button-next swiper-button-white"></div>
                     <div class="swiper-button-prev swiper-button-white"></div>
                     @if ($sold === false)
-                    @if ($isInWishlist)
-                    <a href="#" id="wishlist_button" data-inWishlist="true" data-productId="{{$product->id}}">
-                        <ion-icon name="heart"></ion-icon>
-                        @else
-                        <a href="#" id="wishlist_button" data-inWishlist="false" data-productId="{{$product->id}}">
-                            <ion-icon name="heart-outline"></ion-icon>
-                            @endif
-                        </a>
-                        @endif
+                    <x-wishlist-button :product="$product" :inwishlist="$isInWishlist" />
+                    @endif
                 </div>
             </div>
             <div class="product-details">
