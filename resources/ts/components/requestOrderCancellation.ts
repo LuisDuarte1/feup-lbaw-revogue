@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2'
 import { fetchWithSocketInformation } from '../utils/fetchUtils'
 import { componentAJAXHandler } from '../app'
+import { ErrorToast, handleRequestErrorToast } from '../utils/toastUtils'
 
 export default function (element: Element): void {
   const orderId = element.getAttribute('data-order-id')
@@ -22,13 +23,14 @@ export default function (element: Element): void {
 
     if (orderStatusRes.status !== 200) {
       console.error(`Order status request failed with status ${orderStatusRes.status}`)
+      await handleRequestErrorToast(orderStatusRes)
       return
     }
 
     const orderStatus = await orderStatusRes.json()
 
     if (orderStatus.status !== 'pendingShipment') {
-      // TODO (luisd): show error toast
+      void ErrorToast.fire('You cannot request cancellation because your order already shipped')
       console.log('Order is not in pending shipment state skipping...')
       return
     }
@@ -47,6 +49,7 @@ export default function (element: Element): void {
     const res = await fetchWithSocketInformation(`/api/messages/${threadId}/cancellation`, { method: 'POST' })
     if (res.status !== 200) {
       console.error(`Bargain send request failed with status ${res.status}`)
+      await handleRequestErrorToast(res)
       return
     }
     const html = document.createElement('html')

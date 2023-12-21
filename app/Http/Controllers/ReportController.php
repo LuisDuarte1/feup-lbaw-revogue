@@ -15,7 +15,7 @@ class ReportController extends Controller
         $productId = $request->route('id');
         $product = Product::where('id', $productId)->get()->first();
         if ($product === null) {
-            return back()->withErrors(['create-error' => 'Product does not exist']);
+            return response()->json(['error' => 'Product does not exist'], 404);
         }
         $request->validate([
             'reason' => 'required|max:500',
@@ -25,7 +25,7 @@ class ReportController extends Controller
 
         $report = Report::where('reporter', $reporter->id)->where('reported', $reported->id)->where('product', $product->id)->get()->first();
         if ($report !== null) {
-            return back()->withErrors(['create-error' => 'You have already reported this product']);
+            return response()->json(['error' => 'You have already reported this product'], 400);
         }
 
         $report = Report::create([
@@ -39,7 +39,7 @@ class ReportController extends Controller
             'closed_by' => null,
         ]);
 
-        return redirect('/products/'.$product->id)->with('success', 'Report sent successfully');
+        return response()->json([]);
     }
 
     public function reportUserAPI(Request $request)
@@ -51,13 +51,13 @@ class ReportController extends Controller
 
         $reported = User::where('id', $request->route('id'))->get()->first();
         if ($reported === null) {
-            return back()->withErrors(['create-error' => 'User not found']);
+            return response()->json(['error' => 'User not found'], 404);
         }
         $reporter = $request->user();
 
         $report = Report::where('reporter', $reporter->id)->where('reported', $reported->id)->get()->first();
         if ($report !== null && $report->type === 'user') {
-            return back()->withErrors(['create-error' => 'You have already reported this user']);
+            return response()->json(['error' => 'You have already reported this user'], 400);
         }
 
         $report = Report::create([
@@ -71,7 +71,8 @@ class ReportController extends Controller
             'closed_by' => null,
         ]);
 
-        return redirect('/profile/'.$reported->id)->with('success', 'User reported successfully');
+        return response()->json([]);
+
     }
 
     public function reportMessageThreadAPI(Request $request)
@@ -82,15 +83,15 @@ class ReportController extends Controller
 
         $messageThread = MessageThread::find($request->route('id'));
         if ($messageThread === null) {
-            return back()->withErrors(['create-error' => 'Message thread not found']);
+            return response()->json(['error' => 'Message thread not found'], 404);
         }
 
         $report = Report::where('message_thread', $messageThread->id)->get()->first();
         if ($report !== null) {
-            return back()->withErrors(['create-error' => 'You have already reported this message thread']);
+            return response()->json(['error' => 'You have already reported this message thread'], 400);
         }
         if ($messageThread->user_1 !== $request->user()->id) {
-            return back()->withErrors(['create-error' => 'You cannot report this message thread']);
+            return response()->json(['error' => 'You cannot report this message thread'], 400);
         }
 
         $report = Report::create([
@@ -104,6 +105,7 @@ class ReportController extends Controller
             'closed_by' => null,
         ]);
 
-        return redirect('/messages?thread='.$messageThread->id)->with('success', 'Message thread reported successfully');
+        return response()->json([]);
+
     }
 }

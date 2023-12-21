@@ -1,4 +1,5 @@
 import debounce from 'debounce'
+import { handleRequestErrorToast } from '../utils/toastUtils'
 
 const bannedAttributes = ['Color', 'Size']
 
@@ -20,6 +21,7 @@ function addTag (attribute: string, inputList: HTMLDivElement): (this: GlobalEve
     const req = await fetch(`/api/attributes?q=${attribute}`)
     if (req.status !== 200) {
       console.error('Something went wrong while getting the list of values...')
+      await handleRequestErrorToast(req)
       return
     }
     const values: string[] = (await req.json()).values
@@ -66,6 +68,7 @@ function searchTag (): void {
       const req = await fetch('/api/attributes')
       if (req.status !== 200) {
         console.error('Something went wrong while getting the list of attributes...')
+        await handleRequestErrorToast(req)
         return
       }
       const data = await req.json()

@@ -237,3 +237,28 @@ input[type="radio"]:not(:disabled):checked {
         color: $toast-green;
     }
 }
+
+.swal2-toast{
+
+    .swal2-title{
+        word-break: normal;
+    
+    }
+}
+
+.swal2-popup{
+    background-color: $background;
+    color: $text-color;
+
+    .swal2-confirm{
+        background-color: $accent;
+    }
+
+    .swal2-deny {
+        background-color: $toast-red;
+    }
+
+    .swal2-error {
+        color: $toast-red;
+    }
+}

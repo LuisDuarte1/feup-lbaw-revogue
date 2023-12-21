@@ -28,6 +28,8 @@ import requestOrderCancellation from './components/requestOrderCancellation'
 import messageCancellationContent from './components/messageCancellationContent'
 import applyVoucherButton from './components/applyVoucherButton'
 import voucherRemove from './components/voucherRemove'
+import errorToast from './components/errorToast'
+import successToast from './components/successToast'
 
 type RouteList = Record<string, () => void>
 type ComponentList = Record<string, (element: HTMLElement) => void>
@@ -65,6 +67,8 @@ const components: ComponentList = {
   '.order-message-thread': productMessageThread,
   '.apply-button > button': applyVoucherButton,
   '.voucher-remove': voucherRemove,
+  'meta[name="toast-error"]': errorToast,
+  'meta[name="toast-success"]': successToast,
   '#report_status': submitFormOnChange
 }
 
@@ -91,7 +95,11 @@ function pageHandler (): void {
 function componentHandler (): void {
   Object.keys(components).forEach((value, _) => {
     document.querySelectorAll<HTMLElement>(value).forEach((element, _) => {
-      components[value](element)
+      try {
+        components[value](element)
+      } catch (e: any) {
+        console.error(`Component ${value} had an error while executing: ${e.toString()}`)
+      }
     })
   })
 }

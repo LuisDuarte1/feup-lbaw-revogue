@@ -46,11 +46,11 @@ class CartController extends Controller
                 $errors->put('voucher_does_not_exist', 'Voucher code does not exist.');
             }
 
-            if ($voucher->belongs_to !== $request->user()->id) {
+            if ($errors->isEmpty() && $voucher->belongs_to !== $request->user()->id) {
                 $errors->put('voucher_not_owned', 'This voucher does not belong to you.');
             }
 
-            if ($voucher->used) {
+            if ($errors->isEmpty() && $voucher->used) {
                 $errors->put('voucher_used', 'This voucher has already been used.');
             }
             if ($errors->isEmpty()) {
