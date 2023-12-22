@@ -2,6 +2,8 @@
 
 > Revogue empowers users to breathe new life into their wardrobe treasures, while cultivating a community where fashion is sustainable. It's about reimagining the lifecycle of fashion, where your garments become the catalyst for incredible second-hand discoveries.
 
+Demo: [https://www.youtube.com/watch?v=Q6b-EG3ag6Y](https://www.youtube.com/watch?v=Q6b-EG3ag6Y)
+
 ## Project Components
 
 * [ER: Requirements Specification](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/er)
