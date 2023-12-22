@@ -6,10 +6,10 @@ Demo: [https://www.youtube.com/watch?v=Q6b-EG3ag6Y](https://www.youtube.com/watc
 
 ## Project Components
 
-* [ER: Requirements Specification](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/er)
-* [EBD: Database Specification](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/ebd)
-* [EAP: Architecture Specification and Prototype](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/eap)
-* [PA: Product and Presentation](https://git.fe.up.pt/lbaw/lbaw2324/lbaw23107/-/wikis/pa)
+* [ER: Requirements Specification](https://github.com/LuisDuarte1/feup-lbaw-revogue/wiki/er)
+* [EBD: Database Specification](https://github.com/LuisDuarte1/feup-lbaw-revogue/wiki/ebd)
+* [EAP: Architecture Specification and Prototype](https://github.com/LuisDuarte1/feup-lbaw-revogue/wiki/eap)
+* [PA: Product and Presentation](https://github.com/LuisDuarte1/feup-lbaw-revogue/wiki/pa)
 
 ## Artefacts Checklist
 
